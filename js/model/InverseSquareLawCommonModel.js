@@ -22,9 +22,9 @@ define( function( require ) {
    * options {Object}
    * @constructor
    */
-  function InverseSquareLawModel( mode, value1, value2, position1, position2, options ) {
+  function InverseSquareLawCommonModel( mode, value1, value2, position1, position2, options ) {
     
-    // NOTE: the following documents our game plan for a common InverseSquareLawModel type
+    // NOTE: the following documents our game plan for a common InverseSquareLawCommonModel type
     // instantiate Properties that are common to gravity-force-lab, gravity-force-lab-basics, and coulombs-law
     
     // instantiate the objects from value1 and value2
@@ -52,7 +52,7 @@ define( function( require ) {
     // } )
   }
 
-  inverseSquareLawCommon.register( 'InverseSquareLawModel', InverseSquareLawModel );
+  inverseSquareLawCommon.register( 'InverseSquareLawCommonModel', InverseSquareLawCommonModel );
 
-  return inherit( Object, InverseSquareLawModel );
+  return inherit( Object, InverseSquareLawCommonModel );
 } );
