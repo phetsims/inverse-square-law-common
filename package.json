@@ -1,0 +1,13 @@
+{
+  "name": "force-lab-common",
+  "version": "0.0.0",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/phetsims/force-lab-common.git"
+  },
+  "devDependencies": {
+    "grunt": "~1.0.0",
+    "grunt-eslint": "~19.0.0"
+  }
+}
