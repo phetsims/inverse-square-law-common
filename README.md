@@ -1,4 +1,4 @@
-force-lab-common
+inverse-square-law-common
 ======
 
 Reusable components that are shared between sims that explore forces between two objects in a 2-Dimensional system, 

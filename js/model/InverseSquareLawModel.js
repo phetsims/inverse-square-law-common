@@ -9,7 +9,7 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var forceLabCommon = require( 'FORCE_LAB_COMMON/forceLabCommon' );
+  var inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
   var inherit = require( 'PHET_CORE/inherit' );
 
   /**
@@ -22,9 +22,9 @@ define( function( require ) {
    * options {Object}
    * @constructor
    */
-  function ForceLabModel() {
+  function InverseSquareLawModel() {
     
-    // NOTE: the following documents our game plan for a common ForceLabModel type
+    // NOTE: the following documents our game plan for a common InverseSquareLawModel type
     // instantiate Properties that are common to gravity-force-lab, gravity-force-lab-basics, and coulombs-law
     
     // instantiate the objects from value1 and value2
@@ -52,7 +52,7 @@ define( function( require ) {
     // } )
   }
 
-  forceLabCommon.register( 'ForceLabModel', ForceLabModel );
+  inverseSquareLawCommon.register( 'InverseSquareLawModel', InverseSquareLawModel );
 
-  return inherit( Object, ForceLabModel );
+  return inherit( Object, InverseSquareLawModel );
 } );

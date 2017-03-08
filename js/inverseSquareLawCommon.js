@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * Creates the namespace for all things under force-lab-common.
+ * Creates the namespace for all things under inverse-square-law-common.
  *
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
@@ -11,5 +11,5 @@ define( function( require ) {
   // modules
   var Namespace = require( 'PHET_CORE/Namespace' );
 
-  return new Namespace( 'forceLabCommon' );
+  return new Namespace( 'inverseSquareLawCommon' );
 } );

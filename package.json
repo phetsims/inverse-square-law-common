@@ -1,10 +1,10 @@
 {
-  "name": "force-lab-common",
+  "name": "inverse-square-law-common",
   "version": "0.0.0",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/phetsims/force-lab-common.git"
+    "url": "https://github.com/phetsims/inverse-square-law-common.git"
   },
   "devDependencies": {
     "grunt": "~1.0.0",
