@@ -22,7 +22,7 @@ define( function( require ) {
    * options {Object}
    * @constructor
    */
-  function InverseSquareLawModel() {
+  function InverseSquareLawModel( mode, value1, value2, position1, position2, options ) {
     
     // NOTE: the following documents our game plan for a common InverseSquareLawModel type
     // instantiate Properties that are common to gravity-force-lab, gravity-force-lab-basics, and coulombs-law
