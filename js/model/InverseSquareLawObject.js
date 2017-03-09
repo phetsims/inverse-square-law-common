@@ -30,8 +30,8 @@ define( function( require ) {
     var self = this;
 
     options = _.extend( {
-      leftMassBoundary: InverseSquareLawCommonConstants.LEFT_MASS_BOUNDARY,
-      rightMassBoundary: InverseSquareLawCommonConstants.RIGHT_MASS_BOUNDARY,
+      leftObjectBoundary: InverseSquareLawCommonConstants.LEFT_OBJECT_BOUNDARY,
+      rightObjectBoundary: InverseSquareLawCommonConstants.RIGHT_OBJECT_BOUNDARY,
 
       constantRadius: InverseSquareLawCommonConstants.CONSTANT_RADIUS, // in meters
       constantRadiusColor: InverseSquareLawCommonConstants.CONSTANT_RADIUS_COLOR, // 
@@ -47,7 +47,7 @@ define( function( require ) {
       tandem: options.tandem.createTandem( 'positionProperty' ),
       phetioValueType: TNumber( {
         units: 'meters',
-        range: new Range( options.leftMassBoundary, options.rightMassBoundary )
+        range: new Range( options.leftObjectBoundary, options.rightObjectBoundary )
       } )
     } );
 
