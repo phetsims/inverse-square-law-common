@@ -8,17 +8,17 @@
 define( function( require ) {
   'use strict';
 
-  var gravityAndOrbits = require( 'GRAVITY_AND_ORBITS/gravityAndOrbits' );
+  var inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
 
-  var InverseSquareLawCommonModes = {
+  var InverseSquareLawModes = {
     MASS: 'MASS',
     CHARGE: 'CHARGE'    
   };
 
   // verify that enum is immutable, without the runtime penalty in production code
-  if ( assert ) { Object.freeze( InverseSquareLawCommonModes ); }
+  if ( assert ) { Object.freeze( InverseSquareLawModes ); }
 
-  gravityAndOrbits.register( 'InverseSquareLawCommonModes', InverseSquareLawCommonModes );
+  inverseSquareLawCommon.register( 'InverseSquareLawModes', InverseSquareLawModes );
 
-  return InverseSquareLawCommonModes;
+  return InverseSquareLawModes;
 } );

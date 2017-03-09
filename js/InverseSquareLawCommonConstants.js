@@ -10,8 +10,9 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var inverseSquareLawCommmon = require( 'INVERSE_SQUARE_LAW/inverseSquareLawCommmon' );
+  var inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
   var Range = require( 'DOT/Range' );
+  var Color = require( 'SCENERY/util/Color' );
 
   // constants
   var MIN_MASS = 1; // kg
@@ -25,13 +26,15 @@ define( function( require ) {
     RIGHT_OBJECT_BOUNDARY: MAX_DISTANCE_FROM_CENTER,
     LEFT_OBJECT_BOUNDARY: -MAX_DISTANCE_FROM_CENTER,
 
+    CONSTANT_RADIUS_COLOR: new Color( 'indigo' ),
+
     // mass constants
-    MASS_CONSTANT_RADIUS: 0.5, // meters
+    CONSTANT_RADIUS: 0.5, // meters
     MASS_DENSITY: 150, // kg/m^3
     MASS_RANGE: new Range( MIN_MASS, MAX_MASS )
   };
 
-  inverseSquareLawCommmon.register( 'InverseSquareLawCommonConstants', InverseSquareLawCommonConstants );
+  inverseSquareLawCommon.register( 'InverseSquareLawCommonConstants', InverseSquareLawCommonConstants );
 
   return InverseSquareLawCommonConstants;
 } );
