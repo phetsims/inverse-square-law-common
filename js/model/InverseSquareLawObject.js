@@ -25,7 +25,7 @@ define( function( require ) {
    *
    * @constructor
    */
-  function InverseSquareLawObject( initialValue, initialPosition, constantRadiusProperty, baseColor, options ) {
+  function InverseSquareLawObject( initialValue, initialPosition, valueRange, constantRadiusProperty, baseColor, options ) {
 
     var self = this;
 
@@ -35,8 +35,6 @@ define( function( require ) {
 
       constantRadius: InverseSquareLawCommonConstants.CONSTANT_RADIUS, // in meters
       constantRadiusColor: InverseSquareLawCommonConstants.CONSTANT_RADIUS_COLOR, // 
-
-      valueRange: InverseSquareLawCommonConstants.MASS_RANGE,
 
       tandem: Tandem.tandemRequired(), // tandem optional until sim is instrumented - TODO: come back to this
       tandemUnits: 'kilograms',
@@ -54,7 +52,7 @@ define( function( require ) {
     // @public
     this.valueProperty = new Property( initialValue, {
       tandem: options.tandem.createTandem( 'valueProperty' ),
-      phetioValueType: TNumber( { units: options.tandemUnits, range: options.valueRange } )
+      phetioValueType: TNumber( { units: options.tandemUnits, range: valueRange } )
     } );
 
     // @public - mass radius will change with value
@@ -71,7 +69,7 @@ define( function( require ) {
       [ this.valueProperty, constantRadiusProperty ],
       function( mass, constantRadius ) {
         return constantRadius ?
-               options.constantRadiusColor.colorUtilsBrighter( 1 - self.valueProperty.get() / options.valueRange.max ) :
+               options.constantRadiusColor.colorUtilsBrighter( 1 - self.valueProperty.get() / valueRange.max ) :
                baseColor;
       },
       { tandem: options.tandem.createTandem( 'baseColorProperty' ), phetioValueType: TColor }

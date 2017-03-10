@@ -26,6 +26,8 @@ define( function( require ) {
     RIGHT_OBJECT_BOUNDARY: MAX_DISTANCE_FROM_CENTER,
     LEFT_OBJECT_BOUNDARY: -MAX_DISTANCE_FROM_CENTER,
 
+    MIN_SEPARATION_BETWEEN_OBJECTS: 0.1, // in m
+
     CONSTANT_RADIUS_COLOR: new Color( 'indigo' ),
 
     // mass constants

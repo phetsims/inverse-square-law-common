@@ -71,12 +71,11 @@ define( function( require ) {
       var massOptions = {
         massConstantRadius: options.massConstantRadius,
         leftMassBoundary: options.leftMassBoundary,
-        rightMassBoundary: options.rightMassBoundary,
-        valueRange: options.valueRange
+        rightMassBoundary: options.rightMassBoundary
       };
 
-      this.object1 = new Mass( value1, position1, options.massDensity, new Color( '#00f' ), this.constantRadiusProperty, tandem.createTandem( 'mass1' ), massOptions );
-      this.object2 = new Mass( value2, position2, options.massDensity, new Color( '#f00' ), this.constantRadiusProperty, tandem.createTandem( 'mass2' ), massOptions );
+      this.object1 = new Mass( value1, position1, options.valueRange, options.massDensity, new Color( '#00f' ), this.constantRadiusProperty, tandem.createTandem( 'mass1' ), massOptions );
+      this.object2 = new Mass( value2, position2, options.valueRange, options.massDensity, new Color( '#f00' ), this.constantRadiusProperty, tandem.createTandem( 'mass2' ), massOptions );
     }
     else if ( mode === InverseSquareLawModes.CHARGE ) {
       // make some charges

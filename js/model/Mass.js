@@ -12,7 +12,6 @@ define( function( require ) {
 
   // modules
   var inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
-  var InverseSquareLawCommonConstants = require( 'INVERSE_SQUARE_LAW_COMMON/InverseSquareLawCommonConstants' );
   var InverseSquareLawObject = require( 'INVERSE_SQUARE_LAW_COMMON/model/InverseSquareLawObject' );
   var inherit = require( 'PHET_CORE/inherit' );
 
@@ -26,16 +25,12 @@ define( function( require ) {
    * @param {Object} options
    * @constructor
    */
-  function Mass( initialMass, initialPosition, density, baseColor, constantRadiusProperty, tandem, options ) {
-
-    options = _.extend( {
-      valueRange: InverseSquareLawCommonConstants.MASS_RANGE // in meters
-    }, options );
+  function Mass( initialMass, initialPosition, valueRange, density, baseColor, constantRadiusProperty, tandem, options ) {
 
     // @private
     this.density = density;
 
-    InverseSquareLawObject.call( this, initialMass, initialPosition, constantRadiusProperty, baseColor, options );
+    InverseSquareLawObject.call( this, initialMass, initialPosition, valueRange, constantRadiusProperty, baseColor, options );
   }
 
   inverseSquareLawCommon.register( 'Mass', Mass );
