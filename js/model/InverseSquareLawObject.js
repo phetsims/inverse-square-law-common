@@ -16,10 +16,10 @@ define( function( require ) {
   var Range = require( 'DOT/Range' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var Tandem = require( 'TANDEM/Tandem' );
+  var TColor = require( 'SCENERY/util/TColor' );
 
   // phet-io modules
   var TNumber = require( 'ifphetio!PHET_IO/types/TNumber' );
-  var TColor = require( 'ifphetio!PHET_IO/types/scenery/util/TColor' );
 
   /**
    *
