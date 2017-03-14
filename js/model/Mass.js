@@ -25,7 +25,7 @@ define( function( require ) {
    * @param {Object} options
    * @constructor
    */
-  function Mass( initialMass, initialPosition, valueRange, density, baseColor, constantRadiusProperty, tandem, options ) {
+  function Mass( initialMass, initialPosition, valueRange, density, constantRadiusProperty, baseColor, tandem, options ) {
 
     // @private
     this.density = density;

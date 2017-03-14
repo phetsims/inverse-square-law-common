@@ -10,12 +10,8 @@ define( function( require ) {
 
   // modules
   var inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
-  var InverseSquareLawCommonConstants = require( 'INVERSE_SQUARE_LAW_COMMON/InverseSquareLawCommonConstants' );
-  var InverseSquareLawModes = require( 'INVERSE_SQUARE_LAW_COMMON/InverseSquareLawModes' );
   var Property = require( 'AXON/Property' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
-  var Mass = require( 'INVERSE_SQUARE_LAW_COMMON/model/Mass' );
-  var Color = require( 'SCENERY/util/Color' );
   var Util = require( 'DOT/Util' );
   var inherit = require( 'PHET_CORE/inherit' );
 
@@ -29,63 +25,27 @@ define( function( require ) {
 
   /**
    * @constructor
-   * @param {string} mode - one of {'MASS'|'CHARGE'}  
-   * @param {number} value1 - value of the first object, either in kg or C, depending on mode
-   * @param {number} value2 - value of the first object, either in kg or C, depending on mode
+   * @param {number} forceConstant the appropriate force constant (e.g. G or k)
+   * @param {object} object1 - the first Mass or Charge object
+   * @param {object} object2 - the second Mass or Charge object
    * @param {Vector2} position1 - initial position of the left object
    * @param {Vector2} position2 - initial position of the right object
    * @param {object} options
    */
-  function InverseSquareLawModel( mode, value1, value2, position1, position2, tandem, options ) {
-
-    options = _.extend( {
-
-      // boundary locations for the objects (in meters)
-      leftObjectBoundary: InverseSquareLawCommonConstants.LEFT_OBJECT_BOUNDARY,
-      rightObjectBoundary: InverseSquareLawCommonConstants.RIGHT_OBJECT_BOUNDARY,
-
-      valueRange: InverseSquareLawCommonConstants.MASS_RANGE,
-
-      // options that are specific to mass
-      massDensity: InverseSquareLawCommonConstants.MASS_DENSITY,
-
-      // options that are specific to charge
-      
-    }, options );
+  function InverseSquareLawModel( forceConstant, object1, object2, leftBoundary, rightBoundary, tandem, options ) {
     
     // @private
-    this.leftObjectBoundary = options.leftObjectBoundary;
-    this.rightObjectBoundary = options.rightObjectBoundary;
+    this.leftObjectBoundary = leftBoundary;
+    this.rightObjectBoundary = rightBoundary;
 
     // @public
     this.showValuesProperty = new Property( true, {
       tandem: tandem.createTandem( 'showValuesProperty' ),
       phetioValueType: TBoolean
     } );
-    this.constantRadiusProperty = new Property( false, {
-      tandem: tandem.createTandem( 'constantRadiusProperty' ),
-      phetioValueType: TBoolean
-    } ); // @public
 
-    if ( mode === InverseSquareLawModes.MASS ) {
-      var massOptions = {
-        massConstantRadius: options.massConstantRadius,
-        leftMassBoundary: options.leftMassBoundary,
-        rightMassBoundary: options.rightMassBoundary
-      };
-
-      this.object1 = new Mass( value1, position1, options.valueRange, options.massDensity, new Color( '#00f' ), this.constantRadiusProperty, tandem.createTandem( 'mass1' ), massOptions );
-      this.object2 = new Mass( value2, position2, options.valueRange, options.massDensity, new Color( '#f00' ), this.constantRadiusProperty, tandem.createTandem( 'mass2' ), massOptions );
-    }
-    else if ( mode === InverseSquareLawModes.CHARGE ) {
-      // make some charges
-      throw new Error( 'Charge mode is not supported yet.' );
-    }
-    else {
-      throw new Error( 'Unsuported mode for InverseSquareLawModel' );
-    }
-
-    var forceConstant = mode === InverseSquareLawModes.MASS ? InverseSquareLawCommonConstants.G : InverseSquareLawCommonConstants.k;
+    this.object1 = object1;
+    this.object2 = object2;
     
     // derived property that calculates the force based on changes to values and positions
     this.forceProperty = new DerivedProperty(
@@ -111,6 +71,7 @@ define( function( require ) {
      * @public
      */
     step: function() {
+      // debugger;
       var minX = this.leftObjectBoundary + PULL_OBJECT_WIDTH + this.object1.radiusProperty.get();
       var maxX = this.rightObjectBoundary - PULL_OBJECT_WIDTH - this.object2.radiusProperty.get();
       var locationMass1 = this.object1.positionProperty.get();
@@ -166,7 +127,7 @@ define( function( require ) {
     // @public
     reset: function() {
       this.showValuesProperty.reset();
-      this.constantRadiusProperty.reset();
+      // this.constantRadiusProperty.reset();
       this.object1.reset();
       this.object2.reset();
     }
