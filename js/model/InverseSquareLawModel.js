@@ -57,6 +57,8 @@ define( function( require ) {
      ],
        function( v1, v2, x1, x2 ) {
          var distance = Math.abs( x2 - x1 );
+
+         assert && assert( distance > 0, 'must have non zero distance between objects' );
          return forceConstant * v1 * v2 / ( distance * distance );
        }
     );
