@@ -3,6 +3,7 @@
 /**
  * Arrow node for sims that use inverse-square-law-common.  The arrow is scaled to represent the magnitude of the force,
  * and can change direction to represent repulsive and attractive forces.
+ * 
  * @author Jesse Greenberg
  */
 
@@ -76,7 +77,8 @@ define( function( require ) {
   return inherit( ArrowNode, ISLForceArrowNode, {
 
     /**
-     * Draw the length of the arrow based on the value of the force and the 
+     * Draw the length of the arrow based on the value of the force.
+     * @public
      */
     redrawArrow: function( value ) {
       var arrowLengthMultiplier;
@@ -95,7 +97,11 @@ define( function( require ) {
       this.setTailAndTip( 0, 0, arrowLengthMultiplier * ARROW_LENGTH, 0 );
     },
 
-    // makes sure that the arrow text does not go out of dev bounds
+    /**
+     * Set the arrow text position along the arrow, ensuring that the text does not go outside the layout
+     * bounds.
+     * @public
+     */
     setArrowTextPosition: function( localToParentPoint, parentToLocalBounds ){      
       this.arrowText.centerX = 0;
       if ( Math.floor( localToParentPoint.x - this.arrowText.width / 2 ) <= this.layoutBounds.left + TEXT_OFFSET ) {
@@ -108,7 +114,7 @@ define( function( require ) {
     },
 
     /**
-     * Update the force label string
+     * Update the force label string.
      * @public
      */
     updateLabel: function( forceValue, showValues ) {
@@ -138,7 +144,6 @@ define( function( require ) {
       else {
         this.arrowText.text = StringUtils.format( forceDescriptionPatternTargetSourceString, this.label, this.otherObjectLabel );
       }
-
     } 
   } );
 } );

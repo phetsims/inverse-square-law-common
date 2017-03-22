@@ -16,14 +16,15 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
 
   /**
+   * @constructor
    * @param {number} initialMass
-   * @param {number} initialPosition
+   * @param {Vector2} initialPosition
+   * @param {Range} valueRange
    * @param {number} density
-   * @param {string} baseColor
    * @param {Property.<boolean>} constantRadiusProperty
+   * @param {Color} baseColor
    * @param {Tandem} tandem
    * @param {Object} options
-   * @constructor
    */
   function Mass( initialMass, initialPosition, valueRange, density, constantRadiusProperty, baseColor, tandem, options ) {
 

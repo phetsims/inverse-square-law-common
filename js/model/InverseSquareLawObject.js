@@ -2,6 +2,7 @@
 
 /**
  * Common type for items in inverse square law sims.
+ * 
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 
@@ -21,9 +22,15 @@ define( function( require ) {
   // phet-io modules
   var TNumber = require( 'ifphetio!PHET_IO/types/TNumber' );
 
+
   /**
-   *
    * @constructor
+   * @param {number} initialValue
+   * @param {Vector2} initialPosition
+   * @param {Range} valueRange
+   * @param {Property.<boolean>} constantRadiusProperty
+   * @param {Color} baseColor
+   * @param {Object} options
    */
   function InverseSquareLawObject( initialValue, initialPosition, valueRange, constantRadiusProperty, baseColor, options ) {
 
@@ -84,6 +91,9 @@ define( function( require ) {
 
   return inherit( Object, InverseSquareLawObject, {
 
+    /**
+     * Calculate radius for the object - must be implemented in subtypes.
+     */
     calculateRadius: function() {
       throw new Error( 'calculateRadius must be implemented in descendent types' );
     }

@@ -28,8 +28,9 @@ define( function( require ) {
    * @param {number} forceConstant the appropriate force constant (e.g. G or k)
    * @param {object} object1 - the first Mass or Charge object
    * @param {object} object2 - the second Mass or Charge object
-   * @param {Vector2} position1 - initial position of the left object
-   * @param {Vector2} position2 - initial position of the right object
+   * @param {Vector2} leftBoundary - absolute boundary for the left object
+   * @param {Vector2} rightBoundary - absolute boundary for the right object
+   * @param {Tandem} tandem
    * @param {object} options
    */
   function InverseSquareLawModel( forceConstant, object1, object2, leftBoundary, rightBoundary, tandem, options ) {
@@ -44,6 +45,7 @@ define( function( require ) {
       phetioValueType: TBoolean
     } );
 
+    // @public
     this.object1 = object1;
     this.object2 = object2;
     
@@ -73,7 +75,6 @@ define( function( require ) {
      * @public
      */
     step: function() {
-      // debugger;
       var minX = this.leftObjectBoundary + PULL_OBJECT_WIDTH + this.object1.radiusProperty.get();
       var maxX = this.rightObjectBoundary - PULL_OBJECT_WIDTH - this.object2.radiusProperty.get();
       var locationMass1 = this.object1.positionProperty.get();
@@ -129,7 +130,6 @@ define( function( require ) {
     // @public
     reset: function() {
       this.showValuesProperty.reset();
-      // this.constantRadiusProperty.reset();
       this.object1.reset();
       this.object2.reset();
     }

@@ -2,7 +2,7 @@
 
 // RequireJS configuration file for Shred (UI component lib) demo.
 require.config( {
-  deps: [ 'sun-main' ],
+  deps: [ 'main' ],
 
   paths: {
 

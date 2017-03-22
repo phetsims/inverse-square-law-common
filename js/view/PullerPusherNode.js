@@ -59,13 +59,14 @@ define( function( require ) {
   //   pullImage0, pullImage1, pullImage2, pullImage3, pullImage4, pullImage5, pullImage6, pullImage7, 
   //   pullImage8, pullImage9, pullImage10, pullImage11, pullImage12, pullImage13, pullImage14 ];
   
-  // for now, just using the images we have
+  // for now, just using the images we have available
   var pullImages = [ pullImage0, pullImage1, pullImage2, pullImage3, pullImage4, pullImage5, pullImage6, pullImage7,
     pullImage8, pullImage9, pullImage10, pullImage11, pullImage12, pullImage13, pullImage14 ];
 
   // TODO: add ability to handle negative values
 
   /**
+   * @param {RangeWithValue} forceRange - range of forces, used for determining the visible pullImage
    * @param {Tandem} tandem
    * @param {Object} [options]
    * @constructor
@@ -114,8 +115,7 @@ define( function( require ) {
     this.addChild( pullerGroupNode );
 
     // function select image
-    // TODO: move this to inherit block?
-    // TODO: document
+    // TODO: move this to inherit block and document
     this.setPull = function( force, offsetX ) {
 
       // from the force value, get an index for the visible image
