@@ -85,7 +85,7 @@ define( function( require ) {
 
       var absValue = Math.abs( value );
       if ( value < this.arrowForceRange.min ) {
-        arrowLengthMultiplier = this.forceToArrowMinWidthFunction( absValue );
+        arrowLengthMultiplier = this.forceToArrowWidthMinFunction( absValue );
       }
       else {
         arrowLengthMultiplier = this.forceToArrowWidthFunction( absValue );
