@@ -20,6 +20,7 @@ define( function( require ) {
   var Util = require( 'DOT/Util' );
   var Circle = require( 'SCENERY/nodes/Circle' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  var PullerPusherNode = require( 'INVERSE_SQUARE_LAW_COMMON/view/PullerPusherNode' );
   var Shape = require( 'KITE/Shape' );
   var Path = require( 'SCENERY/nodes/Path' );
   var Text = require( 'SCENERY/nodes/Text' );
@@ -42,11 +43,12 @@ define( function( require ) {
    * @param {Tandem} tandem
    * @param {Object} options
    */
-  function ObjectNode( model, objectModel, layoutBounds, modelViewTransform, pullerNode, arrowNode, tandem, options ) {
+  function ObjectNode( model, objectModel, layoutBounds, modelViewTransform, pullForceRange, arrowNode, tandem, options ) {
 
     options = _.extend( {
       label: 'This Object',
       otherObjectName: 'Other Object',
+      direction: 'left',
       arrowColor: '#66f', // color of vertical line - TODO: what is this?
       y: 250,
       forceArrowHeight: 150, // height of arrow in view coordinates
@@ -57,7 +59,7 @@ define( function( require ) {
     Node.call( this, { tandem: tandem } );
 
     // @private - the puller node
-    this.pullerNode = pullerNode;
+    this.pullerNode = new PullerPusherNode( pullForceRange, tandem.createTandem( 'puller1' ), options );
 
     // a parent node that applies the drag handler
     var dragNode = new Node( {
@@ -65,11 +67,15 @@ define( function( require ) {
       tandem: tandem.createTandem( 'dragNode' )
     } );
 
+    if ( options.direction === 'right' ) {
+      this.pullerNode.scale( -1, 1 );
+    }
+
     // the 'object' - a shaded circle
     var radius = modelViewTransform.modelToViewDeltaX( objectModel.radiusProperty.get() );
     this.objectCircle = new Circle( radius );
 
-    dragNode.addChild( pullerNode );
+    dragNode.addChild( this.pullerNode );
     dragNode.addChild( this.objectCircle );
 
     // TODO: What is this circle doing here?

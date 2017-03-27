@@ -130,8 +130,13 @@ define( function( require ) {
     // @public
     reset: function() {
       this.showValuesProperty.reset();
-      this.object1.reset();
-      this.object2.reset();
+      if ( this.object2.positionProperty.get() === this.object1.positionProperty.initialValue ) {
+        this.object2.reset();
+        this.object1.reset();
+      } else {
+        this.object1.reset();
+        this.object2.reset();
+      }
     }
   }, {
 
