@@ -20,7 +20,6 @@ define( function( require ) {
   // constants
   var RULER_WIDTH = 500;
   var RULER_HEIGHT = 35;
-  var RULER_FONT = new PhetFont( 14 );
 
   // strings
   var unitsMetersString = require( 'string!INVERSE_SQUARE_LAW_COMMON/units.meters' );

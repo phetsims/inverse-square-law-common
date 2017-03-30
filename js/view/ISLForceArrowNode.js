@@ -18,7 +18,6 @@ define( function( require ) {
   var Util = require( 'DOT/Util' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var LinearFunction = require('DOT/LinearFunction');
-  var Text = require( 'SCENERY/nodes/Text' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var ScientificNotationNode = require( 'SCENERY_PHET/ScientificNotationNode' );
 
