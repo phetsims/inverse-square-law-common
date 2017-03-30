@@ -19,7 +19,8 @@ define( function( require ) {
 
   // constants
   var RULER_WIDTH = 500;
-  var RULER_HEIGHT = 50;
+  var RULER_HEIGHT = 35;
+  var RULER_FONT = new PhetFont( 14 );
 
   // strings
   var unitsMetersString = require( 'string!INVERSE_SQUARE_LAW_COMMON/units.meters' );
@@ -41,10 +42,12 @@ define( function( require ) {
       [ '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10' ],
       unitsMetersString,
       {
+        backgroundFill: 'grey',
+        insetsWidth: 7,
         minorTicksPerMajorTick: 4,
-        majorTickFont: new PhetFont( 16 ),
+        majorTickFont: new PhetFont( 12 ),
         unitsFont: new PhetFont( 10 ),
-        unitsSpacing: 5,
+        unitsSpacing: 3,
         tandem: tandem.createTandem( 'ruler' )
       }
     );

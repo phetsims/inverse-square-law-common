@@ -11,6 +11,7 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var HTMLText = require( 'SCENERY/nodes/HTMLText' );
   var inherit = require( 'PHET_CORE/inherit' );
   var inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
   var ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
@@ -19,6 +20,7 @@ define( function( require ) {
   var LinearFunction = require('DOT/LinearFunction');
   var Text = require( 'SCENERY/nodes/Text' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  var ScientificNotationNode = require( 'SCENERY_PHET/ScientificNotationNode' );
 
   // strings
   var forceDescriptionPatternTargetSourceString = require( 'string!INVERSE_SQUARE_LAW_COMMON/force-description-pattern-target_source' );
@@ -29,7 +31,7 @@ define( function( require ) {
   var ARROW_LENGTH = 8; // empirically determined
   var TEXT_OFFSET = 5; // empirically determined to make sure text does not go out of bounds
 
-  function ISLForceArrowNode( arrowTitle, arrowForceRange, layoutBounds, tandem, options ) {
+  function ISLForceArrowNode( arrowForceRange, layoutBounds, tandem, options ) {
 
     options = _.extend( {
       maxArrowWidth: 60, // max width of the arrow when when redrawn, in view coordinates
@@ -37,8 +39,11 @@ define( function( require ) {
       forceReadoutDecimalPlaces: 12, // number of decimal places in force readout
       label: '', // label for this object
       otherObjectLabel: '', // label for the other object exerting a force on this object
+      scientificNotationMode: false, // whether to display number in scientific notation
+      title: '', // object title
 
       // arrow node options
+      forceArrowHeight: 150,
       headHeight: 8,
       headWidth: 8,
       tailWidth: 3,
@@ -47,12 +52,14 @@ define( function( require ) {
     }, options );
 
     // @private
+    this.forceArrowHeight = options.forceArrowHeight;
     this.arrowForceRange = arrowForceRange;
     this.layoutBounds = layoutBounds;
     this.defaultDirection = options.defaultDirection;
     this.forceReadoutDecimalPlaces = options.forceReadoutDecimalPlaces;
     this.label = options.label;
     this.otherObjectLabel = options.otherObjectLabel;
+    this.scientificNotationMode = options.scientificNotationMode;
 
     // @private - maps the force value to the desired width of the arrow in view coordinates 
     this.forceToArrowWidthFunction = new LinearFunction( arrowForceRange.min, arrowForceRange.max, 1, options.maxArrowWidth, false );
@@ -61,15 +68,17 @@ define( function( require ) {
     this.forceToArrowWidthMinFunction = new LinearFunction( 0, arrowForceRange.min, 0, 1, false ); 
 
     // @public (read-only) - for layout, the label for the arrow
-    this.arrowText = new Text( arrowTitle, {
+    this.arrowText = new HTMLText( options.title, {
       font: new PhetFont( 16 ),
-      fill: '#000',
+      fill: '#fff',
       maxWidth: 300, // empirically determined through testing with long strings
+      y: -options.forceArrowHeight - 20,
       tandem: tandem.createTandem( 'arrowText' )
     } );
 
-    ArrowNode.call( this, 0, 0, 200, 0, options );
+    ArrowNode.call( this, 0, -options.forceArrowHeight, 200, -options.forceArrowHeight, { fill: 'white' } );
     this.addChild( this.arrowText );
+    this.y = 0;
   }
 
   inverseSquareLawCommon.register( 'ISLForceArrowNode', ISLForceArrowNode );
@@ -83,6 +92,8 @@ define( function( require ) {
     redrawArrow: function( value ) {
       var arrowLengthMultiplier;
 
+      var valueSign = value >= 0 ? 1 : -1;
+
       var absValue = Math.abs( value );
       if ( value < this.arrowForceRange.min ) {
         arrowLengthMultiplier = this.forceToArrowWidthMinFunction( absValue );
@@ -94,7 +105,7 @@ define( function( require ) {
         arrowLengthMultiplier *= -1;
       }
 
-      this.setTailAndTip( 0, 0, arrowLengthMultiplier * ARROW_LENGTH, 0 );
+      this.setTailAndTip( 0, -this.forceArrowHeight, valueSign * arrowLengthMultiplier * ARROW_LENGTH, -this.forceArrowHeight );
     },
 
     /**
@@ -133,6 +144,12 @@ define( function( require ) {
           for( var i = pointLocation + 4; i < forceStr.length; i+=3 ) {
             formattedString += ' ';
             formattedString += forceStr.substr( i, 3 );
+          }
+
+          if (this.scientificNotationMode) {
+            var notationObject = ScientificNotationNode.toScientificNotation( forceValue, {mantissaDecimalPlaces: 2} );
+            
+            formattedString = notationObject.mantissa + ' X 10<sup>' + notationObject.exponent + '</sup>';
           }
 
           this.arrowText.text = StringUtils.format( forceDescriptionPatternTargetSourceValueString, this.label, this.otherObjectLabel, formattedString );

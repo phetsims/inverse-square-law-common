@@ -17,6 +17,7 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var TandemSimpleDragHandler = require( 'TANDEM/scenery/input/TandemSimpleDragHandler' );
   var InverseSquareLawCommonConstants = require( 'INVERSE_SQUARE_LAW_COMMON/InverseSquareLawCommonConstants' );
+  var ISLForceArrowNode = require( 'INVERSE_SQUARE_LAW_COMMON/view/ISLForceArrowNode' );
   var Util = require( 'DOT/Util' );
   var Circle = require( 'SCENERY/nodes/Circle' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
@@ -43,12 +44,12 @@ define( function( require ) {
    * @param {Tandem} tandem
    * @param {Object} options
    */
-  function ObjectNode( model, objectModel, layoutBounds, modelViewTransform, pullForceRange, arrowNode, tandem, options ) {
+  function ObjectNode( model, objectModel, layoutBounds, modelViewTransform, pullForceRange, arrowForceRange, tandem, options ) {
 
     options = _.extend( {
       label: 'This Object',
       otherObjectName: 'Other Object',
-      direction: 'left',
+      defaultDirection: 'left',
       arrowColor: '#66f', // color of vertical line - TODO: what is this?
       y: 250,
       forceArrowHeight: 150, // height of arrow in view coordinates
@@ -60,6 +61,16 @@ define( function( require ) {
 
     // @private - the puller node
     this.pullerNode = new PullerPusherNode( pullForceRange, tandem.createTandem( 'puller1' ), options );
+
+    if ( options.defaultDirection === 'right' ) {
+      this.pullerNode.scale( -1, 1 );
+    }
+
+    // @private - arrow node
+    var arrowNode = new ISLForceArrowNode(  arrowForceRange, 
+                                            layoutBounds, 
+                                            tandem.createTandem( 'forceArrowNode' ),
+                                            options );
 
     // a parent node that applies the drag handler
     var dragNode = new Node( {
