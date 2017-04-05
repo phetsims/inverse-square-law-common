@@ -3,7 +3,7 @@
 /**
  * Arrow node for sims that use inverse-square-law-common.  The arrow is scaled to represent the magnitude of the force,
  * and can change direction to represent repulsive and attractive forces.
- * 
+ *
  * @author Jesse Greenberg
  */
 
@@ -11,7 +11,7 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var HTMLText = require( 'SCENERY/nodes/HTMLText' );
+  var RichText = require( 'SCENERY_PHET/RichText' );
   var inherit = require( 'PHET_CORE/inherit' );
   var inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
   var ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
@@ -60,14 +60,14 @@ define( function( require ) {
     this.otherObjectLabel = options.otherObjectLabel;
     this.scientificNotationMode = options.scientificNotationMode;
 
-    // @private - maps the force value to the desired width of the arrow in view coordinates 
+    // @private - maps the force value to the desired width of the arrow in view coordinates
     this.forceToArrowWidthFunction = new LinearFunction( arrowForceRange.min, arrowForceRange.max, 1, options.maxArrowWidth, false );
 
     // @private - when the force is below the typical arrow range, width of the arrow is mapped from 0 to 1
-    this.forceToArrowWidthMinFunction = new LinearFunction( 0, arrowForceRange.min, 0, 1, false ); 
+    this.forceToArrowWidthMinFunction = new LinearFunction( 0, arrowForceRange.min, 0, 1, false );
 
     // @public (read-only) - for layout, the label for the arrow
-    this.arrowText = new HTMLText( options.title, {
+    this.arrowText = new RichText( options.title, {
       font: new PhetFont( 16 ),
       fill: '#fff',
       maxWidth: 300, // empirically determined through testing with long strings
@@ -112,7 +112,7 @@ define( function( require ) {
      * bounds.
      * @public
      */
-    setArrowTextPosition: function( localToParentPoint, parentToLocalBounds ){      
+    setArrowTextPosition: function( localToParentPoint, parentToLocalBounds ){
       this.arrowText.centerX = 0;
       if ( Math.floor( localToParentPoint.x - this.arrowText.width / 2 ) <= this.layoutBounds.left + TEXT_OFFSET ) {
         this.arrowText.left = parentToLocalBounds.left + TEXT_OFFSET;
@@ -147,7 +147,7 @@ define( function( require ) {
 
           if (this.scientificNotationMode) {
             var notationObject = ScientificNotationNode.toScientificNotation( forceValue, {mantissaDecimalPlaces: 2} );
-            
+
             formattedString = notationObject.mantissa + ' X 10<sup>' + notationObject.exponent + '</sup>';
           }
 
@@ -160,6 +160,6 @@ define( function( require ) {
       else {
         this.arrowText.text = StringUtils.format( forceDescriptionPatternTargetSourceString, this.label, this.otherObjectLabel );
       }
-    } 
+    }
   } );
 } );
