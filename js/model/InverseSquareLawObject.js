@@ -17,7 +17,6 @@ define( function( require ) {
   var Range = require( 'DOT/Range' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var Tandem = require( 'TANDEM/Tandem' );
-  var TColor = require( 'SCENERY/util/TColor' );
 
   // phet-io modules
   var TNumber = require( 'ifphetio!PHET_IO/types/TNumber' );
@@ -29,19 +28,15 @@ define( function( require ) {
    * @param {Vector2} initialPosition
    * @param {Range} valueRange
    * @param {Property.<boolean>} constantRadiusProperty
-   * @param {Color} baseColor
    * @param {Object} options
    */
-  function InverseSquareLawObject( initialValue, initialPosition, valueRange, constantRadiusProperty, baseColor, options ) {
+  function InverseSquareLawObject( initialValue, initialPosition, valueRange, constantRadiusProperty, options ) {
 
     var self = this;
 
     options = _.extend( {
       leftObjectBoundary: InverseSquareLawCommonConstants.LEFT_OBJECT_BOUNDARY,
       rightObjectBoundary: InverseSquareLawCommonConstants.RIGHT_OBJECT_BOUNDARY,
-
-      constantRadius: InverseSquareLawCommonConstants.CONSTANT_RADIUS, // in meters
-      constantRadiusColor: InverseSquareLawCommonConstants.CONSTANT_RADIUS_COLOR, // 
 
       tandem: Tandem.tandemRequired(), // tandem optional until sim is instrumented - TODO: come back to this
       tandemUnits: 'kilograms',
@@ -69,21 +64,6 @@ define( function( require ) {
         return constantRadius ? options.constantRadius : self.calculateRadius( mass );
       },
       { tandem: options.tandem.createTandem( 'radiusProperty' ), phetioValueType: TNumber( { units: 'meters' } ) }
-    );
-
-    // @public - mass color is will change with value
-    // TODO: alter 'constantRadiusProperty' to better indicate the condition for which the object colors will change
-    // radius changes will be moved into the Mass object
-    // color property will be changed and updated based on a boolean value (negative vs positive for Charge and Constant Radius for Mass)
-    // brightness will be set according to the Mass/Charge magnitude
-    this.baseColorProperty = new DerivedProperty(
-      [ this.valueProperty, constantRadiusProperty ],
-      function( value, constantRadius ) {
-        return constantRadius ?
-               options.constantRadiusColor.colorUtilsBrighter( 1 - Math.abs(value) / valueRange.max ) :
-               baseColor;
-      },
-      { tandem: options.tandem.createTandem( 'baseColorProperty' ), phetioValueType: TColor }
     );
   }
 

@@ -11,9 +11,12 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var DerivedProperty = require( 'AXON/DerivedProperty' );
   var inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
   var InverseSquareLawObject = require( 'INVERSE_SQUARE_LAW_COMMON/model/InverseSquareLawObject' );
+  var InverseSquareLawCommonConstants = require( 'INVERSE_SQUARE_LAW_COMMON/InverseSquareLawCommonConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var TColor = require( 'SCENERY/util/TColor' );
 
   /**
    * @constructor
@@ -28,10 +31,31 @@ define( function( require ) {
    */
   function Mass( initialMass, initialPosition, valueRange, density, constantRadiusProperty, baseColor, tandem, options ) {
 
+    options = _.extend( {
+      constantRadius: InverseSquareLawCommonConstants.CONSTANT_RADIUS, // in meters
+      constantRadiusColor: InverseSquareLawCommonConstants.CONSTANT_RADIUS_COLOR, // 
+    }, options );
+
     // @private
     this.density = density;
 
-    InverseSquareLawObject.call( this, initialMass, initialPosition, valueRange, constantRadiusProperty, baseColor, options );
+    InverseSquareLawObject.call( this, initialMass, initialPosition, valueRange, constantRadiusProperty, options );
+
+
+    // @public - mass color is will change with value
+    // TODO: alter 'constantRadiusProperty' to better indicate the condition for which the object colors will change
+    // radius changes will be moved into the Mass object
+    // color property will be changed and updated based on a boolean value (negative vs positive for Charge and Constant Radius for Mass)
+    // brightness will be set according to the Mass/Charge magnitude
+    this.baseColorProperty = new DerivedProperty(
+      [ this.valueProperty, constantRadiusProperty ],
+      function( value, constantRadius ) {
+        return constantRadius ?
+               options.constantRadiusColor.colorUtilsBrighter( 1 - Math.abs(value) / valueRange.max ) :
+               baseColor;
+      },
+      { tandem: tandem.createTandem( 'baseColorProperty' ), phetioValueType: TColor }
+    );
   }
 
   inverseSquareLawCommon.register( 'Mass', Mass );
