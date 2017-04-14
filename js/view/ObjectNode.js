@@ -66,8 +66,13 @@ define( function( require ) {
       this.pullerNode.scale( -1, 1 );
     }
 
-    // @private - arrow node
-    var arrowNode = new ISLForceArrowNode(  arrowForceRange, 
+    this.layoutBounds = layoutBounds;
+    this.objectModel = objectModel;
+    this.model = model;
+    this.modelViewTransform = modelViewTransform;
+
+    // @orotected - arrow node
+    this.arrowNode = new ISLForceArrowNode(  arrowForceRange, 
                                             layoutBounds, 
                                             tandem.createTandem( 'forceArrowNode' ),
                                             options );
@@ -127,41 +132,42 @@ define( function( require ) {
       tandem: tandem.createTandem( 'markerLine' )
     } ) );
 
-    this.addChild( arrowNode );
+    this.addChild( this.arrowNode );
 
     var self = this;
 
     // redraw view without shift
-    var redrawForce = function() {
-      self.objectCircle.setRadius( modelViewTransform.modelToViewDeltaX( objectModel.radiusProperty.get() ) );
-      self.updateGradient( objectModel.baseColorProperty.get() );
+    // var redrawForce = function() {
+    //   this.objectCircle.setRadius( this.modelViewTransform.modelToViewDeltaX( this.objectModel.radiusProperty.get() ) );
+    //   this..updateGradient( this.objectModel.baseColorProperty.get() );
 
-      // update the arrow label
-      arrowNode.updateLabel( model.forceProperty.get(), model.showValuesProperty.get() );
+    //   // update the arrow label
+    //   this.arrowNode.scientificNotationMode = this.model.scientificNotationMode;
+    //   this.arrowNode.updateLabel( this.model.forceProperty.get(), this.model.showValuesProperty.get() );
 
-      // set the text position, positioning the center relative to the parent coordinate frame
-      arrowNode.setArrowTextPosition( self.localToParentPoint( arrowNode.arrowText.center ), self.parentToLocalBounds( layoutBounds ) );
+    //   // set the text position, positioning the center relative to the parent coordinate frame
+    //   this.arrowNode.setArrowTextPosition( this..localToParentPoint( this.arrowNode.arrowText.center ), this.parentToLocalBounds( this.layoutBounds ) );
 
-      // set the scale of the arrow based on the model value
-      arrowNode.redrawArrow( model.forceProperty.get() );
+    //   // set the scale of the arrow based on the model value
+    //   this.arrowNode.redrawArrow( this.model.forceProperty.get() );
 
-      // update puller node visibility
-      self.pullerNode.setPull( model.forceProperty.get(), self.objectCircle.width / 2 );
-    };
+    //   // update puller node visibility
+    //   self.pullerNode.setPull( this.model.forceProperty.get(), self.objectCircle.width / 2 );
+    // };
 
     objectModel.positionProperty.link( function( prop ) {
       self.x = modelViewTransform.modelToViewX( prop );
     } );
 
-    model.showValuesProperty.lazyLink( redrawForce );
-    objectModel.radiusProperty.lazyLink( redrawForce );
-    model.forceProperty.lazyLink( redrawForce );
+    model.showValuesProperty.lazyLink( this.redrawForce.bind( this ) );
+    objectModel.radiusProperty.lazyLink( this.redrawForce.bind( this ) );
+    model.forceProperty.lazyLink( this.redrawForce.bind( this ) );
 
     objectModel.baseColorProperty.link( function( baseColor ) {
       self.updateGradient( baseColor );
     } );
 
-    redrawForce();
+    this.redrawForce();
 
     var clickOffset;
     dragNode.addInputListener( new TandemSimpleDragHandler( {
@@ -219,6 +225,23 @@ define( function( require ) {
 
     updateGradient: function() {
       throw new Error( 'Update gradient must be implemented in subtypes.' );
+    },
+
+    redrawForce: function() {
+      this.objectCircle.setRadius( this.modelViewTransform.modelToViewDeltaX( this.objectModel.radiusProperty.get() ) );
+      this.updateGradient( this.objectModel.baseColorProperty.get() );
+
+      // update the arrow label
+      this.arrowNode.updateLabel( this.model.forceProperty.get(), this.model.showValuesProperty.get() );
+
+      // set the text position, positioning the center relative to the parent coordinate frame
+      this.arrowNode.setArrowTextPosition( this.localToParentPoint( this.arrowNode.arrowText.center ), this.parentToLocalBounds( this.layoutBounds ) );
+
+      // set the scale of the arrow based on the model value
+      this.arrowNode.redrawArrow( this.model.forceProperty.get() );
+
+      // update puller node visibility
+      this.pullerNode.setPull( this.model.forceProperty.get(), this.objectCircle.width / 2 );
     }
   } );
 

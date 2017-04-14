@@ -38,7 +38,7 @@ define( function( require ) {
       forceReadoutDecimalPlaces: 12, // number of decimal places in force readout
       label: '', // label for this object
       otherObjectLabel: '', // label for the other object exerting a force on this object
-      scientificNotationMode: false, // whether to display number in scientific notation
+      defaultScientificNotationMode: false, // whether to display number in scientific notation
       title: '', // object title
 
       // arrow node options
@@ -58,7 +58,7 @@ define( function( require ) {
     this.forceReadoutDecimalPlaces = options.forceReadoutDecimalPlaces;
     this.label = options.label;
     this.otherObjectLabel = options.otherObjectLabel;
-    this.scientificNotationMode = options.scientificNotationMode;
+    this.scientificNotationMode = options.defaultScientificNotationMode;
 
     // @private - maps the force value to the desired width of the arrow in view coordinates
     this.forceToArrowWidthFunction = new LinearFunction( arrowForceRange.min, arrowForceRange.max, 1, options.maxArrowWidth, false );
