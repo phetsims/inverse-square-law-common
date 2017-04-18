@@ -10,5 +10,8 @@
   },
   "units.meters": {
     "value": "meters"
+  },
+  "pattern_0value_1units": {
+    "value": "{0} {1}"
   }
 }

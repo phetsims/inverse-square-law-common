@@ -65,6 +65,8 @@ define( function( require ) {
       },
       { tandem: options.tandem.createTandem( 'radiusProperty' ), phetioValueType: TNumber( { units: 'meters' } ) }
     );
+
+    this.valueRange = valueRange;
   }
 
   inverseSquareLawCommon.register( 'InverseSquareLawObject', InverseSquareLawObject );
