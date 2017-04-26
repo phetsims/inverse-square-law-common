@@ -15,6 +15,8 @@ define( function( require ) {
   var MovableDragHandler = require( 'SCENERY_PHET/input/MovableDragHandler' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var RulerNode = require( 'SCENERY_PHET/RulerNode' );
+  var Util = require( 'DOT/Util' );
+  var Vector2 = require( 'DOT/Vector2' );
   var Node = require( 'SCENERY/nodes/Node' );
 
   // constants
@@ -28,10 +30,16 @@ define( function( require ) {
    * @param {InverseSquareLawModel} model
    * @param {number} screenWidth
    * @param {number} screenHeight
+   * @param {ModelViewTransform2} modelViewTransform
    * @param {Tandem} tandem
    * @constructor
    */
-  function ISLRuler( model, screenWidth, screenHeight, tandem ) {
+  function ISLRuler( model, screenWidth, screenHeight, modelViewTransform, tandem, options ) {
+
+    options = _.extend( {
+      snapToNearest: null,
+    }, options );
+
     var self = this;
     Node.call( this, { cursor: 'pointer', cssTransform: true, tandem: tandem } );
     var ruler = new RulerNode(
@@ -58,7 +66,23 @@ define( function( require ) {
 
     this.addInputListener( new MovableDragHandler( model.rulerPositionProperty, {
       dragBounds: new Bounds2( -self.width / 2, 0, screenWidth - self.width / 2, screenHeight - self.height ),
-      tandem: tandem.createTandem( 'dragHandler' )
+      tandem: tandem.createTandem( 'dragHandler' ),
+
+      onDrag: function( event ) {
+
+        // snap to nearest snapToNearest if specified
+        if ( options.snapToNearest ) {
+
+          // x in model coordinates
+          var xModel = model.rulerPositionProperty.get().x;
+          
+          // TODO: Reconsider this math, it is not working correctly
+          var snappedX = Util.roundSymmetric( xModel / options.snapToNearest ) * options.snapToNearest;
+          model.rulerPositionProperty.set( new Vector2( snappedX, model.rulerPositionProperty.get().y ) );
+
+
+        }
+      }
     } ) );
   }
 
