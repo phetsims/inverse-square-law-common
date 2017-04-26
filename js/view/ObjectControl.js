@@ -23,7 +23,7 @@ define( function( require ) {
   var pattern0Value1UnitsString = require( 'string!INVERSE_SQUARE_LAW_COMMON/pattern_0value_1units' );
 
   // constants
-  var TRACK_SIZE = new Dimension2( 170, 3 );
+  // var TRACK_SIZE = new Dimension2( 170, 3 );
   var THUMB_SIZE = new Dimension2( 22, 42 );
 
   /**
@@ -36,26 +36,31 @@ define( function( require ) {
    */
   function ObjectControl( titleString, unitString, objectProperty, valueRange, thumbColor, tandem, options ) {
 
+    // major ticks
+    var tickLabelOptions = { pickable: false };
+
     options = _.extend( {
       fill: '#FDF498',
-      xMargin: 15,
-      yMargin: 10,
-      maxWidth: 224,
-      minWidth: 224,
+      xMargin: 10,
+      yMargin: 4,
+      // minWidth: 224,
       resize: false,
       align: 'right',
-      tandem: tandem
-    }, options );
-
-    // major ticks
-    var tickLabelOptions = { font: new PhetFont( 14 ), pickable: false };
-
-    var numberControl = new NumberControl( titleString, objectProperty, valueRange, {
-      titleFont: new PhetFont( 24 ),
-      valueFont: new PhetFont( 18 ),
+      tandem: tandem,
+      titleFont: new PhetFont( options.titleFontSize ),
+      valueFont: new PhetFont( options.valueFontSize ),
 
       // Don't fill in the {0}, it will be filled in by NumberControl
       valuePattern: StringUtils.format( pattern0Value1UnitsString, '{0}', unitString ),
+      layoutFunction: NumberControl.createLayoutFunction3( { xSpacing: 10 } ),
+      minorTickSpacing: 2,
+      minorTickLength: 6,
+      thumbFillEnabled: thumbColor.colorUtilsBrighter( 0.15 ),
+      thumbFillHighlighted: thumbColor,
+      arrowButtonScale: 1,
+      trackFillEnabled: 'black',
+      thumbSize: THUMB_SIZE,
+      additionalTicks: [],
       majorTicks: [ {
         value: valueRange.min,
         label: new Text(
@@ -69,23 +74,35 @@ define( function( require ) {
           _.extend( { tandem: tandem.createTandem( 'majorTickMaxLabel' ) }, tickLabelOptions )
         )
       } ],
-      layoutFunction: NumberControl.createLayoutFunction3( { xSpacing: 10 } ),
-      thumbFillEnabled: thumbColor.colorUtilsBrighter( 0.15 ),
-      thumbFillHighlighted: thumbColor,
-      arrowButtonScale: 1,
-      trackSize: TRACK_SIZE,
-      trackFillEnabled: 'black',
-      thumbSize: THUMB_SIZE,
-      majorTickLength: ( THUMB_SIZE.height / 2 ) + ( TRACK_SIZE.height / 2 ) + 2,
-      valueXMargin: 20,
+      majorTickLength: 12,
+      valueAlign: 'right',
+      valueXMargin: 10,
       valueYMargin: 4,
       valueBackgroundStroke: 'black',
       valueBackgroundCornerRadius: 3,
-      tickLabelSpacing: 2,
-      tandem: tandem.createTandem( 'numberControl' )
-    } );
+      tickLabelSpacing: 1,
+    } , options );
 
-    Panel.call( this, numberControl, options );
+    for (var i = 0; i < options.additionalTicks.length; i++) {
+      var tick = {
+        value: options.additionalTicks[i].value,
+        label: new Text(
+          options.additionalTicks[i].value,
+          _.extend( { tandem: tandem.createTandem( options.additionalTicks[i].tandemLabel ) }, tickLabelOptions )
+        )
+      };
+      options.majorTicks.push(tick);
+    }
+
+    var optionsFilter = ['fill', 'xMargin', 'yMargin', 'ressize', 'align', 'right', 'top'];
+
+    var panelOptions = _.pick(options, optionsFilter);
+
+    options = _.omit(options, optionsFilter);
+
+    var numberControl = new NumberControl( titleString, objectProperty, valueRange, _.extend( { tandem: tandem.createTandem( 'numberControl' ) }, options ) );
+
+    Panel.call( this, numberControl, _.extend( { tandem: tandem }, panelOptions) );
   }
 
   inverseSquareLawCommon.register( 'ObjectControl', ObjectControl );
