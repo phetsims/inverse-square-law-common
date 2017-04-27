@@ -40,7 +40,7 @@ define( function( require ) {
     var tickLabelOptions = { pickable: false };
 
     options = _.extend( {
-      fill: '#FDF498',
+      fill: '#EDEDED',
       xMargin: 10,
       yMargin: 4,
       // minWidth: 224,
@@ -74,7 +74,7 @@ define( function( require ) {
           _.extend( { tandem: tandem.createTandem( 'majorTickMaxLabel' ) }, tickLabelOptions )
         )
       } ],
-      majorTickLength: 12,
+      majorTickLength: 8,
       valueAlign: 'right',
       valueXMargin: 10,
       valueYMargin: 4,

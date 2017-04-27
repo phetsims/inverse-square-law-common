@@ -136,25 +136,6 @@ define( function( require ) {
 
     var self = this;
 
-    // redraw view without shift
-    // var redrawForce = function() {
-    //   this.objectCircle.setRadius( this.modelViewTransform.modelToViewDeltaX( this.objectModel.radiusProperty.get() ) );
-    //   this..updateGradient( this.objectModel.baseColorProperty.get() );
-
-    //   // update the arrow label
-    //   this.arrowNode.scientificNotationMode = this.model.scientificNotationMode;
-    //   this.arrowNode.updateLabel( this.model.forceProperty.get(), this.model.showValuesProperty.get() );
-
-    //   // set the text position, positioning the center relative to the parent coordinate frame
-    //   this.arrowNode.setArrowTextPosition( this..localToParentPoint( this.arrowNode.arrowText.center ), this.parentToLocalBounds( this.layoutBounds ) );
-
-    //   // set the scale of the arrow based on the model value
-    //   this.arrowNode.redrawArrow( this.model.forceProperty.get() );
-
-    //   // update puller node visibility
-    //   self.pullerNode.setPull( this.model.forceProperty.get(), self.objectCircle.width / 2 );
-    // };
-
     objectModel.positionProperty.link( function( prop ) {
       self.x = modelViewTransform.modelToViewX( prop );
     } );

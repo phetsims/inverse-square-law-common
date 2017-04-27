@@ -37,31 +37,31 @@ define( function( require ) {
   var pullImage14 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pull_figure_14.png' );
 
   //puhsers - TODO: replace with proper image paths
-  // var pullImage15 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pull_figure_14.png' );
-  // var pullImage16 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pull_figure_14.png' );
-  // var pullImage17 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pull_figure_14.png' );
-  // var pullImage18 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pull_figure_14.png' );
-  // var pullImage19 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pull_figure_14.png' );
-  // var pullImage20 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pull_figure_14.png' );
-  // var pullImage21 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pull_figure_14.png' );
-  // var pullImage22 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pull_figure_14.png' );
-  // var pullImage23 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pull_figure_14.png' );
-  // var pullImage24 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pull_figure_14.png' );
-  // var pullImage25 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pull_figure_14.png' );
-  // var pullImage26 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pull_figure_14.png' );
-  // var pullImage27 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pull_figure_14.png' );
-  // var pullImage28 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pull_figure_14.png' );
+  var pullImage15 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pull_figure_14.png' );
+  var pullImage16 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pull_figure_14.png' );
+  var pullImage17 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pull_figure_14.png' );
+  var pullImage18 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pull_figure_14.png' );
+  var pullImage19 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pull_figure_14.png' );
+  var pullImage20 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pull_figure_14.png' );
+  var pullImage21 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pull_figure_14.png' );
+  var pullImage22 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pull_figure_14.png' );
+  var pullImage23 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pull_figure_14.png' );
+  var pullImage24 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pull_figure_14.png' );
+  var pullImage25 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pull_figure_14.png' );
+  var pullImage26 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pull_figure_14.png' );
+  var pullImage27 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pull_figure_14.png' );
+  var pullImage28 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pull_figure_14.png' );
 
   // TODO: add additional images for pushers
   // imaages 15 - 28 will are inserted from most pushy to least with image 0 being neutral
-  // var pullImages = [ pullImage15, pullImage16, pullImage17, pullImage18, pullImage19, pullImage20, 
-  //   pullImage21, pullImage22, pullImage23, pullImage24, pullImage25, pullImage26, pullImage27, pullImage28, 
-  //   pullImage0, pullImage1, pullImage2, pullImage3, pullImage4, pullImage5, pullImage6, pullImage7, 
-  //   pullImage8, pullImage9, pullImage10, pullImage11, pullImage12, pullImage13, pullImage14 ];
+  var pullImages = [ pullImage14, pullImage13, pullImage12, pullImage11, pullImage10, pullImage9, 
+    pullImage8, pullImage7, pullImage6, pullImage5, pullImage4, pullImage3, pullImage2, pullImage1, 
+    pullImage0, pullImage15, pullImage16, pullImage17, pullImage18, pullImage19, pullImage20, pullImage21, 
+    pullImage22, pullImage23, pullImage24, pullImage25, pullImage26, pullImage27, pullImage28 ];
   
   // for now, just using the images we have available
-  var pullImages = [ pullImage0, pullImage1, pullImage2, pullImage3, pullImage4, pullImage5, pullImage6, pullImage7,
-    pullImage8, pullImage9, pullImage10, pullImage11, pullImage12, pullImage13, pullImage14 ];
+  // var pullImages = [ pullImage0, pullImage1, pullImage2, pullImage3, pullImage4, pullImage5, pullImage6, pullImage7,
+  //   pullImage8, pullImage9, pullImage10, pullImage11, pullImage12, pullImage13, pullImage14 ];
 
   // TODO: add ability to handle negative values
 
@@ -119,7 +119,8 @@ define( function( require ) {
     this.setPull = function( force, offsetX ) {
 
       // from the force value, get an index for the visible image
-      var index = Util.roundSymmetric( forceToImage( force ) );
+      var index = Util.roundSymmetric( forceToImage( force  ) );
+      
       for ( var i = 0; i < pullImages.length; i++ ) {
         images[ i ].setVisible( i === index );
       }

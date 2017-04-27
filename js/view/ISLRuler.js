@@ -39,7 +39,6 @@ define( function( require ) {
     options = _.extend( {
       snapToNearest: null,
     }, options );
-
     var self = this;
     Node.call( this, { cursor: 'pointer', cssTransform: true, tandem: tandem } );
     var ruler = new RulerNode(
@@ -53,6 +52,7 @@ define( function( require ) {
         insetsWidth: 7,
         minorTicksPerMajorTick: 4,
         majorTickFont: new PhetFont( 12 ),
+        snapToNearest: options.snapToNearest ? options.snapToNearest : 0,
         unitsFont: new PhetFont( 10 ),
         unitsSpacing: 3,
         tandem: tandem.createTandem( 'ruler' )
