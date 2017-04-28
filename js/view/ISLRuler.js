@@ -22,6 +22,7 @@ define( function( require ) {
   // constants
   var RULER_WIDTH = 500;
   var RULER_HEIGHT = 35;
+  var RULER_INSET = 11;
 
   // strings
   var unitsMetersString = require( 'string!INVERSE_SQUARE_LAW_COMMON/units.meters' );
@@ -49,7 +50,7 @@ define( function( require ) {
       unitsMetersString,
       {
         backgroundFill: '#ddd',
-        insetsWidth: 7,
+        insetsWidth: RULER_INSET,
         minorTicksPerMajorTick: 4,
         majorTickFont: new PhetFont( 12 ),
         snapToNearest: options.snapToNearest ? options.snapToNearest : 0,
@@ -61,12 +62,13 @@ define( function( require ) {
     this.addChild( ruler );
 
     model.rulerPositionProperty.link( function( value ) {
-      ruler.translation = value;
+      ruler.translation = modelViewTransform.modelToViewPosition( value );
     } );
 
     this.addInputListener( new MovableDragHandler( model.rulerPositionProperty, {
       dragBounds: new Bounds2( -self.width / 2, 0, screenWidth - self.width / 2, screenHeight - self.height ),
       tandem: tandem.createTandem( 'dragHandler' ),
+      modelViewTransform: modelViewTransform,
 
       onDrag: function( event ) {
 
@@ -76,11 +78,10 @@ define( function( require ) {
           // x in model coordinates
           var xModel = model.rulerPositionProperty.get().x;
           
-          // TODO: Reconsider this math, it is not working correctly
           var snappedX = Util.roundSymmetric( xModel / options.snapToNearest ) * options.snapToNearest;
-          model.rulerPositionProperty.set( new Vector2( snappedX, model.rulerPositionProperty.get().y ) );
 
-
+          var offsetX = modelViewTransform.viewToModelDeltaX( RULER_INSET );
+          model.rulerPositionProperty.set( new Vector2( snappedX - offsetX, model.rulerPositionProperty.get().y ) );
         }
       }
     } ) );

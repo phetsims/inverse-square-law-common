@@ -189,6 +189,9 @@ define( function( require ) {
           var xModel = modelViewTransform.viewToModelX( x );
           var snappedX = Util.roundSymmetric( xModel / options.snapToNearest ) * options.snapToNearest;
 
+          console.log( 'xModel ' + xModel );
+          console.log( 'snappedX ' + snappedX );
+
           // back to view coordinates
           x = modelViewTransform.modelToViewX( snappedX );
         }
