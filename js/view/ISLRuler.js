@@ -22,7 +22,7 @@ define( function( require ) {
   // constants
   var RULER_WIDTH = 500;
   var RULER_HEIGHT = 35;
-  var RULER_INSET = 11;
+  var RULER_INSET = 10;
 
   // strings
   var unitsMetersString = require( 'string!INVERSE_SQUARE_LAW_COMMON/units.meters' );
@@ -80,8 +80,8 @@ define( function( require ) {
           
           var snappedX = Util.roundSymmetric( xModel / options.snapToNearest ) * options.snapToNearest;
 
-          var offsetX = modelViewTransform.viewToModelDeltaX( RULER_INSET );
-          model.rulerPositionProperty.set( new Vector2( snappedX - offsetX, model.rulerPositionProperty.get().y ) );
+          // var offsetX = modelViewTransform.viewToModelDeltaX( RULER_INSET );
+          model.rulerPositionProperty.set( new Vector2( snappedX , model.rulerPositionProperty.get().y ) );
         }
       }
     } ) );
