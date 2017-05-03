@@ -47,7 +47,7 @@ define( function( require ) {
 
     options = _.extend( {
       label: 'This Object',
-      otherObjectName: 'Other Object',
+      otherObjectLabel: 'Other Object',
       defaultDirection: 'left',
 
       // options for the label, in the lower center of the sphere
