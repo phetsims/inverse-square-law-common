@@ -50,6 +50,9 @@ define( function( require ) {
       otherObjectLabel: 'Other Object',
       defaultDirection: 'left',
 
+      forceReadoutDecimalPlaces: 12, // number of decimal places in force readout
+      snapToNearest: null, // {number} if present, object node will snap to the nearest snapToNearest value on drag
+
       // options for the label, in the lower center of the sphere
       labelFill: '#000',
       labelFont: new PhetFont( 12 ),
@@ -60,11 +63,14 @@ define( function( require ) {
       arrowLabelFont: new PhetFont( 16 ),
       arrowAttractNegative: false,
 
-      arrowColor: '#66f', // color of vertical line - TODO: what is this?
+      arrowColor: '#66f', // color of vertical line
+      arrowFill: 'white',
       y: 250,
       forceArrowHeight: 150, // height of arrow in view coordinates
-      forceReadoutDecimalPlaces: 12, // number of decimal places in force readout
-      snapToNearest: null // {number} if present, object node will snap to the nearest snapToNearest value on drag
+
+      arrowHeadHeight: 8,
+      arrowHeadWidth: 8,
+      arrowTailWidth: 3,
     }, options );
 
     Node.call( this, { tandem: tandem } );
@@ -82,7 +88,11 @@ define( function( require ) {
 
       // arrow node options
       forceArrowHeight: options.forceArrowHeight,
-      attractNegative: options.arrowAttractNegative
+      attractNegative: options.arrowAttractNegative,
+      fill: options.arrowFill,
+      headHeight: options.arrowHeadHeight,
+      headWidth: options.arrowHeadWidth,
+      tailWidth: options.arrowTailWidth,
     };
 
     // @private - the puller node

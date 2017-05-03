@@ -52,6 +52,7 @@ define( function( require ) {
       headWidth: 8,
       tailWidth: 3,
       stroke: null,
+      fill: 'white',
       tandem: tandem.createTandem( 'arrowNode' )
     }, options );
 
@@ -81,7 +82,7 @@ define( function( require ) {
       tandem: tandem.createTandem( 'arrowText' )
     } );
 
-    ArrowNode.call( this, 0, -options.forceArrowHeight, 200, -options.forceArrowHeight, { fill: 'white' } );
+    ArrowNode.call( this, 0, -options.forceArrowHeight, 200, -options.forceArrowHeight, options );
     this.addChild( this.arrowText );
     this.y = 0;
   }
