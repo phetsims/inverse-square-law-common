@@ -95,8 +95,7 @@ define( function( require ) {
     redrawArrow: function( value ) {
       var arrowLengthMultiplier;
 
-      var valueSign = value >= 0 ? -1 : 1;
-
+      var valueSign = value >= 0 ? 1 : -1;
       var absValue = Math.abs( value );
       if ( absValue < this.arrowForceRange.min ) {
         arrowLengthMultiplier = this.forceToArrowWidthMinFunction( absValue );
