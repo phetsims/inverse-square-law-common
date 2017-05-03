@@ -59,6 +59,7 @@ define( function( require ) {
       // options for the arrow node, passed to the ISLForceArrowNode
       arrowLabelFill: '#fff',
       arrowLabelFont: new PhetFont( 16 ),
+      arrowAttractNegative: false,
 
       arrowColor: '#66f', // color of vertical line - TODO: what is this?
       y: 250,
@@ -81,7 +82,8 @@ define( function( require ) {
       labelFill: options.arrowLabelFill,
 
       // arrow node options
-      forceArrowHeight: options.forceArrowHeight
+      forceArrowHeight: options.forceArrowHeight,
+      attractNegative: options.arrowAttractNegative
     };
 
     // @private - the puller node

@@ -33,19 +33,20 @@ define( function( require ) {
   function ISLForceArrowNode( arrowForceRange, layoutBounds, tandem, options ) {
 
     options = _.extend( {
-      maxArrowWidth: 60, // max width of the arrow when when redrawn, in view coordinates
       defaultDirection: 'left',
-      forceReadoutDecimalPlaces: 12, // number of decimal places in force readout
-      label: '', // label for this object
-      otherObjectLabel: '', // label for the other object exerting a force on this object
       defaultScientificNotationMode: false, // whether to display number in scientific notation
       title: '', // object title
+      attractNegative: true, // if true, arrows will point towards each other if forces is positive
 
       // label options
+      otherObjectLabel: '', // label for the other object exerting a force on this object
+      label: '', // label for this object
       labelFont: new PhetFont( 16 ),
       labelFill: '#fff',
+      forceReadoutDecimalPlaces: 12, // number of decimal places in force readout
 
       // arrow node options
+      maxArrowWidth: 60, // max width of the arrow when when redrawn, in view coordinates
       forceArrowHeight: 150,
       headHeight: 8,
       headWidth: 8,
@@ -63,6 +64,7 @@ define( function( require ) {
     this.label = options.label;
     this.otherObjectLabel = options.otherObjectLabel;
     this.scientificNotationMode = options.defaultScientificNotationMode;
+    this.attractNegative = options.attractNegative;
 
     // @private - maps the force value to the desired width of the arrow in view coordinates
     this.forceToArrowWidthFunction = new LinearFunction( arrowForceRange.min, arrowForceRange.max, 1, options.maxArrowWidth, false );
@@ -96,6 +98,11 @@ define( function( require ) {
       var arrowLengthMultiplier;
 
       var valueSign = value >= 0 ? 1 : -1;
+
+      // if the arrows are meant to attract 
+      if ( this.attractNegative ) {
+        valueSign *= -1;
+      }
       var absValue = Math.abs( value );
       if ( absValue < this.arrowForceRange.min ) {
         arrowLengthMultiplier = this.forceToArrowWidthMinFunction( absValue );
