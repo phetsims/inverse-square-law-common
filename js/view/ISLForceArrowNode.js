@@ -41,6 +41,10 @@ define( function( require ) {
       defaultScientificNotationMode: false, // whether to display number in scientific notation
       title: '', // object title
 
+      // label options
+      labelFont: new PhetFont( 16 ),
+      labelFill: '#fff',
+
       // arrow node options
       forceArrowHeight: 150,
       headHeight: 8,
@@ -68,8 +72,8 @@ define( function( require ) {
 
     // @public (read-only) - for layout, the label for the arrow
     this.arrowText = new RichText( options.title, {
-      font: new PhetFont( 16 ),
-      fill: '#fff',
+      font: options.labelFont,
+      fill: options.labelFill,
       maxWidth: 300, // empirically determined through testing with long strings
       y: -options.forceArrowHeight - 20,
       tandem: tandem.createTandem( 'arrowText' )

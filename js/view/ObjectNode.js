@@ -50,6 +50,16 @@ define( function( require ) {
       label: 'This Object',
       otherObjectName: 'Other Object',
       defaultDirection: 'left',
+
+      // options for the label, in the lower center of the sphere
+      labelFill: '#000',
+      labelFont: new PhetFont( 12 ),
+      labelMaxWidth: LABEL_MAX_WIDTH,
+
+      // options for the arrow node, passed to the ISLForceArrowNode
+      arrowLabelFill: '#fff',
+      arrowLabelFont: new PhetFont( 16 ),
+
       arrowColor: '#66f', // color of vertical line - TODO: what is this?
       y: 250,
       forceArrowHeight: 150, // height of arrow in view coordinates
@@ -58,6 +68,21 @@ define( function( require ) {
     }, options );
 
     Node.call( this, { tandem: tandem } );
+
+    var arrowOptions = {
+      defaultDirection: options.defaultDirection,
+      forceReadoutDecimalPlaces: options.forceReadoutDecimalPlaces, // number of decimal places in force readout
+
+      label: options.label, // label for this object
+      otherObjectLabel: options.otherObjectLabel, // label for the other object exerting a force on this object
+
+      // label options
+      labelFont: options.arrowLabelFont,
+      labelFill: options.arrowLabelFill,
+
+      // arrow node options
+      forceArrowHeight: options.forceArrowHeight
+    };
 
     // @private - the puller node
     this.pullerNode = new PullerPusherNode( pullForceRange, tandem.createTandem( 'puller1' ), options );
@@ -72,20 +97,13 @@ define( function( require ) {
     this.modelViewTransform = modelViewTransform;
 
     // @orotected - arrow node
-    this.arrowNode = new ISLForceArrowNode(  arrowForceRange, 
-                                            layoutBounds, 
-                                            tandem.createTandem( 'forceArrowNode' ),
-                                            options );
+    this.arrowNode = new ISLForceArrowNode( arrowForceRange, layoutBounds, tandem.createTandem( 'forceArrowNode' ), arrowOptions );
 
     // a parent node that applies the drag handler
     var dragNode = new Node( {
       cursor: 'pointer',
       tandem: tandem.createTandem( 'dragNode' )
     } );
-
-    if ( options.direction === 'right' ) {
-      this.pullerNode.scale( -1, 1 );
-    }
 
     // the 'object' - a shaded circle
     var radius = modelViewTransform.modelToViewDeltaX( objectModel.radiusProperty.get() );
@@ -98,12 +116,11 @@ define( function( require ) {
     dragNode.addChild( new Circle( 2, { fill: '#000' } ) );
 
     // add the label
-    var labelFont = new PhetFont( 12 );
     dragNode.addChild( new Text( options.label, {
-      font: labelFont,
-      fill: '#000',
+      font: options.labelFont,
+      fill: options.labelFill,
       pickable: false,
-      maxWidth: LABEL_MAX_WIDTH,
+      maxWidth: options.labelMaxWidth,
       centerX: 0,
       top: 4,
       tandem: tandem.createTandem( 'labelShadowNode' )
