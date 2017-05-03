@@ -16,7 +16,6 @@ define( function( require ) {
   var inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
   var Node = require( 'SCENERY/nodes/Node' );
   var TandemSimpleDragHandler = require( 'TANDEM/scenery/input/TandemSimpleDragHandler' );
-  var InverseSquareLawCommonConstants = require( 'INVERSE_SQUARE_LAW_COMMON/InverseSquareLawCommonConstants' );
   var ISLForceArrowNode = require( 'INVERSE_SQUARE_LAW_COMMON/view/ISLForceArrowNode' );
   var Util = require( 'DOT/Util' );
   var Circle = require( 'SCENERY/nodes/Circle' );
@@ -191,11 +190,11 @@ define( function( require ) {
         // limit the drag bounds by the position of the other object - object 1 must be to the left of object 2
         if ( objectModel.positionProperty.get() === model.object1.positionProperty.get() ) {
           xMax = modelViewTransform.modelToViewX( model.object2.positionProperty.get() ) - sumRadius -
-                 modelViewTransform.modelToViewDeltaX( InverseSquareLawCommonConstants.MIN_SEPARATION_BETWEEN_OBJECTS );
+                 modelViewTransform.modelToViewDeltaX( model.minSeparationBetweenObjects );
         }
         if ( objectModel.positionProperty.get() === model.object2.positionProperty.get() ) {
           xMin = modelViewTransform.modelToViewX( model.object1.positionProperty.get() ) + sumRadius +
-                 modelViewTransform.modelToViewDeltaX( InverseSquareLawCommonConstants.MIN_SEPARATION_BETWEEN_OBJECTS );
+                 modelViewTransform.modelToViewDeltaX( model.minSeparationBetweenObjects );
         }
 
         // apply limitations and update position
@@ -242,8 +241,6 @@ define( function( require ) {
 
       // update puller node visibility
       this.pullerNode.setPull( this.model.forceProperty.get(), this.objectCircle.width / 2 );
-
-      console.log( this.arrowNode.width );
     }
   } );
 

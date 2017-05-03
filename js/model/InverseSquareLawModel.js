@@ -19,7 +19,6 @@ define( function( require ) {
   var TBoolean = require( 'ifphetio!PHET_IO/types/TBoolean' );
 
   // constants
-  var MIN_SEPARATION_BETWEEN_MASSES = 0.1; // in meters
   var PULL_OBJECT_WIDTH = 1.62; // empirically determined for model space in meters
   var DISTANCE_DECIMAL_PRECISION = 3; // limit precision so small changes are not propogated to the force
 
@@ -34,6 +33,11 @@ define( function( require ) {
    * @param {object} options
    */
   function InverseSquareLawModel( forceConstant, object1, object2, leftBoundary, rightBoundary, tandem, options ) {
+
+    options = _.extend( {
+      snapObjectsToNearest: null, // {number} if defined, objects will snap to nearest value in model coordinates
+      minSeparationBetweenObjects: 0.1 // in meters
+    }, options );
     
     // @private
     this.leftObjectBoundary = leftBoundary;
@@ -48,6 +52,12 @@ define( function( require ) {
     // @public
     this.object1 = object1;
     this.object2 = object2;
+
+    // @privates
+    this.snapObjectsToNearest = options.snapObjectsToNearest;
+
+    // @private
+    this.minSeparationBetweenObjects = options.minSeparationBetweenObjects;
     
     // derived property that calculates the force based on changes to values and positions
     this.forceProperty = new DerivedProperty(
@@ -81,7 +91,7 @@ define( function( require ) {
       var locationMass2 = this.object2.positionProperty.get();
 
       var change_factor = 0.0001; // this is empirically determined larger change factor may make masses farther but converges faster
-      var sumRadius = this.object1.radiusProperty.get() + this.object2.radiusProperty.get() + MIN_SEPARATION_BETWEEN_MASSES;
+      var sumRadius = this.object1.radiusProperty.get() + this.object2.radiusProperty.get() + this.minSeparationBetweenObjects;
       var changed = false;
 
       // for loop is to make sure after checking the boundaries constraints masses don't overlap
@@ -119,6 +129,14 @@ define( function( require ) {
       locationMass1 = Util.toFixedNumber( locationMass1, DISTANCE_DECIMAL_PRECISION );
       locationMass2 = Util.toFixedNumber( locationMass2, DISTANCE_DECIMAL_PRECISION );
 
+      // if objects are limitted to a certain precision, round position values to that precision
+      if ( this.snapObjectsToNearest ) {
+        locationMass1 = Util.roundSymmetric( locationMass1 / this.snapObjectsToNearest ) * this.snapObjectsToNearest;
+        locationMass2 = Util.roundSymmetric( locationMass2 / this.snapObjectsToNearest ) * this.snapObjectsToNearest;
+      }
+
+      console.log( locationMass2 - locationMass1 );
+
       this.object1.positionProperty.set( locationMass1 );
       this.object2.positionProperty.set( locationMass2 );
 
@@ -138,9 +156,5 @@ define( function( require ) {
         this.object2.reset();
       }
     }
-  }, {
-
-    // statics
-    MIN_SEPARATION_BETWEEN_MASSES: MIN_SEPARATION_BETWEEN_MASSES
   } );
 } );
