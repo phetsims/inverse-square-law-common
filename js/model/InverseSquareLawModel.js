@@ -135,8 +135,6 @@ define( function( require ) {
         locationMass2 = Util.roundSymmetric( locationMass2 / this.snapObjectsToNearest ) * this.snapObjectsToNearest;
       }
 
-      console.log( locationMass2 - locationMass1 );
-
       this.object1.positionProperty.set( locationMass1 );
       this.object2.positionProperty.set( locationMass2 );
 

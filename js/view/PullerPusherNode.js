@@ -120,7 +120,6 @@ define( function( require ) {
 
       // from the force value, get an index for the visible image
       var index = Util.roundSymmetric( forceToImage( force ) );
-      console.log( index );
       
       for ( var i = 0; i < pullImages.length; i++ ) {
         images[ i ].setVisible( i === index );
