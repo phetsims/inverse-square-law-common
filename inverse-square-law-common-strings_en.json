@@ -13,5 +13,8 @@
   },
   "pattern_0value_1units": {
     "value": "{0} {1}"
+  },
+  "constantRadius": {
+    "value": "Constant Radius"
   }
 }
