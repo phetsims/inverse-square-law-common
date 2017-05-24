@@ -63,7 +63,9 @@ define( function( require ) {
   var pullImages = [ pullImage0, pullImage1, pullImage2, pullImage3, pullImage4, pullImage5, pullImage6, pullImage7,
     pullImage8, pullImage9, pullImage10, pullImage11, pullImage12, pullImage13, pullImage14 ];
 
-  // TODO: add ability to handle negative values
+  // still wating for pusher assets from Amy
+  // ensure images are ordered: large push to small push
+  var pushImages = [];
 
   /**
    * @param {RangeWithValue} forceRange - range of forces, used for determining the visible pullImage
@@ -72,11 +74,21 @@ define( function( require ) {
    * @constructor
    */
   function PullerPusherNode( forceRange, tandem, options ) {
-    options = _.extend( { ropeLength: 50 }, options );
+    options = _.extend( 
+      { 
+        ropeLength: 50,
+        attractNegative: true     // if true, add pusher images
+      }, options );
+
     Node.call( this, { tandem: tandem } );
 
     // function that maps the visible image to the model force value
     var forceToImage = new LinearFunction( forceRange.min, forceRange.max, 0, pullImages.length - 1, true );
+
+    // if in coulomb's law sim, add pusher images in proper order
+    if (options.attractNegative) {
+      pullImages = pushImages.concat(pullImages);
+    }
 
     var pullerGroupNode = new Node( {
       x: -options.ropeLength,
@@ -117,6 +129,10 @@ define( function( require ) {
     // function select image
     // TODO: move this to inherit block and document
     this.setPull = function( force, offsetX ) {
+
+      if (options.attractNegative) {
+        force *= -1;
+      }
 
       // from the force value, get an index for the visible image
       var index = Util.roundSymmetric( forceToImage( force ) );

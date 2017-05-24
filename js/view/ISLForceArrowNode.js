@@ -36,7 +36,7 @@ define( function( require ) {
       defaultDirection: 'left',
       defaultScientificNotationMode: false, // whether to display number in scientific notation
       title: '', // object title
-      attractNegative: true, // if true, arrows will point towards each other if forces is positive
+      attractNegative: true, // if true, arrows will point towards each other if forces is negative
 
       // label options
       otherObjectLabel: '', // label for the other object exerting a force on this object

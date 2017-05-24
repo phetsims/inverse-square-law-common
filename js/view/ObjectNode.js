@@ -49,7 +49,8 @@ define( function( require ) {
       label: 'This Object',
       otherObjectLabel: 'Other Object',
       defaultDirection: 'left',
-
+      
+      attractNegative: false,
       forceReadoutDecimalPlaces: 12, // number of decimal places in force readout
       snapToNearest: null, // {number} if present, object node will snap to the nearest snapToNearest value on drag
 
@@ -61,7 +62,6 @@ define( function( require ) {
       // options for the arrow node, passed to the ISLForceArrowNode
       arrowLabelFill: '#fff',
       arrowLabelFont: new PhetFont( 16 ),
-      arrowAttractNegative: false,
 
       arrowColor: '#66f', // color of vertical line
       arrowFill: 'white',
@@ -88,7 +88,7 @@ define( function( require ) {
 
       // arrow node options
       forceArrowHeight: options.forceArrowHeight,
-      attractNegative: options.arrowAttractNegative,
+      attractNegative: options.attractNegative,
       fill: options.arrowFill,
       headHeight: options.arrowHeadHeight,
       headWidth: options.arrowHeadWidth,
