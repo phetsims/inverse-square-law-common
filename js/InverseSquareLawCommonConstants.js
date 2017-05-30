@@ -21,7 +21,9 @@ define( function( require ) {
   
   var InverseSquareLawCommonConstants = {
     G: 6.67384E-11, // gravitational constant
-    k: 8.987551E9, // Coulomb's constant,
+    k: 8.987551E9, // Coulomb's constant
+    
+    coulombsPerAtomicUnit: 1.6021766208E-19,   // atomic unit in C
 
     RIGHT_OBJECT_BOUNDARY: MAX_DISTANCE_FROM_CENTER,
     LEFT_OBJECT_BOUNDARY: -MAX_DISTANCE_FROM_CENTER,

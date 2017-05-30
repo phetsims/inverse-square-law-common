@@ -5,8 +5,8 @@
   "force-description-pattern-target_source_value": {
     "value": "Force on {0} by {1} = {2} N"
   },
-  "units.centimeters": {
-    "value": "centimeters"
+  "units.nanometers": {
+    "value": "nm"
   },
   "units.meters": {
     "value": "meters"
