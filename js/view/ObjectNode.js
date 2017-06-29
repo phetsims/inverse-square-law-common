@@ -55,9 +55,15 @@ define( function( require ) {
       snapToNearest: null, // {number} if present, object node will snap to the nearest snapToNearest value on drag
 
       // options for the label, in the lower center of the sphere
-      labelFill: '#000',
+      labelFill: '#fff',
       labelFont: new PhetFont( 12 ),
       labelMaxWidth: LABEL_MAX_WIDTH,
+
+      // options for the label 'shadow' that helps the label show up when the object is roughly the same color
+      // as the label
+      labelShadowFill: '#000',
+      labelShadowOffsetX: 0.5,
+      labelShadowOffsetY: 0.5,
 
       // options for the arrow node, passed to the ISLForceArrowNode
       arrowLabelFill: '#fff',
@@ -126,16 +132,32 @@ define( function( require ) {
     // TODO: What is this circle doing here?
     dragNode.addChild( new Circle( 2, { fill: '#000' } ) );
 
+    var labelCenterX = 0;
+    var labelTop = 4;
+
+    // add the label shadow, added first so that the 'shadow' appears under the label text
+    dragNode.addChild( new Text( options.label, {
+      font: options.labelFont,
+      fill: options.labelShadowFill,
+      pickable: false,
+      maxWidth: options.labelMaxWidth,
+      centerX: labelCenterX + options.labelShadowOffsetX,
+      top: labelTop + options.labelShadowOffsetY,
+      tandem: tandem.createTandem( 'labelShadowNode' )
+    } ) );
+
     // add the label
     dragNode.addChild( new Text( options.label, {
       font: options.labelFont,
       fill: options.labelFill,
       pickable: false,
       maxWidth: options.labelMaxWidth,
-      centerX: 0,
-      top: 4,
-      tandem: tandem.createTandem( 'labelShadowNode' )
+      centerX: labelCenterX,
+      top: labelTop,
+      tandem: tandem.createTandem( 'labelNode' )
     } ) );
+
+
 
     this.addChild( dragNode );
     this.y = options.y;
