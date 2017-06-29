@@ -43,6 +43,9 @@ define( function( require ) {
 
     var verticalCheckBoxItems = [];
 
+    // the check boxes in the group will be as wide as the labels are tall
+    var checkBoxWidth = 0;
+
     items.forEach( function( item ) {
       var itemLabel = new Text(
         item.content,
@@ -52,15 +55,20 @@ define( function( require ) {
         }
       );
 
+      checkBoxWidth = Math.max( checkBoxWidth, itemLabel.height );
+
       verticalCheckBoxItems.push({
         content: itemLabel,
         property: item.property,
         tandemName: item.checkboxTandemLabel
-      });
+      } );
 
-    });
+    } );
+    assert && assert( checkBoxWidth !== 0, 'checkBox width should not be zero.' );
 
-    var checkboxGroup = new VerticalCheckBoxGroup( verticalCheckBoxItems );
+    var checkboxGroup = new VerticalCheckBoxGroup( verticalCheckBoxItems, {
+      boxWidth: checkBoxWidth
+    } );
 
     Panel.call( this, checkboxGroup, options );
   }
