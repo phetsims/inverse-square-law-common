@@ -164,8 +164,6 @@ define( function( require ) {
       tandem: tandem.createTandem( 'labelNode' )
     } ) );
 
-
-
     this.addChild( dragNode );
     this.y = options.y;
 
@@ -194,7 +192,12 @@ define( function( require ) {
     var self = this;
 
     objectModel.positionProperty.link( function( prop ) {
-      self.x = modelViewTransform.modelToViewX( prop );
+
+      var transformedValue = modelViewTransform.modelToViewX( prop );
+      self.x = transformedValue;
+
+      // update the accessible input value when the position changes
+      self.inputValue = prop;
     } );
 
     model.showValuesProperty.lazyLink( this.redrawForce.bind( this ) );
@@ -260,9 +263,17 @@ define( function( require ) {
 
     this.addAccessibleInputListener( {
       input: function( event ) {
-        self.objectModel.positionProperty.set( self.inputValue );
+
+        // input value is a string, convert to number
+        var newValue = Util.toFixedNumber( self.inputValue, 0 );
+        self.objectModel.positionProperty.set( newValue );
       }
     } );
+
+    this.objectModel.radiusProperty.link( function( radius ) {
+      self.focusHighlight = Shape.bounds( dragNode.bounds );
+    } );
+
   }
 
   inverseSquareLawCommon.register( 'ObjectNode', ObjectNode );
