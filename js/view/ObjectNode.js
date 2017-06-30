@@ -76,10 +76,17 @@ define( function( require ) {
 
       arrowHeadHeight: 8,
       arrowHeadWidth: 8,
-      arrowTailWidth: 3,
+      arrowTailWidth: 3
+
     }, options );
 
-    Node.call( this, { tandem: tandem } );
+    Node.call( this, {
+      tandem: tandem,
+
+      // a11y
+      tagName: 'input',
+      inputType: 'range'
+    } );
 
     var arrowOptions = {
       defaultDirection: options.defaultDirection,
@@ -248,6 +255,14 @@ define( function( require ) {
       tandem: tandem.createTandem( 'objectDragHandler' )
     } ) );
 
+    // a11y
+    this.setAccessibleAttribute( 'step', options.snapToNearest );
+
+    this.addAccessibleInputListener( {
+      input: function( event ) {
+        self.objectModel.positionProperty.set( self.inputValue );
+      }
+    } );
   }
 
   inverseSquareLawCommon.register( 'ObjectNode', ObjectNode );

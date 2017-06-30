@@ -91,7 +91,7 @@ define( function( require ) {
       var locationMass2 = this.object2.positionProperty.get();
 
       var change_factor = 0.0001; // this is empirically determined larger change factor may make masses farther but converges faster
-      var sumRadius = this.object1.radiusProperty.get() + this.object2.radiusProperty.get() + this.minSeparationBetweenObjects;
+      var sumRadius = this.getSumRadiusWithSeparation();
       var changed = false;
 
       // for loop is to make sure after checking the boundaries constraints masses don't overlap
@@ -130,10 +130,8 @@ define( function( require ) {
       locationMass2 = Util.toFixedNumber( locationMass2, DISTANCE_DECIMAL_PRECISION );
 
       // if objects are limitted to a certain precision, round position values to that precision
-      if ( this.snapObjectsToNearest ) {
-        locationMass1 = Util.roundSymmetric( locationMass1 / this.snapObjectsToNearest ) * this.snapObjectsToNearest;
-        locationMass2 = Util.roundSymmetric( locationMass2 / this.snapObjectsToNearest ) * this.snapObjectsToNearest;
-      }
+      locationMass1 = this.snapToGrid( locationMass1 );
+      locationMass2 = this.snapToGrid( locationMass2 );
 
       this.object1.positionProperty.set( locationMass1 );
       this.object2.positionProperty.set( locationMass2 );
@@ -141,6 +139,81 @@ define( function( require ) {
       // Force might not have been changed but positions might have changed, therefore to ensure everything is in bounds
       // inside the view
       this.forceProperty.notifyObserversStatic();
+    },
+
+    /**
+     * Returns the sum of the radii of the two spherical objects in this sim, plus the model's min separation between
+     * the two objects.  This is used throughout the model.
+     *
+     * @public
+     * @return {numbet}
+     */
+    getSumRadiusWithSeparation: function() {
+      return this.object1.radiusProperty.get() + this.object2.radiusProperty.get() + this.minSeparationBetweenObjects;
+    },
+
+    /**
+     * Get the absolute maximum horizontal position for an object, relative to the object's center.
+     * 
+     * @param  {} object
+     * @return {number}
+     */
+    getObjectMaxPosition: function( object ) {
+
+      var sumRadius = this.getSumRadiusWithSeparation();
+      var maxX;
+      if ( object.positionProperty.get() === this.object1.positionProperty.get() ) {
+
+        // the max value for the left object is the position of the right object minius the sum of radii
+        maxX = this.object2.positionProperty.get() - sumRadius;
+      }
+      else if ( object.positionProperty.get() === this.object2.positionProperty.get() ) {
+
+        // the max value for the right object is the right edge minus the puller width and the radius of the obejct
+        maxX = this.rightObjectBoundary - PULL_OBJECT_WIDTH - this.object2.radiusProperty.get();
+      }
+
+      return this.snapToGrid( maxX );
+    },
+
+    /**
+     * Get the absolute minimum horizontal position for an object.
+     * 
+     * @param  {InverseSquareLawObject} object 
+     * @return {number}
+     */
+    getObjectMinPosition: function( object ) {
+
+      var sumRadius = this.getSumRadiusWithSeparation();
+      var minX;
+      if ( object.positionProperty.get() === this.object1.positionProperty.get() ) {
+        
+        // the min value for the left object is the left edge plus the puller width and the radius of the object
+        minX = this.leftObjectBoundary + PULL_OBJECT_WIDTH + this.object1.radiusProperty.get();
+      }
+      else if ( object.positionProperty.get() === this.object2.positionProperty.get() ) {
+
+        // min value for the right object is the position of the left object plus the sum of radii between the two
+        // object plus the min distance
+        minX = this.object1.positionProperty.get() + sumRadius;
+      }
+
+      return this.snapToGrid( minX );
+    },
+
+    /**
+     * If this model constrains the objects to a grid, this snaps the position to the nearest spot in the grid.
+     *
+     * @private
+     * @param  {number} position
+     * @return {number}
+     */
+    snapToGrid: function( position ) {
+      var snappedPosition = position;
+      if ( this.snapObjectsToNearest ) {
+        snappedPosition = Util.roundSymmetric( position / this.snapObjectsToNearest ) * this.snapObjectsToNearest;
+      }
+      return snappedPosition;
     },
 
     // @public

@@ -74,13 +74,15 @@ define( function( require ) {
    * @constructor
    */
   function PullerPusherNode( forceRange, tandem, options ) {
-    options = _.extend( 
-      { 
-        ropeLength: 50,
-        attractNegative: true     // if true, add pusher images
-      }, options );
 
-    Node.call( this, { tandem: tandem } );
+    // REVIEW: This node doesn't pass options to Node, cannot 
+    options = _.extend( { 
+      ropeLength: 50,
+      attractNegative: true,     // if true, add pusher images
+      tandem: tandem,
+    }, options );
+
+    Node.call( this );
 
     // function that maps the visible image to the model force value
     var forceToImage = new LinearFunction( forceRange.min, forceRange.max, 0, pullImages.length - 1, true );
