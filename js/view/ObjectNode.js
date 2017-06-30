@@ -271,7 +271,7 @@ define( function( require ) {
     } );
 
     this.objectModel.radiusProperty.link( function( radius ) {
-      self.focusHighlight = Shape.bounds( dragNode.bounds );
+      self.focusHighlight = Shape.bounds( dragNode.bounds.dilated( 5 ) );
     } );
 
   }
