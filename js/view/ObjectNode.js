@@ -167,8 +167,8 @@ define( function( require ) {
     this.addChild( dragNode );
     this.y = options.y;
 
-    // the marker line, connecting the arrow to the object
-    // TODO: Why are there two paths?
+    // the marker line, connecting the arrow to the object, the first one is for the shadow so that
+    // it is visible on top of the object
     var markerLineShape = new Shape();
     markerLineShape.moveTo( 0, -4 );
     markerLineShape.lineTo( 0, -options.forceArrowHeight );
