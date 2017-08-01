@@ -138,7 +138,7 @@ define( function( require ) {
 
       // Force might not have been changed but positions might have changed, therefore to ensure everything is in bounds
       // inside the view
-      this.forceProperty.notifyObserversStatic();
+      this.forceProperty.notifyListenersStatic();
     },
 
     /**
