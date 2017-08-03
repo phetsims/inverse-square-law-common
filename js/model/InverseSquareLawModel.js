@@ -90,7 +90,7 @@ define( function( require ) {
       var locationMass1 = this.object1.positionProperty.get();
       var locationMass2 = this.object2.positionProperty.get();
 
-      var change_factor = 0.0001; // this is empirically determined larger change factor may make masses farther but converges faster
+      var changeFactor = 0.0001; // this is empirically determined larger change factor may make masses farther but converges faster
       var sumRadius = this.getSumRadiusWithSeparation();
       var changed = false;
 
@@ -100,8 +100,8 @@ define( function( require ) {
         // check for overlap and move both masses so that they don't overlap
         if ( Math.abs( locationMass1 - locationMass2 ) < sumRadius ) {
           while ( Math.abs( locationMass1 - locationMass2 ) < sumRadius ) {
-            locationMass1 = locationMass1 - change_factor;
-            locationMass2 = locationMass2 + change_factor;
+            locationMass1 = locationMass1 - changeFactor;
+            locationMass2 = locationMass2 + changeFactor;
 
             changed = true;
           }
