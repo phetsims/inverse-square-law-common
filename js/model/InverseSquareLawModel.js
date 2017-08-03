@@ -129,7 +129,7 @@ define( function( require ) {
       locationMass1 = Util.toFixedNumber( locationMass1, DISTANCE_DECIMAL_PRECISION );
       locationMass2 = Util.toFixedNumber( locationMass2, DISTANCE_DECIMAL_PRECISION );
 
-      // if objects are limitted to a certain precision, round position values to that precision
+      // if objects are limited to a certain precision, round position values to that precision
       locationMass1 = this.snapToGrid( locationMass1 );
       locationMass2 = this.snapToGrid( locationMass2 );
 
