@@ -2,7 +2,10 @@
 
 /**
  * A common type for object views in sims that use inverse-square-law-common. The objects have a shaded sphere with a
- * puller/pusher robot attached that updates based on the model object values.
+ * puller/pusher robot attached that updates based on the model object values.  This node also manages an 
+ * arrow with a label that represents the force.  This arrow is NOT added as a child of this node, but is
+ * intended to be added in the screen view for layering purposes.  The arrow and its label need to be above
+ * both ObjectNodes in the screen view.
  * 
  * @author Michael Barlow
  * @author Jesse Greenberg

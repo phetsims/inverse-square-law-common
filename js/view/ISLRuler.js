@@ -35,7 +35,7 @@ define( function( require ) {
    * @param {Tandem} tandem
    * @constructor
    */
-  function ISLRuler( model, screenWidth, screenHeight, modelViewTransform, tandem, options ) {
+  function ISLCRulerNode( model, screenWidth, screenHeight, modelViewTransform, tandem, options ) {
 
     options = _.extend( {
       snapToNearest: null,
@@ -87,7 +87,7 @@ define( function( require ) {
     } ) );
   }
 
-  inverseSquareLawCommon.register( 'ISLRuler', ISLRuler );
+  inverseSquareLawCommon.register( 'ISLCRulerNode', ISLCRulerNode );
 
-  return inherit( Node, ISLRuler );
+  return inherit( Node, ISLCRulerNode );
 } );
