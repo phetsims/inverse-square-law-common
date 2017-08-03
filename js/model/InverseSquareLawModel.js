@@ -219,6 +219,8 @@ define( function( require ) {
     // @public
     reset: function() {
       this.showValuesProperty.reset();
+
+      // TODO: explain why the resetting order matters or change this code
       if ( this.object2.positionProperty.get() === this.object1.positionProperty.initialValue ) {
         this.object2.reset();
         this.object1.reset();
