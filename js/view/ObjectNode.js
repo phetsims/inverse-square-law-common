@@ -119,9 +119,13 @@ define( function( require ) {
     this.objectModel = objectModel;
     this.model = model;
     this.modelViewTransform = modelViewTransform;
+    this.forceArrowHeight = options.forceArrowHeight;
 
     // @orotected - arrow node
     this.arrowNode = new ISLForceArrowNode( arrowForceRange, layoutBounds, tandem.createTandem( 'forceArrowNode' ), arrowOptions );
+
+    // set y position for the arrow
+    this.arrowNode.y = options.y - options.forceArrowHeight;
 
     // a parent node that applies the drag handler
     var dragNode = new Node( {
@@ -187,14 +191,14 @@ define( function( require ) {
       tandem: tandem.createTandem( 'markerLine' )
     } ) );
 
-    this.addChild( this.arrowNode );
-
     var self = this;
 
     objectModel.positionProperty.link( function( prop ) {
 
+      // position this node and its force arrow with label
       var transformedValue = modelViewTransform.modelToViewX( prop );
       self.x = transformedValue;
+      self.arrowNode.x = transformedValue;
 
       // update the accessible input value when the position changes
       self.inputValue = prop;
@@ -274,6 +278,19 @@ define( function( require ) {
       self.focusHighlight = Shape.bounds( dragNode.bounds.dilated( 5 ) );
     } );
 
+    // for layering purposes, we assume that the ScreenView will add the arrow node and label - by the
+    // time the sim is stepped, make sure that the arrows are added to the view
+    if ( assert ) {
+      var checkForArrowAdded = function() {
+        if ( self.arrowNode.parents.length === 0 ) {
+          throw new Error( 'ArrowNode should be added to the view in inverse-square-law-common sim screen view' );
+        }
+
+        // no need to keep checking
+        model.stepEmitter.removeListener( checkForArrowAdded );
+      };
+      model.stepEmitter.addListener( checkForArrowAdded );
+    }
   }
 
   inverseSquareLawCommon.register( 'ObjectNode', ObjectNode );
@@ -301,5 +318,4 @@ define( function( require ) {
       this.pullerNode.setPull( this.model.forceProperty.get(), this.objectCircle.width / 2 );
     }
   } );
-
 } );

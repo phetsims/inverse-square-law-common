@@ -14,6 +14,7 @@ define( function( require ) {
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var Util = require( 'DOT/Util' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var Emitter = require( 'AXON/Emitter' );
 
   // phet-io modules
   var TBoolean = require( 'ifphetio!PHET_IO/types/TBoolean' );
@@ -58,6 +59,9 @@ define( function( require ) {
 
     // @private
     this.minSeparationBetweenObjects = options.minSeparationBetweenObjects;
+
+    // @public - emits an event when the model is updated in by step
+    this.stepEmitter = new Emitter();
     
     // derived property that calculates the force based on changes to values and positions
     this.forceProperty = new DerivedProperty(
@@ -139,6 +143,9 @@ define( function( require ) {
       // Force might not have been changed but positions might have changed, therefore to ensure everything is in bounds
       // inside the view
       this.forceProperty.notifyListenersStatic();
+
+      // broadcast a message that we have updated the model
+      this.stepEmitter.emit();
     },
 
     /**

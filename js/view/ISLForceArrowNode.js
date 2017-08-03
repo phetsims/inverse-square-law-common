@@ -30,6 +30,7 @@ define( function( require ) {
   var ARROW_LENGTH = 8; // empirically determined
   var TEXT_OFFSET = 5; // empirically determined to make sure text does not go out of bounds
 
+  // TODO: JSDOC
   function ISLForceArrowNode( arrowForceRange, layoutBounds, tandem, options ) {
 
     options = _.extend( {
@@ -78,7 +79,7 @@ define( function( require ) {
       font: options.labelFont,
       fill: options.labelFill,
       maxWidth: 300, // empirically determined through testing with long strings
-      y: -options.forceArrowHeight - 20,
+      y: -20,
       tandem: tandem.createTandem( 'arrowText' )
     } );
 
@@ -111,16 +112,18 @@ define( function( require ) {
       else {
         arrowLengthMultiplier = this.forceToArrowWidthFunction( absValue );
       }
+
       if ( this.defaultDirection === 'right' ) {
         arrowLengthMultiplier *= -1;
       }
 
-      this.setTailAndTip( 0, -this.forceArrowHeight, valueSign * arrowLengthMultiplier * ARROW_LENGTH, -this.forceArrowHeight );
+      this.setTailAndTip( 0, 0, valueSign * arrowLengthMultiplier * ARROW_LENGTH, 0 );
     },
 
     /**
      * Set the arrow text position along the arrow, ensuring that the text does not go outside the layout
      * bounds.
+     *
      * @public
      */
     setArrowTextPosition: function( localToParentPoint, parentToLocalBounds ){
