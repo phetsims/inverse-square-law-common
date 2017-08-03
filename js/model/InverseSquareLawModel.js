@@ -146,7 +146,7 @@ define( function( require ) {
      * the two objects.  This is used throughout the model.
      *
      * @public
-     * @return {numbet}
+     * @return {number}
      */
     getSumRadiusWithSeparation: function() {
       return this.object1.radiusProperty.get() + this.object2.radiusProperty.get() + this.minSeparationBetweenObjects;
