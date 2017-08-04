@@ -87,7 +87,7 @@ define( function( require ) {
   var pushImage29 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pusher_29.png' );
   var pushImage30 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pusher_30.png' );
 
-  var pullImages = [ zeroForceImage, pullImage0, pullImage1, pullImage2, pullImage3, pullImage4, pullImage5, pullImage6, pullImage7,
+  var pullImages = [ pullImage0, pullImage1, pullImage2, pullImage3, pullImage4, pullImage5, pullImage6, pullImage7,
     pullImage8, pullImage9, pullImage10, pullImage11, pullImage12, pullImage13, pullImage14, pullImage15, pullImage16,
     pullImage17, pullImage18, pullImage19, pullImage20, pullImage21, pullImage22, pullImage23, pullImage24, pullImage25,
     pullImage26, pullImage27, pullImage28, pullImage29, pullImage30 ];
@@ -126,7 +126,7 @@ define( function( require ) {
 
     // if in coulomb's law sim, add pusher and zero force images in proper order
     if (options.attractNegative) {
-      this.pullerPusherImages = pushImages.concat( pullImages );
+      this.pullerPusherImages = pushImages.concat( zeroForceImage ).concat( pullImages );
 
       this.zeroForceIndex = 31;
     }

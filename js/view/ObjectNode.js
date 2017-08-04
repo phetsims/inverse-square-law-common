@@ -124,7 +124,7 @@ define( function( require ) {
     this.modelViewTransform = modelViewTransform;
     this.forceArrowHeight = options.forceArrowHeight;
 
-    // @orotected - arrow node
+    // @protected - arrow node
     this.arrowNode = new ISLForceArrowNode( arrowForceRange, layoutBounds, tandem.createTandem( 'forceArrowNode' ), arrowOptions );
 
     // set y position for the arrow
@@ -224,7 +224,6 @@ define( function( require ) {
         clickOffset = dragNode.globalToParentPoint( event.pointer.point ).x - event.currentTarget.x;
       },
       drag: function( event ) {
-
         // drag position relative to the pointer pointer start position
         var x = self.globalToParentPoint( event.pointer.point ).x - clickOffset;
 
@@ -259,7 +258,6 @@ define( function( require ) {
           // back to view coordinates
           x = modelViewTransform.modelToViewX( snappedX );
         }
-
         objectModel.positionProperty.set( Util.toFixedNumber( modelViewTransform.viewToModelX( x ), 3 ) );
       },
       tandem: tandem.createTandem( 'objectDragHandler' )
