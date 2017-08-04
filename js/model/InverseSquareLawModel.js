@@ -40,7 +40,7 @@ define( function( require ) {
       minSeparationBetweenObjects: 0.1 // in meters
     }, options );
     
-    // @private
+    // @public (read-only)
     this.leftObjectBoundary = leftBoundary;
     this.rightObjectBoundary = rightBoundary;
 

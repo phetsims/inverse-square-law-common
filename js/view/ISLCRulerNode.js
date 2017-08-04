@@ -29,18 +29,16 @@ define( function( require ) {
 
   /**
    * @param {InverseSquareLawModel} model
-   * @param {number} screenWidth
    * @param {number} screenHeight
    * @param {ModelViewTransform2} modelViewTransform
    * @param {Tandem} tandem
    * @constructor
    */
-  function ISLCRulerNode( model, screenWidth, screenHeight, modelViewTransform, tandem, options ) {
+  function ISLCRulerNode( model, screenHeight, modelViewTransform, tandem, options ) {
 
     options = _.extend( {
       snapToNearest: null,
     }, options );
-    var self = this;
     Node.call( this, { cursor: 'pointer', cssTransform: true, tandem: tandem } );
     var ruler = new RulerNode(
       RULER_WIDTH,
@@ -63,10 +61,22 @@ define( function( require ) {
 
     model.rulerPositionProperty.link( function( value ) {
       ruler.translation = modelViewTransform.modelToViewPosition( value );
+      console.log( value );
     } );
 
+    // ruler drag bounds (in model coordinate frame) - assumes a single point scale inverted Y mapping
+    var modelHeight = modelViewTransform.viewToModelDeltaY( screenHeight );
+    var modelRulerHeight = modelViewTransform.viewToModelDeltaY( this.height );
+    var modelRulerWidth = modelViewTransform.viewToModelDeltaX( this.width );
+
+    var minX = model.leftObjectBoundary;
+    var minY = modelHeight / 2 - modelRulerHeight; // bottom bound because Y is invered
+    var maxX = model.rightObjectBoundary - modelRulerWidth;
+    var maxY = -modelHeight / 2; // top bound because Y is inverted
+    var bounds = new Bounds2( minX, minY, maxX, maxY );
+
     this.addInputListener( new MovableDragHandler( model.rulerPositionProperty, {
-      dragBounds: new Bounds2( -self.width / 2, 0, screenWidth - self.width / 2, screenHeight - self.height ),
+      dragBounds: bounds,
       tandem: tandem.createTandem( 'dragHandler' ),
       modelViewTransform: modelViewTransform,
 
