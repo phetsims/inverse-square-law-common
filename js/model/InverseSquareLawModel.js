@@ -137,6 +137,15 @@ define( function( require ) {
   return inherit( Object, InverseSquareLawModel, {
 
     /**
+     * step function makes sure masses doesn't goes out of bounds and don't overlap each other at each time step
+     * @public
+     */
+    step: function() {
+      // broadcast a message that we have updated the model
+      this.stepEmitter.emit();
+    },
+
+    /**
      * Returns the sum of the radii of the two spherical objects in this sim, plus the model's min separation between
      * the two objects.  This is used throughout the model.
      *
