@@ -20,7 +20,7 @@ define( function( require ) {
   var TBoolean = require( 'ifphetio!PHET_IO/types/TBoolean' );
 
   // constants
-  // var PULL_OBJECT_WIDTH = -2; // empirically determined for model space in meters
+  var PULL_OBJECT_WIDTH = -2; // empirically determined for model space in meters
   var DISTANCE_DECIMAL_PRECISION = 3; // limit precision so small changes are not propogated to the force
 
   /**
@@ -34,8 +34,6 @@ define( function( require ) {
    * @param {object} options
    */
   function InverseSquareLawModel( forceConstant, object1, object2, leftBoundary, rightBoundary, tandem, options ) {
-
-    var self = this;
 
     options = _.extend( {
       snapObjectsToNearest: null, // {number} if defined, objects will snap to nearest value in model coordinates
@@ -82,54 +80,54 @@ define( function( require ) {
     );
 
     // handles object overlap checking when radius or position is changed
-    Property.multilink( [
-    this.object1.positionProperty,
-    this.object1.radiusProperty, 
-    this.object2.positionProperty,
-    this.object2.radiusProperty ],
-    function( object1Position, object1Radius, object2Position, object2Radius ) {
+    // Property.multilink( [
+    // this.object1.positionProperty,
+    // this.object1.radiusProperty, 
+    // this.object2.positionProperty,
+    // this.object2.radiusProperty ],
+    // function( object1Position, object1Radius, object2Position, object2Radius ) {
 
-      // minimum intended separation between the centers of the objects
-      // consider renaming this and associated option to be more semantic
-      //    - e.g. minCenterSeparation & minEdgeSeparation
-      // we may also want 
-      var minCenterSeparation = object1Radius + object2Radius + self.minSeparationBetweenObjects;
+    //   // minimum intended separation between the centers of the objects
+    //   // consider renaming this and associated option to be more semantic
+    //   //    - e.g. minCenterSeparation & minEdgeSeparation
+    //   // we may also want 
+    //   var minCenterSeparation = object1Radius + object2Radius + self.minSeparationBetweenObjects;
 
-      // these represent the leftmost and rightmost possible midpoints between the charges/masses
-      var maxLeftMidpoint = self.leftObjectBoundary + ( 2 * object1Radius ) + ( minCenterSeparation / 2 );
-      var maxRightMidpoint = self.rightObjectBoundary - (2 *  object2Radius ) - ( minCenterSeparation / 2 );
+    //   // these represent the leftmost and rightmost possible midpoints between the charges/masses
+    //   var maxLeftMidpoint = self.leftObjectBoundary + ( 2 * object1Radius ) + ( minCenterSeparation / 2 );
+    //   var maxRightMidpoint = self.rightObjectBoundary - (2 *  object2Radius ) - ( minCenterSeparation / 2 );
 
-      // ensure that the new locations are at or within their respective boundaries
-      var updatedObject1Position = Math.max( object1Position, self.leftObjectBoundary );
-      var updatedObject2Position = Math.min( object2Position, self.rightObjectBoundary );
+    //   // ensure that the new locations are at or within their respective boundaries
+    //   var updatedObject1Position = Math.max( object1Position, self.leftObjectBoundary );
+    //   var updatedObject2Position = Math.min( object2Position, self.rightObjectBoundary );
 
-      var currentMidpoint = Util.roundSymmetric( ( updatedObject1Position + updatedObject2Position ) / 2 );
+    //   var currentMidpoint = Util.roundSymmetric( ( updatedObject1Position + updatedObject2Position ) / 2 );
 
-      if ( currentMidpoint < maxLeftMidpoint ) {
-        // object1 is at boundary, move object2
-        updatedObject2Position = updatedObject1Position + minCenterSeparation;
-      } else if ( currentMidpoint > maxRightMidpoint ) {
-        // object2 is at boundary, move object1
-        updatedObject1Position = updatedObject2Position - minCenterSeparation;
-      }
+    //   if ( currentMidpoint < maxLeftMidpoint ) {
+    //     // object1 is at boundary, move object2
+    //     updatedObject2Position = updatedObject1Position + minCenterSeparation;
+    //   } else if ( currentMidpoint > maxRightMidpoint ) {
+    //     // object2 is at boundary, move object1
+    //     updatedObject1Position = updatedObject2Position - minCenterSeparation;
+    //   }
 
-      if ( Math.abs( updatedObject2Position - updatedObject1Position ) < minCenterSeparation ) {
-        updatedObject1Position = currentMidpoint - ( self.minSeparationBetweenObjects + object1Radius );
-        updatedObject2Position = currentMidpoint + ( self.minSeparationBetweenObjects + object2Radius );
-      }
+    //   if ( Math.abs( updatedObject2Position - updatedObject1Position ) < minCenterSeparation ) {
+    //     updatedObject1Position = currentMidpoint - ( self.minSeparationBetweenObjects + object1Radius );
+    //     updatedObject2Position = currentMidpoint + ( self.minSeparationBetweenObjects + object2Radius );
+    //   }
 
-      if ( updatedObject1Position !== object1Position ) {
-        updatedObject1Position = Util.toFixedNumber( updatedObject1Position, DISTANCE_DECIMAL_PRECISION );
-        updatedObject1Position = self.snapToGrid( updatedObject1Position );
-        self.object1.positionProperty.set( updatedObject1Position );
-      }
+    //   if ( updatedObject1Position !== object1Position ) {
+    //     updatedObject1Position = Util.toFixedNumber( updatedObject1Position, DISTANCE_DECIMAL_PRECISION );
+    //     updatedObject1Position = self.snapToGrid( updatedObject1Position );
+    //     self.object1.positionProperty.set( updatedObject1Position );
+    //   }
 
-      if ( updatedObject2Position !== object2Position ) {
-        updatedObject2Position = Util.toFixedNumber( updatedObject2Position, DISTANCE_DECIMAL_PRECISION );
-        updatedObject2Position = self.snapToGrid( updatedObject2Position );
-        self.object2.positionProperty.set( updatedObject2Position );
-      }
-    } );
+    //   if ( updatedObject2Position !== object2Position ) {
+    //     updatedObject2Position = Util.toFixedNumber( updatedObject2Position, DISTANCE_DECIMAL_PRECISION );
+    //     updatedObject2Position = self.snapToGrid( updatedObject2Position );
+    //     self.object2.positionProperty.set( updatedObject2Position );
+    //   }
+    // } );
   }
 
   inverseSquareLawCommon.register( 'InverseSquareLawModel', InverseSquareLawModel );
@@ -141,6 +139,61 @@ define( function( require ) {
      * @public
      */
     step: function() {
+      var minX = this.leftObjectBoundary + PULL_OBJECT_WIDTH + this.object1.radiusProperty.get();
+      var maxX = this.rightObjectBoundary - PULL_OBJECT_WIDTH - this.object2.radiusProperty.get();
+      var locationMass1 = this.object1.positionProperty.get();
+      var locationMass2 = this.object2.positionProperty.get();
+
+      var changeFactor = 0.0001; // this is empirically determined larger change factor may make masses farther but converges faster
+      var sumRadius = this.getSumRadiusWithSeparation();
+      var changed = false;
+
+      // for loop is to make sure after checking the boundaries constraints masses don't overlap
+      for ( var i = 0; i < 10; i++ ) {
+
+        // check for overlap and move both masses so that they don't overlap
+        if ( Math.abs( locationMass1 - locationMass2 ) < sumRadius ) {
+          while ( Math.abs( locationMass1 - locationMass2 ) < sumRadius ) {
+            locationMass1 = locationMass1 - changeFactor;
+            locationMass2 = locationMass2 + changeFactor;
+
+            changed = true;
+          }
+        }
+
+        // make sure mass1 doesn't go out of left boundary
+        if ( locationMass1 < minX ) {
+          locationMass1 = Math.max( minX, locationMass1 );
+          changed = true;
+        }
+
+        // make sure mass2 doesn't go out of right boundary
+        if ( locationMass2 > maxX ) {
+          locationMass2 = Math.min( maxX, locationMass2 );
+
+          changed = true;
+        }
+        if ( !changed ) {
+          break;
+        }
+      }
+
+      // round to the nearest thousandths so that very small changes in distance do not show up as changes during
+      // these corrections
+      locationMass1 = Util.toFixedNumber( locationMass1, DISTANCE_DECIMAL_PRECISION );
+      locationMass2 = Util.toFixedNumber( locationMass2, DISTANCE_DECIMAL_PRECISION );
+
+      // if objects are limited to a certain precision, round position values to that precision
+      locationMass1 = this.snapToGrid( locationMass1 );
+      locationMass2 = this.snapToGrid( locationMass2 );
+
+      this.object1.positionProperty.set( locationMass1 );
+      this.object2.positionProperty.set( locationMass2 );
+
+      // Force might not have been changed but positions might have changed, therefore to ensure everything is in bounds
+      // inside the view
+      this.forceProperty.notifyListenersStatic();
+
       // broadcast a message that we have updated the model
       this.stepEmitter.emit();
     },
