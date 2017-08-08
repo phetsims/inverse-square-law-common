@@ -18,7 +18,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var TandemSimpleDragHandler = require( 'TANDEM/scenery/input/TandemSimpleDragHandler' );
+  var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
   var ISLForceArrowNode = require( 'INVERSE_SQUARE_LAW_COMMON/view/ISLForceArrowNode' );
   var Util = require( 'DOT/Util' );
   var Circle = require( 'SCENERY/nodes/Circle' );
@@ -218,7 +218,7 @@ define( function( require ) {
     this.redrawForce();
 
     var clickOffset;
-    dragNode.addInputListener( new TandemSimpleDragHandler( {
+    dragNode.addInputListener( new SimpleDragHandler( {
       allowTouchSnag: true,
       start: function( event ) {
         clickOffset = dragNode.globalToParentPoint( event.pointer.point ).x - event.currentTarget.x;
