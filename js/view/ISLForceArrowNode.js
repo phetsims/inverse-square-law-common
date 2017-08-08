@@ -11,7 +11,7 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var RichText = require( 'SCENERY_PHET/RichText' );
+  var RichText = require( 'SCENERY/nodes/RichText' );
   var inherit = require( 'PHET_CORE/inherit' );
   var inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
   var ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
