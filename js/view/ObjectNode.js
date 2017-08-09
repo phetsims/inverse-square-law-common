@@ -227,17 +227,18 @@ define( function( require ) {
       },
       drag: function( event ) {
 
-        // drag position relative to the pointer pointer start position
-        // x in model coordinates
+        // drag position relative to the pointer pointer start position and convert to model coordinates
         var x = modelViewTransform.viewToModelX( self.globalToParentPoint( event.pointer.point ).x - clickOffset );
 
-        // absolute drag bounds (before considering the other object)
+        // absolute drag bounds based on model
+        // see method descriptions for details
         var xMax =  model.getObjectMaxPosition( objectModel );
         var xMin =  model.getObjectMinPosition( objectModel );
 
         // apply limitations and update position
-        x = Math.max( Math.min( x, xMax ), xMin ); // limited value of x (by boundary) in view coords
+        x = Math.max( Math.min( x, xMax ), xMin ); // limited value of x (by boundary) in model coords
 
+        // snapToGrid method dynamically checks whether to snap or not
         objectModel.positionProperty.set( model.snapToGrid( x ) );
       },
       tandem: tandem.createTandem( 'objectDragHandler' )
