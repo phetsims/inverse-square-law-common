@@ -17,7 +17,11 @@ define( function( require ) {
   // constants
   var MIN_MASS = 1; // kg
   var MAX_MASS = 1000; // kg
-  var MAX_DISTANCE_FROM_CENTER = 7.48; // meters, empirically determined boundary for objects
+
+  // TODO: This is sim and screen specific, should not be a constant in INverseSquareLawConstants
+  // TODO: Consider caluclating this instead of choosing random values - might be tough when
+  // radii can grow.
+  var MAX_DISTANCE_FROM_CENTER = 5.9; // meters, empirically determined boundary for objects
   
   var InverseSquareLawCommonConstants = {
     G: 6.67384E-11, // gravitational constant

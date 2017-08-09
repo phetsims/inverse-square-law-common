@@ -30,7 +30,7 @@ define( function( require ) {
 
   // constants
   var LABEL_MAX_WIDTH = 20; // empirically determined through testing with long strings
-  var OFFSET = 10; // empirically determined to make sure minimum force doesn't go to zero when rounded to 12 significant digits
+  // var OFFSET = 10; // empirically determined to make sure minimum force doesn't go to zero when rounded to 12 significant digits
   /**
    * TODO: This is a lot of constructor args. Can we abstract some things out?
    * TODO: I think the ObjectNode should create the PullerNode and the ArrowNode on its own, move those back to this 
@@ -224,41 +224,46 @@ define( function( require ) {
         clickOffset = dragNode.globalToParentPoint( event.pointer.point ).x - event.currentTarget.x;
       },
       drag: function( event ) {
+
         // drag position relative to the pointer pointer start position
         var x = self.globalToParentPoint( event.pointer.point ).x - clickOffset;
 
-        // absolute drag bounds (before considering the other object)
-        var xMax = layoutBounds.maxX - self.objectCircle.width / 2 - self.pullerNode.width - OFFSET;
-        var xMin = layoutBounds.minX + OFFSET + self.objectCircle.width / 2 + self.pullerNode.width;
+        // TODO: Commenting out for now, we are considering all corrections in the step function, or at
+        // least in the model?
 
-        // total radius in view coords
-        var sumRadius = modelViewTransform.modelToViewDeltaX( model.object1.radiusProperty.get() ) +
-                        modelViewTransform.modelToViewDeltaX( model.object2.radiusProperty.get() );
+        // // absolute drag bounds (before considering the other object)
+        // var xMax = layoutBounds.maxX - self.objectCircle.width / 2 - self.pullerNode.width - OFFSET;
+        // var xMin = layoutBounds.minX + OFFSET + self.objectCircle.width / 2 + self.pullerNode.width;
 
-        // limit the drag bounds by the position of the other object - object 1 must be to the left of object 2
-        if ( objectModel.positionProperty.get() === model.object1.positionProperty.get() ) {
-          xMax = modelViewTransform.modelToViewX( model.object2.positionProperty.get() ) - sumRadius -
-                 modelViewTransform.modelToViewDeltaX( model.minSeparationBetweenObjects );
-        }
-        if ( objectModel.positionProperty.get() === model.object2.positionProperty.get() ) {
-          xMin = modelViewTransform.modelToViewX( model.object1.positionProperty.get() ) + sumRadius +
-                 modelViewTransform.modelToViewDeltaX( model.minSeparationBetweenObjects );
-        }
+        // // total radius in view coords
+        // var sumRadius = modelViewTransform.modelToViewDeltaX( model.object1.radiusProperty.get() ) +
+        //                 modelViewTransform.modelToViewDeltaX( model.object2.radiusProperty.get() );
 
-        // apply limitations and update position
-        x = Math.max( Math.min( x, xMax ), xMin ); // limited value of x (by boundary) in view coords
+        // // limit the drag bounds by the position of the other object - object 1 must be to the left of object 2
+        // if ( objectModel.positionProperty.get() === model.object1.positionProperty.get() ) {
+        //   xMax = modelViewTransform.modelToViewX( model.object2.positionProperty.get() ) - sumRadius -
+        //          modelViewTransform.modelToViewDeltaX( model.minSeparationBetweenObjects );
+        // }
+        // if ( objectModel.positionProperty.get() === model.object2.positionProperty.get() ) {
+        //   xMin = modelViewTransform.modelToViewX( model.object1.positionProperty.get() ) + sumRadius +
+        //          modelViewTransform.modelToViewDeltaX( model.minSeparationBetweenObjects );
+        // }
 
-        // snap to nearest snapToNearest if specified
-        if ( options.snapToNearest ) {
+        // // apply limitations and update position
+        // x = Math.max( Math.min( x, xMax ), xMin ); // limited value of x (by boundary) in view coords
 
-          // x in model coordinates
-          var xModel = modelViewTransform.viewToModelX( x );
-          var snappedX = Util.roundSymmetric( xModel / options.snapToNearest ) * options.snapToNearest;
+        // // snap to nearest snapToNearest if specified
+        // if ( options.snapToNearest ) {
 
-          // back to view coordinates
-          x = modelViewTransform.modelToViewX( snappedX );
-        }
+        //   // x in model coordinates
+        //   var xModel = modelViewTransform.viewToModelX( x );
+        //   var snappedX = Util.roundSymmetric( xModel / options.snapToNearest ) * options.snapToNearest;
+
+        //   // back to view coordinates
+        //   x = modelViewTransform.modelToViewX( snappedX );
+        // }
         objectModel.positionProperty.set( Util.toFixedNumber( modelViewTransform.viewToModelX( x ), 3 ) );
+        console.log( objectModel.positionProperty.get() );
       },
       tandem: tandem.createTandem( 'objectDragHandler' )
     } ) );
