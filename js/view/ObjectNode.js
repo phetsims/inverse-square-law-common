@@ -231,41 +231,14 @@ define( function( require ) {
         // x in model coordinates
         var x = modelViewTransform.viewToModelX( self.globalToParentPoint( event.pointer.point ).x - clickOffset );
 
-        // TODO: Commenting out for now, we are considering all corrections in the step function, or at
-        // least in the model?
-        // debugger;
         // absolute drag bounds (before considering the other object)
         var xMax =  model.getObjectMaxPosition( objectModel );
         var xMin =  model.getObjectMinPosition( objectModel );
 
-        // total radius in view coords
-        // var sumRadius = modelViewTransform.modelToViewDeltaX( model.getSumRadiusWithSeparation() );
-        // debugger;
-        // limit the drag bounds by the position of the other object - object 1 must be to the left of object 2
-        // if ( objectModel === model.object1 ) {
-        //   xMax = modelViewTransform.modelToViewX( model.object2.positionProperty.get() ) - sumRadius;
-        // }
-        // if ( objectModel === model.object2 ) {
-        //   xMin = modelViewTransform.modelToViewX( model.object1.positionProperty.get() ) + sumRadius;
-        // }
-
         // apply limitations and update position
         x = Math.max( Math.min( x, xMax ), xMin ); // limited value of x (by boundary) in view coords
 
-        // // snap to nearest snapToNearest if specified
-        // if ( model.snapObjectsToNearest ) {
-
-          // x in model coordinates
-          // var xModel = modelViewTransform.viewToModelX( x );
-          // var snappedX = Util.roundSymmetric( xMozdel / options.snapToNearest ) * model.snapObjectsToNearest;
-
-          // back to view coordinates
-          // x = modelViewTransform.modelToViewX( snappedX );
-        // }
         objectModel.positionProperty.set( model.snapToGrid( x ) );
-        console.log( model.getSumRadiusWithSeparation() );
-        console.log( model.object1.positionProperty.get() );
-        console.log( model.object2.positionProperty.get());
       },
       tandem: tandem.createTandem( 'objectDragHandler' )
     } ) );
