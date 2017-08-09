@@ -222,48 +222,50 @@ define( function( require ) {
       allowTouchSnag: true,
       start: function( event ) {
         clickOffset = dragNode.globalToParentPoint( event.pointer.point ).x - event.currentTarget.x;
+        objectModel.isDragging = true;
+        model.toggleDraggingObject( objectModel );
       },
       drag: function( event ) {
 
         // drag position relative to the pointer pointer start position
-        var x = self.globalToParentPoint( event.pointer.point ).x - clickOffset;
+        // x in model coordinates
+        var x = modelViewTransform.viewToModelX( self.globalToParentPoint( event.pointer.point ).x - clickOffset );
 
         // TODO: Commenting out for now, we are considering all corrections in the step function, or at
         // least in the model?
+        // debugger;
+        // absolute drag bounds (before considering the other object)
+        var xMax =  model.getObjectMaxPosition( objectModel );
+        var xMin =  model.getObjectMinPosition( objectModel );
 
-        // // absolute drag bounds (before considering the other object)
-        // var xMax = layoutBounds.maxX - self.objectCircle.width / 2 - self.pullerNode.width - OFFSET;
-        // var xMin = layoutBounds.minX + OFFSET + self.objectCircle.width / 2 + self.pullerNode.width;
-
-        // // total radius in view coords
-        // var sumRadius = modelViewTransform.modelToViewDeltaX( model.object1.radiusProperty.get() ) +
-        //                 modelViewTransform.modelToViewDeltaX( model.object2.radiusProperty.get() );
-
-        // // limit the drag bounds by the position of the other object - object 1 must be to the left of object 2
-        // if ( objectModel.positionProperty.get() === model.object1.positionProperty.get() ) {
-        //   xMax = modelViewTransform.modelToViewX( model.object2.positionProperty.get() ) - sumRadius -
-        //          modelViewTransform.modelToViewDeltaX( model.minSeparationBetweenObjects );
+        // total radius in view coords
+        // var sumRadius = modelViewTransform.modelToViewDeltaX( model.getSumRadiusWithSeparation() );
+        // debugger;
+        // limit the drag bounds by the position of the other object - object 1 must be to the left of object 2
+        // if ( objectModel === model.object1 ) {
+        //   xMax = modelViewTransform.modelToViewX( model.object2.positionProperty.get() ) - sumRadius;
         // }
-        // if ( objectModel.positionProperty.get() === model.object2.positionProperty.get() ) {
-        //   xMin = modelViewTransform.modelToViewX( model.object1.positionProperty.get() ) + sumRadius +
-        //          modelViewTransform.modelToViewDeltaX( model.minSeparationBetweenObjects );
+        // if ( objectModel === model.object2 ) {
+        //   xMin = modelViewTransform.modelToViewX( model.object1.positionProperty.get() ) + sumRadius;
         // }
 
-        // // apply limitations and update position
-        // x = Math.max( Math.min( x, xMax ), xMin ); // limited value of x (by boundary) in view coords
+        // apply limitations and update position
+        x = Math.max( Math.min( x, xMax ), xMin ); // limited value of x (by boundary) in view coords
 
         // // snap to nearest snapToNearest if specified
-        // if ( options.snapToNearest ) {
+        // if ( model.snapObjectsToNearest ) {
 
-        //   // x in model coordinates
-        //   var xModel = modelViewTransform.viewToModelX( x );
-        //   var snappedX = Util.roundSymmetric( xModel / options.snapToNearest ) * options.snapToNearest;
+          // x in model coordinates
+          // var xModel = modelViewTransform.viewToModelX( x );
+          // var snappedX = Util.roundSymmetric( xMozdel / options.snapToNearest ) * model.snapObjectsToNearest;
 
-        //   // back to view coordinates
-        //   x = modelViewTransform.modelToViewX( snappedX );
+          // back to view coordinates
+          // x = modelViewTransform.modelToViewX( snappedX );
         // }
-        objectModel.positionProperty.set( Util.toFixedNumber( modelViewTransform.viewToModelX( x ), 3 ) );
-        console.log( objectModel.positionProperty.get() );
+        objectModel.positionProperty.set( model.snapToGrid( x ) );
+        console.log( model.getSumRadiusWithSeparation() );
+        console.log( model.object1.positionProperty.get() );
+        console.log( model.object2.positionProperty.get());
       },
       tandem: tandem.createTandem( 'objectDragHandler' )
     } ) );

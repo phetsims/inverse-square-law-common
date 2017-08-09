@@ -60,11 +60,15 @@ define( function( require ) {
     // @public - mass radius will change with value
     this.radiusProperty = new DerivedProperty(
       [ this.valueProperty, constantRadiusProperty ],
-      function( mass, constantRadius ) {
-        return constantRadius ? options.constantRadius : self.calculateRadius( mass );
+      function( valueProperty, constantRadius ) {
+        return constantRadius ? options.constantRadius : self.calculateRadius( valueProperty );
       },
       { tandem: options.tandem.createTandem( 'radiusProperty' ), phetioValueType: TNumber( { units: 'meters' } ) }
     );
+
+    // @public - property to check if the object is being dragged by the user
+    //           set in the drag handler
+    this.isDragger = false;
 
     this.valueRange = valueRange;
   }

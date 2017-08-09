@@ -34,6 +34,8 @@ define( function( require ) {
    */
   function InverseSquareLawModel( forceConstant, object1, object2, leftBoundary, rightBoundary, tandem, options ) {
 
+    var self = this;
+
     options = _.extend( {
       snapObjectsToNearest: null, // {number} if defined, objects will snap to nearest value in model coordinates
       minSeparationBetweenObjects: 0.1 // in meters
@@ -77,6 +79,15 @@ define( function( require ) {
            return forceConstant * v1 * v2 / ( distance * distance );
        }
     );
+
+    Property.multilink( [
+      this.object1.radiusProperty,
+      this.object2.radiusProperty ],
+      function ( object1Radius, object2Radius ) {
+        self.object1.isDragging = false;
+        self.object2.isDragging = false;
+      }
+    );
   }
 
   inverseSquareLawCommon.register( 'InverseSquareLawModel', InverseSquareLawModel );
@@ -102,13 +113,13 @@ define( function( require ) {
       var minPositionObject2 = this.getObjectMinPosition( this.object2 );
       var maxPositionObject2 = maxX;
 
-      // make sure objects don't overlap
-      locationMass1 = Math.min( locationMass1, maxPositionObject1 );
-      locationMass2 = Math.max( minPositionObject2, locationMass2 );
-
       // make sure that the objects don't go beyond the boundaries
       locationMass1 = Math.max( minPositionObject1, locationMass1 );
       locationMass2 = Math.min( locationMass2, maxPositionObject2 );
+
+      // make sure objects don't overlap
+      locationMass1 = Math.min( locationMass1, maxPositionObject1 );
+      locationMass2 = Math.max( minPositionObject2, locationMass2 );
 
       // round to the nearest thousandths so that very small changes in distance do not show up as changes during
       // these corrections
@@ -120,10 +131,20 @@ define( function( require ) {
       locationMass2 = this.snapToGrid( locationMass2 );
 
       // only update the locations if they have changed
-      if ( this.object1.positionProperty.get() !== locationMass1 ) {
+      // if ( this.object1.positionProperty.get() !== locationMass1 ) {
+        
+      // }
+      // if ( this.object2.positionProperty.get() !== locationMass2 ) {
+        
+      // }
+
+      if ( this.object1.isDragging ) {
         this.object1.positionProperty.set( locationMass1 );
-      }
-      if ( this.object2.positionProperty.get() !== locationMass2 ) {
+      } else if ( this.object2.isDragging ) {
+        this.object2.positionProperty.set( locationMass2 );
+      } else {
+        // neither object is dragging, radius must have changed
+        this.object1.positionProperty.set( locationMass1 );
         this.object2.positionProperty.set( locationMass2 );
       }
 
@@ -143,7 +164,9 @@ define( function( require ) {
      * @return {number}
      */
     getSumRadiusWithSeparation: function() {
-      return this.object1.radiusProperty.get() + this.object2.radiusProperty.get() + this.minSeparationBetweenObjects;
+      return this.snapToGrid(
+        this.object1.radiusProperty.get() + this.object2.radiusProperty.get() + this.minSeparationBetweenObjects
+      );
     },
 
     /**
@@ -156,12 +179,12 @@ define( function( require ) {
 
       var sumRadius = this.getSumRadiusWithSeparation();
       var maxX;
-      if ( object.positionProperty.get() === this.object1.positionProperty.get() ) {
+      if ( object === this.object1 ) {
 
         // the max value for the left object is the position of the right object minius the sum of radii
         maxX = this.object2.positionProperty.get() - sumRadius;
       }
-      else if ( object.positionProperty.get() === this.object2.positionProperty.get() ) {
+      else if ( object === this.object2 ) {
 
         // the max value for the right object is the right edge minus the puller width and the radius of the obejct
         maxX = this.rightObjectBoundary - this.object2.radiusProperty.get();
@@ -183,7 +206,7 @@ define( function( require ) {
       if ( object.positionProperty.get() === this.object1.positionProperty.get() ) {
         
         // the min value for the left object is the left edge plus the puller width and the radius of the object
-        minX = this.leftObjectBoundary + /*PULL_OBJECT_WIDTH +*/ this.object1.radiusProperty.get();
+        minX = this.leftObjectBoundary + this.object1.radiusProperty.get();
       }
       else if ( object.positionProperty.get() === this.object2.positionProperty.get() ) {
 
@@ -209,10 +232,23 @@ define( function( require ) {
       }
 
       // now make sure that the snapped position is within the left and right boundaries for this model
-      snappedPosition = Math.min( snappedPosition, this.rightObjectBoundary );
-      snappedPosition = Math.max( snappedPosition, this.leftObjectBoundary );
+      // snappedPosition = Math.min( snappedPosition, this.rightObjectBoundary );
+      // snappedPosition = Math.max( snappedPosition, this.leftObjectBoundary );
 
       return snappedPosition;
+    },
+
+    /**
+     * Switches between which object is the 'dragging' object. Used to lock the non-dragging object's position.
+     * @param  {ISLObject} object
+     * @return {void}
+     */
+    toggleDraggingObject: function( object ) {
+      if ( object === this.object1 ) {
+        this.object2.isDragging = !this.object1.isDragging;
+      } else if ( object === this.object2 ) {
+        this.object1.isDragging = !this.object2.isDragging;
+      }
     },
 
     // @public
