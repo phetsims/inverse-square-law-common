@@ -20,7 +20,7 @@ define( function( require ) {
   var TBoolean = require( 'ifphetio!PHET_IO/types/TBoolean' );
 
   // constants
-  var DISTANCE_DECIMAL_PRECISION = 3; // limit precision so small changes are not propogated to the force
+  // var DISTANCE_DECIMAL_PRECISION = 3; // limit precision so small changes are not propogated to the force
 
   /**
    * @constructor
@@ -100,6 +100,8 @@ define( function( require ) {
      */
     step: function() {
 
+      // debugger;
+
       var minX = this.leftObjectBoundary + this.object1.radiusProperty.get();
       var maxX = this.rightObjectBoundary - this.object2.radiusProperty.get();
       var locationMass1 = this.object1.positionProperty.get();
@@ -123,8 +125,8 @@ define( function( require ) {
 
       // round to the nearest thousandths so that very small changes in distance do not show up as changes during
       // these corrections
-      locationMass1 = Util.toFixedNumber( locationMass1, DISTANCE_DECIMAL_PRECISION );
-      locationMass2 = Util.toFixedNumber( locationMass2, DISTANCE_DECIMAL_PRECISION );
+      // locationMass1 = Util.toFixedNumber( locationMass1, DISTANCE_DECIMAL_PRECISION );
+      // locationMass2 = Util.toFixedNumber( locationMass2, DISTANCE_DECIMAL_PRECISION );
 
       // // if objects are limited to a certain precision, round position values to that precision
       locationMass1 = this.snapToGrid( locationMass1 );

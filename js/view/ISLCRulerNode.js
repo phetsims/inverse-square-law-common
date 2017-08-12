@@ -61,7 +61,6 @@ define( function( require ) {
 
     model.rulerPositionProperty.link( function( value ) {
       ruler.translation = modelViewTransform.modelToViewPosition( value );
-      console.log( value );
     } );
 
     // ruler drag bounds (in model coordinate frame) - assumes a single point scale inverted Y mapping

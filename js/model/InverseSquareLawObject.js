@@ -30,7 +30,7 @@ define( function( require ) {
    * @param {Property.<boolean>} constantRadiusProperty
    * @param {Object} options
    */
-  function InverseSquareLawObject( initialValue, initialPosition, valueRange, constantRadiusProperty, options ) {
+  function InverseSquareLawObject( initialValue, initialPosition, valueRange, constantRadiusProperty, tandem, options ) {
 
     var self = this;
 
@@ -44,7 +44,7 @@ define( function( require ) {
 
     // @public
     this.positionProperty = new Property( initialPosition, {
-      tandem: options.tandem.createTandem( 'positionProperty' ),
+      tandem: tandem.createTandem( 'positionProperty' ),
       phetioValueType: TNumber( {
         units: 'meters',
         range: new Range( options.leftObjectBoundary, options.rightObjectBoundary )
@@ -53,7 +53,7 @@ define( function( require ) {
 
     // @public
     this.valueProperty = new Property( initialValue, {
-      tandem: options.tandem.createTandem( 'valueProperty' ),
+      tandem: tandem.createTandem( 'valueProperty' ),
       phetioValueType: TNumber( { units: options.tandemUnits, range: valueRange } )
     } );
 
@@ -63,7 +63,7 @@ define( function( require ) {
       function( valueProperty, constantRadius ) {
         return constantRadius ? options.constantRadius : self.calculateRadius( valueProperty );
       },
-      { tandem: options.tandem.createTandem( 'radiusProperty' ), phetioValueType: TNumber( { units: 'meters' } ) }
+      { tandem: tandem.createTandem( 'radiusProperty' ), phetioValueType: TNumber( { units: 'meters' } ) }
     );
 
     // @public - property to check if the object is being dragged by the user
