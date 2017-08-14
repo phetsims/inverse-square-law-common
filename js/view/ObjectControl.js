@@ -23,18 +23,17 @@ define( function( require ) {
   var pattern0Value1UnitsString = require( 'string!INVERSE_SQUARE_LAW_COMMON/pattern_0value_1units' );
 
   // constants
-  // var TRACK_SIZE = new Dimension2( 170, 3 );
+  var TRACK_SIZE = new Dimension2( 170, 3 );
   var THUMB_SIZE = new Dimension2( 22, 42 );
 
   /**
    * @param {string} titleString
    * @param {Property.<number>} objectProperty
    * @param {Range} valueRange
-   * @param {Color} thumbColor
    * @param {Tandem} tandem
    * @constructor
    */
-  function ObjectControl( titleString, unitString, objectProperty, valueRange, thumbColor, tandem, options ) {
+  function ObjectControl( titleString, unitString, objectProperty, valueRange, tandem, options ) {
 
     // major ticks
     var tickLabelOptions = { pickable: false };
@@ -55,8 +54,6 @@ define( function( require ) {
       layoutFunction: NumberControl.createLayoutFunction3( { xSpacing: 10 } ),
       minorTickSpacing: 2,
       minorTickLength: 6,
-      thumbFillEnabled: thumbColor.colorUtilsBrighter( 0.15 ),
-      thumbFillHighlighted: thumbColor,
       arrowButtonScale: 1,
       trackFillEnabled: 'black',
       thumbSize: THUMB_SIZE,

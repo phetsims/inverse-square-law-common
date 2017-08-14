@@ -39,7 +39,7 @@ define( function( require ) {
     // @private
     this.density = density;
 
-    InverseSquareLawObject.call( this, initialMass, initialPosition, valueRange, constantRadiusProperty, options );
+    InverseSquareLawObject.call( this, initialMass, initialPosition, valueRange, constantRadiusProperty, tandem, options );
 
 
     // @public - mass color is will change with value
