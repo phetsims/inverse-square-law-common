@@ -39,7 +39,9 @@ define( function( require ) {
     options = _.extend( {
       snapToNearest: null,
     }, options );
+
     Node.call( this, { cursor: 'pointer', cssTransform: true, tandem: tandem } );
+
     var ruler = new RulerNode(
       RULER_WIDTH,
       RULER_HEIGHT,

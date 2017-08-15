@@ -23,7 +23,7 @@ define( function( require ) {
   // radii can grow.
   var MAX_DISTANCE_FROM_CENTER = 5.9; // meters, empirically determined boundary for objects
   
-  var InverseSquareLawCommonConstants = {
+  var ISLCConstants = {
     G: 6.67384E-11, // gravitational constant
     k: 8.987551E9, // Coulomb's constant
     
@@ -42,7 +42,7 @@ define( function( require ) {
     MASS_RANGE: new Range( MIN_MASS, MAX_MASS )
   };
 
-  inverseSquareLawCommon.register( 'InverseSquareLawCommonConstants', InverseSquareLawCommonConstants );
+  inverseSquareLawCommon.register( 'ISLCConstants', ISLCConstants );
 
-  return InverseSquareLawCommonConstants;
+  return ISLCConstants;
 } );

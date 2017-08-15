@@ -14,7 +14,7 @@ define( function( require ) {
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
   var InverseSquareLawObject = require( 'INVERSE_SQUARE_LAW_COMMON/model/InverseSquareLawObject' );
-  var InverseSquareLawCommonConstants = require( 'INVERSE_SQUARE_LAW_COMMON/InverseSquareLawCommonConstants' );
+  var ISLCConstants = require( 'INVERSE_SQUARE_LAW_COMMON/ISLCConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
   var TColor = require( 'SCENERY/util/TColor' );
 
@@ -32,8 +32,8 @@ define( function( require ) {
   function Mass( initialMass, initialPosition, valueRange, density, constantRadiusProperty, baseColor, tandem, options ) {
 
     options = _.extend( {
-      constantRadius: InverseSquareLawCommonConstants.CONSTANT_RADIUS, // in meters
-      constantRadiusColor: InverseSquareLawCommonConstants.CONSTANT_RADIUS_COLOR, // 
+      constantRadius: ISLCConstants.CONSTANT_RADIUS, // in meters
+      constantRadiusColor: ISLCConstants.CONSTANT_RADIUS_COLOR, // 
     }, options );
 
     // @private

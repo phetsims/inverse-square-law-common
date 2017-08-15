@@ -12,7 +12,7 @@ define( function( require ) {
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
   var inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
-  var InverseSquareLawCommonConstants = require( 'INVERSE_SQUARE_LAW_COMMON/InverseSquareLawCommonConstants' );
+  var ISLCConstants = require( 'INVERSE_SQUARE_LAW_COMMON/ISLCConstants' );
   var Property = require( 'AXON/Property' );
   var Range = require( 'DOT/Range' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
@@ -35,8 +35,8 @@ define( function( require ) {
     var self = this;
 
     options = _.extend( {
-      leftObjectBoundary: InverseSquareLawCommonConstants.LEFT_OBJECT_BOUNDARY,
-      rightObjectBoundary: InverseSquareLawCommonConstants.RIGHT_OBJECT_BOUNDARY,
+      leftObjectBoundary: ISLCConstants.LEFT_OBJECT_BOUNDARY,
+      rightObjectBoundary: ISLCConstants.RIGHT_OBJECT_BOUNDARY,
 
       tandem: Tandem.tandemRequired(), // tandem optional until sim is instrumented - TODO: come back to this
       tandemUnits: 'kilograms',

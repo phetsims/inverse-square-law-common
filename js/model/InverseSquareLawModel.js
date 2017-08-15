@@ -99,9 +99,6 @@ define( function( require ) {
      * @public
      */
     step: function() {
-
-      // debugger;
-
       var minX = this.leftObjectBoundary + this.object1.radiusProperty.get();
       var maxX = this.rightObjectBoundary - this.object2.radiusProperty.get();
       var locationMass1 = this.object1.positionProperty.get();
