@@ -77,6 +77,10 @@ define( function( require ) {
 
   return inherit( Object, InverseSquareLawObject, {
 
+    getMaxRadius: function() {
+      throw new Error( 'getMaxRadius must be implemented in descendent types');
+    },
+
     /**
      * Calculate radius for the object - must be implemented in subtypes.
      */

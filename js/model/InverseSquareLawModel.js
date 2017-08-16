@@ -99,8 +99,9 @@ define( function( require ) {
      * @public
      */
     step: function() {
-      var minX = this.leftObjectBoundary + this.object1.radiusProperty.get();
-      var maxX = this.rightObjectBoundary - this.object2.radiusProperty.get();
+      // debugger;
+      var minX = this.leftObjectBoundary + this.object1.getMaxRadius();
+      var maxX = this.rightObjectBoundary - this.object2.getMaxRadius();
       var locationMass1 = this.object1.positionProperty.get();
       var locationMass2 = this.object2.positionProperty.get();
 
@@ -186,7 +187,7 @@ define( function( require ) {
       else if ( object === this.object2 ) {
 
         // the max value for the right object is the right edge minus the puller width and the radius of the obejct
-        maxX = this.rightObjectBoundary - this.object2.radiusProperty.get();
+        maxX = this.rightObjectBoundary - this.object2.getMaxRadius();
       }
 
       return this.snapToGrid( maxX );
@@ -202,12 +203,12 @@ define( function( require ) {
 
       var sumRadius = this.getSumRadiusWithSeparation();
       var minX;
-      if ( object.positionProperty.get() === this.object1.positionProperty.get() ) {
+      if ( object === this.object1 ) {
         
         // the min value for the left object is the left edge plus the puller width and the radius of the object
-        minX = this.leftObjectBoundary + this.object1.radiusProperty.get();
+        minX = this.leftObjectBoundary + this.object1.getMaxRadius();
       }
-      else if ( object.positionProperty.get() === this.object2.positionProperty.get() ) {
+      else if ( object === this.object2 ) {
 
         // min value for the right object is the position of the left object plus the sum of radii between the two
         // object plus the min distance
@@ -231,8 +232,8 @@ define( function( require ) {
       }
 
       // now make sure that the snapped position is within the left and right boundaries for this model
-      // snappedPosition = Math.min( snappedPosition, this.rightObjectBoundary );
-      // snappedPosition = Math.max( snappedPosition, this.leftObjectBoundary );
+      snappedPosition = Math.min( snappedPosition, this.rightObjectBoundary );
+      snappedPosition = Math.max( snappedPosition, this.leftObjectBoundary );
 
       return snappedPosition;
     },
