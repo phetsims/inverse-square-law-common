@@ -62,10 +62,6 @@ define( function( require ) {
 
   return inherit( InverseSquareLawObject, Mass, {
 
-    getMaxRadius: function() {
-      return this.calculateRadius( this.valueRange.max );
-    },
-
     /**
      * calculates the radius based on mass of object maintaining constant density
      * calculations are made using the density formula and volume of a sphere

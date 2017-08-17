@@ -100,8 +100,8 @@ define( function( require ) {
      */
     step: function() {
       // debugger;
-      var minX = this.leftObjectBoundary + this.object1.getMaxRadius();
-      var maxX = this.rightObjectBoundary - this.object2.getMaxRadius();
+      var minX = this.leftObjectBoundary;
+      var maxX = this.rightObjectBoundary;
       var locationMass1 = this.object1.positionProperty.get();
       var locationMass2 = this.object2.positionProperty.get();
 
@@ -187,7 +187,7 @@ define( function( require ) {
       else if ( object === this.object2 ) {
 
         // the max value for the right object is the right edge minus the puller width and the radius of the obejct
-        maxX = this.rightObjectBoundary - this.object2.getMaxRadius();
+        maxX = this.rightObjectBoundary;
       }
 
       return this.snapToGrid( maxX );
@@ -206,7 +206,7 @@ define( function( require ) {
       if ( object === this.object1 ) {
         
         // the min value for the left object is the left edge plus the puller width and the radius of the object
-        minX = this.leftObjectBoundary + this.object1.getMaxRadius();
+        minX = this.leftObjectBoundary;
       }
       else if ( object === this.object2 ) {
 

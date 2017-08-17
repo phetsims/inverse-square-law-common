@@ -21,7 +21,7 @@ define( function( require ) {
   // TODO: This is sim and screen specific, should not be a constant in INverseSquareLawConstants
   // TODO: Consider caluclating this instead of choosing random values - might be tough when
   // radii can grow.
-  var MAX_DISTANCE_FROM_CENTER = 5.9; // meters, empirically determined boundary for objects
+  var MAX_DISTANCE_FROM_CENTER = 5; // meters, empirically determined boundary for objects
   
   var ISLCConstants = {
     G: 6.67384E-11, // gravitational constant
