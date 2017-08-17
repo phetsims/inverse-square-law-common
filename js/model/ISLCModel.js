@@ -32,7 +32,7 @@ define( function( require ) {
    * @param {Tandem} tandem
    * @param {object} options
    */
-  function InverseSquareLawModel( forceConstant, object1, object2, leftBoundary, rightBoundary, tandem, options ) {
+  function ISLCModel( forceConstant, object1, object2, leftBoundary, rightBoundary, tandem, options ) {
 
     var self = this;
 
@@ -90,9 +90,9 @@ define( function( require ) {
     );
   }
 
-  inverseSquareLawCommon.register( 'InverseSquareLawModel', InverseSquareLawModel );
+  inverseSquareLawCommon.register( 'ISLCModel', ISLCModel );
 
-  return inherit( Object, InverseSquareLawModel, {
+  return inherit( Object, ISLCModel, {
 
     /**
      * step function makes sure masses doesn't goes out of bounds and don't overlap each other at each time step

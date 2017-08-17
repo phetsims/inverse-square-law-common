@@ -28,7 +28,7 @@ define( function( require ) {
   var unitsMetersString = require( 'string!INVERSE_SQUARE_LAW_COMMON/units.meters' );
 
   /**
-   * @param {InverseSquareLawModel} model
+   * @param {ISLCModel} model
    * @param {number} screenHeight
    * @param {ModelViewTransform2} modelViewTransform
    * @param {Tandem} tandem
