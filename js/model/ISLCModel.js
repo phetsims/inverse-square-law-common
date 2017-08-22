@@ -150,7 +150,7 @@ define( function( require ) {
 
       // Force might not have been changed but positions might have changed, therefore to ensure everything is in
       // bounds inside the view
-      this.forceProperty.notifyListenersStatic();
+      // this.forceProperty.notifyListenersStatic();
 
       // broadcast a message that we have updated the model
       this.stepEmitter.emit();
