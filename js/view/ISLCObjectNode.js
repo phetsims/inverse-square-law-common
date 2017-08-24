@@ -5,7 +5,7 @@
  * puller/pusher robot attached that updates based on the model object values.  This node also manages an 
  * arrow with a label that represents the force.  This arrow is NOT added as a child of this node, but is
  * intended to be added in the screen view for layering purposes.  The arrow and its label need to be above
- * both ObjectNodes in the screen view.
+ * both ISLCObjectNodes in the screen view.
  * 
  * @author Michael Barlow
  * @author Jesse Greenberg
@@ -33,7 +33,7 @@ define( function( require ) {
   // var OFFSET = 10; // empirically determined to make sure minimum force doesn't go to zero when rounded to 12 significant digits
   /**
    * TODO: This is a lot of constructor args. Can we abstract some things out?
-   * TODO: I think the ObjectNode should create the PullerNode and the ArrowNode on its own, move those back to this 
+   * TODO: I think the ISLCObjectNode should create the PullerNode and the ArrowNode on its own, move those back to this 
    * file.
    * 
    * @constructor
@@ -46,7 +46,7 @@ define( function( require ) {
    * @param {Tandem} tandem
    * @param {Object} options
    */
-  function ObjectNode( model, objectModel, layoutBounds, modelViewTransform, pullForceRange, arrowForceRange, tandem, options ) {
+  function ISLCObjectNode( model, objectModel, layoutBounds, modelViewTransform, pullForceRange, arrowForceRange, tandem, options ) {
 
     options = _.extend( {
       label: 'This Object',
@@ -275,9 +275,9 @@ define( function( require ) {
     }
   }
 
-  inverseSquareLawCommon.register( 'ObjectNode', ObjectNode );
+  inverseSquareLawCommon.register( 'ISLCObjectNode', ISLCObjectNode );
 
-  return inherit( Node, ObjectNode, {
+  return inherit( Node, ISLCObjectNode, {
 
     updateGradient: function() {
       throw new Error( 'Update gradient must be implemented in subtypes.' );
