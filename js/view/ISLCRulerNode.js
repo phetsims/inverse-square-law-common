@@ -25,7 +25,7 @@ define( function( require ) {
   var RULER_INSET = 10;
 
   // strings
-  var unitsMetersString = require( 'string!INVERSE_SQUARE_LAW_COMMON/units.meters' );
+  var unitsCentimetersString = require( 'string!INVERSE_SQUARE_LAW_COMMON/units.centimeters' );
 
   /**
    * @param {ISLCModel} model
@@ -38,7 +38,12 @@ define( function( require ) {
 
     options = _.extend( {
       snapToNearest: null,
+      majorTickLabels: [ '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10' ],
+      unitString: unitsCentimetersString
     }, options );
+
+    var majorTickLabels = options.majorTickLabels;
+    var rulerUnitString = options.unitString;
 
     Node.call( this, { cursor: 'pointer', cssTransform: true, tandem: tandem } );
 
@@ -46,8 +51,8 @@ define( function( require ) {
       RULER_WIDTH,
       RULER_HEIGHT,
       50,
-      [ '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10' ],
-      unitsMetersString,
+      majorTickLabels,
+      rulerUnitString,
       {
         backgroundFill: '#ddd',
         insetsWidth: RULER_INSET,
