@@ -30,7 +30,7 @@ define( function( require ) {
    * @param {Property.<boolean>} constantRadiusProperty
    * @param {Object} options
    */
-  function InverseSquareLawObject( initialValue, initialPosition, valueRange, constantRadiusProperty, tandem, options ) {
+  function ISLCObject( initialValue, initialPosition, valueRange, constantRadiusProperty, tandem, options ) {
 
     var self = this;
 
@@ -73,9 +73,9 @@ define( function( require ) {
     this.valueRange = valueRange;
   }
 
-  inverseSquareLawCommon.register( 'InverseSquareLawObject', InverseSquareLawObject );
+  inverseSquareLawCommon.register( 'ISLCObject', ISLCObject );
 
-  return inherit( Object, InverseSquareLawObject, {
+  return inherit( Object, ISLCObject, {
 
     /**
      * Calculate radius for the object - must be implemented in subtypes.

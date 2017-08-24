@@ -195,7 +195,7 @@ define( function( require ) {
     /**
      * Get the absolute minimum horizontal position for an object.
      * 
-     * @param  {InverseSquareLawObject} object 
+     * @param  {ISLCObject} object 
      * @return {number}
      */
     getObjectMinPosition: function( object ) {

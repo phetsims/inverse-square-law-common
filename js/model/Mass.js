@@ -13,7 +13,7 @@ define( function( require ) {
   // modules
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
-  var InverseSquareLawObject = require( 'INVERSE_SQUARE_LAW_COMMON/model/InverseSquareLawObject' );
+  var ISLCObject = require( 'INVERSE_SQUARE_LAW_COMMON/model/ISLCObject' );
   var ISLCConstants = require( 'INVERSE_SQUARE_LAW_COMMON/ISLCConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
   var TColor = require( 'SCENERY/util/TColor' );
@@ -39,7 +39,7 @@ define( function( require ) {
     // @private
     this.density = density;
 
-    InverseSquareLawObject.call( this, initialMass, initialPosition, valueRange, constantRadiusProperty, tandem, options );
+    ISLCObject.call( this, initialMass, initialPosition, valueRange, constantRadiusProperty, tandem, options );
 
 
     // @public - mass color is will change with value
@@ -60,7 +60,7 @@ define( function( require ) {
 
   inverseSquareLawCommon.register( 'Mass', Mass );
 
-  return inherit( InverseSquareLawObject, Mass, {
+  return inherit( ISLCObject, Mass, {
 
     /**
      * calculates the radius based on mass of object maintaining constant density
