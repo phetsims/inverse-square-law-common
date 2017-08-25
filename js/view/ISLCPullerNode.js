@@ -106,7 +106,7 @@ define( function( require ) {
    * @param {Object} [options]
    * @constructor
    */
-  function PullerPusherNode( forceRange, tandem, options ) {
+  function ISLCPullerNode( forceRange, tandem, options ) {
 
     // REVIEW: This node doesn't pass options to Node, cannot 
     options = _.extend( { 
@@ -213,9 +213,9 @@ define( function( require ) {
     };
   }
 
-  inverseSquareLawCommon.register( 'PullerPusherNode', PullerPusherNode );
+  inverseSquareLawCommon.register( 'ISLCPullerNode', ISLCPullerNode );
 
-  return inherit( Node, PullerPusherNode, {}, {
+  return inherit( Node, ISLCPullerNode, {}, {
 
     // statics
     PULL_IMAGES_COUNT: pullImages.length

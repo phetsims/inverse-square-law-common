@@ -32,7 +32,7 @@ define( function( require ) {
    * @param {Tandem} tandem
    * @constructor
    */
-  function ObjectControl( titleString, unitString, objectProperty, valueRange, tandem, options ) {
+  function ISLCObjectControl( titleString, unitString, objectProperty, valueRange, tandem, options ) {
 
     // major ticks
     var tickLabelOptions = { pickable: false };
@@ -101,7 +101,7 @@ define( function( require ) {
     Panel.call( this, numberControl, _.extend( { tandem: tandem }, panelOptions) );
   }
 
-  inverseSquareLawCommon.register( 'ObjectControl', ObjectControl );
+  inverseSquareLawCommon.register( 'ISLCObjectControl', ISLCObjectControl );
 
-  return inherit( Panel, ObjectControl );
+  return inherit( Panel, ISLCObjectControl );
 } );

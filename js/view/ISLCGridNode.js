@@ -25,7 +25,7 @@ define( function( require ) {
    * @param {Bounds2} layoutBounds - layout bounds of the ScreenView
    * @param {ModelViewTransform2} modelViewTransform
    */
-  function InverseSquareLawGridNode( rightBoundary, leftBoundary, deltaX, layoutBounds, modelViewTransform, options ) {
+  function ISLCGridNode( rightBoundary, leftBoundary, deltaX, layoutBounds, modelViewTransform, options ) {
 
     options = _.extend( {
       stroke: 'rgba( 0, 0, 0, 0.6 )'
@@ -52,8 +52,8 @@ define( function( require ) {
     } );
   }
 
-  inverseSquareLawCommon.register( 'InverseSquareLawGridNode', InverseSquareLawGridNode );
+  inverseSquareLawCommon.register( 'ISLCGridNode', ISLCGridNode );
 
-  return inherit( Path, InverseSquareLawGridNode );
+  return inherit( Path, ISLCGridNode );
 
 } );

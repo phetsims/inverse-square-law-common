@@ -31,7 +31,7 @@ define( function( require ) {
   var TEXT_OFFSET = 5; // empirically determined to make sure text does not go out of bounds
 
   // TODO: JSDOC
-  function ISLForceArrowNode( arrowForceRange, layoutBounds, tandem, options ) {
+  function ISLCForceArrowNode( arrowForceRange, layoutBounds, tandem, options ) {
 
     options = _.extend( {
       defaultDirection: 'left',
@@ -88,9 +88,9 @@ define( function( require ) {
     this.y = 0;
   }
 
-  inverseSquareLawCommon.register( 'ISLForceArrowNode', ISLForceArrowNode );
+  inverseSquareLawCommon.register( 'ISLCForceArrowNode', ISLCForceArrowNode );
 
-  return inherit( ArrowNode, ISLForceArrowNode, {
+  return inherit( ArrowNode, ISLCForceArrowNode, {
 
     /**
      * Draw the length of the arrow based on the value of the force.
@@ -168,7 +168,7 @@ define( function( require ) {
           this.arrowText.text = StringUtils.format( forceDescriptionPatternTargetSourceValueString, this.label, this.otherObjectLabel, formattedString );
         }
         else {
-          throw new Error( 'ISLForceArrowNode.updateLabel() requires a decimal value' );
+          throw new Error( 'ISLCForceArrowNode.updateLabel() requires a decimal value' );
         }
       }
       else {

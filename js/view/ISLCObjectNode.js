@@ -19,11 +19,11 @@ define( function( require ) {
   var inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
   var Node = require( 'SCENERY/nodes/Node' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
-  var ISLForceArrowNode = require( 'INVERSE_SQUARE_LAW_COMMON/view/ISLForceArrowNode' );
+  var ISLCForceArrowNode = require( 'INVERSE_SQUARE_LAW_COMMON/view/ISLCForceArrowNode' );
   var Util = require( 'DOT/Util' );
   var Circle = require( 'SCENERY/nodes/Circle' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var PullerPusherNode = require( 'INVERSE_SQUARE_LAW_COMMON/view/PullerPusherNode' );
+  var ISLCPullerNode = require( 'INVERSE_SQUARE_LAW_COMMON/view/ISLCPullerNode' );
   var Shape = require( 'KITE/Shape' );
   var Path = require( 'SCENERY/nodes/Path' );
   var Text = require( 'SCENERY/nodes/Text' );
@@ -42,7 +42,7 @@ define( function( require ) {
    * @param {Bounds2} layoutBounds - bounds of the screen view containing the object
    * @param {ModelViewTransform2} modelViewTransform
    * @param {PullerNode} pullerNode
-   * @param {ISLForceArrowNode} arrowNode
+   * @param {ISLCForceArrowNode} arrowNode
    * @param {Tandem} tandem
    * @param {Object} options
    */
@@ -68,7 +68,7 @@ define( function( require ) {
       labelShadowOffsetX: 0.5,
       labelShadowOffsetY: 0.5,
 
-      // options for the arrow node, passed to the ISLForceArrowNode
+      // options for the arrow node, passed to the ISLCForceArrowNode
       arrowLabelFill: '#fff',
       arrowLabelFont: new PhetFont( 16 ),
 
@@ -112,7 +112,7 @@ define( function( require ) {
     };
 
     // @private - the puller node
-    this.pullerNode = new PullerPusherNode( pullForceRange, tandem.createTandem( 'puller1' ), options );
+    this.pullerNode = new ISLCPullerNode( pullForceRange, tandem.createTandem( 'puller1' ), options );
 
     if ( options.defaultDirection === 'right' ) {
       this.pullerNode.scale( -1, 1 );
@@ -125,7 +125,7 @@ define( function( require ) {
     this.forceArrowHeight = options.forceArrowHeight;
 
     // @protected - arrow node
-    this.arrowNode = new ISLForceArrowNode( arrowForceRange, layoutBounds, tandem.createTandem( 'forceArrowNode' ), arrowOptions );
+    this.arrowNode = new ISLCForceArrowNode( arrowForceRange, layoutBounds, tandem.createTandem( 'forceArrowNode' ), arrowOptions );
 
     // set y position for the arrow
     this.arrowNode.y = options.y - options.forceArrowHeight;
