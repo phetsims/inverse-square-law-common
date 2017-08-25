@@ -39,7 +39,8 @@ define( function( require ) {
     options = _.extend( {
       snapToNearest: null,
       majorTickLabels: [ '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10' ],
-      unitString: unitsCentimetersString
+      unitString: unitsCentimetersString,
+      backgroundFill: '#ddd'
     }, options );
 
     var majorTickLabels = options.majorTickLabels;
@@ -54,7 +55,7 @@ define( function( require ) {
       majorTickLabels,
       rulerUnitString,
       {
-        backgroundFill: '#ddd',
+        backgroundFill: options.backgroundFill,
         insetsWidth: RULER_INSET,
         minorTicksPerMajorTick: 4,
         majorTickFont: new PhetFont( 12 ),
