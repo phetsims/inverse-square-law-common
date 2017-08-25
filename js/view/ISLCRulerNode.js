@@ -67,18 +67,17 @@ define( function( require ) {
     this.addChild( ruler );
 
     model.rulerPositionProperty.link( function( value ) {
-      ruler.translation = modelViewTransform.modelToViewPosition( value );
+      ruler.center = modelViewTransform.modelToViewPosition( value );
     } );
 
     // ruler drag bounds (in model coordinate frame) - assumes a single point scale inverted Y mapping
     var modelHeight = modelViewTransform.viewToModelDeltaY( screenHeight );
     var modelRulerHeight = modelViewTransform.viewToModelDeltaY( this.height );
-    var modelRulerWidth = modelViewTransform.viewToModelDeltaX( this.width );
 
     var minX = model.leftObjectBoundary;
     var minY = modelHeight / 2 - modelRulerHeight; // bottom bound because Y is invered
-    var maxX = model.rightObjectBoundary - modelRulerWidth;
-    var maxY = -modelHeight / 2; // top bound because Y is inverted
+    var maxX = model.rightObjectBoundary;
+    var maxY = -modelHeight / 2 + modelRulerHeight; // top bound because Y is inverted
     var bounds = new Bounds2( minX, minY, maxX, maxY );
 
     this.addInputListener( new MovableDragHandler( model.rulerPositionProperty, {
