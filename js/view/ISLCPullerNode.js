@@ -178,13 +178,18 @@ define( function( require ) {
       lineWidth: 2,
       tandem: tandem.createTandem( 'ropeNode' )
     } ) );
+
+    // set the layout for the images
     for ( i = 0; i < this.pullerPusherImages.length; i++ ) {
       pullerGroupNode.addChild( images[ i ] );
       images[ i ].bottom = 44;
       images[ i ].right = -options.ropeLength;
       images[ i ].setVisible( false );
+
+      // the pullImages grow in width as they animate, so make sure that they are still grabbing
+      // the rope
       if ( _.includes( pullImages, images[ i ].children[ 1 ].image ) ) {
-        images[ i ].right += i / 5;
+        images[ i ].right += 0.3 * images[ i ].width;
       }
     }
 
