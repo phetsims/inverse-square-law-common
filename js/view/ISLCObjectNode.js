@@ -24,6 +24,7 @@ define( function( require ) {
   var Circle = require( 'SCENERY/nodes/Circle' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var ISLCPullerNode = require( 'INVERSE_SQUARE_LAW_COMMON/view/ISLCPullerNode' );
+  var RangeWithValue = require( 'DOT/RangeWithValue' );
   var Shape = require( 'KITE/Shape' );
   var Path = require( 'SCENERY/nodes/Path' );
   var Text = require( 'SCENERY/nodes/Text' );
@@ -46,7 +47,7 @@ define( function( require ) {
    * @param {Tandem} tandem
    * @param {Object} options
    */
-  function ISLCObjectNode( model, objectModel, layoutBounds, modelViewTransform, pullForceRange, arrowForceRange, tandem, options ) {
+  function ISLCObjectNode( model, objectModel, layoutBounds, modelViewTransform, pullForceRange, tandem, options ) {
 
     options = _.extend( {
       label: 'This Object',
@@ -71,6 +72,7 @@ define( function( require ) {
       // options for the arrow node, passed to the ISLCForceArrowNode
       arrowLabelFill: '#fff',
       arrowLabelFont: new PhetFont( 16 ),
+      maxArrowWidth: 40,
 
       arrowColor: '#66f', // color of vertical line
       arrowFill: 'white',
@@ -105,6 +107,7 @@ define( function( require ) {
       // arrow node options
       forceArrowHeight: options.forceArrowHeight,
       attractNegative: options.attractNegative,
+      maxArrowWidth: options.maxArrowWidth,
       fill: options.arrowFill,
       headHeight: options.arrowHeadHeight,
       headWidth: options.arrowHeadWidth,
@@ -123,6 +126,8 @@ define( function( require ) {
     this.model = model;
     this.modelViewTransform = modelViewTransform;
     this.forceArrowHeight = options.forceArrowHeight;
+
+    var arrowForceRange = new RangeWithValue( model.getMinForce(), model.getMaxForce() );
 
     // @protected - arrow node
     this.arrowNode = new ISLCForceArrowNode( arrowForceRange, layoutBounds, tandem.createTandem( 'forceArrowNode' ), arrowOptions );

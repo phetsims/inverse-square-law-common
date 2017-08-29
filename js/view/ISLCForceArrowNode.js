@@ -47,7 +47,7 @@ define( function( require ) {
       forceReadoutDecimalPlaces: 12, // number of decimal places in force readout
 
       // arrow node options
-      maxArrowWidth: 60, // max width of the arrow when when redrawn, in view coordinates
+      maxArrowWidth: 15, // max width of the arrow when when redrawn, in view coordinates
       forceArrowHeight: 150,
       headHeight: 8,
       headWidth: 8,
@@ -68,11 +68,12 @@ define( function( require ) {
     this.scientificNotationMode = options.defaultScientificNotationMode;
     this.attractNegative = options.attractNegative;
 
+    var minArrowLength = arrowForceRange.min === 0 ? 0 : 1;
     // @private - maps the force value to the desired width of the arrow in view coordinates
-    this.forceToArrowWidthFunction = new LinearFunction( arrowForceRange.min, arrowForceRange.max, 1, options.maxArrowWidth, false );
+    this.forceToArrowWidthFunction = new LinearFunction( arrowForceRange.min, arrowForceRange.max, minArrowLength, options.maxArrowWidth, false );
 
     // @private - when the force is below the typical arrow range, width of the arrow is mapped from 0 to 1
-    this.forceToArrowWidthMinFunction = new LinearFunction( 0, arrowForceRange.min, 0, 1, false );
+    // this.forceToArrowWidthMinFunction = new LinearFunction( 0, arrowForceRange.min, 0, 1, false );
 
     // @public (read-only) - for layout, the label for the arrow
     this.arrowText = new RichText( options.title, {
@@ -106,12 +107,12 @@ define( function( require ) {
         valueSign *= -1;
       }
       var absValue = Math.abs( value );
-      if ( absValue < this.arrowForceRange.min ) {
-        arrowLengthMultiplier = this.forceToArrowWidthMinFunction( absValue );
-      }
-      else {
+      // if ( absValue < this.arrowForceRange.min ) {
+      //   arrowLengthMultiplier = this.forceToArrowWidthMinFunction( absValue );
+      // }
+      // else {
         arrowLengthMultiplier = this.forceToArrowWidthFunction( absValue );
-      }
+      // }
 
       if ( this.defaultDirection === 'right' ) {
         arrowLengthMultiplier *= -1;

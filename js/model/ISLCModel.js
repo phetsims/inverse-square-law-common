@@ -61,6 +61,9 @@ define( function( require ) {
     // @private
     this.minSeparationBetweenObjects = options.minSeparationBetweenObjects;
 
+    // @private
+    this.forceConstant = forceConstant;
+
     // @public - emits an event when the model is updated in by step
     this.stepEmitter = new Emitter();
     
@@ -75,8 +78,8 @@ define( function( require ) {
        function( v1, v2, x1, x2 ) {
          var distance = Math.abs( x2 - x1 );
 
-         assert && assert( distance > 0, 'must have non zero distance between objects' );
-           return forceConstant * v1 * v2 / ( distance * distance );
+         
+           return self.calculateForce( v1, v2, distance );
        }
     );
 
@@ -153,6 +156,33 @@ define( function( require ) {
 
       // broadcast a message that we have updated the model
       this.stepEmitter.emit();
+    },
+
+    getMinForce: function () {
+      var maxDistance = Math.abs( this.rightObjectBoundary - this.leftObjectBoundary );
+
+      // Since we're checking for magnitude, negative values for charges will need
+      // to be set to zero.
+      var minValue = this.object1.valueRange.min < 0 ? 0 : this.object1.valueRange.min;
+
+      // ensure we always return a positive force value or zero
+      return Math.abs( this.calculateForce( minValue, minValue, maxDistance ) );
+    },
+
+    getMaxForce: function () {
+      var maxValue = this.object1.valueRange.max;
+      return Math.abs( this.calculateForce( maxValue, maxValue, this.getMinDistance( maxValue ) ) );
+    },
+
+    getMinDistance: function( value ) {
+      // calculate radius for masses and charges at maximum mass/charge
+      var minRadius = this.object1.calculateRadius( value );
+      return ( 2 * minRadius ) + this.minSeparationBetweenObjects;
+    },
+
+    calculateForce: function( v1, v2, distance ) {
+      assert && assert( distance > 0, 'must have non zero distance between objects' );
+      return this.forceConstant * v1 * v2 / ( distance * distance );
     },
 
     /**
