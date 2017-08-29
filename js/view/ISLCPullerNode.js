@@ -17,6 +17,7 @@ define( function( require ) {
   var LinearFunction = require('DOT/LinearFunction');
   var Node = require( 'SCENERY/nodes/Node' );
   var Shape = require( 'KITE/Shape' );
+  var Circle = require( 'SCENERY/nodes/Circle' );
   var Path = require( 'SCENERY/nodes/Path' );
   var Vector2 = require( 'DOT/Vector2' );
 
@@ -87,6 +88,10 @@ define( function( require ) {
   var pushImage29 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pusher_29.png' );
   var pushImage30 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pusher_30.png' );
 
+  // constants
+  var PUSH_IMAGE_SCALE = 0.45;
+  var PULL_IMAGE_SCALE = 0.1125;
+
   var pullImages = [ pullImage0, pullImage1, pullImage2, pullImage3, pullImage4, pullImage5, pullImage6, pullImage7,
     pullImage8, pullImage9, pullImage10, pullImage11, pullImage12, pullImage13, pullImage14, pullImage15, pullImage16,
     pullImage17, pullImage18, pullImage19, pullImage20, pullImage21, pullImage22, pullImage23, pullImage24, pullImage25,
@@ -111,6 +116,8 @@ define( function( require ) {
     // REVIEW: This node doesn't pass options to Node, cannot 
     options = _.extend( { 
       ropeLength: 50,
+      shadowMinWidth: 32,
+      shadowMaxWidth: 50,
       attractNegative: true,     // if true, add pusher images
       displayShadow: true,
       tandem: tandem,
@@ -127,45 +134,41 @@ define( function( require ) {
     // if in coulomb's law sim, add pusher and zero force images in proper order
     if (options.attractNegative) {
       this.pullerPusherImages = pushImages.concat( zeroForceImage ).concat( pullImages );
-
       this.zeroForceIndex = 31;
     }
 
     // function that maps the visible image to the model force value
     var forceToImage = new LinearFunction( forceRange.min, forceRange.max, 0, this.pullerPusherImages.length - 1, true );
 
+    // function that maps the size of the shadow to the force value
+    var forceToShadowWidth = new LinearFunction( forceRange.min, forceRange.max, options.shadowMinWidth, options.shadowMaxWidth, true );
+
     var pullerGroupNode = new Node( {
-      x: -options.ropeLength,
       tandem: tandem.createTandem( 'pullerGroupNode' )
     } );
+    var pullerNodeGroupTandem = tandem.createGroupTandem( 'node' );
+
+    // the optional shadow node under the 
+    var shadowNode = new Circle( 10, {
+      fill: '#777',
+      scale: new Vector2( 1, 0.20 ),
+      tandem: tandem.createTandem( 'shadowNode' )
+    } );
+
     var images = [];
     var i;
-    var pullerNodeGroupTandem = tandem.createGroupTandem( 'node' );
     for ( i = 0; i < this.pullerPusherImages.length; i++ ) {
       var pullerTandem = pullerNodeGroupTandem.createNextTandem();
       var image = new Image( this.pullerPusherImages[ i ], { tandem: pullerTandem.createTandem( 'image' ) } );
 
-      // puller images are much larger than pushers, thus
+      // puller images are much larger than pushers, so we need to scale it down
       if ( _.includes( pushImages, image.image ) ) {
-        image.scale(0.45, 0.45);
+        image.scale( PUSH_IMAGE_SCALE,  PUSH_IMAGE_SCALE);
       } else {
-        image.scale(0.1125, 0.1125);
+        image.scale( PULL_IMAGE_SCALE, PULL_IMAGE_SCALE);
       }
 
-      var pullerImageChildren = [ 
-        new Path( Shape.circle( 0, 0, 10 ), {
-          fill: '#777',
-          scale: new Vector2( image.width / 25, 0.25 ),
-          x: image.width / 1.8,
-          y: image.height,
-          tandem: pullerTandem.createTandem( 'shadowNode' )
-        } ),
-        image 
-      ];
-
-      if ( !options.displayShadow ) {
-        pullerImageChildren[ 0 ].setVisible( false ); 
-      }
+      var pullerImageChildren = [ image ];
 
       images.push( new Node( {
         children: pullerImageChildren,
@@ -182,17 +185,19 @@ define( function( require ) {
     // set the layout for the images
     for ( i = 0; i < this.pullerPusherImages.length; i++ ) {
       pullerGroupNode.addChild( images[ i ] );
-      images[ i ].bottom = 44;
+      images[ i ].bottom = 42;
       images[ i ].right = -options.ropeLength;
       images[ i ].setVisible( false );
 
-      // the pullImages grow in width as they animate, so make sure that they are still grabbing
-      // the rope
-      if ( _.includes( pullImages, images[ i ].children[ 1 ].image ) ) {
+      // the pullImages grow in width as they animate, but their hands stay in the same position, so make sure that
+      // they are still grabbing the rope
+      if ( _.includes( pullImages, images[ i ].children[ 0 ].image ) ) {
         images[ i ].right += 0.3 * images[ i ].width;
       }
     }
 
+    //  shadow first so it is behind the pullers
+    options.displayShadow && this.addChild( shadowNode );
     this.addChild( pullerGroupNode );
 
     // function select image
@@ -215,6 +220,11 @@ define( function( require ) {
       }
 
       pullerGroupNode.x = -offsetX;
+
+      // scale the shadow and place it under the visible image
+      shadowNode.radius = forceToShadowWidth( force ) / 2;
+      shadowNode.right = images[ index ].right - offsetX - 4;
+      shadowNode.centerY = images[ index ].bottom;
     };
   }
 
