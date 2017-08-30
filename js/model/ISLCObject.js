@@ -66,9 +66,12 @@ define( function( require ) {
       { tandem: tandem.createTandem( 'radiusProperty' ), phetioValueType: TNumber( { units: 'meters' } ) }
     );
 
-    // @public - property to check if the object is being dragged by the user
+    // @public - flag to check if the object is being dragged by the user
     //           set in the drag handler
-    this.isDragger = false;
+    this.isDragging = false;
+
+    // @public - flag to check whether object's radius was updated, used to determine positioning
+    this.radiusLastChanged = false;
 
     this.valueRange = valueRange;
   }

@@ -228,7 +228,7 @@ define( function( require ) {
       start: function( event ) {
         clickOffset = dragNode.globalToParentPoint( event.pointer.point ).x - event.currentTarget.x;
         objectModel.isDragging = true;
-        model.toggleDraggingObject( objectModel );
+        // model.toggleDraggingObject( objectModel );
       },
       drag: function( event ) {
 
@@ -245,6 +245,9 @@ define( function( require ) {
 
         // snapToGrid method dynamically checks whether to snap or not
         objectModel.positionProperty.set( model.snapToGrid( x ) );
+      },
+      end: function( event ) {
+        objectModel.isDragging = false;
       },
       tandem: tandem.createTandem( 'objectDragHandler' )
     } ) );

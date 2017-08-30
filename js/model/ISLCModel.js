@@ -83,14 +83,15 @@ define( function( require ) {
        }
     );
 
-    Property.multilink( [
-      this.object1.radiusProperty,
-      this.object2.radiusProperty ],
-      function ( object1Radius, object2Radius ) {
-        self.object1.isDragging = false;
-        self.object2.isDragging = false;
-      }
-    );
+    this.object1.radiusProperty.link( function( radius ) {
+      self.object1.radiusLastChanged = true;
+      self.toggleRadiusLastChangedObject( self.object1 );
+    } );
+
+    this.object2.radiusProperty.link( function( radius ) {
+      self.object2.radiusLastChanged = true;
+      self.toggleRadiusLastChangedObject( self.object2 );
+    } );
   }
 
   inverseSquareLawCommon.register( 'ISLCModel', ISLCModel );
@@ -123,22 +124,9 @@ define( function( require ) {
       locationMass1 = Math.min( locationMass1, maxPositionObject1 );
       locationMass2 = Math.max( minPositionObject2, locationMass2 );
 
-      // round to the nearest thousandths so that very small changes in distance do not show up as changes during
-      // these corrections
-      // locationMass1 = Util.toFixedNumber( locationMass1, DISTANCE_DECIMAL_PRECISION );
-      // locationMass2 = Util.toFixedNumber( locationMass2, DISTANCE_DECIMAL_PRECISION );
-
       // // if objects are limited to a certain precision, round position values to that precision
       locationMass1 = this.snapToGrid( locationMass1 );
       locationMass2 = this.snapToGrid( locationMass2 );
-
-      // only update the locations if they have changed
-      // if ( this.object1.positionProperty.get() !== locationMass1 ) {
-        
-      // }
-      // if ( this.object2.positionProperty.get() !== locationMass2 ) {
-        
-      // }
 
       if ( this.object1.isDragging ) {
         this.object1.positionProperty.set( locationMass1 );
@@ -146,13 +134,23 @@ define( function( require ) {
         this.object2.positionProperty.set( locationMass2 );
       } else {
         // neither object is dragging, radius must have changed
-        this.object1.positionProperty.set( locationMass1 );
-        this.object2.positionProperty.set( locationMass2 );
+        if ( this.object1.radiusLastChanged ) {
+          if ( locationMass2 !== maxX ) {
+            // object2 is not at the edge update its position
+            this.object2.positionProperty.set( locationMass2 );
+          } else {
+            // object2 is at the edge update object1 position
+            this.object1.positionProperty.set( locationMass1 );
+          }
+        } else if ( this.object2.radiusLastChanged ) {
+          if ( locationMass1 !== minX ) {
+            // object1 is not at boundary, update position
+            this.object1.positionProperty.set( locationMass1 );
+          } else {
+            this.object2.positionProperty.set( locationMass2 );
+          }
+        }
       }
-
-      // Force might not have been changed but positions might have changed, therefore to ensure everything is in
-      // bounds inside the view
-      // this.forceProperty.notifyListenersStatic();
 
       // broadcast a message that we have updated the model
       this.stepEmitter.emit();
@@ -268,15 +266,15 @@ define( function( require ) {
     },
 
     /**
-     * Switches between which object is the 'dragging' object. Used to lock the non-dragging object's position.
+     * Switches between which object's radius was most recently updated. Used in the logic for updating object positions.
      * @param  {ISLObject} object
      * @return {void}
      */
-    toggleDraggingObject: function( object ) {
+    toggleRadiusLastChangedObject: function( object ) {
       if ( object === this.object1 ) {
-        this.object2.isDragging = !this.object1.isDragging;
+        this.object2.radiusLastChanged = !this.object1.radiusLastChanged;
       } else if ( object === this.object2 ) {
-        this.object1.isDragging = !this.object2.isDragging;
+        this.object1.radiusLastChanged = !this.object2.radiusLastChanged;
       }
     },
 
