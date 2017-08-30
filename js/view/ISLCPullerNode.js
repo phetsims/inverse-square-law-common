@@ -148,7 +148,7 @@ define( function( require ) {
     } );
     var pullerNodeGroupTandem = tandem.createGroupTandem( 'node' );
 
-    // the optional shadow node under the 
+    // the optional shadow node under the pullers - a circle scaled down vertically to look eliptical
     var shadowNode = new Circle( 10, {
       fill: '#777',
       scale: new Vector2( 1, 0.20 ),
@@ -159,21 +159,17 @@ define( function( require ) {
     var i;
     for ( i = 0; i < this.pullerPusherImages.length; i++ ) {
       var pullerTandem = pullerNodeGroupTandem.createNextTandem();
-      var image = new Image( this.pullerPusherImages[ i ], { tandem: pullerTandem.createTandem( 'image' ) } );
+      var pullerImage = new Image( this.pullerPusherImages[ i ], { tandem: pullerTandem.createTandem( 'pullerImage' ) } );
 
       // puller images are much larger than pushers, so we need to scale it down
-      if ( _.includes( pushImages, image.image ) ) {
-        image.scale( PUSH_IMAGE_SCALE,  PUSH_IMAGE_SCALE);
-      } else {
-        image.scale( PULL_IMAGE_SCALE, PULL_IMAGE_SCALE);
+      if ( _.includes( pushImages, pullerImage.image ) ) {
+        pullerImage.scale( PUSH_IMAGE_SCALE,  PUSH_IMAGE_SCALE);
+      }
+      else {
+        pullerImage.scale( PULL_IMAGE_SCALE, PULL_IMAGE_SCALE);
       }
 
-      var pullerImageChildren = [ image ];
-
-      images.push( new Node( {
-        children: pullerImageChildren,
-        tandem: pullerTandem
-      } ) );
+      images.push( pullerImage );
     }
 
     pullerGroupNode.addChild( new Path( Shape.lineSegment( -options.ropeLength, 0, 0, 0 ), {
@@ -191,7 +187,7 @@ define( function( require ) {
 
       // the pullImages grow in width as they animate, but their hands stay in the same position, so make sure that
       // they are still grabbing the rope
-      if ( _.includes( pullImages, images[ i ].children[ 0 ].image ) ) {
+      if ( _.includes( pullImages, images[ i ].image ) ) {
         images[ i ].right += 0.3 * images[ i ].width;
       }
     }
