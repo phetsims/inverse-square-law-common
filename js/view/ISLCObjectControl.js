@@ -35,8 +35,7 @@ define( function( require ) {
   function ISLCObjectControl( titleString, unitString, objectProperty, valueRange, tandem, options ) {
 
     // major ticks
-    var tickLabelOptions = { pickable: false };
-
+    var tickLabelOptions = options.tickLabelOptions ? _.extend( { pickable: false }, options.tickLabelOptions ) : { pickable: false };
     options = _.extend( {
       fill: '#EDEDED',
       xMargin: 10,
@@ -44,7 +43,7 @@ define( function( require ) {
       // minWidth: 224,
       resize: false,
       align: 'right',
-      tandem: tandem,
+
       titleFont: new PhetFont( options.titleFontSize ),
       valueFont: new PhetFont( options.valueFontSize ),
 
@@ -90,7 +89,7 @@ define( function( require ) {
       options.majorTicks.push(tick);
     }
 
-    var optionsFilter = ['fill', 'xMargin', 'yMargin', 'ressize', 'align', 'right', 'top'];
+    var optionsFilter = ['fill', 'xMargin', 'yMargin', 'resize', 'align', 'right', 'top'];
 
     var panelOptions = _.pick(options, optionsFilter);
 
