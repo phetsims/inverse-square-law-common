@@ -161,9 +161,13 @@ define( function( require ) {
           }
 
           if (this.scientificNotationMode) {
-            var notationObject = ScientificNotationNode.toScientificNotation( forceValue, {mantissaDecimalPlaces: 2} );
+            var notationObject = ScientificNotationNode.toScientificNotation( forceValue, { mantissaDecimalPlaces: 2 } );
 
-            formattedString = notationObject.mantissa + ' X 10<sup>' + notationObject.exponent + '</sup>';
+            formattedString = notationObject.mantissa;
+
+            if ( Math.abs( forceValue ) >= 10 ) {
+              formattedString += ' X 10<sup>' + notationObject.exponent + '</sup>';
+            }
           }
 
           this.arrowText.text = StringUtils.format( forceDescriptionPatternTargetSourceValueString, this.label, this.otherObjectLabel, formattedString );
