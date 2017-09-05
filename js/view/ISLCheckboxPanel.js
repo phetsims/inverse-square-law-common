@@ -67,8 +67,7 @@ define( function( require ) {
     assert && assert( checkBoxWidth !== 0, 'checkBox width should not be zero.' );
 
     var checkboxGroup = new VerticalCheckBoxGroup( verticalCheckBoxItems, {
-      boxWidth: checkBoxWidth,
-      tandem: tandem
+      boxWidth: checkBoxWidth
     } );
 
     Panel.call( this, checkboxGroup, options );
