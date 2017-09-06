@@ -144,8 +144,6 @@ define( function( require ) {
      */
     updateLabel: function( forceValue, showValues ) {
 
-      debugger;
-
       if ( showValues ) {
         var forceStr = Util.toFixed( forceValue, this.forceReadoutDecimalPlaces );
 
