@@ -166,16 +166,8 @@ define( function( require ) {
 
             formattedString = notationObject.mantissa.toString();
 
-            // WORKAROUND
-            // ScientificNotationNode uses Util.toFixedNumber() which converts the mantissa to a float, and JS
-            // truncates trailing zeroes in floats. Below, we ensure that we always show 2 decimals of precision 
-            // when in scientific notation mode.
-            while ( formattedString.split( '.' )[ 1 ].length < precision ) {
-              formattedString += '0';
-            }
-
-            if ( Math.abs( forceValue ) >= 10 ) {
-              formattedString += ' X 10<sup>' + notationObject.exponent + '</sup>';
+            if ( notationObject.exponent !== 0 ) {
+              formattedString += ' X 10<sup>' + notationObject.exponent.toString() + '</sup>';
             }
           }
 
