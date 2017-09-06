@@ -17,7 +17,9 @@ define( function( require ) {
     // for the objects
     showGrid: {
       type: 'flag'
-    }
+    },
+
+    showMockup: { type: 'flag' }
   } );
 
   inverseSquareLawCommon.register( 'ISLQueryParameters', ISLQueryParameters );

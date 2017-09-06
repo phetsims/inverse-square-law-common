@@ -160,8 +160,8 @@ define( function( require ) {
             formattedString += forceStr.substr( i, 3 );
           }
 
-          if (this.scientificNotationMode) {
-            var notationObject = ScientificNotationNode.toScientificNotation( forceValue, {mantissaDecimalPlaces: 2} );
+          if ( this.scientificNotationMode ) {
+            var notationObject = ScientificNotationNode.toScientificNotation( forceValue, { mantissaDecimalPlaces: 2 } );
 
             formattedString = notationObject.mantissa + ' X 10<sup>' + notationObject.exponent + '</sup>';
           }

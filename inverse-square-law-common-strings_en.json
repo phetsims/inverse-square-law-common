@@ -16,5 +16,8 @@
   },
   "constantRadius": {
     "value": "Constant Radius"
+  },
+  "scientificNotation": {
+    "value": "Scientific Notation"
   }
 }

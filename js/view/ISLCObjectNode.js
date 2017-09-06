@@ -291,6 +291,18 @@ define( function( require ) {
       throw new Error( 'Update gradient must be implemented in subtypes.' );
     },
 
+    /**
+     * Sets wheter or not the readouts above the arrows use scientific notation in their display of the value.
+     *
+     * @param {boolean} useScientificNotation
+     */
+    setReadoutsInScientificNotation: function( useScientificNotation ) {
+      this.arrowNode.scientificNotationMode = useScientificNotation;
+
+      // redraw the force after updating
+      this.redrawForce();
+    },
+
     redrawForce: function() {
       this.objectCircle.setRadius( this.modelViewTransform.modelToViewDeltaX( this.objectModel.radiusProperty.get() ) );
       this.updateGradient( this.objectModel.baseColorProperty.get() );
