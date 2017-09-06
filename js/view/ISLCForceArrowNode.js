@@ -144,6 +144,8 @@ define( function( require ) {
      */
     updateLabel: function( forceValue, showValues ) {
 
+      debugger;
+
       if ( showValues ) {
         var forceStr = Util.toFixed( forceValue, this.forceReadoutDecimalPlaces );
 
@@ -161,9 +163,18 @@ define( function( require ) {
           }
 
           if (this.scientificNotationMode) {
-            var notationObject = ScientificNotationNode.toScientificNotation( forceValue, { mantissaDecimalPlaces: 2 } );
+            var precision = 2;
+            var notationObject = ScientificNotationNode.toScientificNotation( forceValue, { mantissaDecimalPlaces: precision } );
 
-            formattedString = notationObject.mantissa;
+            formattedString = notationObject.mantissa.toString();
+
+            // WORKAROUND
+            // ScientificNotationNode uses Util.toFixedNumber() which converts the mantissa to a float, and JS
+            // truncates trailing zeroes in floats. Below, we ensure that we always show 2 decimals of precision 
+            // when in scientific notation mode.
+            while ( formattedString.split( '.' )[ 1 ].length < precision ) {
+              formattedString += '0';
+            }
 
             if ( Math.abs( forceValue ) >= 10 ) {
               formattedString += ' X 10<sup>' + notationObject.exponent + '</sup>';
