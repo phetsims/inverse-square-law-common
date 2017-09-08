@@ -27,21 +27,21 @@ define( function( require ) {
     options = _.extend( {
       fill: 'rgb(0,255,0)',
       stroke: null,
-      headHeight: 2,
-      headWidth: 3,
-      tailWidth: 0.75,
-      lineWidth: 0.75,
+      headHeight: 4,
+      headWidth: 5,
+      tailWidth: 2,
+      lineWidth: 1,
       doubleHead: true
     }, options );
 
     ArrowNode.call( this, 0, 100, width, 100, options );
 
     // create left and right end lines
-    var endLinesBottom = this.localBounds.maxY + 1.5;
-    var endLinesTop = endLinesBottom - 6;
+    var endLinesBottom = this.localBounds.maxY + 2.5;
+    var endLinesTop = endLinesBottom - 10;
     var endLinesOptions = {
       stroke: options.fill,
-      lineWidth: 0.75
+      lineWidth: 1.25
     };
 
     var leftEndLine  = new Line(         0, endLinesBottom,         0, endLinesTop, endLinesOptions );
@@ -52,7 +52,7 @@ define( function( require ) {
 
     var legendLabel = new Text( labelString, {
       fill: options.fill,
-      fontSize: 8,
+      fontSize: 14,
       bottom: this.localBounds.top - 1,
       centerX: this.localBounds.centerX
     } );
