@@ -68,12 +68,13 @@ define( function( require ) {
     this.scientificNotationMode = options.defaultScientificNotationMode;
     this.attractNegative = options.attractNegative;
 
-    var minArrowLength = arrowForceRange.min === 0 ? 0 : 1;
+    // get a new higher min
+    this.augmentedMin = ( ( arrowForceRange.max - arrowForceRange.min ) * 0.00003 ) + arrowForceRange.min;
     // @private - maps the force value to the desired width of the arrow in view coordinates
-    this.forceToArrowWidthFunction = new LinearFunction( arrowForceRange.min, arrowForceRange.max, minArrowLength, options.maxArrowWidth, false );
+    this.forceToArrowWidthFunction = new LinearFunction( this.augmentedMin, arrowForceRange.max, 1.5, options.maxArrowWidth * 2, false );
 
     // @private - when the force is below the typical arrow range, width of the arrow is mapped from 0 to 1
-    // this.forceToArrowWidthMinFunction = new LinearFunction( 0, arrowForceRange.min, 0, 1, false );
+    this.smallForceToArrowWidthFunction = new LinearFunction( 0, this.augmentedMin, 0, 1.5, false );
 
     // @public (read-only) - for layout, the label for the arrow
     this.arrowText = new RichText( options.title, {
@@ -107,15 +108,19 @@ define( function( require ) {
         valueSign *= -1;
       }
       var absValue = Math.abs( value );
-      // if ( absValue < this.arrowForceRange.min ) {
-      //   arrowLengthMultiplier = this.forceToArrowWidthMinFunction( absValue );
-      // }
-      // else {
+
+      if ( absValue < this.augmentedMin ) {
+        arrowLengthMultiplier = this.smallForceToArrowWidthFunction( absValue );
+      } else {
         arrowLengthMultiplier = this.forceToArrowWidthFunction( absValue );
-      // }
+      }
 
       if ( this.defaultDirection === 'right' ) {
         arrowLengthMultiplier *= -1;
+      }
+
+      if ( value === 0 ) {
+        arrowLengthMultiplier = 0;
       }
 
       this.setTailAndTip( 0, 0, valueSign * arrowLengthMultiplier * ARROW_LENGTH, 0 );
