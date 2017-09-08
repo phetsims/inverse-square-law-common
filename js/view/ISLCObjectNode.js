@@ -27,7 +27,7 @@ define( function( require ) {
   var RangeWithValue = require( 'DOT/RangeWithValue' );
   var Shape = require( 'KITE/Shape' );
   var Path = require( 'SCENERY/nodes/Path' );
-  var Text = require( 'SCENERY/nodes/Text' );
+  var RichText = require( 'SCENERY/nodes/RichText' );
 
   // constants
   var LABEL_MAX_WIDTH = 20; // empirically determined through testing with long strings
@@ -155,7 +155,7 @@ define( function( require ) {
     var labelTop = 4;
 
     // add the label shadow, added first so that the 'shadow' appears under the label text
-    dragNode.addChild( new Text( options.label, {
+    dragNode.addChild( new RichText( options.label, {
       font: options.labelFont,
       fill: options.labelShadowFill,
       pickable: false,
@@ -166,7 +166,7 @@ define( function( require ) {
     } ) );
 
     // add the label
-    dragNode.addChild( new Text( options.label, {
+    dragNode.addChild( new RichText( options.label, {
       font: options.labelFont,
       fill: options.labelFill,
       pickable: false,
