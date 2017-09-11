@@ -10,9 +10,9 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var Color = require( 'SCENERY/util/Color' );
   var inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
   var Range = require( 'DOT/Range' );
-  var Color = require( 'SCENERY/util/Color' );
 
   // constants
   var MIN_MASS = 1; // kg

@@ -9,12 +9,12 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var VerticalCheckBoxGroup = require( 'SUN/VerticalCheckBoxGroup' );
-  var inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  var inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
   var Panel = require( 'SUN/Panel' );
+  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Text = require( 'SCENERY/nodes/Text' );
+  var VerticalCheckBoxGroup = require( 'SUN/VerticalCheckBoxGroup' );
 
   // strings
   // var constantRadiusString = require( 'string!GRAVITY_FORCE_LAB/constantRadius' );

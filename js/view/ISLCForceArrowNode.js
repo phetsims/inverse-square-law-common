@@ -11,12 +11,12 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var RichText = require( 'SCENERY/nodes/RichText' );
+  var ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
   var inherit = require( 'PHET_CORE/inherit' );
   var inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
-  var ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
-  var Util = require( 'DOT/Util' );
+  var RichText = require( 'SCENERY/nodes/RichText' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
+  var Util = require( 'DOT/Util' );
   var LinearFunction = require('DOT/LinearFunction');
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var ScientificNotationNode = require( 'SCENERY_PHET/ScientificNotationNode' );

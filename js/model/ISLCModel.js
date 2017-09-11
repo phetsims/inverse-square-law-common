@@ -9,12 +9,12 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var DerivedProperty = require( 'AXON/DerivedProperty' );
+  var Emitter = require( 'AXON/Emitter' );
+  var inherit = require( 'PHET_CORE/inherit' );
   var inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
   var Property = require( 'AXON/Property' );
-  var DerivedProperty = require( 'AXON/DerivedProperty' );
   var Util = require( 'DOT/Util' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Emitter = require( 'AXON/Emitter' );
 
   // phet-io modules
   var TBoolean = require( 'ifphetio!PHET_IO/types/TBoolean' );

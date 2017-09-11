@@ -15,23 +15,15 @@ define( function( require ) {
   var inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
   var Util = require( 'DOT/Util' );
   var LinearFunction = require('DOT/LinearFunction');
-  var Node = require( 'SCENERY/nodes/Node' );
-  var Shape = require( 'KITE/Shape' );
   var Circle = require( 'SCENERY/nodes/Circle' );
+  var Node = require( 'SCENERY/nodes/Node' );
   var Path = require( 'SCENERY/nodes/Path' );
+  var Shape = require( 'KITE/Shape' );
   var Vector2 = require( 'DOT/Vector2' );
 
   // images
   var pullImage0 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pull_figure_0.png' );
   var pullImage1 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pull_figure_1.png' );
-  var pullImage2 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pull_figure_2.png' );
-  var pullImage3 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pull_figure_3.png' );
-  var pullImage4 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pull_figure_4.png' );
-  var pullImage5 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pull_figure_5.png' );
-  var pullImage6 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pull_figure_6.png' );
-  var pullImage7 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pull_figure_7.png' );
-  var pullImage8 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pull_figure_8.png' );
-  var pullImage9 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pull_figure_9.png' );
   var pullImage10 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pull_figure_10.png' );
   var pullImage11 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pull_figure_11.png' );
   var pullImage12 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pull_figure_12.png' );
@@ -42,6 +34,7 @@ define( function( require ) {
   var pullImage17 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pull_figure_17.png' );
   var pullImage18 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pull_figure_18.png' );
   var pullImage19 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pull_figure_19.png' );
+  var pullImage2 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pull_figure_2.png' );
   var pullImage20 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pull_figure_20.png' );
   var pullImage21 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pull_figure_21.png' );
   var pullImage22 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pull_figure_22.png' );
@@ -52,20 +45,19 @@ define( function( require ) {
   var pullImage27 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pull_figure_27.png' );
   var pullImage28 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pull_figure_28.png' );
   var pullImage29 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pull_figure_29.png' );
+  var pullImage3 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pull_figure_3.png' );
   var pullImage30 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pull_figure_30.png' );
+  var pullImage4 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pull_figure_4.png' );
+  var pullImage5 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pull_figure_5.png' );
+  var pullImage6 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pull_figure_6.png' );
+  var pullImage7 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pull_figure_7.png' );
+  var pullImage8 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pull_figure_8.png' );
+  var pullImage9 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pull_figure_9.png' );
 
   var zeroForceImage = require( 'image!INVERSE_SQUARE_LAW_COMMON/zero-pull.png' );
 
   var pushImage0 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pusher_0.png' );
   var pushImage1 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pusher_1.png' );
-  var pushImage2 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pusher_2.png' );
-  var pushImage3 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pusher_3.png' );
-  var pushImage4 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pusher_4.png' );
-  var pushImage5 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pusher_5.png' );
-  var pushImage6 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pusher_6.png' );
-  var pushImage7 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pusher_7.png' );
-  var pushImage8 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pusher_8.png' );
-  var pushImage9 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pusher_9.png' );
   var pushImage10 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pusher_10.png' );
   var pushImage11 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pusher_11.png' );
   var pushImage12 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pusher_12.png' );
@@ -76,6 +68,7 @@ define( function( require ) {
   var pushImage17 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pusher_17.png' );
   var pushImage18 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pusher_18.png' );
   var pushImage19 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pusher_19.png' );
+  var pushImage2 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pusher_2.png' );
   var pushImage20 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pusher_20.png' );
   var pushImage21 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pusher_21.png' );
   var pushImage22 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pusher_22.png' );
@@ -86,7 +79,14 @@ define( function( require ) {
   var pushImage27 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pusher_27.png' );
   var pushImage28 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pusher_28.png' );
   var pushImage29 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pusher_29.png' );
+  var pushImage3 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pusher_3.png' );
   var pushImage30 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pusher_30.png' );
+  var pushImage4 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pusher_4.png' );
+  var pushImage5 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pusher_5.png' );
+  var pushImage6 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pusher_6.png' );
+  var pushImage7 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pusher_7.png' );
+  var pushImage8 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pusher_8.png' );
+  var pushImage9 = require( 'image!INVERSE_SQUARE_LAW_COMMON/pusher_9.png' );
 
   // constants
   var PUSH_IMAGE_SCALE = 0.45;

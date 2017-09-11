@@ -15,19 +15,19 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var Circle = require( 'SCENERY/nodes/Circle' );
   var inherit = require( 'PHET_CORE/inherit' );
   var inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
   var ISLCForceArrowNode = require( 'INVERSE_SQUARE_LAW_COMMON/view/ISLCForceArrowNode' );
-  var Util = require( 'DOT/Util' );
-  var Circle = require( 'SCENERY/nodes/Circle' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var ISLCPullerNode = require( 'INVERSE_SQUARE_LAW_COMMON/view/ISLCPullerNode' );
-  var RangeWithValue = require( 'DOT/RangeWithValue' );
-  var Shape = require( 'KITE/Shape' );
+  var Node = require( 'SCENERY/nodes/Node' );
   var Path = require( 'SCENERY/nodes/Path' );
+  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  var RangeWithValue = require( 'DOT/RangeWithValue' );
   var RichText = require( 'SCENERY/nodes/RichText' );
+  var Shape = require( 'KITE/Shape' );
+  var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
+  var Util = require( 'DOT/Util' );
 
   // constants
   var LABEL_MAX_WIDTH = 20; // empirically determined through testing with long strings
