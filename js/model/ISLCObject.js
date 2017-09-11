@@ -2,7 +2,7 @@
 
 /**
  * Common type for items in inverse square law sims.
- * 
+ *
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 
@@ -10,12 +10,13 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var inherit = require( 'PHET_CORE/inherit' );
-  var inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
-  var ISLCConstants = require( 'INVERSE_SQUARE_LAW_COMMON/ISLCConstants' );
+  var DerivedProperty = require( 'AXON/DerivedProperty' );
+  var NumberProperty = require( 'AXON/NumberProperty' );
   var Property = require( 'AXON/Property' );
   var Range = require( 'DOT/Range' );
-  var DerivedProperty = require( 'AXON/DerivedProperty' );
+  var inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
+  var ISLCConstants = require( 'INVERSE_SQUARE_LAW_COMMON/ISLCConstants' );
+  var inherit = require( 'PHET_CORE/inherit' );
   var Tandem = require( 'TANDEM/Tandem' );
 
   // phet-io modules
@@ -43,18 +44,17 @@ define( function( require ) {
     }, options );
 
     // @public
-    this.positionProperty = new Property( initialPosition, {
+    this.positionProperty = new NumberProperty( initialPosition, {
       tandem: tandem.createTandem( 'positionProperty' ),
-      phetioValueType: TNumber( {
-        units: 'meters',
-        range: new Range( options.leftObjectBoundary, options.rightObjectBoundary )
-      } )
+      units: 'meters',
+      range: new Range( options.leftObjectBoundary, options.rightObjectBoundary )
     } );
 
     // @public
-    this.valueProperty = new Property( initialValue, {
+    this.valueProperty = new NumberProperty( initialValue, {
       tandem: tandem.createTandem( 'valueProperty' ),
-      phetioValueType: TNumber( { units: options.tandemUnits, range: valueRange } )
+      units: options.tandemUnits,
+      range: valueRange
     } );
 
     // @public - mass radius will change with value
@@ -62,8 +62,11 @@ define( function( require ) {
       [ this.valueProperty, constantRadiusProperty ],
       function( valueProperty, constantRadius ) {
         return constantRadius ? options.constantRadius : self.calculateRadius( valueProperty );
-      },
-      { tandem: tandem.createTandem( 'radiusProperty' ), phetioValueType: TNumber( { units: 'meters' } ) }
+      }, {
+        tandem: tandem.createTandem( 'radiusProperty' ),
+        units: 'meters',
+        phetioValueType: TNumber
+      }
     );
 
     // @public - flag to check if the object is being dragged by the user
