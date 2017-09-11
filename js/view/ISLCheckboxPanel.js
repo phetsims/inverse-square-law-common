@@ -68,7 +68,7 @@ define( function( require ) {
 
     var checkboxGroup = new VerticalCheckBoxGroup( verticalCheckBoxItems, {
       boxWidth: checkBoxWidth,
-      tandem: tandem
+      tandem: tandem.createTandem( 'checkboxGroup' )
     } );
 
     Panel.call( this, checkboxGroup, options );
