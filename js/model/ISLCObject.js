@@ -15,7 +15,6 @@ define( function( require ) {
   var inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
   var ISLCConstants = require( 'INVERSE_SQUARE_LAW_COMMON/ISLCConstants' );
   var NumberProperty = require( 'AXON/NumberProperty' );
-  var Property = require( 'AXON/Property' );
   var Range = require( 'DOT/Range' );
   var Tandem = require( 'TANDEM/Tandem' );
 
