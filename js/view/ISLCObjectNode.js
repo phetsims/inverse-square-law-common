@@ -71,7 +71,7 @@ define( function( require ) {
 
       // options for the arrow node, passed to the ISLCForceArrowNode
       arrowLabelFill: '#fff',
-      arrowLabelFont: new PhetFont( { size: 16, weight: 900 } ),
+      arrowLabelFont: new PhetFont( { size: 16 } ),
       arrowLabelStroke: null,
       maxArrowWidth: 40,
 
