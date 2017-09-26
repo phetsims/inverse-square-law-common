@@ -172,11 +172,10 @@ define( function( require ) {
           if ( this.scientificNotationMode ) {
             var precision = 2;
             var notationObject = ScientificNotationNode.toScientificNotation( forceValue, { mantissaDecimalPlaces: precision } );
+            formattedString = notationObject.mantissa;
 
-            formattedString = notationObject.mantissa.toString();
-
-            if ( notationObject.exponent !== 0 ) {
-              formattedString += ' X 10<sup>' + notationObject.exponent.toString() + '</sup>';
+            if ( notationObject.exponent !== '0' ) {
+              formattedString += ' X 10<sup>' + notationObject.exponent + '</sup>';
             }
           }
 
