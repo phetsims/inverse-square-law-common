@@ -38,12 +38,14 @@ define( function( require ) {
       defaultScientificNotationMode: false, // whether to display number in scientific notation
       title: '', // object title
       attractNegative: true, // if true, arrows will point towards each other if forces is negative
+      lineWidth: 0.25,
 
       // label options
       otherObjectLabel: '', // label for the other object exerting a force on this object
       label: '', // label for this object
       labelFont: new PhetFont( 16 ),
       labelFill: '#fff',
+      labelStroke: null,
       forceReadoutDecimalPlaces: 12, // number of decimal places in force readout
 
       // arrow node options
@@ -80,6 +82,8 @@ define( function( require ) {
     this.arrowText = new RichText( options.title, {
       font: options.labelFont,
       fill: options.labelFill,
+      stroke: options.labelStroke,
+      lineWidth: options.lineWidth,
       maxWidth: 300, // empirically determined through testing with long strings
       y: -20,
       tandem: tandem.createTandem( 'arrowText' )

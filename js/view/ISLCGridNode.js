@@ -19,20 +19,19 @@ define( function( require ) {
 
   /**
    * @constructor
-   * @param {number} rightBoundary - right most position of object in model coordinates
-   * @param {number} leftBoundary - left most postion of object in model coordinates
    * @param {number} deltaX - position step for the object in model coordinates
    * @param {Bounds2} layoutBounds - layout bounds of the ScreenView
    * @param {ModelViewTransform2} modelViewTransform
    */
-  function ISLCGridNode( rightBoundary, leftBoundary, deltaX, layoutBounds, modelViewTransform, options ) {
+  function ISLCGridNode( deltaX, layoutBounds, modelViewTransform, options ) {
 
     options = _.extend( {
       stroke: 'rgba( 0, 0, 0, 0.6 )'
     }, options );
 
     var gridShape = new Shape();
-    var gridPosition = leftBoundary;
+    var gridPosition = modelViewTransform.viewToModelX( layoutBounds.minX );
+    var rightBoundary = modelViewTransform. viewToModelX( layoutBounds.maxX );
     while ( gridPosition <= rightBoundary ) {
 
       // grid position in view coords

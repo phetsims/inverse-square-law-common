@@ -71,7 +71,8 @@ define( function( require ) {
 
       // options for the arrow node, passed to the ISLCForceArrowNode
       arrowLabelFill: '#fff',
-      arrowLabelFont: new PhetFont( 16 ),
+      arrowLabelFont: new PhetFont( { size: 16, weight: 900 } ),
+      arrowLabelStroke: null,
       maxArrowWidth: 40,
 
       arrowColor: '#66f', // color of vertical line
@@ -81,8 +82,9 @@ define( function( require ) {
 
       arrowHeadHeight: 8,
       arrowHeadWidth: 8,
-      arrowTailWidth: 3
-
+      arrowTailWidth: 3,
+      arrowStroke: null,
+      arrowNodeLineWidth: 0.25
     }, options );
 
     Node.call( this, {
@@ -103,6 +105,7 @@ define( function( require ) {
       // label options
       labelFont: options.arrowLabelFont,
       labelFill: options.arrowLabelFill,
+      labelStroke: options.arrowLabelStroke,
 
       // arrow node options
       forceArrowHeight: options.forceArrowHeight,
@@ -112,6 +115,8 @@ define( function( require ) {
       headHeight: options.arrowHeadHeight,
       headWidth: options.arrowHeadWidth,
       tailWidth: options.arrowTailWidth,
+      stroke: options.arrowStroke,
+      lineWidth: options.arrowNodeLineWidth
     };
 
     // @private - the puller node
