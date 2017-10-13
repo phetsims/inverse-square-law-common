@@ -16,13 +16,6 @@ define( function( require ) {
   var Text = require( 'SCENERY/nodes/Text' );
   var VerticalCheckBoxGroup = require( 'SUN/VerticalCheckBoxGroup' );
 
-  // strings
-  // var constantRadiusString = require( 'string!GRAVITY_FORCE_LAB/constantRadius' );
-  // var showValuesString = require( 'string!INVERSE_SQUARE_LAW_COMMON/showValues' );
-
-  // constants
-  // var MAX_CAPTION_WIDTH = 120; // empirically determined through testing with long strings
-
   /**
    * @param {items} list of item objects to attach
    * @param {Tandem} tandem

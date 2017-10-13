@@ -57,6 +57,7 @@ define( function( require ) {
     } );
 
     // @public - mass radius will change with value
+    // since ISLCObjects are never destroyed, we do not need to dispose of this property
     this.radiusProperty = new DerivedProperty(
       [ this.valueProperty, constantRadiusProperty ],
       function( valueProperty, constantRadius ) {

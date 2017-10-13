@@ -31,19 +31,15 @@ define( function( require ) {
 
   // constants
   var LABEL_MAX_WIDTH = 20; // empirically determined through testing with long strings
-  // var OFFSET = 10; // empirically determined to make sure minimum force doesn't go to zero when rounded to 12 significant digits
+
   /**
-   * TODO: This is a lot of constructor args. Can we abstract some things out?
-   * TODO: I think the ISLCObjectNode should create the PullerNode and the ArrowNode on its own, move those back to this 
-   * file.
    * 
    * @constructor
    * @param {ISLModel} model
    * @param {ISLObjectModel} objectModel
    * @param {Bounds2} layoutBounds - bounds of the screen view containing the object
    * @param {ModelViewTransform2} modelViewTransform
-   * @param {PullerNode} pullerNode
-   * @param {ISLCForceArrowNode} arrowNode
+   * @param {Range} pullForceRange - the max and min possible force values
    * @param {Tandem} tandem
    * @param {Object} options
    */
@@ -95,6 +91,8 @@ define( function( require ) {
       inputType: 'range'
     } );
 
+    // TODO: consider a cleaner solution like an options mask, e.g. _.pick() & _.omit()
+    // see ISLCObjectControl for example
     var arrowOptions = {
       defaultDirection: options.defaultDirection,
       forceReadoutDecimalPlaces: options.forceReadoutDecimalPlaces, // number of decimal places in force readout

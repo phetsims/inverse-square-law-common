@@ -42,11 +42,7 @@ define( function( require ) {
     ISLCObject.call( this, initialMass, initialPosition, valueRange, constantRadiusProperty, tandem, options );
 
 
-    // @public - mass color is will change with value
-    // TODO: alter 'constantRadiusProperty' to better indicate the condition for which the object colors will change
-    // radius changes will be moved into the Mass object
-    // color property will be changed and updated based on a boolean value (negative vs positive for Charge and Constant Radius for Mass)
-    // brightness will be set according to the Mass/Charge magnitude
+    // @public - mass color is will change with value of constantRadiusProperty (set within sim)
     this.baseColorProperty = new DerivedProperty(
       [ this.valueProperty, constantRadiusProperty ],
       function( value, constantRadius ) {

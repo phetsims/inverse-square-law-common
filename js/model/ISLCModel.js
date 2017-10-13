@@ -82,7 +82,8 @@ define( function( require ) {
            return self.calculateForce( v1, v2, distance );
        }
     );
-
+    // when sim is reset, we only reset the position properties of each object to their initial values
+    // thus, there is no need ot dispose of the listeners below
     this.object1.radiusProperty.link( function( radius ) {
       self.object1.radiusLastChanged = true;
       self.toggleRadiusLastChangedObject( self.object1 );
@@ -282,7 +283,8 @@ define( function( require ) {
     reset: function() {
       this.showValuesProperty.reset();
 
-      // TODO: explain why the resetting order matters or change this code
+      // if the position of object2 is equal to object1's initial position, an error will result when we 
+      // reset object1's position. Thus, we need to check for that one edge case prior to reset
       if ( this.object2.positionProperty.get() === this.object1.positionProperty.initialValue ) {
         this.object2.reset();
         this.object1.reset();

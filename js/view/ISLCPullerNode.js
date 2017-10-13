@@ -196,8 +196,7 @@ define( function( require ) {
     options.displayShadow && this.addChild( shadowNode );
     this.addChild( pullerGroupNode );
 
-    // function select image
-    // TODO: move this to inherit block and document
+    // @public - set the visibility of the image corresponding to the current force value
     this.setPull = function( force, offsetX ) {
 
       if (options.attractNegative) {
@@ -226,9 +225,5 @@ define( function( require ) {
 
   inverseSquareLawCommon.register( 'ISLCPullerNode', ISLCPullerNode );
 
-  return inherit( Node, ISLCPullerNode, {}, {
-
-    // statics
-    PULL_IMAGES_COUNT: pullImages.length
-  } );
+  return inherit( Node, ISLCPullerNode );
 } );
