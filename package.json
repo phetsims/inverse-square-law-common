@@ -8,5 +8,8 @@
   },
   "devDependencies": {
     "grunt": "~1.0.0"
+  },
+  "phet": {
+    "requirejsNamespace": "INVERSE_SQUARE_LAW_COMMON"
   }
 }
