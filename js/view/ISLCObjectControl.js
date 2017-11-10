@@ -24,6 +24,8 @@ define( function( require ) {
 
   // constants
   var THUMB_SIZE = new Dimension2( 22, 42 );
+  var TITLE_MAX_WIDTH = 120;
+  var VALUE_MAX_WIDTH = 120;
 
   /**
    * @param {string} titleString
@@ -46,6 +48,8 @@ define( function( require ) {
 
       titleFont: new PhetFont( options.titleFontSize ),
       valueFont: new PhetFont( options.valueFontSize ),
+      titleMaxWidth: TITLE_MAX_WIDTH,
+      valueMaxWidth: VALUE_MAX_WIDTH,
 
       // Don't fill in the {0}, it will be filled in by NumberControl
       valuePattern: StringUtils.format( pattern0Value1UnitsString, '{0}', unitString ),
@@ -89,13 +93,21 @@ define( function( require ) {
       options.majorTicks.push(tick);
     }
 
-    var optionsFilter = ['fill', 'xMargin', 'yMargin', 'resize', 'align', 'right', 'top'];
+    var optionsFilter = ['fill', 'xMargin', 'yMargin', 'resize', 'align', 'right', 'left', 'top'];
 
     var panelOptions = _.pick(options, optionsFilter);
 
     options = _.omit(options, optionsFilter);
 
-    var numberControl = new NumberControl( titleString, objectProperty, valueRange, _.extend( { tandem: tandem.createTandem( 'numberControl' ) }, options ) );
+    var numberControl = new NumberControl( 
+                              titleString,
+                              objectProperty, 
+                              valueRange, 
+                              _.extend( { 
+                                tandem: tandem.createTandem( 'numberControl' ),
+                                valueAlign: 'center'
+                              }, 
+                              options ) );
 
     Panel.call( this, numberControl, _.extend( { tandem: tandem }, panelOptions) );
   }

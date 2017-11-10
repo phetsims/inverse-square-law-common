@@ -54,7 +54,8 @@ define( function( require ) {
       fill: options.fill,
       fontSize: 14,
       bottom: this.localBounds.top - 1,
-      centerX: this.localBounds.centerX
+      centerX: this.localBounds.centerX,
+      maxWidth: 150
     } );
 
     this.addChild( legendLabel );

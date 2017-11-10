@@ -16,6 +16,9 @@ define( function( require ) {
   var Text = require( 'SCENERY/nodes/Text' );
   var VerticalCheckBoxGroup = require( 'SUN/VerticalCheckBoxGroup' );
 
+  // constants
+  var TEXT_MAX_WIDTH = 100;
+
   /**
    * @param {items} list of item objects to attach
    * @param {Tandem} tandem
@@ -31,6 +34,7 @@ define( function( require ) {
       minWidth: 170,
       align: 'left',
       textSize: 14,
+      itemTextMaxWidth: TEXT_MAX_WIDTH,
       tandem: tandem
     }, options );
 
@@ -44,7 +48,8 @@ define( function( require ) {
         item.content,
         {
           tandem: tandem.createTandem( item.textTandemLabel ),
-          font: new PhetFont( options.textSize )
+          font: new PhetFont( options.textSize ),
+          maxWidth: options.itemTextMaxWidth
         }
       );
 

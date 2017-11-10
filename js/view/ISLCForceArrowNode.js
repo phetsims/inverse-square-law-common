@@ -136,7 +136,7 @@ define( function( require ) {
      *
      * @public
      */
-    setArrowTextPosition: function( localToParentPoint, parentToLocalBounds ){
+    setArrowTextPosition: function( localToParentPoint, parentToLocalBounds ) {
       this.arrowText.centerX = 0;
       if ( Math.floor( localToParentPoint.x - this.arrowText.width / 2 ) <= this.layoutBounds.left + TEXT_OFFSET ) {
         this.arrowText.left = parentToLocalBounds.left + TEXT_OFFSET;

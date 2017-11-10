@@ -204,15 +204,15 @@ define( function( require ) {
 
     var self = this;
 
-    objectModel.positionProperty.link( function( prop ) {
+    objectModel.positionProperty.link( function( property ) {
 
       // position this node and its force arrow with label
-      var transformedValue = modelViewTransform.modelToViewX( prop );
+      var transformedValue = modelViewTransform.modelToViewX( property );
       self.x = transformedValue;
       self.arrowNode.x = transformedValue;
 
       // update the accessible input value when the position changes
-      self.inputValue = prop;
+      self.inputValue = property;
     } );
 
     model.showValuesProperty.lazyLink( this.redrawForce.bind( this ) );
