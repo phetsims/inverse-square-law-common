@@ -18,7 +18,7 @@ define( function( require ) {
   var Util = require( 'DOT/Util' );
 
   // phet-io modules
-  var TBoolean = require( 'ifphetio!PHET_IO/types/TBoolean' );
+  var BooleanIO = require( 'ifphetio!PHET_IO/types/BooleanIO' );
 
   // constants
   // var DISTANCE_DECIMAL_PRECISION = 3; // limit precision so small changes are not propogated to the force
@@ -49,7 +49,7 @@ define( function( require ) {
     // @public
     this.showValuesProperty = new Property( true, {
       tandem: tandem.createTandem( 'showValuesProperty' ),
-      phetioType: PropertyIO( TBoolean )
+      phetioType: PropertyIO( BooleanIO )
     } );
 
     // @public
