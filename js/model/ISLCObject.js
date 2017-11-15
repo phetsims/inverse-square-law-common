@@ -17,7 +17,7 @@ define( function( require ) {
   var NumberProperty = require( 'AXON/NumberProperty' );
   var Range = require( 'DOT/Range' );
   var Tandem = require( 'TANDEM/Tandem' );
-  var TDerivedProperty = require( 'AXON/TDerivedProperty' );
+  var DerivedPropertyIO = require( 'AXON/DerivedPropertyIO' );
 
   // phet-io modules
   var TNumber = require( 'ifphetio!PHET_IO/types/TNumber' );
@@ -66,7 +66,7 @@ define( function( require ) {
       }, {
         tandem: tandem.createTandem( 'radiusProperty' ),
         units: 'meters',
-        phetioType: TDerivedProperty( TNumber )
+        phetioType: DerivedPropertyIO( TNumber )
       }
     );
 

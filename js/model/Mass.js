@@ -17,7 +17,7 @@ define( function( require ) {
   var ISLCConstants = require( 'INVERSE_SQUARE_LAW_COMMON/ISLCConstants' );
   var ISLCObject = require( 'INVERSE_SQUARE_LAW_COMMON/model/ISLCObject' );
   var TColor = require( 'SCENERY/util/TColor' );
-  var TDerivedProperty = require( 'AXON/TDerivedProperty' );
+  var DerivedPropertyIO = require( 'AXON/DerivedPropertyIO' );
 
   /**
    * @constructor
@@ -51,7 +51,7 @@ define( function( require ) {
                options.constantRadiusColor.colorUtilsBrighter( 1 - Math.abs(value) / valueRange.max ) :
                baseColor;
       },
-      { tandem: tandem.createTandem( 'baseColorProperty' ), phetioType: TDerivedProperty( TColor ) }
+      { tandem: tandem.createTandem( 'baseColorProperty' ), phetioType: DerivedPropertyIO( TColor ) }
     );
   }
 
