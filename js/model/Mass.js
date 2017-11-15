@@ -17,6 +17,7 @@ define( function( require ) {
   var ISLCConstants = require( 'INVERSE_SQUARE_LAW_COMMON/ISLCConstants' );
   var ISLCObject = require( 'INVERSE_SQUARE_LAW_COMMON/model/ISLCObject' );
   var TColor = require( 'SCENERY/util/TColor' );
+  var TDerivedProperty = require( 'AXON/TDerivedProperty' );
 
   /**
    * @constructor
@@ -33,7 +34,7 @@ define( function( require ) {
 
     options = _.extend( {
       constantRadius: ISLCConstants.CONSTANT_RADIUS, // in meters
-      constantRadiusColor: ISLCConstants.CONSTANT_RADIUS_COLOR, // 
+      constantRadiusColor: ISLCConstants.CONSTANT_RADIUS_COLOR //
     }, options );
 
     // @private
@@ -50,7 +51,7 @@ define( function( require ) {
                options.constantRadiusColor.colorUtilsBrighter( 1 - Math.abs(value) / valueRange.max ) :
                baseColor;
       },
-      { tandem: tandem.createTandem( 'baseColorProperty' ), phetioValueType: TColor }
+      { tandem: tandem.createTandem( 'baseColorProperty' ), phetioType: TDerivedProperty( TColor ) }
     );
   }
 

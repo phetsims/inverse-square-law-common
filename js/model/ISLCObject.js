@@ -17,10 +17,10 @@ define( function( require ) {
   var NumberProperty = require( 'AXON/NumberProperty' );
   var Range = require( 'DOT/Range' );
   var Tandem = require( 'TANDEM/Tandem' );
+  var TDerivedProperty = require( 'AXON/TDerivedProperty' );
 
   // phet-io modules
   var TNumber = require( 'ifphetio!PHET_IO/types/TNumber' );
-
 
   /**
    * @constructor
@@ -28,7 +28,8 @@ define( function( require ) {
    * @param {Vector2} initialPosition
    * @param {Range} valueRange
    * @param {Property.<boolean>} constantRadiusProperty
-   * @param {Object} options
+   * @param {Tandem} tandem
+   * @param {Object} [options]
    */
   function ISLCObject( initialValue, initialPosition, valueRange, constantRadiusProperty, tandem, options ) {
 
@@ -65,7 +66,7 @@ define( function( require ) {
       }, {
         tandem: tandem.createTandem( 'radiusProperty' ),
         units: 'meters',
-        phetioValueType: TNumber
+        phetioType: TDerivedProperty( TNumber )
       }
     );
 
