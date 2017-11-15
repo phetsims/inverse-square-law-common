@@ -14,7 +14,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
   var Property = require( 'AXON/Property' );
-  var TProperty = require( 'AXON/TProperty' );
+  var PropertyIO = require( 'AXON/PropertyIO' );
   var Util = require( 'DOT/Util' );
 
   // phet-io modules
@@ -49,7 +49,7 @@ define( function( require ) {
     // @public
     this.showValuesProperty = new Property( true, {
       tandem: tandem.createTandem( 'showValuesProperty' ),
-      phetioType: TProperty( TBoolean )
+      phetioType: PropertyIO( TBoolean )
     } );
 
     // @public
