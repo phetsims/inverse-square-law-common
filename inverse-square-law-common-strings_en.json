@@ -12,7 +12,7 @@
     "value": "cm"
   },
   "pattern_0value_1units": {
-    "value": "{0} {1}"
+    "value": "{{value}} {{units}}"
   },
   "constantRadius": {
     "value": "Constant Radius"

@@ -1,9 +1,10 @@
-// Copyright 2013-2015, University of Colorado Boulder
+// Copyright 2017, University of Colorado Boulder
 
 /**
  * control that allows the user to show or hide the force values
  *
- * @author Anton Ulyanov (Mlearner)
+ * @author Michael Barlow
+ * @author Jesse Greenberg
  */
 define( function( require ) {
   'use strict';

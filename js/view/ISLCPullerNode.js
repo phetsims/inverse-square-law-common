@@ -1,9 +1,11 @@
-// Copyright 2013-2015, University of Colorado Boulder
+// Copyright 2017, University of Colorado Boulder
 
 /**
- * puller view for massObject
+ * The pullers attached to the mass and charge objects. The node maintains a list of puller images that vary in 
+ * perceived pull effort. They are made visible and invisible to correspond to a given force value.
  *
- * @author Anton Ulyanov (Mlearner)
+ * @author Michael Barlow
+ * @author Jesse Greenberg
  */
 define( function( require ) {
   'use strict';

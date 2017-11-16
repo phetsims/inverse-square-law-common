@@ -1,4 +1,4 @@
-// Copyright 2013-2015, University of Colorado Boulder
+// Copyright 2017, University of Colorado Boulder
 
 /**
  * Arrow buttons, slider and text box for editing the object value amount.
@@ -52,7 +52,7 @@ define( function( require ) {
       valueMaxWidth: VALUE_MAX_WIDTH,
 
       // Don't fill in the {0}, it will be filled in by NumberControl
-      valuePattern: StringUtils.format( pattern0Value1UnitsString, '{0}', unitString ),
+      valuePattern: StringUtils.fillIn( pattern0Value1UnitsString, { value: '{0}', units: unitString } ),
       layoutFunction: NumberControl.createLayoutFunction3( { xSpacing: 10 } ),
       minorTickSpacing: 2,
       minorTickLength: 6,

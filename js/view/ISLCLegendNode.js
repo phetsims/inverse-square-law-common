@@ -1,4 +1,4 @@
-// Copyright 2013-2017, University of Colorado Boulder
+// Copyright 2017, University of Colorado Boulder
 
 /**
  * A legend graphic consisting of a double-ended arrow, two endpoint lines, and a label string.

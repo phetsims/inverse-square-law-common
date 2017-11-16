@@ -1,4 +1,4 @@
-// Copyright 2013-2015, University of Colorado Boulder
+// Copyright 2017, University of Colorado Boulder
 
 /**
  * Main model for a system of two objects that exert forces on each other.
@@ -19,9 +19,6 @@ define( function( require ) {
 
   // phet-io modules
   var BooleanIO = require( 'ifphetio!PHET_IO/types/BooleanIO' );
-
-  // constants
-  // var DISTANCE_DECIMAL_PRECISION = 3; // limit precision so small changes are not propogated to the force
 
   /**
    * @constructor
@@ -69,6 +66,7 @@ define( function( require ) {
     this.stepEmitter = new Emitter();
     
     // derived property that calculates the force based on changes to values and positions
+    // objects are never destroyed, so forceProperty does not require disposal
     this.forceProperty = new DerivedProperty(
      [
        this.object1.valueProperty,
@@ -87,12 +85,12 @@ define( function( require ) {
     // thus, there is no need ot dispose of the listeners below
     this.object1.radiusProperty.link( function( radius ) {
       self.object1.radiusLastChanged = true;
-      self.toggleRadiusLastChangedObject( self.object1 );
+      self.object2.radiusLastChanged = false;
     } );
 
     this.object2.radiusProperty.link( function( radius ) {
       self.object2.radiusLastChanged = true;
-      self.toggleRadiusLastChangedObject( self.object2 );
+      self.object1.radiusLastChanged = false;
     } );
   }
 
@@ -158,6 +156,12 @@ define( function( require ) {
       this.stepEmitter.emit();
     },
 
+    /**
+     * Helper function to for accessing and mapping force ranges in the inheriting sims' views
+     *
+     * @public
+     * @return {number} the smallest possible force magnitude
+     */
     getMinForce: function () {
       var maxDistance = Math.abs( this.rightObjectBoundary - this.leftObjectBoundary );
 
@@ -169,17 +173,40 @@ define( function( require ) {
       return Math.abs( this.calculateForce( minValue, minValue, maxDistance ) );
     },
 
+    /**
+     * Helper function to for accessing and mapping force ranges in the inheriting sims' views
+     *
+     * @public
+     * @return {number} the largest possible force magnitude
+     */
     getMaxForce: function () {
       var maxValue = this.object1.valueRange.max;
       return Math.abs( this.calculateForce( maxValue, maxValue, this.getMinDistance( maxValue ) ) );
     },
 
+    /**
+     * Get the minimum possible separation between the objects' centers given a defined value for each of their
+     * main properties. 
+     *
+     * @public
+     * @param  {number} value - the object's mass or charges
+     * @return {number} the distance between the objects' centers
+     */
     getMinDistance: function( value ) {
       // calculate radius for masses and charges at maximum mass/charge
       var minRadius = this.object1.calculateRadius( value );
       return ( 2 * minRadius ) + this.minSeparationBetweenObjects;
     },
 
+    /**
+     * Helper function to calculate the force within the model
+     *
+     * @public
+     * @param  {number} v1 - the first object's mass or charge
+     * @param  {number} v2 - the second object's mass or charge
+     * @param  {number} distance - the distance between the objects' centers
+     * @return {number} the force between the two objects
+     */
     calculateForce: function( v1, v2, distance ) {
       assert && assert( distance > 0, 'must have non zero distance between objects' );
       return this.forceConstant * v1 * v2 / ( distance * distance );
@@ -200,8 +227,9 @@ define( function( require ) {
 
     /**
      * Get the absolute maximum horizontal position for an object, relative to the object's center.
-     * 
-     * @param  {} object
+     *
+     * @private
+     * @param  {ISLCObject} object
      * @return {number}
      */
     getObjectMaxPosition: function( object ) {
@@ -224,7 +252,8 @@ define( function( require ) {
 
     /**
      * Get the absolute minimum horizontal position for an object.
-     * 
+     *
+     * @private
      * @param  {ISLCObject} object 
      * @return {number}
      */
@@ -265,19 +294,6 @@ define( function( require ) {
       snappedPosition = Math.max( snappedPosition, this.leftObjectBoundary );
 
       return snappedPosition;
-    },
-
-    /**
-     * Switches between which object's radius was most recently updated. Used in the logic for updating object positions.
-     * @param  {ISLObject} object
-     * @return {void}
-     */
-    toggleRadiusLastChangedObject: function( object ) {
-      if ( object === this.object1 ) {
-        this.object2.radiusLastChanged = !this.object1.radiusLastChanged;
-      } else if ( object === this.object2 ) {
-        this.object1.radiusLastChanged = !this.object2.radiusLastChanged;
-      }
     },
 
     // @public

@@ -26,11 +26,16 @@ define( function( require ) {
   var forceDescriptionPatternTargetSourceValueString = require( 'string!INVERSE_SQUARE_LAW_COMMON/force-description-pattern-target_source_value' );
 
   // constants
-  // TODO: these will probably have to be changed for different sims?
   var ARROW_LENGTH = 8; // empirically determined
   var TEXT_OFFSET = 5; // empirically determined to make sure text does not go out of bounds
 
-  // TODO: JSDOC
+  /**
+   * @constructor
+   * @param {Range} arrowForceRange - the range in force magnitude
+   * @param {Bounds2} layoutBounds
+   * @param {Tandem} tandem
+   * @param {Object} options
+   */
   function ISLCForceArrowNode( arrowForceRange, layoutBounds, tandem, options ) {
 
     options = _.extend( {

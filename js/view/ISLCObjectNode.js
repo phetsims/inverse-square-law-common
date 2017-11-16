@@ -204,6 +204,8 @@ define( function( require ) {
 
     var self = this;
 
+    // on reset, no objects are destroyed and properties are set to initial values
+    // no need to dispose of any of the below listeners
     objectModel.positionProperty.link( function( property ) {
 
       // position this node and its force arrow with label
@@ -306,6 +308,9 @@ define( function( require ) {
       this.redrawForce();
     },
 
+    /**
+     * Updates the radius, arrow length & direction, force readout, and the visible puller image.
+     */
     redrawForce: function() {
       this.objectCircle.setRadius( this.modelViewTransform.modelToViewDeltaX( this.objectModel.radiusProperty.get() ) );
       this.updateGradient( this.objectModel.baseColorProperty.get() );

@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * Common type for items in inverse square law sims.
+ * Common type for model items in inverse square law sims.
  *
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
