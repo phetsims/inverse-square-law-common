@@ -15,6 +15,7 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var AccessibleSlider = require( 'SUN/accessibility/AccessibleSlider' );
   var Circle = require( 'SCENERY/nodes/Circle' );
   var inherit = require( 'PHET_CORE/inherit' );
   var inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
@@ -23,11 +24,11 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var Path = require( 'SCENERY/nodes/Path' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  var Property = require( 'AXON/Property' );
   var RangeWithValue = require( 'DOT/RangeWithValue' );
   var RichText = require( 'SCENERY/nodes/RichText' );
   var Shape = require( 'KITE/Shape' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
-  var Util = require( 'DOT/Util' );
 
   // constants
   var LABEL_MAX_WIDTH = 20; // empirically determined through testing with long strings
@@ -84,11 +85,7 @@ define( function( require ) {
     }, options );
 
     Node.call( this, {
-      tandem: tandem,
-
-      // a11y
-      tagName: 'input',
-      inputType: 'range'
+      tandem: tandem
     } );
 
     // TODO: consider a cleaner solution like an options mask, e.g. _.pick() & _.omit()
@@ -212,9 +209,6 @@ define( function( require ) {
       var transformedValue = modelViewTransform.modelToViewX( property );
       self.x = transformedValue;
       self.arrowNode.x = transformedValue;
-
-      // update the accessible input value when the position changes
-      self.inputValue = property;
     } );
 
     model.showValuesProperty.lazyLink( this.redrawForce.bind( this ) );
@@ -257,17 +251,23 @@ define( function( require ) {
       tandem: tandem.createTandem( 'objectDragHandler' )
     } ) );
 
-    // a11y
-    this.setAccessibleAttribute( 'step', options.snapToNearest );
-
-    this.addAccessibleInputListener( {
-      input: function( event ) {
-
-        // input value is a string, convert to number
-        var newValue = Util.toFixedNumber( self.inputValue, 0 );
-        self.objectModel.positionProperty.set( newValue );
-      }
+    // a11y - range for the accessible slider, will change whenever model force changes
+    var sliderRangeProperty = new Property( self.objectModel.positionProperty.range );
+    model.forceProperty.link( function() {
+      var maxPosition = model.getObjectMaxPosition( objectModel );
+      var minPosition = model.getObjectMinPosition( objectModel );
+      sliderRangeProperty.set( new RangeWithValue( minPosition, maxPosition ) );
     } );
+
+    // options for making this node act like an accessible slider
+    var sliderOptions = {
+      keyboardStep: options.snapToNearest,
+      shiftKeyboardStep: options.snapToNearest,
+      pageKeyboardStep: ( sliderRangeProperty.get().max - sliderRangeProperty.get().min ) / 10
+    };
+
+    // initialize features that make this node act like a range input
+    this.initializeAccessibleSlider( self.objectModel.positionProperty, sliderRangeProperty, new Property( true ), sliderOptions );
 
     this.objectModel.radiusProperty.link( function( radius ) {
       self.focusHighlight = Shape.bounds( dragNode.bounds.dilated( 5 ) );
@@ -290,7 +290,7 @@ define( function( require ) {
 
   inverseSquareLawCommon.register( 'ISLCObjectNode', ISLCObjectNode );
 
-  return inherit( Node, ISLCObjectNode, {
+  inherit( Node, ISLCObjectNode, {
 
     updateGradient: function() {
       throw new Error( 'Update gradient must be implemented in subtypes.' );
@@ -328,4 +328,9 @@ define( function( require ) {
       this.pullerNode.setPull( this.model.forceProperty.get(), this.objectCircle.width / 2 );
     }
   } );
+
+  // mix in accessibility features, this Node behaves like a range input
+  AccessibleSlider.mixInto( ISLCObjectNode );
+
+  return ISLCObjectNode;
 } );
