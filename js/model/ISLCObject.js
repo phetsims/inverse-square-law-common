@@ -77,6 +77,7 @@ define( function( require ) {
     // @public - flag to check whether object's radius was updated, used to determine positioning
     this.radiusLastChanged = false;
 
+    // @public
     this.valueRange = valueRange;
   }
 

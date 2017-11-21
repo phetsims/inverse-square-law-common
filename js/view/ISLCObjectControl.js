@@ -24,14 +24,16 @@ define( function( require ) {
 
   // constants
   var THUMB_SIZE = new Dimension2( 22, 42 );
-  var TITLE_MAX_WIDTH = 120;
+  var TITLE_MAX_WIDTH = 120; // max widths are set empirically to handle long strings
   var VALUE_MAX_WIDTH = 120;
 
   /**
    * @param {string} titleString
+   * @param {string} unitString
    * @param {Property.<number>} objectProperty
    * @param {Range} valueRange
    * @param {Tandem} tandem
+   * @param {Object} options
    * @constructor
    */
   function ISLCObjectControl( titleString, unitString, objectProperty, valueRange, tandem, options ) {

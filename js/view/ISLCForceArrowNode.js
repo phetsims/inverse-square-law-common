@@ -75,8 +75,9 @@ define( function( require ) {
     this.scientificNotationMode = options.defaultScientificNotationMode;
     this.attractNegative = options.attractNegative;
 
-    // get a new higher min
+    // @private - get a new higher min
     this.augmentedMin = ( ( arrowForceRange.max - arrowForceRange.min ) * 0.00003 ) + arrowForceRange.min;
+
     // @private - maps the force value to the desired width of the arrow in view coordinates
     this.forceToArrowWidthFunction = new LinearFunction( this.augmentedMin, arrowForceRange.max, 1.5, options.maxArrowWidth * 2, false );
 

@@ -69,7 +69,7 @@ define( function( require ) {
     );
     this.addChild( ruler );
 
-    // ruler node is never destroyed, no listener disposal necessary
+    // @public - ruler node is never destroyed, no listener disposal necessary
     model.rulerPositionProperty.link( function( value ) {
       ruler.center = modelViewTransform.modelToViewPosition( value );
     } );

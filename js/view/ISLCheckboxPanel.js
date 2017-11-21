@@ -21,10 +21,10 @@ define( function( require ) {
   var TEXT_MAX_WIDTH = 100;
 
   /**
+   * @constructor
    * @param {items} list of item objects to attach
    * @param {Tandem} tandem
    * @param {Object} [options]
-   * @constructor
    */
   function ISLCheckboxPanel( items, tandem, options ) {
 

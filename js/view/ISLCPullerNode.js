@@ -94,6 +94,8 @@ define( function( require ) {
   var PUSH_IMAGE_SCALE = 0.45;
   var PULL_IMAGE_SCALE = 0.1125;
 
+  // for all images, the appended number corresponds to their 'level of effort', e.g. pullImage1 shows less pull than pullImage22
+  // this is important for mapping force values to the index of the corresponding pull effort
   var pullImages = [ pullImage0, pullImage1, pullImage2, pullImage3, pullImage4, pullImage5, pullImage6, pullImage7,
     pullImage8, pullImage9, pullImage10, pullImage11, pullImage12, pullImage13, pullImage14, pullImage15, pullImage16,
     pullImage17, pullImage18, pullImage19, pullImage20, pullImage21, pullImage22, pullImage23, pullImage24, pullImage25,
@@ -115,7 +117,7 @@ define( function( require ) {
    */
   function ISLCPullerNode( forceRange, tandem, options ) {
 
-    // REVIEW: This node doesn't pass options to Node, cannot 
+    // REVIEW: This node doesn't pass options to Node 
     options = _.extend( { 
       ropeLength: 50,
       shadowMinWidth: 32,
@@ -127,13 +129,12 @@ define( function( require ) {
 
     Node.call( this );
 
-    // create property to hold puller/pusher images
-    // prevents extended chaining of 
+    // @private
     this.pullerPusherImages = pullImages;
 
+    // @private - if in coulomb's law sim, add pusher and zero force images in proper order
     this.zeroForceIndex = null;
 
-    // if in coulomb's law sim, add pusher and zero force images in proper order
     if (options.attractNegative) {
       this.pullerPusherImages = pushImages.concat( zeroForceImage ).concat( pullImages );
       this.zeroForceIndex = 31;
@@ -157,6 +158,7 @@ define( function( require ) {
       tandem: tandem.createTandem( 'shadowNode' )
     } );
 
+    // create the puller/pusher image nodes
     var images = [];
     var i;
     for ( i = 0; i < this.pullerPusherImages.length; i++ ) {

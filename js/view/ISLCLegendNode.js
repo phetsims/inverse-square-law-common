@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * A legend graphic consisting of a double-ended arrow, two endpoint lines, and a label string.
+ * A legend graphic consisting of a double-ended arrow, two endpoint lines, and a label string. Intended to visually indicate a distance scale.
  *
  * @author  Michael Barlow
  */
@@ -16,7 +16,7 @@ define( function( require ) {
   var Text = require( 'SCENERY/nodes/Text' );
 
   /**
-   * A graphic to visually indicate a distance scale.
+   * @constructor
    * @param {ISLModel} model              
    * @param {ModelViewTransform2} modelViewTransform 
    * @param {int/float} width (in view coordinates)

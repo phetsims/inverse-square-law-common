@@ -65,6 +65,7 @@ define( function( require ) {
     // @public - emits an event when the model is updated in by step
     this.stepEmitter = new Emitter();
     
+    // @public
     // derived property that calculates the force based on changes to values and positions
     // objects are never destroyed, so forceProperty does not require disposal
     this.forceProperty = new DerivedProperty(
@@ -81,6 +82,7 @@ define( function( require ) {
            return self.calculateForce( v1, v2, distance );
        }
     );
+
     // when sim is reset, we only reset the position properties of each object to their initial values
     // thus, there is no need ot dispose of the listeners below
     this.object1.radiusProperty.link( function( radius ) {
