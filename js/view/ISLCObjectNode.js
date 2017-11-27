@@ -46,6 +46,8 @@ define( function( require ) {
    */
   function ISLCObjectNode( model, objectModel, layoutBounds, modelViewTransform, pullForceRange, tandem, options ) {
 
+    var self = this;
+
     options = _.extend( {
       label: 'This Object',
       otherObjectLabel: 'Other Object',
@@ -115,6 +117,8 @@ define( function( require ) {
     };
 
     // @private - the puller node
+    // options: ropeLength, shadowMinWidth, shadowMaxWidth, attractNegative, displayShadow
+    // we may only need to pass attractNegative & ropeLength
     this.pullerNode = new ISLCPullerNode( pullForceRange, tandem.createTandem( 'puller1' ), options );
 
     if ( options.defaultDirection === 'right' ) {
@@ -199,29 +203,8 @@ define( function( require ) {
       tandem: tandem.createTandem( 'markerLine' )
     } ) );
 
-    var self = this;
-
-    // on reset, no objects are destroyed and properties are set to initial values
-    // no need to dispose of any of the below listeners
-    objectModel.positionProperty.link( function( property ) {
-
-      // position this node and its force arrow with label
-      var transformedValue = modelViewTransform.modelToViewX( property );
-      self.x = transformedValue;
-      self.arrowNode.x = transformedValue;
-    } );
-
-    model.showValuesProperty.lazyLink( this.redrawForce.bind( this ) );
-    objectModel.radiusProperty.lazyLink( this.redrawForce.bind( this ) );
-    model.forceProperty.lazyLink( this.redrawForce.bind( this ) );
-
-    objectModel.baseColorProperty.link( function( baseColor ) {
-      self.updateGradient( baseColor );
-    } );
-
-    this.redrawForce();
-
     var clickOffset;
+
     dragNode.addInputListener( new SimpleDragHandler( {
       allowTouchSnag: true,
       start: function( event ) {
@@ -250,28 +233,26 @@ define( function( require ) {
       },
       tandem: tandem.createTandem( 'objectDragHandler' )
     } ) );
+    
+    // on reset, no objects are destroyed and properties are set to initial values
+    // no need to dispose of any of the below listeners
+    objectModel.positionProperty.link( function( property ) {
 
-    // a11y - range for the accessible slider, will change whenever model force changes
-    var sliderRangeProperty = new Property( self.objectModel.positionProperty.range );
-    model.forceProperty.link( function() {
-      var maxPosition = model.getObjectMaxPosition( objectModel );
-      var minPosition = model.getObjectMinPosition( objectModel );
-      sliderRangeProperty.set( new RangeWithValue( minPosition, maxPosition ) );
+      // position this node and its force arrow with label
+      var transformedValue = modelViewTransform.modelToViewX( property );
+      self.x = transformedValue;
+      self.arrowNode.x = transformedValue;
     } );
 
-    // options for making this node act like an accessible slider
-    var sliderOptions = {
-      keyboardStep: options.snapToNearest,
-      shiftKeyboardStep: options.snapToNearest,
-      pageKeyboardStep: ( sliderRangeProperty.get().max - sliderRangeProperty.get().min ) / 10
-    };
+    model.showValuesProperty.lazyLink( this.redrawForce.bind( this ) );
+    objectModel.radiusProperty.lazyLink( this.redrawForce.bind( this ) );
+    model.forceProperty.lazyLink( this.redrawForce.bind( this ) );
 
-    // initialize features that make this node act like a range input
-    this.initializeAccessibleSlider( self.objectModel.positionProperty, sliderRangeProperty, new Property( true ), sliderOptions );
-
-    this.objectModel.radiusProperty.link( function( radius ) {
-      self.focusHighlight = Shape.bounds( dragNode.bounds.dilated( 5 ) );
+    objectModel.baseColorProperty.link( function( baseColor ) {
+      self.updateGradient( baseColor );
     } );
+
+    this.redrawForce();
 
     // for layering purposes, we assume that the ScreenView will add the arrow node and label - by the
     // time the sim is stepped, make sure that the arrows are added to the view
