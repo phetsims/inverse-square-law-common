@@ -41,7 +41,6 @@ define( function( require ) {
     options = _.extend( {
       defaultDirection: 'left',
       defaultScientificNotationMode: false, // whether to display number in scientific notation
-      title: '', // object title
       attractNegative: true, // if true, arrows will point towards each other if forces is negative
       lineWidth: 0.25,
 
@@ -85,7 +84,7 @@ define( function( require ) {
     this.smallForceToArrowWidthFunction = new LinearFunction( 0, this.augmentedMin, 0, 1.5, false );
 
     // @public (read-only) - for layout, the label for the arrow
-    this.arrowText = new RichText( options.title, {
+    this.arrowText = new RichText( '', {
       font: options.labelFont,
       fill: options.labelFill,
       stroke: options.labelStroke,
