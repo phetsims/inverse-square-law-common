@@ -123,8 +123,7 @@ define( function( require ) {
       shadowMinWidth: 32,
       shadowMaxWidth: 50,
       attractNegative: true,     // if true, add pusher images
-      displayShadow: true,
-      tandem: tandem,
+      displayShadow: true
     }, options );
 
     Node.call( this );

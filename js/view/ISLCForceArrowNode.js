@@ -40,38 +40,38 @@ define( function( require ) {
 
     options = _.extend( {
       defaultDirection: 'left',
-      defaultScientificNotationMode: false, // whether to display number in scientific notation
       attractNegative: true, // if true, arrows will point towards each other if forces is negative
-      lineWidth: 0.25,
+      arrowNodeLineWidth: 0.25,
 
       // label options
       otherObjectLabel: '', // label for the other object exerting a force on this object
       label: '', // label for this object
-      labelFont: new PhetFont( 16 ),
-      labelFill: '#fff',
-      labelStroke: null,
+      arrowLabelFont: new PhetFont( 16 ),
+      arrowLabelFill: '#fff',
+      arrowLabelStroke: null,
       forceReadoutDecimalPlaces: 12, // number of decimal places in force readout
 
-      // arrow node options
-      maxArrowWidth: 15, // max width of the arrow when when redrawn, in view coordinates
+      // arrow node arguments
       forceArrowHeight: 150,
+
+      // arrow node options
+      maxArrowWidth: 15, // max width of the arrow when when redrawn, in view coordinates - used in mapping function
       headHeight: 8,
       headWidth: 8,
       tailWidth: 3,
-      stroke: null,
-      fill: 'white',
+      arrowStroke: null,
+      arrowFill: '#fff',
       tandem: tandem.createTandem( 'arrowNode' )
     }, options );
-
+    
     // @private
-    this.forceArrowHeight = options.forceArrowHeight;
     this.arrowForceRange = arrowForceRange;
     this.layoutBounds = layoutBounds;
     this.defaultDirection = options.defaultDirection;
     this.forceReadoutDecimalPlaces = options.forceReadoutDecimalPlaces;
     this.label = options.label;
     this.otherObjectLabel = options.otherObjectLabel;
-    this.scientificNotationMode = options.defaultScientificNotationMode;
+    this.scientificNotationMode = false;
     this.attractNegative = options.attractNegative;
 
     // @private - get a new higher min
@@ -85,16 +85,21 @@ define( function( require ) {
 
     // @public (read-only) - for layout, the label for the arrow
     this.arrowText = new RichText( '', {
-      font: options.labelFont,
-      fill: options.labelFill,
+      font: options.arrowLabelFont,
+      fill: options.arrowLabelFill,
       stroke: options.labelStroke,
-      lineWidth: options.lineWidth,
+      lineWidth: options.arrowNodeLineWidth,
       maxWidth: 300, // empirically determined through testing with long strings
       y: -20,
       tandem: tandem.createTandem( 'arrowText' )
     } );
 
-    ArrowNode.call( this, 0, -options.forceArrowHeight, 200, -options.forceArrowHeight, options );
+    var arrowNodeOptions = _.pick( options, [ 'headHeight', 'headWidth', 'tailWidth' ] );
+    arrowNodeOptions.lineWidth = options.arrowNodeLineWidth;
+    arrowNodeOptions.stroke = options.arrowStroke;
+    arrowNodeOptions.fill = options.arrowFill;
+
+    ArrowNode.call( this, 0, -options.forceArrowHeight, 200, -options.forceArrowHeight, arrowNodeOptions );
     this.addChild( this.arrowText );
     this.y = 0;
   }

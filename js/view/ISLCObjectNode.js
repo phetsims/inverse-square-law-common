@@ -69,9 +69,6 @@ define( function( require ) {
 
       // options for the arrow node, passed to the ISLCForceArrowNode
       arrowLabelFill: '#fff',
-      arrowLabelFont: new PhetFont( { size: 16 } ),
-      arrowLabelStroke: null,
-      maxArrowWidth: 40,
 
       arrowColor: '#66f', // color of vertical line
       arrowFill: 'white',
@@ -81,62 +78,77 @@ define( function( require ) {
       arrowHeadHeight: 8,
       arrowHeadWidth: 8,
       arrowTailWidth: 3,
-      arrowStroke: null,
-      arrowNodeLineWidth: 0.25
+      arrowStroke: null
     }, options );
 
     Node.call( this, {
       tandem: tandem
     } );
 
-    // TODO: consider a cleaner solution like an options mask, e.g. _.pick() & _.omit()
-    // see ISLCObjectControl for example
-    var arrowOptions = {
-      defaultDirection: options.defaultDirection,
-      forceReadoutDecimalPlaces: options.forceReadoutDecimalPlaces, // number of decimal places in force readout
-
-      label: options.label, // label for this object
-      otherObjectLabel: options.otherObjectLabel, // label for the other object exerting a force on this object
-
-      // label options
-      labelFont: options.arrowLabelFont,
-      labelFill: options.arrowLabelFill,
-      labelStroke: options.arrowLabelStroke,
-
-      // arrow node options
-      forceArrowHeight: options.forceArrowHeight,
-      attractNegative: options.attractNegative,
-      maxArrowWidth: options.maxArrowWidth,
-      fill: options.arrowFill,
-      headHeight: options.arrowHeadHeight,
-      headWidth: options.arrowHeadWidth,
-      tailWidth: options.arrowTailWidth,
-      stroke: options.arrowStroke,
-      lineWidth: options.arrowNodeLineWidth
-    };
-
-    // @private - the puller node
-    // options: ropeLength, shadowMinWidth, shadowMaxWidth, attractNegative, displayShadow
-    // we may only need to pass attractNegative & ropeLength
-    this.pullerNode = new ISLCPullerNode( pullForceRange, tandem.createTandem( 'puller1' ), options );
-
-    if ( options.defaultDirection === 'right' ) {
-      this.pullerNode.scale( -1, 1 );
-    }
-
     this.layoutBounds = layoutBounds;
     this.objectModel = objectModel;
     this.model = model;
     this.modelViewTransform = modelViewTransform;
-    this.forceArrowHeight = options.forceArrowHeight;
 
+    var arrowOptionKeys = [
+      'defaultDirection',
+      'attractNegative', // if true, arrows will point towards each other if forces is negative
+      'arrowNodeLineWidth',
+
+      // label options
+      'otherObjectLabel', // label for the other object exerting a force on this object
+      'label', // label for this object
+      'arrowLabelFont',
+      'arrowLabelFill',
+      'arrowLabelStroke',
+      'forceReadoutDecimalPlaces', // number of decimal places in force readout
+
+      // arrow node arguments
+      'forceArrowHeight',
+
+      // arrow node options
+      'maxArrowWidth', // max width of the arrow when when redrawn, in view coordinates - used in mapping function
+      'headHeight',
+      'headWidth',
+      'tailWidth',
+      'arrowStroke',
+      'arrowFill'
+    ];
+
+    // the full range of force for the arrow node (note: this is distinct)
     var arrowForceRange = new RangeWithValue( model.getMinForce(), model.getMaxForce() );
 
     // @protected - arrow node
-    this.arrowNode = new ISLCForceArrowNode( arrowForceRange, layoutBounds, tandem.createTandem( 'forceArrowNode' ), arrowOptions );
+    this.arrowNode = new ISLCForceArrowNode( 
+      arrowForceRange, 
+      layoutBounds, 
+      tandem.createTandem( 'forceArrowNode' ), 
+      _.pick( options, arrowOptionKeys )
+    );
 
     // set y position for the arrow
     this.arrowNode.y = options.y - options.forceArrowHeight;
+
+    // @private - the puller node
+    // options: ropeLength, shadowMinWidth, shadowMaxWidth, attractNegative, displayShadow
+    // we may only need to pass attractNegative & ropeLength
+    var pullerOptionKeys = [
+      'ropeLength',
+      'shadowMinWidth',
+      'shadowMaxWidth',
+      'attractNegative',
+      'displayShadow'
+    ];
+
+    this.pullerNode = new ISLCPullerNode(
+      pullForceRange,
+      tandem.createTandem( 'pullerNode' ),
+      _.pick( options, pullerOptionKeys )
+    );
+
+    if ( options.defaultDirection === 'right' ) {
+      this.pullerNode.scale( -1, 1 );
+    }
 
     // a parent node that applies the drag handler
     var dragNode = new Node( {
