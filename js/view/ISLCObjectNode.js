@@ -24,10 +24,16 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var Path = require( 'SCENERY/nodes/Path' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  var Property = require( 'AXON/Property' );
   var RangeWithValue = require( 'DOT/RangeWithValue' );
   var RichText = require( 'SCENERY/nodes/RichText' );
   var Shape = require( 'KITE/Shape' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
+
+  // phetio
+  var PropertyIO = require( 'AXON/PropertyIO' );
+  var RangeIO = require( 'DOT/RangeIO' );
+  var BooleanProperty = require( 'AXON/BooleanProperty' );
 
   // constants
   var LABEL_MAX_WIDTH = 20; // empirically determined through testing with long strings
@@ -251,7 +257,6 @@ define( function( require ) {
     // on reset, no objects are destroyed and properties are set to initial values
     // no need to dispose of any of the below listeners
     objectModel.positionProperty.link( function( property ) {
-
       // position this node and its force arrow with label
       var transformedValue = modelViewTransform.modelToViewX( property );
       self.x = transformedValue;
@@ -267,6 +272,40 @@ define( function( require ) {
     } );
 
     this.redrawForce();
+
+    // a11y - initialize the accessible slider
+    var enabledRange = new RangeWithValue( model.leftObjectBoundary, model.rightObjectBoundary );
+    var enabledRangeProperty = new Property( enabledRange, {
+      tandem: tandem.createTandem( 'enabledRangeProperty' ),
+      phetioType: PropertyIO( RangeIO )
+    } );
+
+    // necessary to reset the enabledRangeProperty to prevent object overlap
+    // disposal not necessary
+    model.forceProperty.link( function () {
+      var maxPosition = model.getObjectMaxPosition( objectModel );
+      var minPosition = model.getObjectMinPosition( objectModel );
+
+      enabledRangeProperty.set( new RangeWithValue( minPosition, maxPosition ) ); 
+    } );
+
+    var enabledProperty = new BooleanProperty( true, {
+      tandem: tandem.createTandem( 'enabledProperty' )
+    } );
+
+    var accessibleSliderOptions = {
+      keyboardStep: options.snapToNearest,
+      shiftKeyboardStep: options.snapToNearest,
+      pageKeyboardStep: options.snapToNearest * 10,
+      startDrag: function() {
+        objectModel.isDragging = true;
+      },
+      endDrag: function() {
+        objectModel.isDragging = false;
+      }
+    };
+
+    this.initializeAccessibleSlider( objectModel.positionProperty, enabledRangeProperty, enabledProperty, accessibleSliderOptions );
 
     // for layering purposes, we assume that the ScreenView will add the arrow node and label - by the
     // time the sim is stepped, make sure that the arrows are added to the view
