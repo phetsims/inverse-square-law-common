@@ -307,6 +307,11 @@ define( function( require ) {
 
     this.initializeAccessibleSlider( objectModel.positionProperty, enabledRangeProperty, enabledProperty, accessibleSliderOptions );
 
+    this.objectModel.radiusProperty.link( function( radius ) {
+      // a11y - update the focusHighlight with the radius
+      self.focusHighlight = Shape.bounds( dragNode.bounds.dilated( 5 ) );
+    } );
+    
     // for layering purposes, we assume that the ScreenView will add the arrow node and label - by the
     // time the sim is stepped, make sure that the arrows are added to the view
     if ( assert ) {
