@@ -280,8 +280,7 @@ define( function( require ) {
       phetioType: PropertyIO( RangeIO )
     } );
 
-    // necessary to reset the enabledRangeProperty to prevent object overlap
-    // disposal not necessary
+    // a11y - necessary to reset the enabledRangeProperty to prevent object overlap, disposal not necessary
     model.forceProperty.link( function () {
       var maxPosition = model.getObjectMaxPosition( objectModel );
       var minPosition = model.getObjectMinPosition( objectModel );
@@ -305,6 +304,7 @@ define( function( require ) {
       }
     };
 
+    // initialize features that  make this node act like an accessible range input
     this.initializeAccessibleSlider( objectModel.positionProperty, enabledRangeProperty, enabledProperty, accessibleSliderOptions );
 
     this.objectModel.radiusProperty.link( function( radius ) {
