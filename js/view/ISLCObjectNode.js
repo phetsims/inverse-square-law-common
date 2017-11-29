@@ -34,14 +34,14 @@ define( function( require ) {
 
   /**
    * 
-   * @constructor
-   * @param {ISLModel} model
-   * @param {ISLObjectModel} objectModel
+   * @param {ISLModel} model - the simulation model
+   * @param {ISLObjectModel} objectModel - the associated object's model within the sim
    * @param {Bounds2} layoutBounds - bounds of the screen view containing the object
    * @param {ModelViewTransform2} modelViewTransform
    * @param {Range} pullForceRange - the max and min possible force values
    * @param {Tandem} tandem
    * @param {Object} options
+   * @constructor
    */
   function ISLCObjectNode( model, objectModel, layoutBounds, modelViewTransform, pullForceRange, tandem, options ) {
 
@@ -85,6 +85,7 @@ define( function( require ) {
       tandem: tandem
     } );
 
+    // @protected
     this.layoutBounds = layoutBounds;
     this.objectModel = objectModel;
     this.model = model;
@@ -129,9 +130,6 @@ define( function( require ) {
     // set y position for the arrow
     this.arrowNode.y = options.y - options.forceArrowHeight;
 
-    // @private - the puller node
-    // options: ropeLength, shadowMinWidth, shadowMaxWidth, attractNegative, displayShadow
-    // we may only need to pass attractNegative & ropeLength
     var pullerOptionKeys = [
       'ropeLength',
       'shadowMinWidth',
@@ -140,6 +138,7 @@ define( function( require ) {
       'displayShadow'
     ];
 
+    // @private - the puller node
     this.pullerNode = new ISLCPullerNode(
       pullForceRange,
       tandem.createTandem( 'pullerNode' ),
@@ -158,12 +157,14 @@ define( function( require ) {
 
     // the 'object' - a shaded circle
     var radius = modelViewTransform.modelToViewDeltaX( objectModel.radiusProperty.get() );
+
+    // @protected - the object
     this.objectCircle = new Circle( radius );
 
     dragNode.addChild( this.pullerNode );
     dragNode.addChild( this.objectCircle );
 
-    // TODO: What is this circle doing here?
+    // Small black dot where vertical arrow line connects to the object
     dragNode.addChild( new Circle( 2, { fill: '#000' } ) );
 
     var labelCenterX = 0;
@@ -192,6 +193,8 @@ define( function( require ) {
     } ) );
 
     this.addChild( dragNode );
+
+    // @private
     this.y = options.y;
 
     // the marker line, connecting the arrow to the object, the first one is for the shadow so that
@@ -284,6 +287,9 @@ define( function( require ) {
 
   inherit( Node, ISLCObjectNode, {
 
+    /**
+     * Redraws the white radial gradient for the object - must be implemented in subtypes.
+     */
     updateGradient: function() {
       throw new Error( 'Update gradient must be implemented in subtypes.' );
     },

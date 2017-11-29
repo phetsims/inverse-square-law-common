@@ -117,7 +117,6 @@ define( function( require ) {
    */
   function ISLCPullerNode( forceRange, tandem, options ) {
 
-    // REVIEW: This node doesn't pass options to Node 
     options = _.extend( { 
       ropeLength: 50,
       shadowMinWidth: 32,
@@ -157,7 +156,7 @@ define( function( require ) {
       tandem: tandem.createTandem( 'shadowNode' )
     } );
 
-    // create the puller/pusher image nodes
+    // create each of the puller/pusher image nodes
     var images = [];
     var i;
     for ( i = 0; i < this.pullerPusherImages.length; i++ ) {

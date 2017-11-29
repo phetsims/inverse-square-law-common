@@ -101,7 +101,7 @@ define( function( require ) {
   return inherit( Object, ISLCModel, {
 
     /**
-     * step function makes sure masses doesn't goes out of bounds and don't overlap each other at each time step
+     * Step function makes sure masses doesn't goes out of bounds and don't overlap each other at each time step
      * @public
      */
     step: function() {
