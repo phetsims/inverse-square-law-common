@@ -17,6 +17,7 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var RulerNode = require( 'SCENERY_PHET/RulerNode' );
+  var KeyboardDragListener = require( 'SCENERY/accessibility/listeners/KeyboardDragListener' );
   var Util = require( 'DOT/Util' );
   var Vector2 = require( 'DOT/Vector2' );
 
@@ -48,7 +49,7 @@ define( function( require ) {
     var majorTickLabels = options.majorTickLabels;
     var rulerUnitString = options.unitString;
 
-    Node.call( this, { cursor: 'pointer', cssTransform: true, tandem: tandem } );
+    Node.call( this, { cursor: 'pointer', cssTransform: true, tandem: tandem, tagName: 'div', focusable: true } );
 
     var ruler = new RulerNode(
       RULER_WIDTH,
@@ -104,9 +105,39 @@ define( function( require ) {
         }
       }
     } ) );
+
+    // @private (a11y) - supports keyboard interaction, private so it can be stepped
+    this.keyboardDragListener = new KeyboardDragListener( {
+      dragBounds: bounds,
+      locationProperty: model.rulerPositionProperty,
+      transform: modelViewTransform,
+      positionDelta: 3, // in view coordinates
+      shiftPositionDelta: 1.5,
+
+      // snap to nearest snapToNearest, called on end so that dragging doesn't snap to a value for as long
+      // as key is held down
+      end: function() {
+        if ( options.snapToNearest ) {
+          var xModel = model.rulerPositionProperty.get().x;
+          var snappedX = Util.roundSymmetric( xModel / options.snapToNearest ) * options.snapToNearest;
+          model.rulerPositionProperty.set( new Vector2( snappedX , model.rulerPositionProperty.get().y ) );
+        }
+      }
+    } );
+    this.addAccessibleInputListener( this.keyboardDragListener );
   }
 
   inverseSquareLawCommon.register( 'ISLCRulerNode', ISLCRulerNode );
 
-  return inherit( Node, ISLCRulerNode );
+  return inherit( Node, ISLCRulerNode, {
+
+    /**
+     * Step to support keyboard dragging.
+     *
+     * @param {number} dt
+     */
+    step: function( dt ) {
+      this.keyboardDragListener.step( dt );
+    }
+  } );
 } );
