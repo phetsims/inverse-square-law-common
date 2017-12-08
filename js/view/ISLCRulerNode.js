@@ -90,7 +90,7 @@ define( function( require ) {
       tandem: tandem.createTandem( 'dragHandler' ),
       modelViewTransform: modelViewTransform,
 
-      onDrag: function( event ) {
+      onDrag: function() {
 
         // snap to nearest snapToNearest if specified
         if ( options.snapToNearest ) {
