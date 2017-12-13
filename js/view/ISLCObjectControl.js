@@ -82,36 +82,36 @@ define( function( require ) {
       valueBackgroundStroke: 'black',
       valueBackgroundCornerRadius: 3,
       tickLabelSpacing: 1,
-    } , options );
+    }, options );
 
-    for (var i = 0; i < options.additionalTicks.length; i++) {
+    for ( var i = 0; i < options.additionalTicks.length; i++ ) {
       var tick = {
-        value: options.additionalTicks[i].value,
+        value: options.additionalTicks[ i ].value,
         label: new Text(
-          options.additionalTicks[i].value,
-          _.extend( { tandem: tandem.createTandem( options.additionalTicks[i].tandemLabel ) }, tickLabelOptions )
+          options.additionalTicks[ i ].value,
+          _.extend( { tandem: tandem.createTandem( options.additionalTicks[ i ].tandemLabel ) }, tickLabelOptions )
         )
       };
-      options.majorTicks.push(tick);
+      options.majorTicks.push( tick );
     }
 
-    var optionsFilter = ['fill', 'xMargin', 'yMargin', 'resize', 'align', 'right', 'left', 'top'];
+    var optionsFilter = [ 'fill', 'xMargin', 'yMargin', 'resize', 'align', 'right', 'left', 'top', 'tandem' ];
 
-    var panelOptions = _.pick(options, optionsFilter);
+    var panelOptions = _.pick( options, optionsFilter );
 
-    options = _.omit(options, optionsFilter);
+    options = _.omit( options, optionsFilter );
 
-    var numberControl = new NumberControl( 
-                              titleString,
-                              objectProperty, 
-                              valueRange, 
-                              _.extend( { 
-                                tandem: tandem.createTandem( 'numberControl' ),
-                                valueAlign: 'center'
-                              }, 
-                              options ) );
+    var numberControl = new NumberControl(
+      titleString,
+      objectProperty,
+      valueRange,
+      _.extend( {
+          tandem: tandem.createTandem( 'numberControl' ),
+          valueAlign: 'center'
+        },
+        options ) );
 
-    Panel.call( this, numberControl, _.extend( { tandem: tandem }, panelOptions) );
+    Panel.call( this, numberControl, panelOptions );
   }
 
   inverseSquareLawCommon.register( 'ISLCObjectControl', ISLCObjectControl );
