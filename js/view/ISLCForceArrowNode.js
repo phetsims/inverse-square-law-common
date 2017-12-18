@@ -74,14 +74,10 @@ define( function( require ) {
     this.scientificNotationMode = false;
     this.attractNegative = options.attractNegative;
 
-    // @private - get a new higher min
-    this.augmentedMin = ( ( arrowForceRange.max - arrowForceRange.min ) * 0.00003 ) + arrowForceRange.min;
+    var minArrowLength = arrowForceRange.min === 0 ? 0 : 1;
 
     // @private - maps the force value to the desired width of the arrow in view coordinates
-    this.forceToArrowWidthFunction = new LinearFunction( this.augmentedMin, arrowForceRange.max, 1.5, options.maxArrowWidth * 2, false );
-
-    // @private - when the force is below the typical arrow range, width of the arrow is mapped from 0 to 1
-    this.smallForceToArrowWidthFunction = new LinearFunction( 0, this.augmentedMin, 0, 1.5, false );
+    this.forceToArrowWidthFunction = new LinearFunction( arrowForceRange.min, arrowForceRange.max, minArrowLength, options.maxArrowWidth, false );
 
     // @public (read-only) - for layout, the label for the arrow
     this.arrowText = new RichText( '', {
@@ -123,11 +119,8 @@ define( function( require ) {
       }
       var absValue = Math.abs( value );
 
-      if ( absValue < this.augmentedMin ) {
-        arrowLengthMultiplier = this.smallForceToArrowWidthFunction( absValue );
-      } else {
-        arrowLengthMultiplier = this.forceToArrowWidthFunction( absValue );
-      }
+      // map force value to width in view
+      arrowLengthMultiplier = this.forceToArrowWidthFunction( absValue );
 
       if ( this.defaultDirection === 'right' ) {
         arrowLengthMultiplier *= -1;
