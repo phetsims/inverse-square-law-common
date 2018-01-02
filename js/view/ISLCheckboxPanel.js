@@ -18,7 +18,7 @@ define( function( require ) {
   var VerticalCheckBoxGroup = require( 'SUN/VerticalCheckBoxGroup' );
 
   // constants
-  var TEXT_MAX_WIDTH = 100;
+  var TEXT_MAX_WIDTH = 120;
 
   /**
    * @constructor
