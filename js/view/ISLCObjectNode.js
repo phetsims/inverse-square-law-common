@@ -141,7 +141,8 @@ define( function( require ) {
       'shadowMinWidth',
       'shadowMaxWidth',
       'attractNegative',
-      'displayShadow'
+      'displayShadow',
+      'atomicScale'
     ];
 
     // @private - the puller node
