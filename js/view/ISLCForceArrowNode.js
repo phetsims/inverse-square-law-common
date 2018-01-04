@@ -128,10 +128,6 @@ define( function( require ) {
         arrowLengthMultiplier *= -1;
       }
 
-      if ( value === 0 ) {
-        arrowLengthMultiplier = 0;
-      }
-
       this.setTailAndTip( 0, 0, valueSign * arrowLengthMultiplier * ARROW_LENGTH, 0 );
     },
 
