@@ -17,8 +17,8 @@ define( function( require ) {
   var Text = require( 'SCENERY/nodes/Text' );
 
   /**
-   * @param {ISLModel} model              
-   * @param {ModelViewTransform2} modelViewTransform 
+   * @param {ISLModel} model
+   * @param {ModelViewTransform2} modelViewTransform
    * @param {int/float} width (in view coordinates)
    * @param {string} labelString
    * @constructor
@@ -45,7 +45,7 @@ define( function( require ) {
       lineWidth: 1.25
     };
 
-    var leftEndLine  = new Line(         0, endLinesBottom,         0, endLinesTop, endLinesOptions );
+    var leftEndLine = new Line( 0, endLinesBottom, 0, endLinesTop, endLinesOptions );
     var rightEndLine = new Line( this.tipX, endLinesBottom, this.tipX, endLinesTop, endLinesOptions );
 
     this.addChild( leftEndLine );
@@ -64,5 +64,5 @@ define( function( require ) {
 
   inverseSquareLawCommon.register( 'ISLCLegendNode', ISLCLegendNode );
 
-  return inherit( ArrowNode, ISLCLegendNode);
+  return inherit( ArrowNode, ISLCLegendNode );
 } );

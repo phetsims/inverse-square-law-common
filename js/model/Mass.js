@@ -48,7 +48,7 @@ define( function( require ) {
       [ this.valueProperty, constantRadiusProperty ],
       function( value, constantRadius ) {
         return constantRadius ?
-               options.constantRadiusColor.colorUtilsBrighter( 1 - Math.abs(value) / valueRange.max ) :
+               options.constantRadiusColor.colorUtilsBrighter( 1 - Math.abs( value ) / valueRange.max ) :
                baseColor;
       },
       { tandem: tandem.createTandem( 'baseColorProperty' ), phetioType: DerivedPropertyIO( ColorIO ) }

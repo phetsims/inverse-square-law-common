@@ -17,7 +17,7 @@ define( function( require ) {
   var RichText = require( 'SCENERY/nodes/RichText' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var Util = require( 'DOT/Util' );
-  var LinearFunction = require('DOT/LinearFunction');
+  var LinearFunction = require( 'DOT/LinearFunction' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var ScientificNotationNode = require( 'SCENERY_PHET/ScientificNotationNode' );
 
@@ -63,7 +63,7 @@ define( function( require ) {
       arrowFill: '#fff',
       tandem: tandem.createTandem( 'arrowNode' )
     }, options );
-    
+
     // @private
     this.arrowForceRange = arrowForceRange;
     this.layoutBounds = layoutBounds;
@@ -165,7 +165,7 @@ define( function( require ) {
           var formattedString = forceStr.substr( 0, pointLocation + 4 );
 
           // remaining groups of three, separated by spaces
-          for( var i = pointLocation + 4; i < forceStr.length; i+=3 ) {
+          for ( var i = pointLocation + 4; i < forceStr.length; i += 3 ) {
             formattedString += ' ';
             formattedString += forceStr.substr( i, 3 );
           }

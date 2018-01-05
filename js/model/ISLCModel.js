@@ -38,7 +38,7 @@ define( function( require ) {
       snapObjectsToNearest: null, // {number} if defined, objects will snap to nearest value in model coordinates
       minSeparationBetweenObjects: 0.1 // in meters
     }, options );
-    
+
     // @public (read-only)
     this.leftObjectBoundary = leftBoundary;
     this.rightObjectBoundary = rightBoundary;
@@ -64,23 +64,23 @@ define( function( require ) {
 
     // @public - emits an event when the model is updated in by step
     this.stepEmitter = new Emitter();
-    
+
     // @public
     // derived property that calculates the force based on changes to values and positions
     // objects are never destroyed, so forceProperty does not require disposal
     this.forceProperty = new DerivedProperty(
-     [
-       this.object1.valueProperty,
-       this.object2.valueProperty,
-       this.object1.positionProperty,
-       this.object2.positionProperty
-     ],
-       function( v1, v2, x1, x2 ) {
-         var distance = Math.abs( x2 - x1 );
+      [
+        this.object1.valueProperty,
+        this.object2.valueProperty,
+        this.object1.positionProperty,
+        this.object2.positionProperty
+      ],
+      function( v1, v2, x1, x2 ) {
+        var distance = Math.abs( x2 - x1 );
 
-         
-           return self.calculateForce( v1, v2, distance );
-       }
+
+        return self.calculateForce( v1, v2, distance );
+      }
     );
 
     // when sim is reset, we only reset the position properties of each object to their initial values
@@ -132,23 +132,28 @@ define( function( require ) {
 
       if ( this.object1.isDragging ) {
         this.object1.positionProperty.set( locationMass1 );
-      } else if ( this.object2.isDragging ) {
+      }
+      else if ( this.object2.isDragging ) {
         this.object2.positionProperty.set( locationMass2 );
-      } else {
+      }
+      else {
         // neither object is dragging, radius must have changed
         if ( this.object1.radiusLastChanged ) {
           if ( locationMass2 !== maxX ) {
             // object2 is not at the edge update its position
             this.object2.positionProperty.set( locationMass2 );
-          } else {
+          }
+          else {
             // object2 is at the edge update object1 position
             this.object1.positionProperty.set( locationMass1 );
           }
-        } else if ( this.object2.radiusLastChanged ) {
+        }
+        else if ( this.object2.radiusLastChanged ) {
           if ( locationMass1 !== minX ) {
             // object1 is not at boundary, update position
             this.object1.positionProperty.set( locationMass1 );
-          } else {
+          }
+          else {
             this.object2.positionProperty.set( locationMass2 );
           }
         }
@@ -164,7 +169,7 @@ define( function( require ) {
      * @public
      * @return {number} the smallest possible force magnitude
      */
-    getMinForce: function () {
+    getMinForce: function() {
       var maxDistance = Math.abs( this.rightObjectBoundary - this.leftObjectBoundary );
 
       // Since we're checking for magnitude, negative values for charges will need
@@ -181,14 +186,14 @@ define( function( require ) {
      * @public
      * @return {number} the largest possible force magnitude
      */
-    getMaxForce: function () {
+    getMaxForce: function() {
       var maxValue = this.object1.valueRange.max;
       return Math.abs( this.calculateForce( maxValue, maxValue, this.getMinDistance( maxValue ) ) );
     },
 
     /**
      * Get the minimum possible separation between the objects' centers given a defined value for each of their
-     * main properties. 
+     * main properties.
      *
      * @public
      * @param  {number} value - the object's mass or charges
@@ -256,7 +261,7 @@ define( function( require ) {
      * Get the absolute minimum horizontal position for an object.
      *
      * @private
-     * @param  {ISLCObject} object 
+     * @param  {ISLCObject} object
      * @return {number}
      */
     getObjectMinPosition: function( object ) {
@@ -264,7 +269,7 @@ define( function( require ) {
       var sumRadius = this.getSumRadiusWithSeparation();
       var minX;
       if ( object === this.object1 ) {
-        
+
         // the min value for the left object is the left edge plus the puller width and the radius of the object
         minX = this.leftObjectBoundary;
       }
@@ -307,7 +312,8 @@ define( function( require ) {
       if ( this.object2.positionProperty.get() === this.object1.positionProperty.initialValue ) {
         this.object2.reset();
         this.object1.reset();
-      } else {
+      }
+      else {
         this.object1.reset();
         this.object2.reset();
       }

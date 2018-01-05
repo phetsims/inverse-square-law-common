@@ -56,7 +56,7 @@ define( function( require ) {
 
       checkBoxWidth = Math.max( checkBoxWidth, itemLabel.height );
 
-      verticalCheckBoxItems.push({
+      verticalCheckBoxItems.push( {
         content: itemLabel,
         property: item.property,
         tandemName: item.checkboxTandemLabel

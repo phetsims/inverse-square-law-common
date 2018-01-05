@@ -4,7 +4,7 @@
  * Grid that shows the possible locations of where the objects can be in the play area. For several
  * sims that use inverse-square-law-common, objects are constrained to positions along a 2D grid.
  * This node should only be used for debugging and will be hidden behind query parameter "showGrid".
- * 
+ *
  * @author Jesse Greenberg
  */
 
@@ -31,7 +31,7 @@ define( function( require ) {
 
     var gridShape = new Shape();
     var gridPosition = modelViewTransform.viewToModelX( layoutBounds.minX );
-    var rightBoundary = modelViewTransform. viewToModelX( layoutBounds.maxX );
+    var rightBoundary = modelViewTransform.viewToModelX( layoutBounds.maxX );
     while ( gridPosition <= rightBoundary ) {
 
       // grid position in view coords

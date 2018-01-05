@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * The pullers attached to the mass and charge objects. The node maintains a list of puller images that vary in 
+ * The pullers attached to the mass and charge objects. The node maintains a list of puller images that vary in
  * perceived pull effort. They are made visible and invisible to correspond to a given force value.
  *
  * @author Michael Barlow
@@ -17,7 +17,7 @@ define( function( require ) {
   var inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
   var ISLCPullerImages = require( 'INVERSE_SQUARE_LAW_COMMON/ISLCPullerImages' );
   var Util = require( 'DOT/Util' );
-  var LinearFunction = require('DOT/LinearFunction');
+  var LinearFunction = require( 'DOT/LinearFunction' );
   var Circle = require( 'SCENERY/nodes/Circle' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Path = require( 'SCENERY/nodes/Path' );
@@ -35,7 +35,7 @@ define( function( require ) {
    */
   function ISLCPullerNode( forceRange, tandem, options ) {
 
-    options = _.extend( { 
+    options = _.extend( {
       ropeLength: 50,
       shadowMinWidth: 32,
       shadowMaxWidth: 50,
@@ -63,7 +63,7 @@ define( function( require ) {
     // @private - if in coulomb's law sim, add pusher and zero force images in proper order
     this.zeroForceIndex = null;
 
-    if (options.attractNegative) {
+    if ( options.attractNegative ) {
       this.pullerPusherImages = pushImages.concat( zeroForceImage ).concat( pullImages );
       this.zeroForceIndex = 31;
     }
@@ -94,7 +94,7 @@ define( function( require ) {
       var pullerImage = new Image( this.pullerPusherImages[ i ], { tandem: pullerTandem.createTandem( 'pullerImage' ) } );
 
       // puller images are much larger than pushers, so we need to scale it down
-      pullerImage.scale( IMAGE_SCALE,  IMAGE_SCALE);
+      pullerImage.scale( IMAGE_SCALE, IMAGE_SCALE );
 
       images.push( pullerImage );
     }
@@ -114,7 +114,7 @@ define( function( require ) {
 
       // the pullImages grow in width as they animate, but their hands stay in the same position, so make sure that
       // they are still grabbing the rope
-        images[ i ].right += 0.1 * images[ i ].width;
+      images[ i ].right += 0.1 * images[ i ].width;
     }
 
     //  shadow first so it is behind the pullers
@@ -124,7 +124,7 @@ define( function( require ) {
     // @public - set the visibility of the image corresponding to the current force value
     this.setPull = function( force, offsetX ) {
 
-      if (options.attractNegative) {
+      if ( options.attractNegative ) {
         force *= -1;
       }
 
@@ -134,7 +134,7 @@ define( function( require ) {
       if ( force !== 0 && index === this.zeroForceIndex ) {
         index += ( force > 0 ) ? 1 : -1;
       }
-      
+
       for ( var i = 0; i < this.pullerPusherImages.length; i++ ) {
         images[ i ].setVisible( i === index );
       }

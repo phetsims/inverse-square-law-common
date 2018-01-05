@@ -97,11 +97,11 @@ define( function( require ) {
 
           // x in model coordinates
           var xModel = model.rulerPositionProperty.get().x;
-          
+
           var snappedX = Util.roundSymmetric( xModel / options.snapToNearest ) * options.snapToNearest;
 
           // var offsetX = modelViewTransform.viewToModelDeltaX( RULER_INSET );
-          model.rulerPositionProperty.set( new Vector2( snappedX , model.rulerPositionProperty.get().y ) );
+          model.rulerPositionProperty.set( new Vector2( snappedX, model.rulerPositionProperty.get().y ) );
         }
       }
     } ) );
@@ -120,7 +120,7 @@ define( function( require ) {
         if ( options.snapToNearest ) {
           var xModel = model.rulerPositionProperty.get().x;
           var snappedX = Util.roundSymmetric( xModel / options.snapToNearest ) * options.snapToNearest;
-          model.rulerPositionProperty.set( new Vector2( snappedX , model.rulerPositionProperty.get().y ) );
+          model.rulerPositionProperty.set( new Vector2( snappedX, model.rulerPositionProperty.get().y ) );
         }
       }
     } );

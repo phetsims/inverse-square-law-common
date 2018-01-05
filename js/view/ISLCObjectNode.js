@@ -2,11 +2,11 @@
 
 /**
  * A common type for object views in sims that use inverse-square-law-common. The objects have a shaded sphere with a
- * puller/pusher robot attached that updates based on the model object values.  This node also manages an 
+ * puller/pusher robot attached that updates based on the model object values.  This node also manages an
  * arrow with a label that represents the force.  This arrow is NOT added as a child of this node, but is
  * intended to be added in the screen view for layering purposes.  The arrow and its label need to be above
  * both ISLCObjectNodes in the screen view.
- * 
+ *
  * @author Michael Barlow
  * @author Jesse Greenberg
  */
@@ -39,7 +39,7 @@ define( function( require ) {
   var LABEL_MAX_WIDTH = 20; // empirically determined through testing with long strings
 
   /**
-   * 
+   *
    * @param {ISLModel} model - the simulation model
    * @param {ISLObjectModel} objectModel - the associated object's model within the sim
    * @param {Bounds2} layoutBounds - bounds of the screen view containing the object
@@ -57,7 +57,7 @@ define( function( require ) {
       label: 'This Object',
       otherObjectLabel: 'Other Object',
       defaultDirection: 'left',
-      
+
       attractNegative: false,
       forceReadoutDecimalPlaces: 12, // number of decimal places in force readout
       snapToNearest: null, // {number} if present, object node will snap to the nearest snapToNearest value on drag
@@ -126,10 +126,10 @@ define( function( require ) {
     var arrowForceRange = new RangeWithValue( model.getMinForce(), model.getMaxForce() );
 
     // @protected - arrow node
-    this.arrowNode = new ISLCForceArrowNode( 
-      arrowForceRange, 
-      layoutBounds, 
-      tandem.createTandem( 'forceArrowNode' ), 
+    this.arrowNode = new ISLCForceArrowNode(
+      arrowForceRange,
+      layoutBounds,
+      tandem.createTandem( 'forceArrowNode' ),
       _.pick( options, arrowOptionKeys )
     );
 
@@ -240,8 +240,8 @@ define( function( require ) {
 
         // absolute drag bounds based on model
         // see method descriptions for details
-        var xMax =  model.getObjectMaxPosition( objectModel );
-        var xMin =  model.getObjectMinPosition( objectModel );
+        var xMax = model.getObjectMaxPosition( objectModel );
+        var xMin = model.getObjectMinPosition( objectModel );
 
         // apply limitations and update position
         x = Math.max( Math.min( x, xMax ), xMin ); // limited value of x (by boundary) in model coords
@@ -254,7 +254,7 @@ define( function( require ) {
       },
       tandem: tandem.createTandem( 'objectDragHandler' )
     } ) );
-    
+
     // on reset, no objects are destroyed and properties are set to initial values
     // no need to dispose of any of the below listeners
     objectModel.positionProperty.link( function( property ) {
@@ -282,11 +282,11 @@ define( function( require ) {
     } );
 
     // a11y - necessary to reset the enabledRangeProperty to prevent object overlap, disposal not necessary
-    model.forceProperty.link( function () {
+    model.forceProperty.link( function() {
       var maxPosition = model.getObjectMaxPosition( objectModel );
       var minPosition = model.getObjectMinPosition( objectModel );
 
-      enabledRangeProperty.set( new RangeWithValue( minPosition, maxPosition ) ); 
+      enabledRangeProperty.set( new RangeWithValue( minPosition, maxPosition ) );
     } );
 
     var enabledProperty = new BooleanProperty( true, {
@@ -312,7 +312,7 @@ define( function( require ) {
       // a11y - update the focusHighlight with the radius
       self.focusHighlight = Shape.bounds( dragNode.bounds.dilated( 5 ) );
     } );
-    
+
     // for layering purposes, we assume that the ScreenView will add the arrow node and label - by the
     // time the sim is stepped, make sure that the arrows are added to the view
     if ( assert ) {
