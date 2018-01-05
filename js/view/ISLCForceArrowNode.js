@@ -77,7 +77,7 @@ define( function( require ) {
     var minArrowLength = arrowForceRange.min === 0 ? 0 : 1;
     // var minArrowLength = 0;
 
-    console.log( options.maxArrowWidth );
+    // console.log( options.maxArrowWidth );
     // @private - maps the force value to the desired width of the arrow in view coordinates
     this.forceToArrowWidthFunction = new LinearFunction( arrowForceRange.min, arrowForceRange.max, minArrowLength, options.maxArrowWidth, false );
 
