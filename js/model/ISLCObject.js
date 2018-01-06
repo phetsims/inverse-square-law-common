@@ -15,7 +15,6 @@ define( function( require ) {
   var ISLCConstants = require( 'INVERSE_SQUARE_LAW_COMMON/ISLCConstants' );
   var NumberProperty = require( 'AXON/NumberProperty' );
   var Range = require( 'DOT/Range' );
-  var Tandem = require( 'TANDEM/Tandem' );
   var DerivedPropertyIO = require( 'AXON/DerivedPropertyIO' );
 
   // phet-io modules
@@ -37,8 +36,6 @@ define( function( require ) {
     options = _.extend( {
       leftObjectBoundary: ISLCConstants.LEFT_OBJECT_BOUNDARY,
       rightObjectBoundary: ISLCConstants.RIGHT_OBJECT_BOUNDARY,
-
-      tandem: Tandem.required,
       tandemUnits: 'kilograms'
     }, options );
 
@@ -58,8 +55,7 @@ define( function( require ) {
 
     // @public - mass radius will change with value
     // since ISLCObjects are never destroyed, we do not need to dispose of this property
-    this.radiusProperty = new DerivedProperty(
-      [ this.valueProperty, constantRadiusProperty ],
+    this.radiusProperty = new DerivedProperty( [ this.valueProperty, constantRadiusProperty ],
       function( valueProperty, constantRadius ) {
         return constantRadius ? options.constantRadius : self.calculateRadius( valueProperty );
       }, {
