@@ -21,12 +21,12 @@ define( function( require ) {
   var TEXT_MAX_WIDTH = 120;
 
   /**
-   * @constructor
-   * @param {items} list of item objects to attach
+   * @param {Object[]} items - list of item objects to attach
    * @param {Tandem} tandem
    * @param {Object} [options]
+   * @constructor
    */
-  function ISLCheckboxPanel( items, tandem, options ) {
+  function ISLCCheckboxPanel( items, tandem, options ) {
 
     options = _.extend( {
       fill: '#FDF498',
@@ -72,7 +72,7 @@ define( function( require ) {
     Panel.call( this, checkboxGroup, options );
   }
 
-  inverseSquareLawCommon.register( 'ISLCheckboxPanel', ISLCheckboxPanel );
+  inverseSquareLawCommon.register( 'ISLCCheckboxPanel', ISLCCheckboxPanel );
 
-  return inherit( Panel, ISLCheckboxPanel );
+  return inherit( Panel, ISLCCheckboxPanel );
 } );

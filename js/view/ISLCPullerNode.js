@@ -4,14 +4,13 @@
  * The pullers attached to the mass and charge objects. The node maintains a list of puller images that vary in
  * perceived pull effort. They are made visible and invisible to correspond to a given force value.
  *
- * @author Michael Barlow
- * @author Jesse Greenberg
+ * @author Michael Barlow (PhET Interactive Simulations)
+ * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 define( function( require ) {
   'use strict';
 
   // modules
-  // var Bounds2 = require( 'DOT/Bounds2' );
   var Image = require( 'SCENERY/nodes/Image' );
   var inherit = require( 'PHET_CORE/inherit' );
   var inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
@@ -77,7 +76,6 @@ define( function( require ) {
     var pullerGroupNode = new Node( {
       tandem: tandem.createTandem( 'pullerGroupNode' )
     } );
-    var pullerNodeGroupTandem = tandem.createGroupTandem( 'node' );
 
     // the optional shadow node under the pullers - a circle scaled down vertically to look eliptical
     var shadowNode = new Circle( 10, {

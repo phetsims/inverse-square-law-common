@@ -3,8 +3,8 @@
 /**
  * Arrow buttons, slider and text box for editing the object value amount.
  *
- * @author  Jesse Greenberg
- * @author  Michael Barlow
+ * @author Jesse Greenberg (PhET Interactive Simulations)
+ * @author Michael Barlow (PhET Interactive Simulations
  */
 define( function( require ) {
   'use strict';
@@ -33,7 +33,7 @@ define( function( require ) {
    * @param {Property.<number>} objectProperty
    * @param {Range} valueRange
    * @param {Tandem} tandem
-   * @param {Object} options
+   * @param {Object} [options]
    * @constructor
    */
   function ISLCObjectControl( titleString, unitString, objectProperty, valueRange, tandem, options ) {

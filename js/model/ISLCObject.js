@@ -5,7 +5,6 @@
  *
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
-
 define( function( require ) {
   'use strict';
 
@@ -23,13 +22,13 @@ define( function( require ) {
   var NumberIO = require( 'ifphetio!PHET_IO/types/NumberIO' );
 
   /**
-   * @constructor
    * @param {number} initialValue
    * @param {Vector2} initialPosition
    * @param {Range} valueRange
    * @param {Property.<boolean>} constantRadiusProperty
    * @param {Tandem} tandem
    * @param {Object} [options]
+   * @constructor
    */
   function ISLCObject( initialValue, initialPosition, valueRange, constantRadiusProperty, tandem, options ) {
 
@@ -92,5 +91,4 @@ define( function( require ) {
       throw new Error( 'calculateRadius must be implemented in descendent types' );
     }
   } );
-
 } );

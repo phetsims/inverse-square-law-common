@@ -20,7 +20,6 @@ define( function( require ) {
   var DerivedPropertyIO = require( 'AXON/DerivedPropertyIO' );
 
   /**
-   * @constructor
    * @param {number} initialMass
    * @param {Vector2} initialPosition
    * @param {Range} valueRange
@@ -28,7 +27,8 @@ define( function( require ) {
    * @param {Property.<boolean>} constantRadiusProperty
    * @param {Color} baseColor
    * @param {Tandem} tandem
-   * @param {Object} options
+   * @param {Object} [options]
+   * @constructor
    */
   function Mass( initialMass, initialPosition, valueRange, density, constantRadiusProperty, baseColor, tandem, options ) {
 

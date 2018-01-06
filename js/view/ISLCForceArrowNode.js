@@ -4,9 +4,8 @@
  * Arrow node for sims that use inverse-square-law-common.  The arrow is scaled to represent the magnitude of the force,
  * and can change direction to represent repulsive and attractive forces.
  *
- * @author Jesse Greenberg
+ * @author Jesse Greenberg (PhET Interactive Simulations)
  */
-
 define( function( require ) {
   'use strict';
 
@@ -30,11 +29,11 @@ define( function( require ) {
   var TEXT_OFFSET = 5; // empirically determined to make sure text does not go out of bounds
 
   /**
-   * @constructor
    * @param {Range} arrowForceRange - the range in force magnitude
    * @param {Bounds2} layoutBounds
    * @param {Tandem} tandem
-   * @param {Object} options
+   * @param {Object} [options]
+   * @constructor
    */
   function ISLCForceArrowNode( arrowForceRange, layoutBounds, tandem, options ) {
 

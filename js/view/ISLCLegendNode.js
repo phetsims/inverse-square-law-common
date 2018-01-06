@@ -4,7 +4,7 @@
  * A legend graphic consisting of a double-ended arrow, two endpoint lines, and a label string. Intended to visually
  * indicate a distance scale.
  *
- * @author  Michael Barlow
+ * @author Michael Barlow (PhET Interactive Simulations)
  */
 define( function( require ) {
   'use strict';
@@ -17,10 +17,9 @@ define( function( require ) {
   var Text = require( 'SCENERY/nodes/Text' );
 
   /**
-   * @param {ISLModel} model
-   * @param {ModelViewTransform2} modelViewTransform
    * @param {int/float} width (in view coordinates)
    * @param {string} labelString
+   * @param {Object} [options]
    * @constructor
    */
   function ISLCLegendNode( width, labelString, options ) {

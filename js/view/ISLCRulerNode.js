@@ -3,8 +3,8 @@
 /**
  * The draggable horizontal ruler.
  *
- * @author Michael Barlow
- * @author Jesse Greenberg
+ * @author Michael Barlow (PhET Interactive Simulations)
+ * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 define( function( require ) {
   'use strict';
@@ -34,6 +34,7 @@ define( function( require ) {
    * @param {number} screenHeight
    * @param {ModelViewTransform2} modelViewTransform
    * @param {Tandem} tandem
+   * @param {Object} [options]
    * @constructor
    */
   function ISLCRulerNode( model, screenHeight, modelViewTransform, tandem, options ) {

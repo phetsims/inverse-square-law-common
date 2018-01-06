@@ -7,10 +7,9 @@
  * intended to be added in the screen view for layering purposes.  The arrow and its label need to be above
  * both ISLCObjectNodes in the screen view.
  *
- * @author Michael Barlow
- * @author Jesse Greenberg
+ * @author Michael Barlow (PhET Interactive Simulations)
+ * @author Jesse Greenberg (PhET Interactive Simulations)
  */
-
 define( function( require ) {
   'use strict';
 
@@ -39,9 +38,8 @@ define( function( require ) {
   var LABEL_MAX_WIDTH = 20; // empirically determined through testing with long strings
 
   /**
-   *
-   * @param {ISLModel} model - the simulation model
-   * @param {ISLObjectModel} objectModel - the associated object's model within the sim
+   * @param {ISLCModel} model - the simulation model
+   * @param {ISLCObject} object - the associated object's model within the sim
    * @param {Bounds2} layoutBounds - bounds of the screen view containing the object
    * @param {ModelViewTransform2} modelViewTransform
    * @param {Range} pullForceRange - the max and min possible force values
@@ -49,7 +47,7 @@ define( function( require ) {
    * @param {Object} options
    * @constructor
    */
-  function ISLCObjectNode( model, objectModel, layoutBounds, modelViewTransform, pullForceRange, tandem, options ) {
+  function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, pullForceRange, tandem, options ) {
 
     var self = this;
 
@@ -93,7 +91,7 @@ define( function( require ) {
 
     // @protected
     this.layoutBounds = layoutBounds;
-    this.objectModel = objectModel;
+    this.objectModel = object;
     this.model = model;
     this.modelViewTransform = modelViewTransform;
 
@@ -163,7 +161,7 @@ define( function( require ) {
     } );
 
     // the 'object' - a shaded circle
-    var radius = modelViewTransform.modelToViewDeltaX( objectModel.radiusProperty.get() );
+    var radius = modelViewTransform.modelToViewDeltaX( object.radiusProperty.get() );
 
     // @protected - the object
     this.objectCircle = new Circle( radius );
@@ -230,7 +228,7 @@ define( function( require ) {
       allowTouchSnag: true,
       start: function( event ) {
         clickOffset = dragNode.globalToParentPoint( event.pointer.point ).x - event.currentTarget.x;
-        objectModel.isDragging = true;
+        object.isDragging = true;
         // model.toggleDraggingObject( objectModel );
       },
       drag: function( event ) {
@@ -240,24 +238,24 @@ define( function( require ) {
 
         // absolute drag bounds based on model
         // see method descriptions for details
-        var xMax = model.getObjectMaxPosition( objectModel );
-        var xMin = model.getObjectMinPosition( objectModel );
+        var xMax = model.getObjectMaxPosition( object );
+        var xMin = model.getObjectMinPosition( object );
 
         // apply limitations and update position
         x = Math.max( Math.min( x, xMax ), xMin ); // limited value of x (by boundary) in model coords
 
         // snapToGrid method dynamically checks whether to snap or not
-        objectModel.positionProperty.set( model.snapToGrid( x ) );
+        object.positionProperty.set( model.snapToGrid( x ) );
       },
       end: function( event ) {
-        objectModel.isDragging = false;
+        object.isDragging = false;
       },
       tandem: tandem.createTandem( 'objectDragHandler' )
     } ) );
 
     // on reset, no objects are destroyed and properties are set to initial values
     // no need to dispose of any of the below listeners
-    objectModel.positionProperty.link( function( property ) {
+    object.positionProperty.link( function( property ) {
       // position this node and its force arrow with label
       var transformedValue = modelViewTransform.modelToViewX( property );
       self.x = transformedValue;
@@ -265,10 +263,10 @@ define( function( require ) {
     } );
 
     model.showValuesProperty.lazyLink( this.redrawForce.bind( this ) );
-    objectModel.radiusProperty.lazyLink( this.redrawForce.bind( this ) );
+    object.radiusProperty.lazyLink( this.redrawForce.bind( this ) );
     model.forceProperty.lazyLink( this.redrawForce.bind( this ) );
 
-    objectModel.baseColorProperty.link( function( baseColor ) {
+    object.baseColorProperty.link( function( baseColor ) {
       self.updateGradient( baseColor );
     } );
 
@@ -283,8 +281,8 @@ define( function( require ) {
 
     // a11y - necessary to reset the enabledRangeProperty to prevent object overlap, disposal not necessary
     model.forceProperty.link( function() {
-      var maxPosition = model.getObjectMaxPosition( objectModel );
-      var minPosition = model.getObjectMinPosition( objectModel );
+      var maxPosition = model.getObjectMaxPosition( object );
+      var minPosition = model.getObjectMinPosition( object );
 
       enabledRangeProperty.set( new RangeWithValue( minPosition, maxPosition ) );
     } );
@@ -298,15 +296,15 @@ define( function( require ) {
       shiftKeyboardStep: options.snapToNearest,
       pageKeyboardStep: options.snapToNearest * 10,
       startDrag: function() {
-        objectModel.isDragging = true;
+        object.isDragging = true;
       },
       endDrag: function() {
-        objectModel.isDragging = false;
+        object.isDragging = false;
       }
     };
 
     // initialize features that  make this node act like an accessible range input
-    this.initializeAccessibleSlider( objectModel.positionProperty, enabledRangeProperty, enabledProperty, accessibleSliderOptions );
+    this.initializeAccessibleSlider( object.positionProperty, enabledRangeProperty, enabledProperty, accessibleSliderOptions );
 
     this.objectModel.radiusProperty.link( function( radius ) {
       // a11y - update the focusHighlight with the radius

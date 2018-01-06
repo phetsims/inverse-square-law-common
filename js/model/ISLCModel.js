@@ -21,7 +21,6 @@ define( function( require ) {
   var BooleanIO = require( 'ifphetio!PHET_IO/types/BooleanIO' );
 
   /**
-   * @constructor
    * @param {number} forceConstant the appropriate force constant (e.g. G or k)
    * @param {object} object1 - the first Mass or Charge object
    * @param {object} object2 - the second Mass or Charge object
@@ -29,6 +28,7 @@ define( function( require ) {
    * @param {Vector2} rightBoundary - absolute boundary for the right object
    * @param {Tandem} tandem
    * @param {object} options
+   * @constructor
    */
   function ISLCModel( forceConstant, object1, object2, leftBoundary, rightBoundary, tandem, options ) {
 

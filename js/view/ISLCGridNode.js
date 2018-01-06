@@ -5,9 +5,8 @@
  * sims that use inverse-square-law-common, objects are constrained to positions along a 2D grid.
  * This node should only be used for debugging and will be hidden behind query parameter "showGrid".
  *
- * @author Jesse Greenberg
+ * @author Jesse Greenberg (PhET Interactive Simulations)
  */
-
 define( function( require ) {
   'use strict';
 
@@ -18,10 +17,11 @@ define( function( require ) {
   var Shape = require( 'KITE/Shape' );
 
   /**
-   * @constructor
    * @param {number} deltaX - position step for the object in model coordinates
    * @param {Bounds2} layoutBounds - layout bounds of the ScreenView
    * @param {ModelViewTransform2} modelViewTransform
+   * @param {Object} [options]
+   * @constructor
    */
   function ISLCGridNode( deltaX, layoutBounds, modelViewTransform, options ) {
 
@@ -54,5 +54,4 @@ define( function( require ) {
   inverseSquareLawCommon.register( 'ISLCGridNode', ISLCGridNode );
 
   return inherit( Path, ISLCGridNode );
-
 } );
