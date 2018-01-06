@@ -27,7 +27,7 @@ define( function( require ) {
    * @param {Vector2} leftBoundary - absolute boundary for the left object
    * @param {Vector2} rightBoundary - absolute boundary for the right object
    * @param {Tandem} tandem
-   * @param {object} options
+   * @param {Object} [options]
    * @constructor
    */
   function ISLCModel( forceConstant, object1, object2, leftBoundary, rightBoundary, tandem, options ) {
