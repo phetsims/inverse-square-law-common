@@ -36,7 +36,7 @@ define( function( require ) {
    * @param {Object} [options]
    * @constructor
    */
-  function ISLCObjectControl( titleString, unitString, objectProperty, valueRange, tandem, options ) {
+  function ISLCObjectControlPanel( titleString, unitString, objectProperty, valueRange, tandem, options ) {
 
     // major ticks
     var tickLabelOptions = options.tickLabelOptions ? _.extend( { pickable: false }, options.tickLabelOptions ) : { pickable: false };
@@ -114,7 +114,7 @@ define( function( require ) {
     Panel.call( this, numberControl, panelOptions );
   }
 
-  inverseSquareLawCommon.register( 'ISLCObjectControl', ISLCObjectControl );
+  inverseSquareLawCommon.register( 'ISLCObjectControlPanel', ISLCObjectControlPanel );
 
-  return inherit( Panel, ISLCObjectControl );
+  return inherit( Panel, ISLCObjectControlPanel );
 } );
