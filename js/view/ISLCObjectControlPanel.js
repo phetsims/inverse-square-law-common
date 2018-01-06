@@ -17,6 +17,7 @@ define( function( require ) {
   var Panel = require( 'SUN/Panel' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
+  var Tandem = require( 'TANDEM/Tandem' );
   var Text = require( 'SCENERY/nodes/Text' );
 
   // strings
@@ -32,14 +33,14 @@ define( function( require ) {
    * @param {string} unitString
    * @param {Property.<number>} objectProperty
    * @param {Range} valueRange
-   * @param {Tandem} tandem
    * @param {Object} [options]
    * @constructor
    */
-  function ISLCObjectControlPanel( titleString, unitString, objectProperty, valueRange, tandem, options ) {
+  function ISLCObjectControlPanel( titleString, unitString, objectProperty, valueRange, options ) {
 
     // major ticks
-    var tickLabelOptions = options.tickLabelOptions ? _.extend( { pickable: false }, options.tickLabelOptions ) : { pickable: false };
+    var tickLabelOptions = options.tickLabelOptions ?
+                           _.extend( { pickable: false }, options.tickLabelOptions ) : { pickable: false };
     options = _.extend( {
       fill: '#EDEDED',
       xMargin: 10,
@@ -82,6 +83,7 @@ define( function( require ) {
       valueBackgroundStroke: 'black',
       valueBackgroundCornerRadius: 3,
       tickLabelSpacing: 1,
+      tandem: Tandem.required
     }, options );
 
     for ( var i = 0; i < options.additionalTicks.length; i++ ) {
@@ -89,7 +91,9 @@ define( function( require ) {
         value: options.additionalTicks[ i ].value,
         label: new Text(
           options.additionalTicks[ i ].value,
-          _.extend( { tandem: tandem.createTandem( options.additionalTicks[ i ].tandemLabel ) }, tickLabelOptions )
+          _.extend( {
+            tandem: options.tandem.createTandem( options.additionalTicks[ i ].tandemLabel )
+          }, tickLabelOptions )
         )
       };
       options.majorTicks.push( tick );
@@ -106,7 +110,7 @@ define( function( require ) {
       objectProperty,
       valueRange,
       _.extend( {
-          tandem: tandem.createTandem( 'numberControl' ),
+          tandem: options.tandem.createTandem( 'numberControl' ),
           valueAlign: 'center'
         },
         options ) );
