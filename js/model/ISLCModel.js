@@ -45,7 +45,7 @@ define( function( require ) {
 
     // @public
     this.showValuesProperty = new Property( true, {
-      tandem: tandem.createTandem( 'showValuesProperty' ),
+      tandem: tandem.createTandem( 'forceValuesProperty' ), // TODO: is this tandem name appropriate for all sims?  Or just GFLB?
       phetioType: PropertyIO( BooleanIO )
     } );
 
