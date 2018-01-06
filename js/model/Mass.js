@@ -42,16 +42,16 @@ define( function( require ) {
 
     ISLCObject.call( this, initialMass, initialPosition, valueRange, constantRadiusProperty, tandem, options );
 
-
     // @public - mass color is will change with value of constantRadiusProperty (set within sim)
-    this.baseColorProperty = new DerivedProperty(
-      [ this.valueProperty, constantRadiusProperty ],
+    this.baseColorProperty = new DerivedProperty( [ this.valueProperty, constantRadiusProperty ],
       function( value, constantRadius ) {
         return constantRadius ?
                options.constantRadiusColor.colorUtilsBrighter( 1 - Math.abs( value ) / valueRange.max ) :
                baseColor;
-      },
-      { tandem: tandem.createTandem( 'baseColorProperty' ), phetioType: DerivedPropertyIO( ColorIO ) }
+      }, {
+        tandem: tandem.createTandem( 'baseColorProperty' ),
+        phetioType: DerivedPropertyIO( ColorIO )
+      }
     );
   }
 
