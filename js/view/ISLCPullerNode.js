@@ -77,7 +77,7 @@ define( function( require ) {
       tandem: tandem.createTandem( 'pullerGroupNode' )
     } );
 
-    // the optional shadow node under the pullers - a circle scaled down vertically to look eliptical
+    // the optional shadow node under the pullers - a circle scaled down vertically to look elliptical
     var shadowNode = new Circle( 10, {
       fill: '#777',
       scale: new Vector2( 1, 0.20 ),
