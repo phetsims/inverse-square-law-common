@@ -90,8 +90,7 @@ define( function( require ) {
     var images = [];
     var i;
     for ( i = 0; i < this.pullerPusherImages.length; i++ ) {
-      var pullerTandem = pullerNodeGroupTandem.createNextTandem();
-      var pullerImage = new Image( this.pullerPusherImages[ i ], { tandem: pullerTandem.createTandem( 'pullerImage' ) } );
+      var pullerImage = new Image( this.pullerPusherImages[ i ] );
 
       // puller images are much larger than pushers, so we need to scale it down
       pullerImage.scale( IMAGE_SCALE, IMAGE_SCALE );
