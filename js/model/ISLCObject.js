@@ -21,7 +21,7 @@ define( function( require ) {
   var NumberIO = require( 'ifphetio!PHET_IO/types/NumberIO' );
 
   /**
-   * @param {number} initialValue
+   * @param {number} initialMass
    * @param {Vector2} initialPosition
    * @param {Range} valueRange
    * @param {Property.<boolean>} constantRadiusProperty
@@ -29,7 +29,7 @@ define( function( require ) {
    * @param {Object} [options]
    * @constructor
    */
-  function ISLCObject( initialValue, initialPosition, valueRange, constantRadiusProperty, tandem, options ) {
+  function ISLCObject( initialMass, initialPosition, valueRange, constantRadiusProperty, tandem, options ) {
 
     var self = this;
 
@@ -47,17 +47,17 @@ define( function( require ) {
     } );
 
     // @public
-    this.valueProperty = new NumberProperty( initialValue, {
-      tandem: tandem.createTandem( 'valueProperty' ),
+    this.massProperty = new NumberProperty( initialMass, {
+      tandem: tandem.createTandem( 'massProperty' ),
       units: options.tandemUnits,
       range: valueRange
     } );
 
     // @public - mass radius will change with value
     // since ISLCObjects are never destroyed, we do not need to dispose of this property
-    this.radiusProperty = new DerivedProperty( [ this.valueProperty, constantRadiusProperty ],
-      function( valueProperty, constantRadius ) {
-        return constantRadius ? options.constantRadius : self.calculateRadius( valueProperty );
+    this.radiusProperty = new DerivedProperty( [ this.massProperty, constantRadiusProperty ],
+      function( massProperty, constantRadius ) {
+        return constantRadius ? options.constantRadius : self.calculateRadius( massProperty );
       }, {
         tandem: tandem.createTandem( 'radiusProperty' ),
         units: 'meters',

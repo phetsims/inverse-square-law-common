@@ -67,13 +67,13 @@ define( function( require ) {
         value: valueRange.min,
         label: new Text(
           valueRange.min,
-          _.extend( { tandem: tandem.createTandem( 'majorTickMinLabel' ) }, tickLabelOptions )
+          _.extend( { tandem: options.tandem.createTandem( 'majorTickMinLabel' ) }, tickLabelOptions )
         )
       }, {
         value: valueRange.max,
         label: new Text(
           valueRange.max,
-          _.extend( { tandem: tandem.createTandem( 'majorTickMaxLabel' ) }, tickLabelOptions )
+          _.extend( { tandem: options.tandem.createTandem( 'majorTickMaxLabel' ) }, tickLabelOptions )
         )
       } ],
       majorTickLength: 8,
@@ -99,6 +99,8 @@ define( function( require ) {
       options.majorTicks.push( tick );
     }
 
+    var tandem = options.tandem;
+
     var optionsFilter = [ 'fill', 'xMargin', 'yMargin', 'resize', 'align', 'right', 'left', 'top', 'tandem' ];
 
     var panelOptions = _.pick( options, optionsFilter );
@@ -110,7 +112,7 @@ define( function( require ) {
       objectProperty,
       valueRange,
       _.extend( {
-          tandem: options.tandem.createTandem( 'numberControl' ),
+          tandem: tandem.createTandem( 'numberControl' ),
           valueAlign: 'center'
         },
         options ) );
