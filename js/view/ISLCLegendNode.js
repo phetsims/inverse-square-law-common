@@ -17,7 +17,7 @@ define( function( require ) {
   var Text = require( 'SCENERY/nodes/Text' );
 
   /**
-   * @param {int/float} width (in view coordinates)
+   * @param {number} width (in view coordinates)
    * @param {string} labelString
    * @param {Object} [options]
    * @constructor
