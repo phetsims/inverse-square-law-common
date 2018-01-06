@@ -39,7 +39,7 @@ define( function( require ) {
       rightObjectBoundary: ISLCConstants.RIGHT_OBJECT_BOUNDARY,
 
       tandem: Tandem.required,
-      tandemUnits: 'kilograms',
+      tandemUnits: 'kilograms'
     }, options );
 
     // @public

@@ -46,8 +46,7 @@ define( function( require ) {
 
     items.forEach( function( item ) {
       var itemLabel = new Text(
-        item.content,
-        {
+        item.content, {
           tandem: tandem.createTandem( item.textTandemLabel ),
           font: new PhetFont( options.textSize ),
           maxWidth: options.itemTextMaxWidth
@@ -61,7 +60,6 @@ define( function( require ) {
         property: item.property,
         tandemName: item.checkboxTandemLabel
       } );
-
     } );
     assert && assert( checkBoxWidth !== 0, 'checkBox width should not be zero.' );
 

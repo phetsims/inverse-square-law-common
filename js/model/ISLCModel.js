@@ -68,29 +68,25 @@ define( function( require ) {
     // @public
     // derived property that calculates the force based on changes to values and positions
     // objects are never destroyed, so forceProperty does not require disposal
-    this.forceProperty = new DerivedProperty(
-      [
+    this.forceProperty = new DerivedProperty( [
         this.object1.valueProperty,
         this.object2.valueProperty,
         this.object1.positionProperty,
         this.object2.positionProperty
-      ],
-      function( v1, v2, x1, x2 ) {
+      ], function( v1, v2, x1, x2 ) {
         var distance = Math.abs( x2 - x1 );
-
-
         return self.calculateForce( v1, v2, distance );
       }
     );
 
     // when sim is reset, we only reset the position properties of each object to their initial values
     // thus, there is no need ot dispose of the listeners below
-    this.object1.radiusProperty.link( function( radius ) {
+    this.object1.radiusProperty.link( function() {
       self.object1.radiusLastChanged = true;
       self.object2.radiusLastChanged = false;
     } );
 
-    this.object2.radiusProperty.link( function( radius ) {
+    this.object2.radiusProperty.link( function() {
       self.object2.radiusLastChanged = true;
       self.object1.radiusLastChanged = false;
     } );

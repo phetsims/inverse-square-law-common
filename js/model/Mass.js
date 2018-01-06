@@ -34,7 +34,7 @@ define( function( require ) {
 
     options = _.extend( {
       constantRadius: ISLCConstants.CONSTANT_RADIUS, // in meters
-      constantRadiusColor: ISLCConstants.CONSTANT_RADIUS_COLOR //
+      constantRadiusColor: ISLCConstants.CONSTANT_RADIUS_COLOR
     }, options );
 
     // @private
