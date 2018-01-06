@@ -80,8 +80,7 @@ define( function( require ) {
     // the optional shadow node under the pullers - a circle scaled down vertically to look elliptical
     var shadowNode = new Circle( 10, {
       fill: '#777',
-      scale: new Vector2( 1, 0.20 ),
-      tandem: tandem.createTandem( 'shadowNode' )
+      scale: new Vector2( 1, 0.20 )
     } );
 
     // create each of the puller/pusher image nodes
@@ -98,8 +97,7 @@ define( function( require ) {
 
     pullerGroupNode.addChild( new Path( Shape.lineSegment( -options.ropeLength, 0, 0, 0 ), {
       stroke: '#666',
-      lineWidth: 2,
-      tandem: tandem.createTandem( 'ropeNode' )
+      lineWidth: 2
     } ) );
 
     // set the layout for the images

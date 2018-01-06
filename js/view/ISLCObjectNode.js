@@ -292,6 +292,7 @@ define( function( require ) {
       enabledRangeProperty.set( new RangeWithValue( minPosition, maxPosition ) );
     } );
 
+    // TODO: please document this -- it is unclear what it is for or if it is necessary
     var enabledProperty = new BooleanProperty( true, {
       tandem: tandem.createTandem( 'enabledProperty' )
     } );
