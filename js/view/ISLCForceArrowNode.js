@@ -13,12 +13,13 @@ define( function( require ) {
   var ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
   var inherit = require( 'PHET_CORE/inherit' );
   var inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
-  var RichText = require( 'SCENERY/nodes/RichText' );
-  var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
-  var Util = require( 'DOT/Util' );
   var LinearFunction = require( 'DOT/LinearFunction' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  var RichText = require( 'SCENERY/nodes/RichText' );
   var ScientificNotationNode = require( 'SCENERY_PHET/ScientificNotationNode' );
+  var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
+  var Tandem = require( 'TANDEM/Tandem' );
+  var Util = require( 'DOT/Util' );
 
   // strings
   var forceDescriptionPatternTargetSourceString = require( 'string!INVERSE_SQUARE_LAW_COMMON/force-description-pattern-target_source' );
@@ -31,11 +32,10 @@ define( function( require ) {
   /**
    * @param {Range} arrowForceRange - the range in force magnitude
    * @param {Bounds2} layoutBounds
-   * @param {Tandem} tandem
    * @param {Object} [options]
    * @constructor
    */
-  function ISLCForceArrowNode( arrowForceRange, layoutBounds, tandem, options ) {
+  function ISLCForceArrowNode( arrowForceRange, layoutBounds, options ) {
 
     options = _.extend( {
       defaultDirection: 'left',
@@ -60,11 +60,10 @@ define( function( require ) {
       tailWidth: 3,
       arrowStroke: null,
       arrowFill: '#fff',
-      tandem: tandem.createTandem( 'arrowNode' )
+      tandem: Tandem.required
     }, options );
 
     // @private
-    this.arrowForceRange = arrowForceRange;
     this.layoutBounds = layoutBounds;
     this.defaultDirection = options.defaultDirection;
     this.forceReadoutDecimalPlaces = options.forceReadoutDecimalPlaces;
@@ -88,7 +87,7 @@ define( function( require ) {
       lineWidth: options.arrowNodeLineWidth,
       maxWidth: 300, // empirically determined through testing with long strings
       y: -20,
-      tandem: tandem.createTandem( 'arrowText' )
+      tandem: options.tandem.createTandem( 'arrowText' )
     } );
 
     var arrowNodeOptions = _.pick( options, [ 'headHeight', 'headWidth', 'tailWidth' ] );

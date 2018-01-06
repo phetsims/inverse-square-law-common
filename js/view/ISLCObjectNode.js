@@ -127,8 +127,9 @@ define( function( require ) {
     this.arrowNode = new ISLCForceArrowNode(
       arrowForceRange,
       layoutBounds,
-      tandem.createTandem( 'forceArrowNode' ),
-      _.pick( options, arrowOptionKeys )
+      _.extend( {
+        tandem: tandem.createTandem( 'forceArrowNode' )
+      }, _.pick( options, arrowOptionKeys ) )
     );
 
     // set y position for the arrow
