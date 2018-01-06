@@ -28,11 +28,12 @@ define( function( require ) {
   var RichText = require( 'SCENERY/nodes/RichText' );
   var Shape = require( 'KITE/Shape' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
+  var Tandem = require( 'TANDEM/Tandem' );
 
   // phetio
+  var BooleanProperty = require( 'AXON/BooleanProperty' );
   var PropertyIO = require( 'AXON/PropertyIO' );
   var RangeIO = require( 'DOT/RangeIO' );
-  var BooleanProperty = require( 'AXON/BooleanProperty' );
 
   // constants
   var LABEL_MAX_WIDTH = 20; // empirically determined through testing with long strings
@@ -43,11 +44,10 @@ define( function( require ) {
    * @param {Bounds2} layoutBounds - bounds of the screen view containing the object
    * @param {ModelViewTransform2} modelViewTransform
    * @param {Range} pullForceRange - the max and min possible force values
-   * @param {Tandem} tandem
    * @param {Object} options
    * @constructor
    */
-  function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, pullForceRange, tandem, options ) {
+  function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, pullForceRange, options ) {
 
     var self = this;
 
@@ -82,8 +82,12 @@ define( function( require ) {
       arrowHeadHeight: 8,
       arrowHeadWidth: 8,
       arrowTailWidth: 3,
-      arrowStroke: null
+      arrowStroke: null,
+
+      tandem: Tandem.required
     }, options );
+
+    var tandem = options.tandem;
 
     Node.call( this, {
       tandem: tandem
