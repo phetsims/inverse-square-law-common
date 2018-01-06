@@ -3,8 +3,8 @@
 /**
  * control that allows the user to show or hide the force values
  *
- * @author Michael Barlow
- * @author Jesse Greenberg
+ * @author Michael Barlow (PhET Interactive Simulations)
+ * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 define( function( require ) {
   'use strict';
