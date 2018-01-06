@@ -14,6 +14,7 @@ define( function( require ) {
   var inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
   var Panel = require( 'SUN/Panel' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  var Tandem = require( 'TANDEM/Tandem' );
   var Text = require( 'SCENERY/nodes/Text' );
   var VerticalCheckBoxGroup = require( 'SUN/VerticalCheckBoxGroup' );
 
@@ -22,11 +23,10 @@ define( function( require ) {
 
   /**
    * @param {Object[]} items - list of item objects to attach
-   * @param {Tandem} tandem
    * @param {Object} [options]
    * @constructor
    */
-  function ISLCCheckboxPanel( items, tandem, options ) {
+  function ISLCCheckboxPanel( items, options ) {
 
     options = _.extend( {
       fill: '#FDF498',
@@ -36,7 +36,7 @@ define( function( require ) {
       align: 'left',
       textSize: 14,
       itemTextMaxWidth: TEXT_MAX_WIDTH,
-      tandem: tandem
+      tandem: Tandem.required
     }, options );
 
     var verticalCheckBoxItems = [];
@@ -47,7 +47,7 @@ define( function( require ) {
     items.forEach( function( item ) {
       var itemLabel = new Text(
         item.content, {
-          tandem: tandem.createTandem( item.textTandemLabel ),
+          tandem: options.tandem.createTandem( item.textTandemLabel ),
           font: new PhetFont( options.textSize ),
           maxWidth: options.itemTextMaxWidth
         }
