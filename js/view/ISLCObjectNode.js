@@ -255,7 +255,7 @@ define( function( require ) {
       end: function( event ) {
         object.isDragging = false;
       },
-      tandem: tandem.createTandem( 'objectDragHandler' )
+      tandem: tandem.createTandem( 'dragHandler' )
     } ) );
 
     // on reset, no objects are destroyed and properties are set to initial values
