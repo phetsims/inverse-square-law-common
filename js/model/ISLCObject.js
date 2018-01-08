@@ -10,12 +10,16 @@ define( function( require ) {
 
   // modules
   var DerivedProperty = require( 'AXON/DerivedProperty' );
+  var DerivedPropertyIO = require( 'AXON/DerivedPropertyIO' );
   var inherit = require( 'PHET_CORE/inherit' );
   var inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
   var ISLCConstants = require( 'INVERSE_SQUARE_LAW_COMMON/ISLCConstants' );
   var NumberProperty = require( 'AXON/NumberProperty' );
+  var Property = require( 'AXON/Property' );
+  var PropertyIO = require( 'AXON/PropertyIO' );
   var Range = require( 'DOT/Range' );
-  var DerivedPropertyIO = require( 'AXON/DerivedPropertyIO' );
+  var RangeIO = require( 'DOT/RangeIO' );
+  var RangeWithValue = require( 'DOT/RangeWithValue' );
 
   // phet-io modules
   var NumberIO = require( 'ifphetio!PHET_IO/types/NumberIO' );
@@ -64,6 +68,15 @@ define( function( require ) {
         phetioType: DerivedPropertyIO( NumberIO )
       }
     );
+
+    // a11y - initialize the accessible slider
+    var enabledRange = new RangeWithValue( options.leftObjectBoundary, options.rightObjectBoundary );
+
+    // @public - set by ISLCModel when the force changes
+    this.enabledRangeProperty = new Property( enabledRange, {
+      tandem: tandem.createTandem( 'enabledRangeProperty' ),
+      phetioType: PropertyIO( RangeIO )
+    } );
 
     // @public - flag to check if the object is being dragged by the user
     //           set in the drag handler

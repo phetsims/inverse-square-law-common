@@ -17,6 +17,7 @@ define( function( require ) {
   var NumberIO = require( 'ifphetio!PHET_IO/types/NumberIO' );
   var Property = require( 'AXON/Property' );
   var PropertyIO = require( 'AXON/PropertyIO' );
+  var RangeWithValue = require( 'DOT/RangeWithValue' );
   var Util = require( 'DOT/Util' );
 
   // phet-io modules
@@ -84,6 +85,22 @@ define( function( require ) {
         units: 'Newtons' // TODO: this appears unused in instance-proxies
       }
     );
+
+    var updateRange = function( object ) {
+      var maxPosition = self.getObjectMaxPosition( object );
+      var minPosition = self.getObjectMinPosition( object );
+
+      object.enabledRangeProperty.set( new RangeWithValue( minPosition, maxPosition ) );
+    };
+
+    // a11y - necessary to reset the enabledRangeProperty to prevent object overlap, disposal not necessary
+    // We need to update the available range for each mass when the opposing mass radius or position changes.
+    // However, we know the force will change when either of these attributes change, so we can link to that instead of
+    // linking to the four underlying attributes
+    this.forceProperty.link( function() {
+      updateRange( object1 );
+      updateRange( object2 );
+    } );
 
     // when sim is reset, we only reset the position properties of each object to their initial values
     // thus, there is no need ot dispose of the listeners below

@@ -23,7 +23,6 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var Path = require( 'SCENERY/nodes/Path' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var Property = require( 'AXON/Property' );
   var RangeWithValue = require( 'DOT/RangeWithValue' );
   var RichText = require( 'SCENERY/nodes/RichText' );
   var Shape = require( 'KITE/Shape' );
@@ -32,8 +31,6 @@ define( function( require ) {
 
   // phetio
   var BooleanProperty = require( 'AXON/BooleanProperty' );
-  var PropertyIO = require( 'AXON/PropertyIO' );
-  var RangeIO = require( 'DOT/RangeIO' );
 
   // constants
   var LABEL_MAX_WIDTH = 20; // empirically determined through testing with long strings
@@ -277,21 +274,6 @@ define( function( require ) {
 
     this.redrawForce();
 
-    // a11y - initialize the accessible slider
-    var enabledRange = new RangeWithValue( model.leftObjectBoundary, model.rightObjectBoundary );
-    var enabledRangeProperty = new Property( enabledRange, {
-      tandem: tandem.createTandem( 'enabledRangeProperty' ),
-      phetioType: PropertyIO( RangeIO )
-    } );
-
-    // a11y - necessary to reset the enabledRangeProperty to prevent object overlap, disposal not necessary
-    model.forceProperty.link( function() {
-      var maxPosition = model.getObjectMaxPosition( object );
-      var minPosition = model.getObjectMinPosition( object );
-
-      enabledRangeProperty.set( new RangeWithValue( minPosition, maxPosition ) );
-    } );
-
     // TODO: please document this -- it is unclear what it is for or if it is necessary
     var enabledProperty = new BooleanProperty( true, {
       tandem: tandem.createTandem( 'enabledProperty' )
@@ -310,7 +292,7 @@ define( function( require ) {
     };
 
     // initialize features that  make this node act like an accessible range input
-    this.initializeAccessibleSlider( object.positionProperty, enabledRangeProperty, enabledProperty, accessibleSliderOptions );
+    this.initializeAccessibleSlider( object.positionProperty, object.enabledRangeProperty, enabledProperty, accessibleSliderOptions );
 
     this.objectModel.radiusProperty.link( function( radius ) {
       // a11y - update the focusHighlight with the radius
