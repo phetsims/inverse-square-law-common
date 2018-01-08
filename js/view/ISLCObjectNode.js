@@ -274,7 +274,7 @@ define( function( require ) {
 
     this.redrawForce();
 
-    // TODO: please document this -- it is unclear what it is for or if it is necessary
+    // a Property required for the node to behave like an accessible slider, ISLCObjects are always enabled
     var enabledProperty = new BooleanProperty( true, {
       tandem: tandem.createTandem( 'enabledProperty' )
     } );
