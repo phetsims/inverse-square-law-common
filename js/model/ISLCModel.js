@@ -10,9 +10,11 @@ define( function( require ) {
 
   // modules
   var DerivedProperty = require( 'AXON/DerivedProperty' );
+  var DerivedPropertyIO = require( 'AXON/DerivedPropertyIO' );
   var Emitter = require( 'AXON/Emitter' );
   var inherit = require( 'PHET_CORE/inherit' );
   var inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
+  var NumberIO = require( 'ifphetio!PHET_IO/types/NumberIO' );
   var Property = require( 'AXON/Property' );
   var PropertyIO = require( 'AXON/PropertyIO' );
   var Util = require( 'DOT/Util' );
@@ -69,13 +71,17 @@ define( function( require ) {
     // derived property that calculates the force based on changes to values and positions
     // objects are never destroyed, so forceProperty does not require disposal
     this.forceProperty = new DerivedProperty( [
-      this.object1.massProperty,
-      this.object2.massProperty,
+        this.object1.massProperty,
+        this.object2.massProperty,
         this.object1.positionProperty,
         this.object2.positionProperty
       ], function( v1, v2, x1, x2 ) {
         var distance = Math.abs( x2 - x1 );
         return self.calculateForce( v1, v2, distance );
+      }, {
+        phetioType: DerivedPropertyIO( NumberIO ),
+        tandem: tandem.createTandem( 'forceProperty' ),
+        units: 'Newtons' // TODO: this appears unused in instance-proxies
       }
     );
 
