@@ -48,7 +48,7 @@ define( function( require ) {
 
     // @public
     this.showValuesProperty = new Property( true, {
-      tandem: tandem.createTandem( 'forceValuesProperty' ), // TODO: is this tandem name appropriate for all sims?  Or just GFLB?
+      tandem: tandem.createTandem( 'showValuesProperty' ),
       phetioType: PropertyIO( BooleanIO )
     } );
 
@@ -145,7 +145,7 @@ define( function( require ) {
       locationMass1 = Math.min( locationMass1, maxPositionObject1 );
       locationMass2 = Math.max( minPositionObject2, locationMass2 );
 
-      // // if objects are limited to a certain precision, round position values to that precision
+      // if objects are limited to a certain precision, round position values to that precision
       locationMass1 = this.snapToGrid( locationMass1 );
       locationMass2 = this.snapToGrid( locationMass2 );
 
