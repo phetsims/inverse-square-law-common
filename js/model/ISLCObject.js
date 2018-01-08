@@ -47,17 +47,17 @@ define( function( require ) {
     } );
 
     // @public
-    this.massProperty = new NumberProperty( initialMass, {
-      tandem: tandem.createTandem( 'massProperty' ),
+    this.valueProperty = new NumberProperty( initialMass, {
+      tandem: tandem.createTandem( 'valueProperty' ),
       units: options.tandemUnits,
       range: valueRange
     } );
 
     // @public - mass radius will change with value
     // since ISLCObjects are never destroyed, we do not need to dispose of this property
-    this.radiusProperty = new DerivedProperty( [ this.massProperty, constantRadiusProperty ],
-      function( massProperty, constantRadius ) {
-        return constantRadius ? options.constantRadius : self.calculateRadius( massProperty );
+    this.radiusProperty = new DerivedProperty( [ this.valueProperty, constantRadiusProperty ],
+      function( valueProperty, constantRadius ) {
+        return constantRadius ? options.constantRadius : self.calculateRadius( valueProperty );
       }, {
         tandem: tandem.createTandem( 'radiusProperty' ),
         units: 'meters',
