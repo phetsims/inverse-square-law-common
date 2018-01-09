@@ -274,11 +274,6 @@ define( function( require ) {
 
     this.redrawForce();
 
-    // a Property required for the node to behave like an accessible slider, ISLCObjects are always enabled
-    var enabledProperty = new BooleanProperty( true, {
-      tandem: tandem.createTandem( 'enabledProperty' )
-    } );
-
     var accessibleSliderOptions = {
       keyboardStep: options.snapToNearest,
       shiftKeyboardStep: options.snapToNearest,
@@ -292,7 +287,12 @@ define( function( require ) {
     };
 
     // initialize features that  make this node act like an accessible range input
-    this.initializeAccessibleSlider( object.positionProperty, object.enabledRangeProperty, enabledProperty, accessibleSliderOptions );
+    this.initializeAccessibleSlider(
+      object.positionProperty,
+      object.enabledRangeProperty,
+      new BooleanProperty( true ), // always enabled
+      accessibleSliderOptions
+    );
 
     this.objectModel.radiusProperty.link( function( radius ) {
       // a11y - update the focusHighlight with the radius
