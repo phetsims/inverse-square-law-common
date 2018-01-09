@@ -72,12 +72,8 @@ define( function( require ) {
     this.scientificNotationMode = false;
     this.attractNegative = options.attractNegative;
 
-    var minArrowLength = arrowForceRange.min === 0 ? 0 : 1;
-    // var minArrowLength = 0;
-
-    // console.log( options.maxArrowWidth );
     // @private - maps the force value to the desired width of the arrow in view coordinates
-    this.forceToArrowWidthFunction = new LinearFunction( arrowForceRange.min, arrowForceRange.max, minArrowLength, options.maxArrowWidth, false );
+    this.forceToArrowWidthFunction = new LinearFunction( arrowForceRange.min, arrowForceRange.max, 0, options.maxArrowWidth, false );
 
     // @public (read-only) - for layout, the label for the arrow
     this.arrowText = new RichText( '', {
