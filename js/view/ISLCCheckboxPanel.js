@@ -44,6 +44,8 @@ define( function( require ) {
     // the check boxes in the group will be as wide as the labels are tall
     var checkBoxWidth = 0;
 
+    // TODO: it seems odd to pass these through this intermediary rather than creating them in the desired form in
+    // the first place
     items.forEach( function( item ) {
       var itemLabel = new Text(
         item.content, {
@@ -58,7 +60,7 @@ define( function( require ) {
       verticalCheckBoxItems.push( {
         content: itemLabel,
         property: item.property,
-        tandemName: item.checkboxTandemLabel
+        tandem: options.tandem.createTandem( item.checkboxTandemLabel )
       } );
     } );
     assert && assert( checkBoxWidth !== 0, 'checkBox width should not be zero.' );
