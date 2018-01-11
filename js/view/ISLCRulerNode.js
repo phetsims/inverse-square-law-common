@@ -11,6 +11,7 @@ define( function( require ) {
 
   // modules
   var Bounds2 = require( 'DOT/Bounds2' );
+  var FocusHighlightFromNode = require( 'SCENERY/accessibility/FocusHighlightFromNode' );
   var inherit = require( 'PHET_CORE/inherit' );
   var inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
   var MovableDragHandler = require( 'SCENERY_PHET/input/MovableDragHandler' );
@@ -50,7 +51,14 @@ define( function( require ) {
     var majorTickLabels = options.majorTickLabels;
     var rulerUnitString = options.unitString;
 
-    Node.call( this, { cursor: 'pointer', cssTransform: true, tandem: tandem, tagName: 'div', focusable: true } );
+    Node.call( this, {
+      cursor: 'pointer',
+      cssTransform: true,
+      tandem: tandem,
+      tagName: 'div',
+      focusable: true,
+      focusHighlightLayerable: true
+    } );
 
     var ruler = new RulerNode(
       RULER_WIDTH,
@@ -106,6 +114,12 @@ define( function( require ) {
         }
       }
     } ) );
+
+    // @private (a11y) - custom, layerable focus highlight
+    var focusHighlight = new FocusHighlightFromNode( ruler, { useLocalBounds: true } );
+    this.setFocusHighlight( focusHighlight);
+
+    ruler.addChild( focusHighlight );
 
     // @private (a11y) - supports keyboard interaction, private so it can be stepped
     this.keyboardDragListener = new KeyboardDragListener( {
