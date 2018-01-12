@@ -20,7 +20,7 @@ define( function( require ) {
   var DEFAULT_TEXT_SIZE = 14;
 
   /**
-   * @param {string} label - the text that will appear next to the check box
+   * @param {string} label - the text that will appear next to the checkbox
    * @param {Property.<boolean>} property - the property that governs whether the checkbox is selected
    * @param {Object} options [options]
    * @constructor
@@ -32,7 +32,7 @@ define( function( require ) {
       textMaxWidth: DEFAULT_MAX_TEXT_WIDTH
     }, options );
 
-    // @public - the content of the check box
+    // @public - the content of the checkbox
     this.content = new Text( label, {
         tandem: options.tandem.createTandem( 'labelNode' ),
         font: new PhetFont( options.textSize ),

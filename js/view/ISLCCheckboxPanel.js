@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * Panel with a vertical check box group, for display options.
+ * Panel with a vertical checkbox group, for display options.
  *
  * @author Michael Barlow (PhET Interactive Simulations)
  * @author Jesse Greenberg (PhET Interactive Simulations)
@@ -33,7 +33,7 @@ define( function( require ) {
       tandem: Tandem.required
     }, options );
 
-    // the check boxes in the group will be as wide as the labels are tall
+    // the checkboxes in the group will be as wide as the labels are tall
     var checkboxWidth = _.max( checkboxItems.map( function( item ) {
       return item.content.height;
     } ) );
