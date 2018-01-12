@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * A checkbox item displayed in an ISLCCheckboxPanel.  Conforms to the interface of values passed to VerticalCheckBoxGroup
+ * A checkbox item displayed in an ISLCCheckboxPanel.  Conforms to the interface of values passed to VerticalCheckboxGroup
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */

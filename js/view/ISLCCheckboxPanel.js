@@ -15,7 +15,7 @@ define( function( require ) {
   var inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
   var Panel = require( 'SUN/Panel' );
   var Tandem = require( 'TANDEM/Tandem' );
-  var VerticalCheckBoxGroup = require( 'SUN/VerticalCheckBoxGroup' );
+  var VerticalCheckboxGroup = require( 'SUN/VerticalCheckboxGroup' );
 
   /**
    * @param {ISLCCheckboxItem[]} checkboxItems
@@ -34,14 +34,14 @@ define( function( require ) {
     }, options );
 
     // the check boxes in the group will be as wide as the labels are tall
-    var checkBoxWidth = _.max( checkboxItems.map( function( item ) {
+    var checkboxWidth = _.max( checkboxItems.map( function( item ) {
       return item.content.height;
     } ) );
 
-    assert && assert( checkBoxWidth > 0, 'checkBox width must be positive' );
+    assert && assert( checkboxWidth > 0, 'checkbox width must be positive' );
 
-    var checkboxGroup = new VerticalCheckBoxGroup( checkboxItems, {
-      boxWidth: checkBoxWidth
+    var checkboxGroup = new VerticalCheckboxGroup( checkboxItems, {
+      boxWidth: checkboxWidth
     } );
 
     Panel.call( this, checkboxGroup, options );
