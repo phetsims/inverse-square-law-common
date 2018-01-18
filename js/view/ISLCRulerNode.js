@@ -128,10 +128,12 @@ define( function( require ) {
       transform: modelViewTransform,
       positionDelta: 3, // in view coordinates
       shiftPositionDelta: 1.5,
+      moveOnHoldDelay: 750,
+      moveOnHoldInterval: 1500,
 
       // snap to nearest snapToNearest, called on end so that dragging doesn't snap to a value for as long
       // as key is held down
-      end: function() {
+      drag: function() {
         if ( options.snapToNearest ) {
           var xModel = model.rulerPositionProperty.get().x;
           var snappedX = Util.roundSymmetric( xModel / options.snapToNearest ) * options.snapToNearest;
