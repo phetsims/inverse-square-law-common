@@ -11,6 +11,8 @@ define( function( require ) {
 
   // modules
   var Dimension2 = require( 'DOT/Dimension2' );
+  var GroupFocusHighlightFromNode = require( 'SCENERY/accessibility/GroupFocusHighlightFromNode' );
+  var FocusHighlightPath = require( 'SCENERY/accessibility/FocusHighlightPath' );
   var inherit = require( 'PHET_CORE/inherit' );
   var inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
   var NumberControl = require( 'SCENERY_PHET/NumberControl' );
@@ -117,7 +119,18 @@ define( function( require ) {
         },
         options ) );
 
+    // a11y - the panel has a group focus highlight
+    numberControl.groupFocusHighlight = false;
+
     Panel.call( this, numberControl, panelOptions );
+
+    this.groupFocusHighlight = new GroupFocusHighlightFromNode( this, {
+      useLocalBounds: true,
+      dilationCoefficient: 3.7,
+
+      outerStroke: FocusHighlightPath.OUTER_DARK_GROUP_FOCUS_COLOR,
+      innerStroke: FocusHighlightPath.INNER_DARK_GROUP_FOCUS_COLOR,
+    } );
   }
 
   inverseSquareLawCommon.register( 'ISLCObjectControlPanel', ISLCObjectControlPanel );
