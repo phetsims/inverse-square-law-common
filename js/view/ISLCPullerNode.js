@@ -43,7 +43,7 @@ define( function( require ) {
       atomicScale: false
     }, options );
 
-    Node.call( this );
+    Node.call( this, { tandem: tandem } );
 
     var pullImages = ISLCPullerImages.pullImages;
     var pushImages = ISLCPullerImages.pushImages;
@@ -73,9 +73,7 @@ define( function( require ) {
     // function that maps the size of the shadow to the force value
     var forceToShadowWidth = new LinearFunction( forceRange.min, forceRange.max, options.shadowMinWidth, options.shadowMaxWidth, true );
 
-    var pullerGroupNode = new Node( {
-      tandem: tandem.createTandem( 'pullerGroupNode' )
-    } );
+    var pullerGroupNode = new Node();
 
     // the optional shadow node under the pullers - a circle scaled down vertically to look elliptical
     var shadowNode = new Circle( 10, {
