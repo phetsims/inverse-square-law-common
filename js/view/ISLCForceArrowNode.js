@@ -14,6 +14,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
   var LinearFunction = require( 'DOT/LinearFunction' );
+  var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var RichText = require( 'SCENERY/nodes/RichText' );
   var ScientificNotationNode = require( 'SCENERY_PHET/ScientificNotationNode' );
@@ -86,19 +87,22 @@ define( function( require ) {
       tandem: options.tandem.createTandem( 'arrowText' )
     } );
 
-    var arrowNodeOptions = _.pick( options, [ 'headHeight', 'headWidth', 'tailWidth' ] );
-    arrowNodeOptions.lineWidth = options.arrowNodeLineWidth;
-    arrowNodeOptions.stroke = options.arrowStroke;
-    arrowNodeOptions.fill = options.arrowFill;
+    var arrowOptions = _.pick( options, [ 'headHeight', 'headWidth', 'tailWidth' ] );
+    arrowOptions.lineWidth = options.arrowNodeLineWidth;
+    arrowOptions.stroke = options.arrowStroke;
+    arrowOptions.fill = options.arrowFill;
+    arrowOptions.tandem = options.tandem.createTandem( 'arrow' );
 
-    ArrowNode.call( this, 0, -options.forceArrowHeight, 200, -options.forceArrowHeight, arrowNodeOptions );
+    this.arrow = new ArrowNode( 0, -options.forceArrowHeight, 200, -options.forceArrowHeight, arrowOptions );
+    Node.call( this, {} );
     this.addChild( this.arrowText );
+    this.addChild( this.arrowNode );
     this.y = 0;
   }
 
   inverseSquareLawCommon.register( 'ISLCForceArrowNode', ISLCForceArrowNode );
 
-  return inherit( ArrowNode, ISLCForceArrowNode, {
+  return inherit( Node, ISLCForceArrowNode, {
 
     /**
      * Draw the length of the arrow based on the value of the force.
@@ -122,7 +126,7 @@ define( function( require ) {
         arrowLengthMultiplier *= -1;
       }
 
-      this.setTailAndTip( 0, 0, valueSign * arrowLengthMultiplier * ARROW_LENGTH, 0 );
+      this.arrow.setTailAndTip( 0, 0, valueSign * arrowLengthMultiplier * ARROW_LENGTH, 0 );
     },
 
     /**
