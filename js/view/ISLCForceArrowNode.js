@@ -96,7 +96,7 @@ define( function( require ) {
     this.arrow = new ArrowNode( 0, -options.forceArrowHeight, 200, -options.forceArrowHeight, arrowOptions );
     Node.call( this, {} );
     this.addChild( this.arrowText );
-    this.addChild( this.arrowNode );
+    this.addChild( this.arrow );
     this.y = 0;
   }
 

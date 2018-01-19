@@ -11,7 +11,7 @@ define( function( require ) {
   // modules
   var inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
 
-  var ISLQueryParameters = QueryStringMachine.getAll( {
+  var ISLCQueryParameters = QueryStringMachine.getAll( {
 
     // when flagged, shows a grid in the ScreenView that visualizes the possible locations
     // for the objects
@@ -22,7 +22,7 @@ define( function( require ) {
     showMockup: { type: 'flag' }
   } );
 
-  inverseSquareLawCommon.register( 'ISLQueryParameters', ISLQueryParameters );
+  inverseSquareLawCommon.register( 'ISLCQueryParameters', ISLCQueryParameters );
 
-  return ISLQueryParameters;
+  return ISLCQueryParameters;
 } );
