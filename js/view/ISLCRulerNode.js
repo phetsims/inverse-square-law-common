@@ -45,7 +45,12 @@ define( function( require ) {
       majorTickLabels: [ '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10' ],
       unitString: unitsCentimetersString,
       backgroundFill: '#ddd',
-      rulerInset: RULER_INSET
+      rulerInset: RULER_INSET,
+
+      // a11y
+      positionDelta: 10, // in view coordinates
+      shiftPositionDelta: 5,
+      moveOnHoldDelay: 750
     }, options );
 
     var majorTickLabels = options.majorTickLabels;
@@ -126,10 +131,9 @@ define( function( require ) {
       dragBounds: bounds,
       locationProperty: model.rulerPositionProperty,
       transform: modelViewTransform,
-      positionDelta: 3, // in view coordinates
-      shiftPositionDelta: 1.5,
-      moveOnHoldDelay: 750,
-      moveOnHoldInterval: 1500,
+      positionDelta: options.positionDelta, // in view coordinates
+      shiftPositionDelta: options.shiftPositionDelta,
+      moveOnHoldDelay: options.moveOnHoldDelay,
 
       // snap to nearest snapToNearest, called on end so that dragging doesn't snap to a value for as long
       // as key is held down
