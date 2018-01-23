@@ -94,9 +94,10 @@ define( function( require ) {
     };
 
     // a11y - necessary to reset the enabledRangeProperty to prevent object overlap, disposal not necessary
-    // We need to update the available range for each mass when the opposing mass radius or position changes.
+    // We need to update the available range for each mass when the opposing value, or position changes.
     // However, we know the force will change when either of these attributes change, so we can link to that instead of
-    // linking to the four underlying attributes
+    // linking to the four underlying attributes. Radius can change without changing force, so it must be linked to
+    // radius of each object
     this.forceProperty.link( function() {
       updateRange( object1 );
       updateRange( object2 );
@@ -107,11 +108,16 @@ define( function( require ) {
     this.object1.radiusProperty.link( function() {
       self.object1.radiusLastChanged = true;
       self.object2.radiusLastChanged = false;
+
+      // update range if radius changes with constant radius
+      updateRange( object1 );
     } );
 
     this.object2.radiusProperty.link( function() {
       self.object2.radiusLastChanged = true;
       self.object1.radiusLastChanged = false;
+
+      updateRange( object2 );
     } );
   }
 
