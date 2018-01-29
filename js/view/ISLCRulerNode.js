@@ -18,7 +18,7 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var RulerNode = require( 'SCENERY_PHET/RulerNode' );
-  var KeyboardDragListener = require( 'SCENERY/accessibility/listeners/KeyboardDragListener' );
+  var KeyboardDragListener = require( 'SCENERY_PHET/accessibility/listeners/KeyboardDragListener' );
   var Util = require( 'DOT/Util' );
   var Vector2 = require( 'DOT/Vector2' );
 
@@ -150,15 +150,5 @@ define( function( require ) {
 
   inverseSquareLawCommon.register( 'ISLCRulerNode', ISLCRulerNode );
 
-  return inherit( Node, ISLCRulerNode, {
-
-    /**
-     * Step to support keyboard dragging.
-     *
-     * @param {number} dt
-     */
-    step: function( dt ) {
-      this.keyboardDragListener.step( dt );
-    }
-  } );
+  return inherit( Node, ISLCRulerNode );
 } );
