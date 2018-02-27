@@ -14,7 +14,6 @@ define( function( require ) {
   var Emitter = require( 'AXON/Emitter' );
   var inherit = require( 'PHET_CORE/inherit' );
   var inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
-  var NumberIO = require( 'ifphetio!PHET_IO/types/NumberIO' );
   var Property = require( 'AXON/Property' );
   var PropertyIO = require( 'AXON/PropertyIO' );
   var RangeWithValue = require( 'DOT/RangeWithValue' );
@@ -22,6 +21,7 @@ define( function( require ) {
 
   // phet-io modules
   var BooleanIO = require( 'ifphetio!PHET_IO/types/BooleanIO' );
+  var NumberIO = require( 'ifphetio!PHET_IO/types/NumberIO' );
 
   /**
    * @param {number} forceConstant the appropriate force constant (e.g. G or k)
