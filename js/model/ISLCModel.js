@@ -231,6 +231,7 @@ define( function( require ) {
      * @return {number} the distance between the objects' centers
      */
     getMinDistance: function( value ) {
+      
       // calculate radius for masses and charges at maximum mass/charge
       var minRadius = this.object1.calculateRadius( value );
       return ( 2 * minRadius ) + this.minSeparationBetweenObjects;
