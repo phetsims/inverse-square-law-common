@@ -127,7 +127,8 @@ define( function( require ) {
   return inherit( Object, ISLCModel, {
 
     /**
-     * Step function makes sure masses doesn't goes out of bounds and don't overlap each other at each time step
+     * Step function makes sure masses doesn't goes out of bounds and don't overlap each other at each time step.
+     * 
      * @public
      */
     step: function() {
@@ -163,19 +164,23 @@ define( function( require ) {
         this.object2.positionProperty.set( locationMass2 );
       }
       else {
+
         // neither object is dragging, radius must have changed
         if ( this.object1.radiusLastChanged ) {
           if ( locationMass2 !== maxX ) {
+
             // object2 is not at the edge update its position
             this.object2.positionProperty.set( locationMass2 );
           }
           else {
+
             // object2 is at the edge update object1 position
             this.object1.positionProperty.set( locationMass1 );
           }
         }
         else if ( this.object2.radiusLastChanged ) {
           if ( locationMass1 !== minX ) {
+            
             // object1 is not at boundary, update position
             this.object1.positionProperty.set( locationMass1 );
           }
