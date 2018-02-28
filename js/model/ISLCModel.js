@@ -104,7 +104,7 @@ define( function( require ) {
     } );
 
     // when sim is reset, we only reset the position properties of each object to their initial values
-    // thus, there is no need ot dispose of the listeners below
+    // thus, there is no need to dispose of the listeners below
     this.object1.radiusProperty.link( function() {
       self.object1.radiusLastChanged = true;
       self.object2.radiusLastChanged = false;
