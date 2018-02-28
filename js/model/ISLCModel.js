@@ -56,7 +56,7 @@ define( function( require ) {
     this.object1 = object1;
     this.object2 = object2;
 
-    // @privates
+    // @private
     this.snapObjectsToNearest = options.snapObjectsToNearest;
 
     // @private
