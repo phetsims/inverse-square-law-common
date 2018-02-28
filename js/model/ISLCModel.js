@@ -109,7 +109,7 @@ define( function( require ) {
       self.object1.radiusLastChanged = true;
       self.object2.radiusLastChanged = false;
 
-      // update range if radius changes with constant radius
+      // update range if radius changed with "constant radius" setting (which didn't trigger other model updates)
       updateRange( object1 );
     } );
 
@@ -117,6 +117,7 @@ define( function( require ) {
       self.object2.radiusLastChanged = true;
       self.object1.radiusLastChanged = false;
 
+      // update range if radius changed with "constant radius" setting (which didn't trigger other model updates)
       updateRange( object2 );
     } );
   }
