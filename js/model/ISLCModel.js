@@ -65,7 +65,7 @@ define( function( require ) {
     // @private
     this.forceConstant = forceConstant;
 
-    // @public - emits an event when the model is updated in by step
+    // @public - emits an event when the model is updated by step
     this.stepEmitter = new Emitter();
 
     // @public
