@@ -1,4 +1,4 @@
-// Copyright 2017, University of Colorado Boulder
+// Copyright 2018, University of Colorado Boulder
 
 /**
  * A checkbox item displayed in an ISLCCheckboxPanel.  Conforms to the interface of values passed to VerticalCheckboxGroup
