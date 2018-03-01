@@ -38,7 +38,7 @@ define( function( require ) {
       ropeLength: 50,
       shadowMinWidth: 32,
       shadowMaxWidth: 50,
-      attractNegative: true,     // if true, add pusher images
+      attractNegative: true, // if true, add pusher images
       displayShadow: true,
       atomicScale: false
     }, options );
@@ -110,7 +110,7 @@ define( function( require ) {
       images[ i ].right += 0.1 * images[ i ].width;
     }
 
-    //  shadow first so it is behind the pullers
+    // shadow first so it is behind the pullers
     options.displayShadow && this.addChild( shadowNode );
     this.addChild( pullerGroupNode );
 

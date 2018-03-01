@@ -127,7 +127,7 @@ define( function( require ) {
     ruler.addChild( focusHighlight );
 
     // @private (a11y) - supports keyboard interaction, private so it can be stepped
-    this.keyboardDragListener = new KeyboardDragListener( {
+    var keyboardDragListener = new KeyboardDragListener( {
       dragBounds: bounds,
       locationProperty: model.rulerPositionProperty,
       transform: modelViewTransform,
@@ -145,7 +145,7 @@ define( function( require ) {
         }
       }
     } );
-    this.addAccessibleInputListener( this.keyboardDragListener );
+    this.addAccessibleInputListener( keyboardDragListener );
   }
 
   inverseSquareLawCommon.register( 'ISLCRulerNode', ISLCRulerNode );
