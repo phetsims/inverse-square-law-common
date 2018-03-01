@@ -327,7 +327,7 @@ define( function( require ) {
     },
 
     /**
-     * Sets wheter or not the readouts above the arrows use scientific notation in their display of the value.
+     * Sets whether or not the readouts above the arrows use scientific notation in their display of the value.
      *
      * @param {boolean} useScientificNotation
      */
