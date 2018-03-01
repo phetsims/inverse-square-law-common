@@ -47,7 +47,6 @@ define( function( require ) {
       fill: '#EDEDED',
       xMargin: 10,
       yMargin: 4,
-      // minWidth: 224,
       resize: false,
       align: 'right',
 
@@ -100,14 +99,12 @@ define( function( require ) {
       };
       options.majorTicks.push( tick );
     }
-
     var tandem = options.tandem;
 
+    // pull out options that apply to  the Panel, and those that apply to the NumberControl
     var optionsFilter = [ 'fill', 'xMargin', 'yMargin', 'resize', 'align', 'right', 'left', 'top', 'tandem' ];
-
     var panelOptions = _.pick( options, optionsFilter );
-
-    options = _.omit( options, optionsFilter );
+    var numberControlOptions = _.omit( options, optionsFilter );
 
     var numberControl = new NumberControl(
       titleString,
@@ -116,10 +113,9 @@ define( function( require ) {
       _.extend( {
           tandem: tandem.createTandem( 'numberControl' ),
           valueAlign: 'center'
-        },
-        options ) );
+      }, numberControlOptions ) );
 
-    // a11y - the panel has a group focus highlight
+    // a11y - the panel has a group focus highlight rather than the number control
     numberControl.groupFocusHighlight = false;
 
     Panel.call( this, numberControl, panelOptions );
@@ -127,7 +123,6 @@ define( function( require ) {
     this.groupFocusHighlight = new GroupFocusHighlightFromNode( this, {
       useLocalBounds: true,
       dilationCoefficient: 3.7,
-
       outerStroke: FocusHighlightPath.OUTER_DARK_GROUP_FOCUS_COLOR,
       innerStroke: FocusHighlightPath.INNER_DARK_GROUP_FOCUS_COLOR,
     } );

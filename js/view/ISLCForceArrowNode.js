@@ -40,7 +40,7 @@ define( function( require ) {
 
     options = _.extend( {
       defaultDirection: 'left',
-      attractNegative: true, // if true, arrows will point towards each other if forces is negative
+      attractNegative: true, // if true, arrows will point towards each other if force is negative
       arrowNodeLineWidth: 0.25,
 
       // label options
@@ -97,6 +97,7 @@ define( function( require ) {
     Node.call( this, {} );
     this.addChild( this.arrowText );
     this.addChild( this.arrow );
+    
     this.y = 0;
   }
 
