@@ -295,6 +295,7 @@ define( function( require ) {
     );
 
     this.objectModel.radiusProperty.link( function( radius ) {
+      
       // a11y - update the focusHighlight with the radius
       self.focusHighlight = Shape.bounds( dragNode.bounds.dilated( 5 ) );
     } );
