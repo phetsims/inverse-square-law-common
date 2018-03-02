@@ -93,7 +93,7 @@ define( function( require ) {
     arrowOptions.fill = options.arrowFill;
     arrowOptions.tandem = options.tandem.createTandem( 'arrow' );
 
-    // @private
+    // @private - tip and tail set in redrawArrow
     this.arrow = new ArrowNode( 0, -options.forceArrowHeight, 200, -options.forceArrowHeight, arrowOptions );
     
     Node.call( this, {} );
