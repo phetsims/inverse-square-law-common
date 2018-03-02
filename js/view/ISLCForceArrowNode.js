@@ -109,7 +109,9 @@ define( function( require ) {
 
     /**
      * Draw the length of the arrow based on the value of the force.
+     * 
      * @public
+     * @param {number} value
      */
     redrawArrow: function( value ) {
       var arrowLengthMultiplier;
@@ -138,6 +140,13 @@ define( function( require ) {
      *
      * @public
      */
+    /**
+     * Set the arrow text position along the arrow, ensuring that the text does not go outside the layout bounds.
+     *
+     * @public
+     * @param {Vector2} localToParentPoint  
+     * @param {Bounds2} parentToLocalBounds
+     */
     setArrowTextPosition: function( localToParentPoint, parentToLocalBounds ) {
       this.arrowText.centerX = 0;
       if ( Math.floor( localToParentPoint.x - this.arrowText.width / 2 ) <= this.layoutBounds.left + TEXT_OFFSET ) {
@@ -152,6 +161,13 @@ define( function( require ) {
     /**
      * Update the force label string.
      * @public
+     */
+    /**
+     * Update the force label string.
+     *
+     * @public
+     * @param  {number} forceValue
+     * @param  {boolean} showValues
      */
     updateLabel: function( forceValue, showValues ) {
 
