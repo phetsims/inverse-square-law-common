@@ -82,7 +82,7 @@ define( function( require ) {
       }, {
         phetioType: DerivedPropertyIO( NumberIO ),
         tandem: tandem.createTandem( 'forceProperty' ),
-        units: 'Newtons' // TODO: this appears unused in instance-proxies
+        units: 'Newtons' // TODO: this appears unused in studio
       }
     );
 
