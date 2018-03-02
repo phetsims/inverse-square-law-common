@@ -59,12 +59,13 @@ define( function( require ) {
     // @private
     this.pullerPusherImages = pullImages;
 
-    // @private - if in coulomb's law sim, add pusher and zero force images in proper order
-    this.zeroForceIndex = null;
+    // used to ensure that small non-zero forces do not map to the zero force puller (see lines 130-132)
+    var zeroForceIndex = null;
 
+    // if in coulomb's law, add pusher and zero force images in proper order
     if ( options.attractNegative ) {
+      var zeroForceIndex = pushImages.length;
       this.pullerPusherImages = pushImages.concat( zeroForceImage ).concat( pullImages );
-      this.zeroForceIndex = 31;
     }
 
     // function that maps the visible image to the model force value
@@ -124,7 +125,7 @@ define( function( require ) {
       // from the force value, get an index for the visible image
       var index = Util.roundSymmetric( forceToImage( force ) );
 
-      if ( force !== 0 && index === this.zeroForceIndex ) {
+      if ( force !== 0 && index === zeroForceIndex ) {
         index += ( force > 0 ) ? 1 : -1;
       }
 
