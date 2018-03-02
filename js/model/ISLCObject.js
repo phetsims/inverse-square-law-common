@@ -95,6 +95,8 @@ define( function( require ) {
 
     /**
      * Calculate radius for the object - must be implemented in subtypes.
+     *
+     * @public
      */
     calculateRadius: function() {
       throw new Error( 'calculateRadius must be implemented in descendent types' );

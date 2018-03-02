@@ -321,6 +321,8 @@ define( function( require ) {
 
     /**
      * Redraws the white radial gradient for the object - must be implemented in subtypes.
+     *
+     * @public
      */
     updateGradient: function() {
       throw new Error( 'Update gradient must be implemented in subtypes.' );
@@ -329,6 +331,7 @@ define( function( require ) {
     /**
      * Sets whether or not the readouts above the arrows use scientific notation in their display of the value.
      *
+     * @public
      * @param {boolean} useScientificNotation
      */
     setReadoutsInScientificNotation: function( useScientificNotation ) {
@@ -340,6 +343,8 @@ define( function( require ) {
 
     /**
      * Updates the radius, arrow length & direction, force readout, and the visible puller image.
+     *
+     * @public
      */
     redrawForce: function() {
       this.objectCircle.setRadius( this.modelViewTransform.modelToViewDeltaX( this.objectModel.radiusProperty.get() ) );

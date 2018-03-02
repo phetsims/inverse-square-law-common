@@ -93,7 +93,9 @@ define( function( require ) {
     arrowOptions.fill = options.arrowFill;
     arrowOptions.tandem = options.tandem.createTandem( 'arrow' );
 
+    // @private
     this.arrow = new ArrowNode( 0, -options.forceArrowHeight, 200, -options.forceArrowHeight, arrowOptions );
+    
     Node.call( this, {} );
     this.addChild( this.arrowText );
     this.addChild( this.arrow );

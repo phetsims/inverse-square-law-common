@@ -120,6 +120,7 @@ define( function( require ) {
 
     Panel.call( this, numberControl, panelOptions );
 
+    // @protected - used in Accessibility.js
     this.groupFocusHighlight = new GroupFocusHighlightFromNode( this, {
       useLocalBounds: true,
       dilationCoefficient: 3.7,
