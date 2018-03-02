@@ -64,7 +64,7 @@ define( function( require ) {
 
     // if in coulomb's law, add pusher and zero force images in proper order
     if ( options.attractNegative ) {
-      var zeroForceIndex = pushImages.length;
+      zeroForceIndex = pushImages.length;
       this.pullerPusherImages = pushImages.concat( zeroForceImage ).concat( pullImages );
     }
 
