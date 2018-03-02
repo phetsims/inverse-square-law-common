@@ -23,8 +23,8 @@ define( function( require ) {
   var Util = require( 'DOT/Util' );
 
   // strings
-  var forceDescriptionPatternTargetSourceString = require( 'string!INVERSE_SQUARE_LAW_COMMON/force-description-pattern-target_source' );
-  var forceDescriptionPatternTargetSourceValueString = require( 'string!INVERSE_SQUARE_LAW_COMMON/force-description-pattern-target_source_value' );
+  var forceOnObjectByOtherObjectPatternString = require( 'string!INVERSE_SQUARE_LAW_COMMON/forceOnObjectByOtherObjectPattern' );
+  var forceOnObjectByOtherObjectWithUnitsPatternString = require( 'string!INVERSE_SQUARE_LAW_COMMON/forceOnObjectByOtherObjectWithUnitsPattern' );
 
   // constants
   var ARROW_LENGTH = 8; // empirically determined
@@ -179,14 +179,14 @@ define( function( require ) {
             }
           }
 
-          this.arrowText.text = StringUtils.format( forceDescriptionPatternTargetSourceValueString, this.label, this.otherObjectLabel, formattedString );
+          this.arrowText.text = StringUtils.fillIn( forceOnObjectByOtherObjectWithUnitsPatternString, { thisObject: this.label, otherObject: this.otherObjectLabel, value: formattedString } );
         }
         else {
           throw new Error( 'ISLCForceArrowNode.updateLabel() requires a decimal value' );
         }
       }
       else {
-        this.arrowText.text = StringUtils.format( forceDescriptionPatternTargetSourceString, this.label, this.otherObjectLabel );
+        this.arrowText.text = StringUtils.fillIn( forceOnObjectByOtherObjectPatternString, { thisObject: this.label, otherObject: this.otherObjectLabel } );
       }
     }
   } );

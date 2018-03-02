@@ -1,9 +1,9 @@
 {
-  "force-description-pattern-target_source": {
-    "value": "Force on {0} by {1}"
+  "forceOnObjectByOtherObjectPattern": {
+    "value": "Force on {{thisObject}} by {{otherObject}}"
   },
-  "force-description-pattern-target_source_value": {
-    "value": "Force on {0} by {1} = {2} N"
+  "forceOnObjectByOtherObjectWithUnitsPattern": {
+    "value": "Force on {{thisObject}} by {{otherObject}} = {{value}} N"
   },
   "units.picometers": {
     "value": "pm"
