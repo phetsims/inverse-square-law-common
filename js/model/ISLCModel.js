@@ -96,7 +96,7 @@ define( function( require ) {
     };
 
     // a11y - necessary to reset the enabledRangeProperty to prevent object overlap, disposal not necessary
-    // We need to update the available range for each mass when the opposing value, or position changes.
+    // We need to update the available range for each object when the opposing value, or position changes.
     // However, we know the force will change when either of these attributes change, so we can link to that instead of
     // linking to the four underlying attributes. Radius can change without changing force, so it must be linked to
     // radius of each object
@@ -129,15 +129,15 @@ define( function( require ) {
   return inherit( Object, ISLCModel, {
 
     /**
-     * Step function makes sure masses doesn't goes out of bounds and don't overlap each other at each time step.
+     * Step function makes sure objects don't go out of bounds and don't overlap each other at each time step.
      *
      * @public
      */
     step: function() {
       var minX = this.leftObjectBoundary;
       var maxX = this.rightObjectBoundary;
-      var locationMass1 = this.object1.positionProperty.get();
-      var locationMass2 = this.object2.positionProperty.get();
+      var locationObject1 = this.object1.positionProperty.get();
+      var locationObject2 = this.object2.positionProperty.get();
 
       // bounds for the left object are the left boundary and the right edge of object 2 minus half the min separation
       var minPositionObject1 = minX;
@@ -148,46 +148,46 @@ define( function( require ) {
       var maxPositionObject2 = maxX;
 
       // make sure that the objects don't go beyond the boundaries
-      locationMass1 = Math.max( minPositionObject1, locationMass1 );
-      locationMass2 = Math.min( locationMass2, maxPositionObject2 );
+      locationObject1 = Math.max( minPositionObject1, locationObject1 );
+      locationObject2 = Math.min( locationObject2, maxPositionObject2 );
 
       // make sure objects don't overlap
-      locationMass1 = Math.min( locationMass1, maxPositionObject1 );
-      locationMass2 = Math.max( minPositionObject2, locationMass2 );
+      locationObject1 = Math.min( locationObject1, maxPositionObject1 );
+      locationObject2 = Math.max( minPositionObject2, locationObject2 );
 
       // if objects are limited to a certain precision, round position values to that precision
-      locationMass1 = this.snapToGrid( locationMass1 );
-      locationMass2 = this.snapToGrid( locationMass2 );
+      locationObject1 = this.snapToGrid( locationObject1 );
+      locationObject2 = this.snapToGrid( locationObject2 );
 
       if ( this.object1.isDragging ) {
-        this.object1.positionProperty.set( locationMass1 );
+        this.object1.positionProperty.set( locationObject1 );
       }
       else if ( this.object2.isDragging ) {
-        this.object2.positionProperty.set( locationMass2 );
+        this.object2.positionProperty.set( locationObject2 );
       }
       else {
 
         // neither object is dragging, radius must have changed
         if ( this.object1.radiusLastChanged ) {
-          if ( locationMass2 !== maxX ) {
+          if ( locationObject2 !== maxX ) {
 
             // object2 is not at the edge update its position
-            this.object2.positionProperty.set( locationMass2 );
+            this.object2.positionProperty.set( locationObject2 );
           }
           else {
 
             // object2 is at the edge update object1 position
-            this.object1.positionProperty.set( locationMass1 );
+            this.object1.positionProperty.set( locationObject1 );
           }
         }
         else if ( this.object2.radiusLastChanged ) {
-          if ( locationMass1 !== minX ) {
-
+          if ( locationObject1 !== minX ) {
+            
             // object1 is not at boundary, update position
-            this.object1.positionProperty.set( locationMass1 );
+            this.object1.positionProperty.set( locationObject1 );
           }
           else {
-            this.object2.positionProperty.set( locationMass2 );
+            this.object2.positionProperty.set( locationObject2 );
           }
         }
       }
@@ -229,7 +229,7 @@ define( function( require ) {
      * main properties.
      *
      * @public
-     * @param  {number} value - the object's mass or charges
+     * @param  {number} value - the object's mass or charge
      * @return {number} the distance between the objects' centers
      */
     getMinDistance: function( value ) {
