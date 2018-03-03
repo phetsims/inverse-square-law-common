@@ -182,7 +182,7 @@ define( function( require ) {
         }
         else if ( this.object2.radiusLastChanged ) {
           if ( locationObject1 !== minX ) {
-            
+
             // object1 is not at boundary, update position
             this.object1.positionProperty.set( locationObject1 );
           }
