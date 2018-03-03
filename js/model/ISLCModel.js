@@ -10,10 +10,10 @@ define( function( require ) {
 
   // modules
   var DerivedProperty = require( 'AXON/DerivedProperty' );
-  var DerivedPropertyIO = require( 'AXON/DerivedPropertyIO' );
   var Emitter = require( 'AXON/Emitter' );
   var inherit = require( 'PHET_CORE/inherit' );
   var inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
+  var NumberProperty = require( 'AXON/NumberProperty' );
   var Property = require( 'AXON/Property' );
   var PropertyIO = require( 'AXON/PropertyIO' );
   var RangeWithValue = require( 'DOT/RangeWithValue' );
@@ -21,7 +21,6 @@ define( function( require ) {
 
   // phet-io modules
   var BooleanIO = require( 'ifphetio!PHET_IO/types/BooleanIO' );
-  var NumberIO = require( 'ifphetio!PHET_IO/types/NumberIO' );
 
   /**
    * @param {number} forceConstant the appropriate force constant (e.g. G or k)
@@ -68,23 +67,26 @@ define( function( require ) {
     // @public - emits an event when the model is updated by step
     this.stepEmitter = new Emitter();
 
+    // Intermediate derived property for the computation, passes value to the forceProperty
+    var forceDerivation = new DerivedProperty( [
+      this.object1.valueProperty, // could be mass or charge
+      this.object2.valueProperty,
+      this.object1.positionProperty,
+      this.object2.positionProperty
+    ], function( v1, v2, x1, x2 ) {
+      var distance = Math.abs( x2 - x1 );
+      return self.calculateForce( v1, v2, distance );
+    } );
+
     // @public
     // derived property that calculates the force based on changes to values and positions
     // objects are never destroyed, so forceProperty does not require disposal
-    this.forceProperty = new DerivedProperty( [
-        this.object1.valueProperty, // could be mass or charge
-        this.object2.valueProperty,
-        this.object1.positionProperty,
-        this.object2.positionProperty
-      ], function( v1, v2, x1, x2 ) {
-        var distance = Math.abs( x2 - x1 );
-        return self.calculateForce( v1, v2, distance );
-      }, {
-        phetioType: DerivedPropertyIO( NumberIO ),
-        tandem: tandem.createTandem( 'forceProperty' ),
-        units: 'Newtons' // TODO: this appears unused in studio
-      }
-    );
+    this.forceProperty = new NumberProperty( forceDerivation.value, {
+      phetioReadOnly: true,
+      tandem: tandem.createTandem( 'forceProperty' ),
+      units: 'newtons'
+    } );
+    forceDerivation.linkAttribute( this.forceProperty, 'value' );
 
     var updateRange = function( object ) {
       var maxPosition = self.getObjectMaxPosition( object );
@@ -128,7 +130,7 @@ define( function( require ) {
 
     /**
      * Step function makes sure masses doesn't goes out of bounds and don't overlap each other at each time step.
-     * 
+     *
      * @public
      */
     step: function() {
@@ -180,7 +182,7 @@ define( function( require ) {
         }
         else if ( this.object2.radiusLastChanged ) {
           if ( locationMass1 !== minX ) {
-            
+
             // object1 is not at boundary, update position
             this.object1.positionProperty.set( locationMass1 );
           }
@@ -231,7 +233,7 @@ define( function( require ) {
      * @return {number} the distance between the objects' centers
      */
     getMinDistance: function( value ) {
-      
+
       // calculate radius for masses and charges at maximum mass/charge
       var minRadius = this.object1.calculateRadius( value );
       return ( 2 * minRadius ) + this.minSeparationBetweenObjects;
