@@ -40,7 +40,7 @@ define( function( require ) {
    * @param {ISLCObject} object - the associated object's model within the sim
    * @param {Bounds2} layoutBounds - bounds of the screen view containing the object
    * @param {ModelViewTransform2} modelViewTransform
-   * @param {Range} pullForceRange - the max and min possible force values
+   * @param {Range} pullForceRange - empirically determined range of force values (usu. min/max) for puller image mapping
    * @param {Object} options
    * @constructor
    */
