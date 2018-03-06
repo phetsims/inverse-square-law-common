@@ -19,7 +19,11 @@ define( function( require ) {
       type: 'flag'
     },
 
-    showMockup: { type: 'flag' }
+    showMockup: { type: 'flag' },
+
+    // Shows boundary positions of the two objects, as .  The boundary positions for each
+    // object will change depending on the size and position of both objects.
+    showDragBounds: { type: 'flag' }
   } );
 
   inverseSquareLawCommon.register( 'ISLCQueryParameters', ISLCQueryParameters );
