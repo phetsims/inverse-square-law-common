@@ -144,11 +144,11 @@ define( function( require ) {
      * Set the arrow text position along the arrow, ensuring that the text does not go outside the layout bounds.
      *
      * @public
-     * @param {Vector2} localToParentPoint  
      * @param {Bounds2} parentToLocalBounds
      */
-    setArrowTextPosition: function( localToParentPoint, parentToLocalBounds ) {
+    setArrowTextPosition: function( parentToLocalBounds ) {
       this.arrowText.centerX = 0;
+      var localToParentPoint = this.localToParentPoint( this.arrowText.center );
       if ( Math.floor( localToParentPoint.x - this.arrowText.width / 2 ) <= this.layoutBounds.left + TEXT_OFFSET ) {
         this.arrowText.left = parentToLocalBounds.left + TEXT_OFFSET;
       }

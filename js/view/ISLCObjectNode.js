@@ -354,7 +354,7 @@ define( function( require ) {
       this.arrowNode.updateLabel( this.model.forceProperty.get(), this.model.showValuesProperty.get() );
 
       // set the text position, positioning the center relative to the parent coordinate frame
-      this.arrowNode.setArrowTextPosition( this.localToParentPoint( this.arrowNode.arrowText.center ), this.parentToLocalBounds( this.layoutBounds ) );
+      this.arrowNode.setArrowTextPosition( this.parentToLocalBounds( this.layoutBounds ) );
 
       // set the scale of the arrow based on the model value
       this.arrowNode.redrawArrow( this.model.forceProperty.get() );
