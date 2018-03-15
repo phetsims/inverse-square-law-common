@@ -34,6 +34,38 @@ define( function( require ) {
 
   // constants
   var LABEL_MAX_WIDTH = 20; // empirically determined through testing with long strings
+	var ARROW_OPTION_KEYS = [
+		'defaultDirection',
+		'attractNegative', // if true, arrows will point towards each other if forces is negative
+		'arrowNodeLineWidth',
+
+		// label options
+		'otherObjectLabel', // label for the other object exerting a force on this object
+		'label', // label for this object
+		'arrowLabelFont',
+		'arrowLabelFill',
+		'arrowLabelStroke',
+		'forceReadoutDecimalPlaces', // number of decimal places in force readout
+
+		// arrow node arguments
+		'forceArrowHeight',
+
+		// arrow node options
+		'maxArrowWidth', // max width of the arrow when when redrawn, in view coordinates - used in mapping function
+		'headHeight',
+		'headWidth',
+		'tailWidth',
+		'arrowStroke',
+		'arrowFill'
+	];
+	var PULLER_OPTION_KEYS = [
+		'ropeLength',
+		'shadowMinWidth',
+		'shadowMaxWidth',
+		'attractNegative',
+		'displayShadow',
+		'atomicScale'
+	];
 
   /**
    * @param {ISLCModel} model - the simulation model
@@ -96,30 +128,6 @@ define( function( require ) {
     this.model = model;
     this.modelViewTransform = modelViewTransform;
 
-    var arrowOptionKeys = [
-      'defaultDirection',
-      'attractNegative', // if true, arrows will point towards each other if forces is negative
-      'arrowNodeLineWidth',
-
-      // label options
-      'otherObjectLabel', // label for the other object exerting a force on this object
-      'label', // label for this object
-      'arrowLabelFont',
-      'arrowLabelFill',
-      'arrowLabelStroke',
-      'forceReadoutDecimalPlaces', // number of decimal places in force readout
-
-      // arrow node arguments
-      'forceArrowHeight',
-
-      // arrow node options
-      'maxArrowWidth', // max width of the arrow when when redrawn, in view coordinates - used in mapping function
-      'headHeight',
-      'headWidth',
-      'tailWidth',
-      'arrowStroke',
-      'arrowFill'
-    ];
 
     // the full range of force for the arrow node (note: this is distinct)
     var arrowForceRange = new RangeWithValue( model.getMinForce(), model.getMaxForce() );
@@ -130,26 +138,18 @@ define( function( require ) {
       layoutBounds,
       _.extend( {
         tandem: tandem.createTandem( 'forceArrowNode' )
-      }, _.pick( options, arrowOptionKeys ) )
+      }, _.pick( options, ARROW_OPTION_KEYS ) )
     );
 
     // set y position for the arrow
     this.arrowNode.y = options.y - options.forceArrowHeight;
 
-    var pullerOptionKeys = [
-      'ropeLength',
-      'shadowMinWidth',
-      'shadowMaxWidth',
-      'attractNegative',
-      'displayShadow',
-      'atomicScale'
-    ];
 
     // @private - the puller node
     this.pullerNode = new ISLCPullerNode(
       pullForceRange,
       tandem.createTandem( 'pullerNode' ),
-      _.pick( options, pullerOptionKeys )
+      _.pick( options, PULLER_OPTION_KEYS )
     );
 
     if ( options.defaultDirection === 'right' ) {
