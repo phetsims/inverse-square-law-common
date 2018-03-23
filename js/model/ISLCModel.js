@@ -10,10 +10,11 @@ define( function( require ) {
 
   // modules
   var DerivedProperty = require( 'AXON/DerivedProperty' );
+  var DerivedPropertyIO = require( 'AXON/DerivedPropertyIO' );
   var Emitter = require( 'AXON/Emitter' );
   var inherit = require( 'PHET_CORE/inherit' );
   var inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
-  var NumberProperty = require( 'AXON/NumberProperty' );
+  var NumberIO = require( 'ifphetio!PHET_IO/types/NumberIO' );
   var Property = require( 'AXON/Property' );
   var PropertyIO = require( 'AXON/PropertyIO' );
   var RangeWithValue = require( 'DOT/RangeWithValue' );
@@ -67,8 +68,10 @@ define( function( require ) {
     // @public - emits an event when the model is updated by step
     this.stepEmitter = new Emitter();
 
-    // Intermediate derived property for the computation, passes value to the forceProperty
-    var forceDerivation = new DerivedProperty( [
+    // @public
+    // derived property that calculates the force based on changes to values and positions
+    // objects are never destroyed, so forceProperty does not require disposal
+    this.forceProperty = new DerivedProperty( [
       this.object1.valueProperty, // could be mass or charge
       this.object2.valueProperty,
       this.object1.positionProperty,
@@ -76,17 +79,11 @@ define( function( require ) {
     ], function( v1, v2, x1, x2 ) {
       var distance = Math.abs( x2 - x1 );
       return self.calculateForce( v1, v2, distance );
-    } );
-
-    // @public
-    // derived property that calculates the force based on changes to values and positions
-    // objects are never destroyed, so forceProperty does not require disposal
-    this.forceProperty = new NumberProperty( forceDerivation.value, {
-      phetioReadOnly: true,
+    }, {
+      phetioType: DerivedPropertyIO( NumberIO ),
       tandem: tandem.createTandem( 'forceProperty' ),
       units: 'newtons'
     } );
-    forceDerivation.linkAttribute( this.forceProperty, 'value' );
 
     var updateRange = function( object ) {
       var maxPosition = self.getObjectMaxPosition( object );
