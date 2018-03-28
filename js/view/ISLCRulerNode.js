@@ -48,8 +48,6 @@ define( function( require ) {
       rulerInset: RULER_INSET,
 
       // a11y
-      positionDelta: 10, // in view coordinates
-      shiftPositionDelta: 5,
       moveOnHoldDelay: 750
     }, options );
 
@@ -131,9 +129,9 @@ define( function( require ) {
       dragBounds: bounds,
       locationProperty: model.rulerPositionProperty,
       transform: modelViewTransform,
-      positionDelta: options.positionDelta, // in view coordinates
-      shiftPositionDelta: options.shiftPositionDelta,
       moveOnHoldDelay: options.moveOnHoldDelay,
+      downDelta: modelViewTransform.modelToViewDeltaX( options.snapToNearest ) * 2,
+      shiftDownDelta: modelViewTransform.modelToViewDeltaX( options.snapToNearest ),
 
       // snap to nearest snapToNearest, called on end so that dragging doesn't snap to a value for as long
       // as key is held down
