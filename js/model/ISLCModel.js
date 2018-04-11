@@ -47,8 +47,8 @@ define( function( require ) {
     this.rightObjectBoundary = rightBoundary;
 
     // @public
-    this.showValuesProperty = new Property( true, {
-      tandem: tandem.createTandem( 'showValuesProperty' ),
+    this.forceValuesProperty = new Property( true, {
+      tandem: tandem.createTandem( 'forceValuesProperty' ),
       phetioType: PropertyIO( BooleanIO )
     } );
 
@@ -337,7 +337,7 @@ define( function( require ) {
 
     // @public
     reset: function() {
-      this.showValuesProperty.reset();
+      this.forceValuesProperty.reset();
 
       // if the position of object2 is equal to object1's initial position, an error will result when we 
       // reset object1's position. Thus, we need to check for that one edge case prior to reset

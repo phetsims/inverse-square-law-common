@@ -264,7 +264,7 @@ define( function( require ) {
       self.arrowNode.x = transformedValue;
     } );
 
-    model.showValuesProperty.lazyLink( this.redrawForce.bind( this ) );
+    model.forceValuesProperty.lazyLink( this.redrawForce.bind( this ) );
     object.radiusProperty.lazyLink( this.redrawForce.bind( this ) );
     model.forceProperty.lazyLink( this.redrawForce.bind( this ) );
 
@@ -351,7 +351,7 @@ define( function( require ) {
       this.updateGradient( this.objectModel.baseColorProperty.get() );
 
       // update the arrow label
-      this.arrowNode.updateLabel( this.model.forceProperty.get(), this.model.showValuesProperty.get() );
+      this.arrowNode.updateLabel( this.model.forceProperty.get(), this.model.forceValuesProperty.get() );
 
       // set the text position, positioning the center relative to the parent coordinate frame
       this.arrowNode.setArrowTextPosition( this.parentToLocalBounds( this.layoutBounds ) );

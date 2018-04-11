@@ -167,11 +167,11 @@ define( function( require ) {
      *
      * @public
      * @param  {number} forceValue
-     * @param  {boolean} showValues
+     * @param  {boolean} forceValues
      */
-    updateLabel: function( forceValue, showValues ) {
+    updateLabel: function( forceValue, forceValues ) {
 
-      if ( showValues ) {
+      if ( forceValues ) {
         var forceStr = Util.toFixed( forceValue, this.forceReadoutDecimalPlaces );
 
         // group values together so that they are easy to read

@@ -14,8 +14,11 @@
   "pattern_0value_1units": {
     "value": "{{value}} {{units}}"
   },
-  "constantRadius": {
-    "value": "Constant Radius"
+  "constantSize": {
+    "value": "Constant Size"
+  },
+  "forceValues": {
+    "value": "Force Values"
   },
   "scientificNotation": {
     "value": "Scientific Notation"
