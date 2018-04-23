@@ -10,7 +10,6 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var Color = require( 'SCENERY/util/Color' );
   var inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
   var Range = require( 'DOT/Range' );
 
@@ -30,8 +29,6 @@ define( function( require ) {
     LEFT_OBJECT_BOUNDARY: -MAX_DISTANCE_FROM_CENTER,
 
     MIN_SEPARATION_BETWEEN_OBJECTS: 0.1, // in m
-
-    CONSTANT_RADIUS_COLOR: new Color( 'indigo' ),
 
     // mass constants
     CONSTANT_RADIUS: 0.5, // meters
