@@ -14,6 +14,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
   var LinearFunction = require( 'DOT/LinearFunction' );
+  var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var RichText = require( 'SCENERY/nodes/RichText' );
@@ -193,7 +194,8 @@ define( function( require ) {
             formattedString = notationObject.mantissa;
 
             if ( notationObject.exponent !== '0' ) {
-              formattedString += ' X 10<sup>' + notationObject.exponent + '</sup>';
+              formattedString += ' ' + MathSymbols.TIMES;
+              formattedString += ' 10<sup>' + notationObject.exponent + '</sup>';
             }
           }
 
