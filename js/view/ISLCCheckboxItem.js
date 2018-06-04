@@ -1,16 +1,20 @@
 // Copyright 2018, University of Colorado Boulder
 
 /**
- * A checkbox item displayed in an ISLCCheckboxPanel.  Conforms to the interface of values passed to VerticalCheckboxGroup
+ * A checkbox that is displayed in an ISLCCheckboxPanel.
  *
  * @author Sam Reid (PhET Interactive Simulations)
+ * @author Michael Barlow (PhET Interactive Simulatins)
  */
 define( function( require ) {
   'use strict';
 
   // modules
+  var Checkbox = require( 'SUN/Checkbox' );
+  var HStrut = require( 'SCENERY/nodes/HStrut' );
   var inherit = require( 'PHET_CORE/inherit' );
   var inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
+  var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Tandem = require( 'TANDEM/Tandem' );
   var Text = require( 'SCENERY/nodes/Text' );
@@ -27,27 +31,39 @@ define( function( require ) {
    */
   function ISLCCheckboxItem( label, property, options ) {
     options = _.extend( {
-      tandem: Tandem.required,
+
       textSize: DEFAULT_TEXT_SIZE,
-      textMaxWidth: DEFAULT_MAX_TEXT_WIDTH
+      textMaxWidth: DEFAULT_MAX_TEXT_WIDTH,
+      spacing: 10,
+      padding: 8,
+
+      tandem: Tandem.required
     }, options );
 
-    // @public - the content of the checkbox
-    this.content = new Text( label, {
+    var labelContent = new Text( label, {
         tandem: options.tandem.createTandem( 'labelNode' ),
         font: new PhetFont( options.textSize ),
         maxWidth: options.textMaxWidth
       }
     );
 
-    // @public - the Property that governs whether the checkbox is selected or not
-    this.property = property;
+    options.boxWidth = labelContent.height;
+
+    assert && assert( options.boxWidth > 0, 'checkbox width must be positive' );
 
     // @public
-    this.tandem = options.tandem;
+    // this.tandem = options.tandem;
+
+    var maxWidth = Math.max( DEFAULT_MAX_TEXT_WIDTH, labelContent.width );
+
+    var content = new Node( {
+      children: [ new HStrut( maxWidth + options.padding ), labelContent ]
+    } );
+
+    Checkbox.call( this, content, property, _.pick( options, [ 'boxWidth', 'tandem' ] ) );
   }
 
   inverseSquareLawCommon.register( 'ISLCCheckboxItem', ISLCCheckboxItem );
 
-  return inherit( Object, ISLCCheckboxItem );
+  return inherit( Checkbox, ISLCCheckboxItem );
 } );
