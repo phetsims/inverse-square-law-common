@@ -30,7 +30,7 @@ define( function( require ) {
     }, options );
 
     var gridShape = new Shape();
-    var gridPosition = modelViewTransform.viewToModelX( layoutBounds.minX );
+    var gridPosition = modelViewTransform.viewToModelX( layoutBounds.minX - 1 );
     var rightBoundary = modelViewTransform.viewToModelX( layoutBounds.maxX );
     while ( gridPosition <= rightBoundary ) {
 
