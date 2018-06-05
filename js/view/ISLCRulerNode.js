@@ -130,7 +130,7 @@ define( function( require ) {
       locationProperty: model.rulerPositionProperty,
       transform: modelViewTransform,
       moveOnHoldDelay: options.moveOnHoldDelay,
-      downDelta: modelViewTransform.modelToViewDeltaX( options.snapToNearest ) * 2,
+      downDelta: modelViewTransform.modelToViewDeltaX( options.snapToNearest ),
       shiftDownDelta: modelViewTransform.modelToViewDeltaX( options.snapToNearest ),
 
       // snap to nearest snapToNearest, called on end so that dragging doesn't snap to a value for as long
