@@ -21,7 +21,7 @@ define( function( require ) {
   var RangeIO = require( 'DOT/RangeIO' );
   var RangeWithValue = require( 'DOT/RangeWithValue' );
 
-  // phet-io modules
+  // ifphetio
   var NumberIO = require( 'ifphetio!PHET_IO/types/NumberIO' );
 
   /**
