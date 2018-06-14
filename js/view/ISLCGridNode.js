@@ -30,6 +30,8 @@ define( function( require ) {
     }, options );
 
     var gridShape = new Shape();
+
+    // subtract 1 so grid aligns with model, see https://github.com/phetsims/inverse-square-law-common/issues/49
     var gridPosition = modelViewTransform.viewToModelX( layoutBounds.minX - 1 );
     var rightBoundary = modelViewTransform.viewToModelX( layoutBounds.maxX );
     while ( gridPosition <= rightBoundary ) {
