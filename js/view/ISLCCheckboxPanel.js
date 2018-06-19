@@ -16,6 +16,7 @@ define( function( require ) {
   var Panel = require( 'SUN/Panel' );
   var Tandem = require( 'TANDEM/Tandem' );
   var VBox = require( 'SCENERY/nodes/VBox' );
+
   // var VerticalCheckboxGroup = require( 'SUN/VerticalCheckboxGroup' );
 
   /**
@@ -57,7 +58,7 @@ define( function( require ) {
     //   return item.content.width;
     // } ) );
 
-    var vBoxOptions = _.pick( options, [ 'spacing', 'align', 'tandem' ] );
+    var vBoxOptions = _.pick( options, [ 'spacing', 'align' ] );
 
     var checkboxGroup = new VBox( vBoxOptions );
 
@@ -75,7 +76,7 @@ define( function( require ) {
       //   boxWidth: checkboxWidth,
       //   tandem: item.tandem || Tandem.optional
       // } );
-    
+
       // set pointer areas, y dimensions are computed
       var yDilation = options.spacing / 2;
       item.mouseArea = item.localBounds.dilatedXY( options.mouseAreaXDilation, yDilation );
