@@ -1,5 +1,7 @@
 // Copyright 2017-2018, University of Colorado Boulder
 
+// REVIEW: Update header. Summary of this file's purpose and @authors.
+
 define( function ( require ) {
   'use strict';
 
