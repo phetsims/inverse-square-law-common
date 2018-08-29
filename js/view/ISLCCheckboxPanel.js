@@ -17,6 +17,7 @@ define( function( require ) {
   var Tandem = require( 'TANDEM/Tandem' );
   var VBox = require( 'SCENERY/nodes/VBox' );
 
+  // REVIEW: Remove unused code.
   // var VerticalCheckboxGroup = require( 'SUN/VerticalCheckboxGroup' );
 
   /**
@@ -44,6 +45,7 @@ define( function( require ) {
       tandem: Tandem.required
     }, options );
 
+    // REVIEW: Remove unused code.
     // the checkboxes in the group will be as wide as the labels are tall
     // var checkboxWidth = _.max( checkboxItems.map( function( item ) {
     //   return item.content.height;
@@ -65,6 +67,8 @@ define( function( require ) {
     for ( var i = 0; i < checkboxItems.length; i++ ) {
 
       var item = checkboxItems[ i ];
+
+      // REVIEW: Remove unused code.
       // var indent = item.indent || 0;
 
       // var content = new Node( {

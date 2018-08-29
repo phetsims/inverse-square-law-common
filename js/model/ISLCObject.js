@@ -57,6 +57,7 @@ define( function( require ) {
       range: valueRange
     } );
 
+    // REVIEW: type doc
     // @public - mass radius will change with value
     // since ISLCObjects are never destroyed, we do not need to dispose of this property
     this.radiusProperty = new DerivedProperty( [ this.valueProperty, constantRadiusProperty ],
@@ -72,6 +73,7 @@ define( function( require ) {
     // a11y - initialize the accessible slider
     var enabledRange = new RangeWithValue( options.leftObjectBoundary, options.rightObjectBoundary );
 
+    // REVIEW: type doc
     // @public - set by ISLCModel when the force changes
     this.enabledRangeProperty = new Property( enabledRange, {
       tandem: tandem.createTandem( 'enabledRangeProperty' ),

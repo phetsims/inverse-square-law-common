@@ -115,6 +115,7 @@ define( function( require ) {
           valueAlign: 'center'
       }, numberControlOptions ) );
 
+    // REVIEW: Can we pass this into the options of numberControl?
     // a11y - the panel has a group focus highlight rather than the number control
     numberControl.groupFocusHighlight = false;
 

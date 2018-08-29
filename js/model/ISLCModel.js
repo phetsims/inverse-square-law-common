@@ -46,6 +46,7 @@ define( function( require ) {
     this.leftObjectBoundary = leftBoundary;
     this.rightObjectBoundary = rightBoundary;
 
+    // REVIEW: Consider using BooleanProperty
     // @public
     this.forceValuesProperty = new Property( true, {
       tandem: tandem.createTandem( 'forceValuesProperty' ),
