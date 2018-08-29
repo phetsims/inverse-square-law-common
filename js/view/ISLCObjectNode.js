@@ -128,7 +128,6 @@ define( function( require ) {
     this.model = model;
     this.modelViewTransform = modelViewTransform;
 
-
     // the full range of force for the arrow node (note: this is distinct)
     var arrowForceRange = new RangeWithValue( model.getMinForce(), model.getMaxForce() );
 
@@ -231,6 +230,7 @@ define( function( require ) {
       start: function( event ) {
         clickOffset = dragNode.globalToParentPoint( event.pointer.point ).x - event.currentTarget.x;
         object.isDragging = true;
+        // REVIEW: Remove unused code
         // model.toggleDraggingObject( objectModel );
       },
       drag: function( event ) {
@@ -244,7 +244,7 @@ define( function( require ) {
         var xMin = model.getObjectMinPosition( object );
 
         // apply limitations and update position
-        x = Math.max( Math.min( x, xMax ), xMin ); // limited value of x (by boundary) in model coords
+        x = Math.max( Math.min( x, xMax ), xMin ); // limited value of x (by boundary) in model coordinates
 
         // snapToGrid method dynamically checks whether to snap or not
         object.positionProperty.set( model.snapToGrid( x ) );
@@ -258,6 +258,7 @@ define( function( require ) {
     // on reset, no objects are destroyed and properties are set to initial values
     // no need to dispose of any of the below listeners
     object.positionProperty.link( function( property ) {
+
       // position this node and its force arrow with label
       var transformedValue = modelViewTransform.modelToViewX( property );
       self.x = transformedValue;
@@ -294,8 +295,10 @@ define( function( require ) {
       accessibleSliderOptions
     );
 
+    // REVIEW: Unused argument 'radius'
     this.objectModel.radiusProperty.link( function( radius ) {
-      
+
+      // REVIEW: Visibility annotation
       // a11y - update the focusHighlight with the radius
       self.focusHighlight = Shape.bounds( dragNode.bounds.dilated( 5 ) );
     } );

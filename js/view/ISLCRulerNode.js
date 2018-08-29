@@ -92,7 +92,7 @@ define( function( require ) {
     var modelRulerHeight = modelViewTransform.viewToModelDeltaY( this.height );
 
     var minX = model.leftObjectBoundary;
-    var minY = modelHeight / 2 - modelRulerHeight; // bottom bound because Y is invered
+    var minY = modelHeight / 2 - modelRulerHeight; // bottom bound because Y is inverted
     var maxX = model.rightObjectBoundary;
     var maxY = -modelHeight / 2 + modelRulerHeight; // top bound because Y is inverted
     var bounds = new Bounds2( minX, minY, maxX, maxY );
@@ -112,6 +112,7 @@ define( function( require ) {
 
           var snappedX = Util.roundSymmetric( xModel / options.snapToNearest ) * options.snapToNearest;
 
+          // REVIEW: Remove unused code?
           // var offsetX = modelViewTransform.viewToModelDeltaX( RULER_INSET );
           model.rulerPositionProperty.set( new Vector2( snappedX, model.rulerPositionProperty.get().y ) );
         }
