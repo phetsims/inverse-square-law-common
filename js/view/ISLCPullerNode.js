@@ -74,6 +74,7 @@ define( function( require ) {
     // function that maps the size of the shadow to the force value
     var forceToShadowWidth = new LinearFunction( forceRange.min, forceRange.max, options.shadowMinWidth, options.shadowMaxWidth, true );
 
+    // REVIEW: Add minor doc about purpose.
     var pullerGroupNode = new Node();
 
     // the optional shadow node under the pullers - a circle scaled down vertically to look elliptical
@@ -132,7 +133,6 @@ define( function( require ) {
       for ( var i = 0; i < this.pullerPusherImages.length; i++ ) {
         images[ i ].setVisible( i === index );
       }
-
       pullerGroupNode.x = -offsetX;
 
       // scale the shadow and place it under the visible image
