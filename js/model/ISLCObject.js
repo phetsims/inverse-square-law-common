@@ -53,13 +53,14 @@ define( function( require ) {
     // @public
     this.valueProperty = new NumberProperty( initialMass, {
       tandem: tandem.createTandem( 'valueProperty' ),
-      units: options.tandemUnits,
+      units: options.tandemUnits, // REVIEW: Consider documenting units may be measuring mass or charge.
       range: valueRange
     } );
 
     // REVIEW: type doc
     // @public - mass radius will change with value
     // since ISLCObjects are never destroyed, we do not need to dispose of this property
+    // REVIEW: Use Property instead of property in above comment
     this.radiusProperty = new DerivedProperty( [ this.valueProperty, constantRadiusProperty ],
       function( valueProperty, constantRadius ) {
         return constantRadius ? options.constantRadius : self.calculateRadius( valueProperty );

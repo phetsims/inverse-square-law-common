@@ -72,8 +72,9 @@ define( function( require ) {
     // @public
     // derived property that calculates the force based on changes to values and positions
     // objects are never destroyed, so forceProperty does not require disposal
+    // REVIEW: Use Property instead of property in above comment
     this.forceProperty = new DerivedProperty( [
-      this.object1.valueProperty, // could be mass or charge
+      this.object1.valueProperty, // could be mass or charge // REVIEW:Consider moving this comment to declaration of valueProperty in ISLCObject.js
       this.object2.valueProperty,
       this.object1.positionProperty,
       this.object2.positionProperty
