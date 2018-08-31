@@ -1,8 +1,8 @@
-// Copyright 2017-2018, University of Colorado Boulder
+// Copyright 2018, University of Colorado Boulder
 
 // REVIEW: Update header. Summary of this file's purpose and @authors.
 
-define( function ( require ) {
+define( function( require ) {
   'use strict';
 
   // modules
@@ -12,6 +12,7 @@ define( function ( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var Property = require( 'AXON/Property' );
 
+  // REVIEW: JSDoc
   function ISLCDragBoundsNode( model, layoutBounds, modelViewTransform, options ) {
 
     options = _.extend( {
@@ -28,11 +29,13 @@ define( function ( require ) {
     var object1LineOptions = { stroke: options.object1Stroke, lineWidth: options.lineWidth };
     var object2LineOptions = { stroke: options.object1Stroke, lineWidth: options.lineWidth };
 
+    // REVIEW: Add doc describing the purpose of these lines
     var object1MinLine = new Line( 0, verticalMin, 0, verticalMax, object1LineOptions );
     var object1MaxLine = new Line( 0, verticalMin, 0, verticalMax, object1LineOptions );
     var object2MinLine = new Line( 0, verticalMin, 0, verticalMax, object2LineOptions );
     var object2MaxLine = new Line( 0, verticalMin, 0, verticalMax, object2LineOptions );
 
+    // REVIEW: Consider refactoring to this.children=[ object1MinLine, object1MaxLine, object2MinLine, object2MaxLine ]
     this.addChild( object1MinLine );
     this.addChild( object2MinLine );
     this.addChild( object1MaxLine );
@@ -49,6 +52,7 @@ define( function ( require ) {
       model.object2.radiusProperty
     ];
 
+    // REVIEW: Unused parameters
     Property.multilink( objectProperties, function( position1, radius1, position2, radius2 ) {
       object1MinX = modelViewTransform.modelToViewX( model.getObjectMinPosition( model.object1 ) );
       object1MinLine.x1 = object1MinX;
