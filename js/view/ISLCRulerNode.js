@@ -120,6 +120,7 @@ define( function( require ) {
     } ) );
 
     // @private (a11y) - custom, layerable focus highlight
+    // REVIEW: Visibility annotation not needed for var
     var focusHighlight = new FocusHighlightFromNode( ruler, { useLocalBounds: true } );
     this.setFocusHighlight( focusHighlight);
 
