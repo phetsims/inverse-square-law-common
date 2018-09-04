@@ -159,6 +159,7 @@ define( function( require ) {
       }
     },
 
+    // REVIEW: Duplicate comment
     /**
      * Update the force label string.
      * @public
