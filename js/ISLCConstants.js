@@ -16,7 +16,6 @@ define( function( require ) {
   // constants
   var MIN_MASS = 1; // kg
   var MAX_MASS = 1000; // kg
-
   var MAX_DISTANCE_FROM_CENTER = 5; // meters, empirically determined boundary for objects
 
   var ISLCConstants = {

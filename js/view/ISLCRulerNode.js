@@ -22,6 +22,7 @@ define( function( require ) {
   var Util = require( 'DOT/Util' );
   var Vector2 = require( 'DOT/Vector2' );
 
+  // REVIEW: Constants should be moved to below require statements.
   // constants
   var RULER_WIDTH = 500;
   var RULER_HEIGHT = 35;

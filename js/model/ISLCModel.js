@@ -38,7 +38,7 @@ define( function( require ) {
     var self = this;
 
     options = _.extend( {
-      snapObjectsToNearest: null, // {number} if defined, objects will snap to nearest value in model coordinates
+      snapObjectsToNearest: null, // {number} if defined, objects will snap to nearest value in model coordinates // REVIEW: Doc type should be {number|null}
       minSeparationBetweenObjects: 0.1 // in meters
     }, options );
 
@@ -73,6 +73,7 @@ define( function( require ) {
     // derived property that calculates the force based on changes to values and positions
     // objects are never destroyed, so forceProperty does not require disposal
     // REVIEW: Use Property instead of property in above comment
+    // REVIEW: Doc type?
     this.forceProperty = new DerivedProperty( [
       this.object1.valueProperty, // could be mass or charge // REVIEW:Consider moving this comment to declaration of valueProperty in ISLCObject.js
       this.object2.valueProperty,
