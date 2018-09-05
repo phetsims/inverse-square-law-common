@@ -13,6 +13,7 @@ define( function( require ) {
 
   var ISLCQueryParameters = QueryStringMachine.getAll( {
 
+    // REVIEW: ShowGrid is being used for debugging. Can this be removed from the code base, including usages in CoulombsLawCommonView.js
     // when flagged, shows a grid in the ScreenView that visualizes the possible locations
     // for the objects
     showGrid: {
