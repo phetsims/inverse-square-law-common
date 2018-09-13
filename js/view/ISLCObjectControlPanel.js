@@ -40,86 +40,91 @@ define( function( require ) {
    */
   function ISLCObjectControlPanel( titleString, unitString, objectProperty, valueRange, options ) {
 
-    // major ticks
-    var tickLabelOptions = options.tickLabelOptions ?
-                           _.extend( { pickable: false }, options.tickLabelOptions ) : { pickable: false };
     options = _.extend( {
+
+      // panel options
       fill: '#EDEDED',
       xMargin: 10,
       yMargin: 4,
       resize: false,
       align: 'right',
 
-      titleFont: new PhetFont( options.titleFontSize ),
-      valueFont: new PhetFont( options.valueFontSize ),
-      titleMaxWidth: TITLE_MAX_WIDTH,
-      valueMaxWidth: VALUE_MAX_WIDTH,
+      numberControlOptions: {},
+      tickLabelOptions: {},
+
+      tandem: Tandem.required
+    }, options );
+
+    // define first because they are used by numberControlOptions
+    options.tickLabelOptions = _.extend( {
+      pickable: false
+    }, options.tickLabelOptions );
+
+    // options that are passed along to the number control
+    options.numberControlOptions = _.extend( {
 
       // Don't fill in the {0}, it will be filled in by NumberControl
       valuePattern: StringUtils.fillIn( pattern0Value1UnitsString, { value: '{0}', units: unitString } ),
+
+      // layout options
       layoutFunction: NumberControl.createLayoutFunction3( { xSpacing: 10 } ),
       minorTickSpacing: 2,
       minorTickLength: 6,
       arrowButtonScale: 1,
       trackFillEnabled: 'black',
       thumbSize: THUMB_SIZE,
+
+      // tick options
       additionalTicks: [],
       majorTicks: [ {
         value: valueRange.min,
         label: new Text(
           valueRange.min,
-          _.extend( { tandem: options.tandem.createTandem( 'majorTickMinLabel' ) }, tickLabelOptions )
+          _.extend( { tandem: options.tandem.createTandem( 'majorTickMinLabel' ) }, options.tickLabelOptions )
         )
       }, {
         value: valueRange.max,
         label: new Text(
           valueRange.max,
-          _.extend( { tandem: options.tandem.createTandem( 'majorTickMaxLabel' ) }, tickLabelOptions )
+          _.extend( { tandem: options.tandem.createTandem( 'majorTickMaxLabel' ) }, options.tickLabelOptions )
         )
       } ],
       majorTickLength: 8,
+
       valueAlign: 'right',
       valueXMargin: 10,
       valueYMargin: 4,
       valueBackgroundStroke: 'black',
       valueBackgroundCornerRadius: 3,
       tickLabelSpacing: 1,
-      tandem: Tandem.required
-    }, options );
 
-    for ( var i = 0; i < options.additionalTicks.length; i++ ) {
+      // title and value text options
+      titleFont: new PhetFont( 12 ),
+      valueFont: new PhetFont( 12 ),
+      titleMaxWidth: TITLE_MAX_WIDTH,
+      valueMaxWidth: VALUE_MAX_WIDTH
+    }, options.numberControlOptions );
+
+    for ( var i = 0; i < options.numberControlOptions.additionalTicks.length; i++ ) {
       var tick = {
-        value: options.additionalTicks[ i ].value,
-        label: new Text(
-          options.additionalTicks[ i ].value,
-          _.extend( {
-            tandem: options.tandem.createTandem( options.additionalTicks[ i ].tandemLabel )
-          }, tickLabelOptions )
-        )
+        value: options.numberControlOptions.additionalTicks[ i ].value,
+        label: new Text( options.numberControlOptions.additionalTicks[ i ].value, _.extend( {
+          tandem: options.tandem.createTandem( options.numberControlOptions.additionalTicks[ i ].tandemLabel )
+        }, options.tickLabelOptions ) )
       };
-      options.majorTicks.push( tick );
+      options.numberControlOptions.majorTicks.push( tick );
     }
     var tandem = options.tandem;
 
-    // pull out options that apply to  the Panel, and those that apply to the NumberControl
-    var optionsFilter = [ 'fill', 'xMargin', 'yMargin', 'resize', 'align', 'right', 'left', 'top', 'tandem' ];
-    var panelOptions = _.pick( options, optionsFilter );
-    var numberControlOptions = _.omit( options, optionsFilter );
-
-    var numberControl = new NumberControl(
-      titleString,
-      objectProperty,
-      valueRange,
-      _.extend( {
-          tandem: tandem.createTandem( 'numberControl' ),
-          valueAlign: 'center'
-      }, numberControlOptions ) );
+    var numberControl = new NumberControl( titleString, objectProperty, valueRange, _.extend( {
+      tandem: tandem.createTandem( 'numberControl' )
+    }, options.numberControlOptions ) );
 
     // REVIEW: Can we pass this into the options of numberControl?
     // a11y - the panel has a group focus highlight rather than the number control
     numberControl.groupFocusHighlight = false;
 
-    Panel.call( this, numberControl, panelOptions );
+    Panel.call( this, numberControl, options );
 
     // @protected - used in Accessibility.js
     this.groupFocusHighlight = new GroupFocusHighlightFromNode( this, {
