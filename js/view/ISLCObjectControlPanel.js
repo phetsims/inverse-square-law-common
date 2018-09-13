@@ -120,13 +120,14 @@ define( function( require ) {
       tandem: tandem.createTandem( 'numberControl' )
     }, options.numberControlOptions ) );
 
-    // REVIEW: Can we pass this into the options of numberControl?
-    // a11y - the panel has a group focus highlight rather than the number control
-    numberControl.groupFocusHighlight = false;
-
     Panel.call( this, numberControl, options );
 
-    // @protected - used in Accessibility.js
+    // a11y - it looks nicer if the entire panel has a group focus highlight rather than the NumberControl
+    assert && assert( options.numberControlOptions.groupFocusHighlight === undefined, 'ISLCObjectControlPanel sets group focus highlight' );
+    numberControl.groupFocusHighlight = false;
+
+    // a11y - creates highlight that appears around this node when any ancestor (like the
+    // NumberControl) has focus
     this.groupFocusHighlight = new GroupFocusHighlightFromNode( this, {
       useLocalBounds: true,
       dilationCoefficient: 3.7,
