@@ -1,7 +1,11 @@
 // Copyright 2018, University of Colorado Boulder
 
-// REVIEW: Update header. Summary of this file's purpose and @authors.
-
+/**
+ * Shows the boundaries of the draggable area for an ISLCObjec's center point. Adjusts with the radius of the object.
+ * Currently only used in Gravity Force Lab Basics
+ *
+ * @author Jesse Greenberg (PhET Interactive Simulations)
+ */
 define( function( require ) {
   'use strict';
 
@@ -12,7 +16,13 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var Property = require( 'AXON/Property' );
 
-  // REVIEW: JSDoc
+  /**
+   * @param       {ISLCModel} model
+   * @param       {Bounds2} layoutBounds
+   * @param       {ModelViewTransform2} modelViewTransform
+   * @param       {Object} [options]
+   * @constructor
+   */
   function ISLCDragBoundsNode( model, layoutBounds, modelViewTransform, options ) {
 
     options = _.extend( {
@@ -29,17 +39,13 @@ define( function( require ) {
     var object1LineOptions = { stroke: options.object1Stroke, lineWidth: options.lineWidth };
     var object2LineOptions = { stroke: options.object1Stroke, lineWidth: options.lineWidth };
 
-    // REVIEW: Add doc describing the purpose of these lines
+    // vertical lines (drawn from yMin to yMax) that will be positioned according to the draggable limits of each object
     var object1MinLine = new Line( 0, verticalMin, 0, verticalMax, object1LineOptions );
     var object1MaxLine = new Line( 0, verticalMin, 0, verticalMax, object1LineOptions );
     var object2MinLine = new Line( 0, verticalMin, 0, verticalMax, object2LineOptions );
     var object2MaxLine = new Line( 0, verticalMin, 0, verticalMax, object2LineOptions );
 
-    // REVIEW: Consider refactoring to this.children=[ object1MinLine, object1MaxLine, object2MinLine, object2MaxLine ]
-    this.addChild( object1MinLine );
-    this.addChild( object2MinLine );
-    this.addChild( object1MaxLine );
-    this.addChild( object2MaxLine );
+    this.children = [ object1MinLine, object2MinLine, object1MaxLine, object2MaxLine ];
 
     var object1MinX;
     var object1MaxX;
@@ -52,8 +58,7 @@ define( function( require ) {
       model.object2.radiusProperty
     ];
 
-    // REVIEW: Unused parameters
-    Property.multilink( objectProperties, function( position1, radius1, position2, radius2 ) {
+    Property.multilink( objectProperties, function() {
       object1MinX = modelViewTransform.modelToViewX( model.getObjectMinPosition( model.object1 ) );
       object1MinLine.x1 = object1MinX;
       object1MinLine.x2 = object1MinX;

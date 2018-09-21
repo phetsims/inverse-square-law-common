@@ -17,9 +17,6 @@ define( function( require ) {
   var Tandem = require( 'TANDEM/Tandem' );
   var VBox = require( 'SCENERY/nodes/VBox' );
 
-  // REVIEW: Remove unused code.
-  // var VerticalCheckboxGroup = require( 'SUN/VerticalCheckboxGroup' );
-
   /**
    * @param {ISLCCheckboxItem[]} checkboxItems
    * @param {Object} [options]
@@ -45,21 +42,6 @@ define( function( require ) {
       tandem: Tandem.required
     }, options );
 
-    // REVIEW: Remove unused code.
-    // the checkboxes in the group will be as wide as the labels are tall
-    // var checkboxWidth = _.max( checkboxItems.map( function( item ) {
-    //   return item.content.height;
-    // } ) );
-
-    // var maxWidth = 0;
-    // for ( var i = 0; i < checkboxItems.length; i++ ) {
-    //   maxWidth = Math.max( maxWidth, checkboxItems[ i ].content.width );
-    // }
-
-    // var maxWidth = Math.max( checkboxItems.map( function ( item ) {
-    //   return item.content.width;
-    // } ) );
-
     var vBoxOptions = _.pick( options, [ 'spacing', 'align' ] );
 
     var checkboxGroup = new VBox( vBoxOptions );
@@ -67,19 +49,6 @@ define( function( require ) {
     for ( var i = 0; i < checkboxItems.length; i++ ) {
 
       var item = checkboxItems[ i ];
-
-      // REVIEW: Remove unused code.
-      // var indent = item.indent || 0;
-
-      // var content = new Node( {
-      //   children: [ new HStrut( maxWidth + options.padding - indent ), item.content ]
-      // } );
-
-      // var checkbox = new Checkbox( content, item.property, {
-      //   checkboxColor: options.checkboxColor,
-      //   boxWidth: checkboxWidth,
-      //   tandem: item.tandem || Tandem.optional
-      // } );
 
       // set pointer areas, y dimensions are computed
       var yDilation = options.spacing / 2;

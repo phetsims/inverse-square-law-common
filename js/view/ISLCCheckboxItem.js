@@ -51,10 +51,6 @@ define( function( require ) {
 
     assert && assert( options.boxWidth > 0, 'checkbox width must be positive' );
 
-    // REVIEW: Remove unused code.
-    // @public
-    // this.tandem = options.tandem;
-
     var maxWidth = Math.max( DEFAULT_MAX_TEXT_WIDTH, labelContent.width );
 
     var content = new Node( {
