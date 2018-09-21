@@ -96,11 +96,11 @@ define( function( require ) {
 
     // @private - tip and tail set in redrawArrow
     this.arrow = new ArrowNode( 0, -options.forceArrowHeight, 200, -options.forceArrowHeight, arrowOptions );
-    
+
     Node.call( this, {} );
     this.addChild( this.arrowText );
     this.addChild( this.arrow );
-    
+
     this.y = 0;
   }
 
@@ -110,7 +110,7 @@ define( function( require ) {
 
     /**
      * Draw the length of the arrow based on the value of the force.
-     * 
+     *
      * @public
      * @param {number} value
      */
@@ -119,7 +119,7 @@ define( function( require ) {
 
       var valueSign = value >= 0 ? 1 : -1;
 
-      // if the arrows are meant to attract 
+      // if the arrows are meant to attract
       if ( this.attractNegative ) {
         valueSign *= -1;
       }
@@ -135,12 +135,6 @@ define( function( require ) {
       this.arrow.setTailAndTip( 0, 0, valueSign * arrowLengthMultiplier * ARROW_LENGTH, 0 );
     },
 
-    /**
-     * Set the arrow text position along the arrow, ensuring that the text does not go outside the layout
-     * bounds.
-     *
-     * @public
-     */
     /**
      * Set the arrow text position along the arrow, ensuring that the text does not go outside the layout bounds.
      *
@@ -159,11 +153,6 @@ define( function( require ) {
       }
     },
 
-    // REVIEW: Duplicate comment
-    /**
-     * Update the force label string.
-     * @public
-     */
     /**
      * Update the force label string.
      *
