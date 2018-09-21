@@ -15,13 +15,9 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
   var NumberIO = require( 'ifphetio!PHET_IO/types/NumberIO' );
-  var Property = require( 'AXON/Property' );
-  var PropertyIO = require( 'AXON/PropertyIO' );
+  var BooleanProperty = require( 'AXON/BooleanProperty' );
   var RangeWithValue = require( 'DOT/RangeWithValue' );
   var Util = require( 'DOT/Util' );
-
-  // ifphetio
-  var BooleanIO = require( 'ifphetio!PHET_IO/types/BooleanIO' );
 
   /**
    * @param {number} forceConstant the appropriate force constant (e.g. G or k)
@@ -38,7 +34,7 @@ define( function( require ) {
     var self = this;
 
     options = _.extend( {
-      snapObjectsToNearest: null, // {number} if defined, objects will snap to nearest value in model coordinates // REVIEW: Doc type should be {number|null}
+      snapObjectsToNearest: null, // {number|null} if defined, objects will snap to nearest value in model coordinates
       minSeparationBetweenObjects: 0.1 // in meters
     }, options );
 
@@ -46,11 +42,9 @@ define( function( require ) {
     this.leftObjectBoundary = leftBoundary;
     this.rightObjectBoundary = rightBoundary;
 
-    // REVIEW: Consider using BooleanProperty
     // @public
-    this.forceValuesProperty = new Property( true, {
-      tandem: tandem.createTandem( 'forceValuesProperty' ),
-      phetioType: PropertyIO( BooleanIO )
+    this.forceValuesProperty = new BooleanProperty( true, {
+      tandem: tandem.createTandem( 'forceValuesProperty' )
     } );
 
     // @public
@@ -342,7 +336,7 @@ define( function( require ) {
     reset: function() {
       this.forceValuesProperty.reset();
 
-      // if the position of object2 is equal to object1's initial position, an error will result when we 
+      // if the position of object2 is equal to object1's initial position, an error will result when we
       // reset object1's position. Thus, we need to check for that one edge case prior to reset
       if ( this.object2.positionProperty.get() === this.object1.positionProperty.initialValue ) {
         this.object2.reset();
