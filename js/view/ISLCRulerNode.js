@@ -22,14 +22,13 @@ define( function( require ) {
   var Util = require( 'DOT/Util' );
   var Vector2 = require( 'DOT/Vector2' );
 
-  // REVIEW: Constants should be moved to below require statements.
+  // strings
+  var unitsCentimetersString = require( 'string!INVERSE_SQUARE_LAW_COMMON/units.centimeters' );
+
   // constants
   var RULER_WIDTH = 500;
   var RULER_HEIGHT = 35;
   var RULER_INSET = 10;
-
-  // strings
-  var unitsCentimetersString = require( 'string!INVERSE_SQUARE_LAW_COMMON/units.centimeters' );
 
   /**
    * @param {ISLCModel} model
@@ -113,15 +112,12 @@ define( function( require ) {
 
           var snappedX = Util.roundSymmetric( xModel / options.snapToNearest ) * options.snapToNearest;
 
-          // REVIEW: Remove unused code?
-          // var offsetX = modelViewTransform.viewToModelDeltaX( RULER_INSET );
           model.rulerPositionProperty.set( new Vector2( snappedX, model.rulerPositionProperty.get().y ) );
         }
       }
     } ) );
 
-    // @private (a11y) - custom, layerable focus highlight
-    // REVIEW: Visibility annotation not needed for var
+    // a11y - custom, layerable focus highlight
     var focusHighlight = new FocusHighlightFromNode( ruler, { useLocalBounds: true } );
     this.setFocusHighlight( focusHighlight);
 

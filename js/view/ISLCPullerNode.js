@@ -74,7 +74,7 @@ define( function( require ) {
     // function that maps the size of the shadow to the force value
     var forceToShadowWidth = new LinearFunction( forceRange.min, forceRange.max, options.shadowMinWidth, options.shadowMaxWidth, true );
 
-    // REVIEW: Add minor doc about purpose.
+    // parent node for all puller images and the rope
     var pullerGroupNode = new Node();
 
     // the optional shadow node under the pullers - a circle scaled down vertically to look elliptical

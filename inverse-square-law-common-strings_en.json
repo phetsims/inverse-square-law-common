@@ -1,32 +1,32 @@
 {
+  "constantSize": {
+    "value": "Constant Size"
+  },
   "forceOnObjectByOtherObjectPattern": {
     "value": "Force on {{thisObject}} by {{otherObject}}"
   },
   "forceOnObjectByOtherObjectWithUnitsPattern": {
     "value": "Force on {{thisObject}} by {{otherObject}} = {{value}} N"
   },
-  "units.picometers": {
-    "value": "pm"
-  },
-  "units.centimeters": {
-    "value": "cm"
-  },
-  "pattern_0value_1units": {
-    "value": "{{value}} {{units}}"
-  },
-  "constantSize": {
-    "value": "Constant Size"
-  },
   "forceValues": {
     "value": "Force Values"
-  },
-  "scientificNotation": {
-    "value": "Scientific Notation"
   },
   "mass1": {
     "value": "Mass 1"
   },
   "mass2": {
     "value": "Mass 2"
+  },
+  "pattern_0value_1units": {
+    "value": "{{value}} {{units}}"
+  },
+  "scientificNotation": {
+    "value": "Scientific Notation"
+  },
+  "units.picometers": {
+    "value": "pm"
+  },
+  "units.centimeters": {
+    "value": "cm"
   }
 }

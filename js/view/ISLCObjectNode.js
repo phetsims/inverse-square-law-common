@@ -230,8 +230,6 @@ define( function( require ) {
       start: function( event ) {
         clickOffset = dragNode.globalToParentPoint( event.pointer.point ).x - event.currentTarget.x;
         object.isDragging = true;
-        // REVIEW: Remove unused code
-        // model.toggleDraggingObject( objectModel );
       },
       drag: function( event ) {
 
@@ -295,11 +293,9 @@ define( function( require ) {
       accessibleSliderOptions
     );
 
-    // REVIEW: Unused argument 'radius'
-    this.objectModel.radiusProperty.link( function( radius ) {
+    this.objectModel.radiusProperty.link( function() {
 
-      // REVIEW: Visibility annotation
-      // a11y - update the focusHighlight with the radius
+      // a11y - update the focusHighlight with the radius (Accessibility.js setter)
       self.focusHighlight = Shape.bounds( dragNode.bounds.dilated( 5 ) );
     } );
 
