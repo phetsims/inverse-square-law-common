@@ -99,6 +99,12 @@ define( function( require ) {
      */
     calculateRadius: function() {
       throw new Error( 'calculateRadius must be implemented in descendent types' );
+    },
+
+    // @public
+    reset: function() {
+      this.valueProperty.reset();
+      this.positionProperty.reset();
     }
   } );
 } );
