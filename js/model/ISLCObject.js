@@ -50,10 +50,9 @@ define( function( require ) {
       range: new Range( options.leftObjectBoundary, options.rightObjectBoundary )
     } );
 
-    // @public
+    // @public {Property.<number>} - the mass or charge of the object in kilograms or coulombs
     this.valueProperty = new NumberProperty( initialMass, {
       tandem: tandem.createTandem( 'valueProperty' ),
-      units: options.tandemUnits, // REVIEW: Consider documenting units may be measuring mass or charge.
       range: valueRange
     } );
 

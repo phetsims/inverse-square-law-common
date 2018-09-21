@@ -42,7 +42,7 @@ define( function( require ) {
     this.leftObjectBoundary = leftBoundary;
     this.rightObjectBoundary = rightBoundary;
 
-    // @public
+    // @public {Property.<boolean>}- whether to display the force values
     this.forceValuesProperty = new BooleanProperty( true, {
       tandem: tandem.createTandem( 'forceValuesProperty' )
     } );
@@ -63,13 +63,10 @@ define( function( require ) {
     // @public - emits an event when the model is updated by step
     this.stepEmitter = new Emitter();
 
-    // @public
-    // derived property that calculates the force based on changes to values and positions
+    // @public {Property.<number>} - calculates the force based on changes to values and positions
     // objects are never destroyed, so forceProperty does not require disposal
-    // REVIEW: Use Property instead of property in above comment
-    // REVIEW: Doc type?
     this.forceProperty = new DerivedProperty( [
-      this.object1.valueProperty, // could be mass or charge // REVIEW:Consider moving this comment to declaration of valueProperty in ISLCObject.js
+      this.object1.valueProperty, // see valueProperty in ISLCObject.js
       this.object2.valueProperty,
       this.object1.positionProperty,
       this.object2.positionProperty
