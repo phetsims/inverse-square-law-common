@@ -101,7 +101,11 @@ define( function( require ) {
       throw new Error( 'calculateRadius must be implemented in descendent types' );
     },
 
-    // @public
+    /**
+     * Resets object model properties.
+     *
+     * @public
+     */
     reset: function() {
       this.valueProperty.reset();
       this.positionProperty.reset();
