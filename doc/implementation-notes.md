@@ -14,7 +14,7 @@ While the objects have defined radii, the force calculation is based on their ce
 The scene graph construction is handled in inheriting sims, and ISLC simply creates the common nodes that they use.
 
 ### Object Nodes
-These consist of a circle, a puller and rope, a force readout, and an arrow that visually corresponds to the force direction and magnitude. The puller is an ordered array of images that are invisible; by mapping force values to indices, we can set the visibility of the appropriate puller image.
+These consist of a circle, a puller and rope, a force readout, and an arrow that visually corresponds to the force direction and magnitude. The puller is an ordered array of images that are invisible; by mapping force values to indices, we can set the visibility of the puller image that corresponds to the force value.
 
 Force ranges are required for the mapping functions for the arrow width and puller indices.
 
