@@ -16,7 +16,7 @@ define( function( require ) {
   var inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
   var NumberIO = require( 'ifphetio!PHET_IO/types/NumberIO' );
   var BooleanProperty = require( 'AXON/BooleanProperty' );
-  var RangeWithValue = require( 'DOT/RangeWithValue' );
+  var Range = require( 'DOT/Range' );
   var Util = require( 'DOT/Util' );
 
   /**
@@ -84,7 +84,7 @@ define( function( require ) {
       var maxPosition = self.getObjectMaxPosition( object );
       var minPosition = self.getObjectMinPosition( object );
 
-      object.enabledRangeProperty.set( new RangeWithValue( minPosition, maxPosition ) );
+      object.enabledRangeProperty.set( new Range( minPosition, maxPosition ) );
     };
 
     // a11y - necessary to reset the enabledRangeProperty to prevent object overlap, disposal not necessary
