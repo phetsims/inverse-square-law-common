@@ -77,7 +77,7 @@ define( function( require ) {
       phetioType: DerivedPropertyIO( NumberIO ),
       tandem: tandem.createTandem( 'forceProperty' ),
       units: 'newtons',
-      phetioInstanceDocumentation: 'The force of one object on the other (in Newtons)'
+      phetioDocumentation: 'The force of one object on the other (in Newtons)'
     } );
 
     var updateRange = function( object ) {
