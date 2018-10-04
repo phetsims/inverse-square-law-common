@@ -19,7 +19,6 @@ define( function( require ) {
   var PropertyIO = require( 'AXON/PropertyIO' );
   var Range = require( 'DOT/Range' );
   var RangeIO = require( 'DOT/RangeIO' );
-  var RangeWithValue = require( 'DOT/RangeWithValue' );
 
   // ifphetio
   var NumberIO = require( 'ifphetio!PHET_IO/types/NumberIO' );
@@ -69,7 +68,7 @@ define( function( require ) {
     );
 
     // a11y - initialize the accessible slider
-    var enabledRange = new RangeWithValue( options.leftObjectBoundary, options.rightObjectBoundary );
+    var enabledRange = new Range( options.leftObjectBoundary, options.rightObjectBoundary );
 
     // @public {Property.<Range>}- set by ISLCModel when the force changes
     this.enabledRangeProperty = new Property( enabledRange, {

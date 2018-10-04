@@ -23,7 +23,7 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var Path = require( 'SCENERY/nodes/Path' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var RangeWithValue = require( 'DOT/RangeWithValue' );
+  var Range = require( 'DOT/Range' );
   var RichText = require( 'SCENERY/nodes/RichText' );
   var Shape = require( 'KITE/Shape' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
@@ -129,7 +129,7 @@ define( function( require ) {
     this.modelViewTransform = modelViewTransform;
 
     // the full range of force for the arrow node (note: this is distinct)
-    var arrowForceRange = new RangeWithValue( model.getMinForce(), model.getMaxForce() );
+    var arrowForceRange = new Range( model.getMinForce(), model.getMaxForce() );
 
     // @protected - arrow node
     this.arrowNode = new ISLCForceArrowNode(
