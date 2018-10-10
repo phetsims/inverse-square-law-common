@@ -274,7 +274,7 @@ define( function( require ) {
     this.redrawForce();
 
     var accessibleSliderOptions = {
-      keyboardStep: options.snapToNearest,
+      keyboardStep: options.snapToNearest * 2,
       shiftKeyboardStep: options.snapToNearest,
       pageKeyboardStep: options.snapToNearest * 10,
       startDrag: function() {
