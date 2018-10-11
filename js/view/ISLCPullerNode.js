@@ -71,6 +71,9 @@ define( function( require ) {
     // function that maps the visible image to the model force value
     var forceToImage = new LinearFunction( forceRange.min, forceRange.max, 0, this.pullerPusherImages.length - 1, true );
 
+    // function to dynamically move the position of the shadow under the puller
+    var indexToShadowOffset = new LinearFunction( 0, this.pullerPusherImages.length - 1, -4, 6 );
+
     // function that maps the size of the shadow to the force value
     var forceToShadowWidth = new LinearFunction( forceRange.min, forceRange.max, options.shadowMinWidth, options.shadowMaxWidth, true );
 
@@ -137,7 +140,7 @@ define( function( require ) {
 
       // scale the shadow and place it under the visible image
       shadowNode.radius = forceToShadowWidth( force ) / 2;
-      shadowNode.right = images[ index ].right - offsetX - 4;
+      shadowNode.right = images[ index ].right - offsetX + Util.roundSymmetric( indexToShadowOffset( index ) );
       shadowNode.centerY = images[ index ].bottom;
     };
   }
