@@ -14,7 +14,7 @@ define( function( require ) {
   var Emitter = require( 'AXON/Emitter' );
   var inherit = require( 'PHET_CORE/inherit' );
   var inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
-  var NumberIO = require( 'ifphetio!PHET_IO/types/NumberIO' );
+  var NumberIO = require( 'TANDEM/types/NumberIO' );
   var BooleanProperty = require( 'AXON/BooleanProperty' );
   var Range = require( 'DOT/Range' );
   var Util = require( 'DOT/Util' );
