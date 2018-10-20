@@ -11,6 +11,7 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var Bounds2 = require( 'DOT/Bounds2' );
   var Image = require( 'SCENERY/nodes/Image' );
   var inherit = require( 'PHET_CORE/inherit' );
   var inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
@@ -58,6 +59,9 @@ define( function( require ) {
 
     // @private
     this.pullerPusherImages = pullImages;
+
+    // @public
+    this.touchAreaBounds = new Bounds2( 0,0,0,0 );
 
     // used to ensure that small non-zero forces do not map to the zero force puller (see lines 130-132)
     var zeroForceIndex = null;
@@ -118,7 +122,7 @@ define( function( require ) {
     // shadow first so it is behind the pullers
     options.displayShadow && this.addChild( shadowNode );
     this.addChild( pullerGroupNode );
-
+    var self = this;
     // @public - set the visibility of the image corresponding to the current force value
     this.setPull = function( force, offsetX ) {
 
@@ -142,6 +146,11 @@ define( function( require ) {
       shadowNode.radius = forceToShadowWidth( force ) / 2;
       shadowNode.right = images[ index ].right - offsetX + Util.roundSymmetric( indexToShadowOffset( index ) );
       shadowNode.centerY = images[ index ].bottom;
+
+      // configure pointer area
+      // NOTE: the rope is not included in the draggable node, so we expose the puller bounds here for setting
+      // the touch and mouse areas in ISLCObjectNode
+      self.touchAreaBounds = pullerGroupNode.bounds.withOffsets( 0, 0, -options.ropeLength + 5, 2 );
     };
   }
 

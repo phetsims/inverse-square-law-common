@@ -297,6 +297,11 @@ define( function( require ) {
 
       // a11y - update the focusHighlight with the radius (Accessibility.js setter)
       self.focusHighlight = Shape.bounds( dragNode.bounds.dilated( 5 ) );
+
+      // set the pointer and touch areas
+      var pullerBounds = self.pullerNode.localToParentBounds( self.pullerNode.touchAreaBounds );
+      self.mouseArea = Shape.xor( [ Shape.bounds( pullerBounds ), self.objectCircle.createCircleShape() ] );
+      self.touchArea = self.mouseArea;
     } );
 
     // for layering purposes, we assume that the ScreenView will add the arrow node and label - by the
