@@ -17,11 +17,20 @@
   "mass2": {
     "value": "Mass 2"
   },
+  "mass": {
+    "value": "mass"
+  },
   "pattern_0value_1units": {
     "value": "{{value}} {{units}}"
   },
   "scientificNotation": {
     "value": "Scientific Notation"
+  },
+  "units.meters": {
+    "value": "meters"
+  },
+  "units.newtons": {
+    "value": "newtons"
   },
   "units.picometers": {
     "value": "pm"
