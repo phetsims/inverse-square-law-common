@@ -19,13 +19,16 @@ define( require => {
       value: 'Force vectors are {{size}} at {{objectValue}} {{units}}.'
     },
     robotPullSummaryPattern: {
-      value: 'Robots {{pullAmount}} keeping spheres in place.'
+      value: 'Robots pulling {{effort}} keeping spheres in place.'
+    },
+    robotPushSummaryPattern: {
+      value: 'Robots pushing {{effort}} keeping spheres in place.'
     },
     summaryInteractionHintPattern: {
       value: 'Move spheres or change their {{massOrCharge}} to begin observations.'
     },
     distanceSpaceAndValueSummaryPattern: {
-      value: '{{object1Label}} and {{object2Label}} are {{distance}} each other, exactly {{distanceValue}} {{units}} apart.'
+      value: '{{object1Label}} and {{object2Label}} are {{qualitativeDistance}} each other, exactly {{distance}} {{distanceUnits}} apart.'
     },
 
     ////////////////////////
@@ -79,7 +82,31 @@ define( require => {
     },
     rightNextTo: {
       value: 'right next to'
+    },
+
+    // puller robot effort
+    veryHard: {
+      value: 'very hard'
+    },
+    hard: {
+      value: 'hard'
+    },
+    moderately: {
+      value: 'moderately'
+    },
+    gently: {
+      value: 'gently'
+    },
+    lighly: {
+      value: 'lightly'
+    },
+    aLittle: {
+      value: 'a little'
+    },
+    aTinyBit: {
+      value: 'a tiny bit'
     }
+
   };
 
   if ( assert ) { Object.freeze( ISLCA11yStrings ); }
