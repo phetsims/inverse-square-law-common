@@ -21,7 +21,7 @@ define( function( require ) {
   var RangeIO = require( 'DOT/RangeIO' );
 
   // ifphetio
-  var NumberIO = require( 'TANDEM/types/NumberIO' );
+  var NumberIO = require( 'ifphetio!PHET_IO/types/NumberIO' );
 
   /**
    * @param {number} initialMass
