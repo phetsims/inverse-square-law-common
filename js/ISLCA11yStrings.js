@@ -8,9 +8,10 @@ define( require => {
 
   const ISLCA11yStrings = {
 
-    /////////////////////
-    // Pattern Strings //
-    /////////////////////
+    /***************************
+     * Summary Pattern Strings *
+     ***************************/
+
 
     vectorSizePattern: {
       value: 'Force vectors are {{size}}.'
@@ -31,9 +32,26 @@ define( require => {
       value: '{{object1Label}} and {{object2Label}} are {{qualitativeDistance}} each other, exactly {{distance}} {{distanceUnits}} apart.'
     },
 
-    ////////////////////////
-    // Qualitative Values //
-    ////////////////////////
+    /******************
+     * Sphere Strings *
+     ******************/
+
+    spherePositions: {
+      value: 'Sphere Positions'
+    },
+    spherePositionHelpText: {
+      value: 'Move spheres, closer or further from each other.'
+    },
+    forceVectorMagnitudePattern: {
+      value: 'Force vector magnitude is {{objectValue}} {{units}}.'
+    },
+    forceAndVectorPattern: {
+      value: 'Force on {{thisObject}} by {{otherObject}} is {{size}}, and vector points directly at {{otherObject}}.'
+    },
+
+    /**********************
+     * Qualitative Values *
+     **********************/
 
     // force vector and mass object size
     tiny: {

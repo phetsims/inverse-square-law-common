@@ -23,6 +23,11 @@ define( require => {
   const robotPullSummaryPatternString = ISLCA11yStrings.robotPullSummaryPattern.value;
   const robotPushSummaryPatternString = ISLCA11yStrings.robotPushSummaryPattern.value;
 
+  // sphere strings
+  // const spherePositionHelpTextString = ISLCA11yStrings.spherePositionHelpText.value;
+  const forceVectorMagnitudePatternString = ISLCA11yStrings.forceVectorMagnitudePattern.value;
+  const forceAndVectorPatternString = ISLCA11yStrings.forceAndVectorPattern.value;
+
   const tinyString = ISLCA11yStrings.tiny.value;
   const verySmallString = ISLCA11yStrings.verySmall.value;
   const smallString = ISLCA11yStrings.small.value;
@@ -92,8 +97,6 @@ define( require => {
       }, options );
 
       // @private
-      this.object1Label = object1Label;
-      this.object2Label = object2Label;
       this._modelValue = options.modelValue;
       this._distanceUnits = options.distanceUnits;
       this._valueUnits = options.valueUnits;
@@ -106,6 +109,8 @@ define( require => {
       this.model = model;
       this.object1 = model.object1;
       this.object2 = model.object2;
+      this.object1Label = object1Label;
+      this.object2Label = object2Label;
 
       model.forceProperty.link( force => {
         this._vectorSizeIndex = this.getForceVectorIndex( force );
@@ -139,11 +144,11 @@ define( require => {
                       vectorSizeValueUnitsPatternString :
                       vectorSizePatternString;
 
-      fillObject.size = SIZE_STRINGS[ this._vectorSizeIndex ];
+      fillObject.size = this.getForceVectorSize();
 
       if ( this.model.forceValuesProperty.get() ) {
         fillObject.units = this._valueUnits;
-        fillObject.objectValue = Util.toFixedNumber( this.model.forceProperty.get() * this._valueUnitConversion, 7 );
+        fillObject.objectValue = this.getConvertedObjectValue();
       }
 
       return StringUtils.fillIn( pattern, fillObject );
@@ -166,6 +171,37 @@ define( require => {
                       robotPullSummaryPatternString;
       const effort = PULL_EFFORT_STINGS[ this._effortIndex ];
       return StringUtils.fillIn( pattern, { effort } );
+    }
+
+    getForceVectorMagnitudeText() {
+      const pattern = forceVectorMagnitudePatternString;
+      const fillObject = {
+        objectValue: this.getConvertedObjectValue(),
+        units: this._valueUnits
+      };
+      return StringUtils.fillIn( pattern, fillObject );
+    }
+
+    getForceBetweenAndVectorText( thisObject, otherObject ) {
+      const pattern = forceAndVectorPatternString;
+      const fillObject = {
+        thisObject,
+        otherObject,
+        size: this.getForceVectorSize()
+      };
+      return StringUtils.fillIn( pattern, fillObject );
+    }
+
+    getSizeFromIndex( index ) {
+      return SIZE_STRINGS[ index ];
+    }
+
+    getForceVectorSize() {
+      return SIZE_STRINGS[ this._vectorSizeIndex ];
+    }
+
+    getConvertedObjectValue( decimalPlaces = 7 ) {
+      return Util.toFixedNumber( this.model.forceProperty.get() * this._valueUnitConversion, decimalPlaces );
     }
 
     getForceVectorIndex( force ) {

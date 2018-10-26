@@ -49,6 +49,10 @@ define( function( require ) {
       resize: false,
       align: 'right',
 
+      // a11y
+      // TODO: REVIEW this
+      tagName: 'li',
+
       numberControlOptions: {},
       tickLabelOptions: {},
 

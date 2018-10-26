@@ -57,7 +57,9 @@ define( function( require ) {
       children: [ new HStrut( maxWidth + options.padding ), labelContent ]
     } );
 
-    Checkbox.call( this, content, property, _.pick( options, [ 'boxWidth', 'tandem' ] ) );
+    // a11y
+    // TODO: review a11y implemntation ('accessibility' key in array)
+    Checkbox.call( this, content, property, _.pick( options, [ 'boxWidth', 'tandem', 'accessibleName' ] ) );
   }
 
   inverseSquareLawCommon.register( 'ISLCCheckboxItem', ISLCCheckboxItem );

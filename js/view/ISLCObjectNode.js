@@ -119,8 +119,14 @@ define( function( require ) {
     var tandem = options.tandem;
 
     Node.call( this, {
+      containerTagName: 'li',
       tandem: tandem
     } );
+
+    // A11Y DRAFT
+    // TODO: refactor
+    assert && assert( options.createAriaValueText, 'ISLCObjectNode subtypes must define an aria-valuetext creation function' );
+    this.accessibleName = `${options.label} position`;
 
     // @protected
     this.layoutBounds = layoutBounds;
@@ -277,12 +283,14 @@ define( function( require ) {
       keyboardStep: options.snapToNearest * 2,
       shiftKeyboardStep: options.snapToNearest,
       pageKeyboardStep: options.snapToNearest * 10,
+      accessibleDecimalPlaces: 1,
       startDrag: function() {
         object.isDragging = true;
       },
       endDrag: function() {
         object.isDragging = false;
-      }
+      },
+      createAriaValueText: options.createAriaValueText
     };
 
     // initialize features that  make this node act like an accessible range input
