@@ -119,7 +119,7 @@ define( function( require ) {
     var tandem = options.tandem;
 
     Node.call( this, {
-      containerTagName: 'li',
+      // containerTagName: 'li',
       tandem: tandem
     } );
 
