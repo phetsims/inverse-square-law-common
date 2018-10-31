@@ -27,6 +27,8 @@ define( require => {
   // const spherePositionHelpTextString = ISLCA11yStrings.spherePositionHelpText.value;
   const forceVectorMagnitudePatternString = ISLCA11yStrings.forceVectorMagnitudePattern.value;
   const forceAndVectorPatternString = ISLCA11yStrings.forceAndVectorPattern.value;
+  const positionMeterMarkPatternString = ISLCA11yStrings.positionMeterMarkPattern.value;
+  const objectLabelPositionPatternString = ISLCA11yStrings.objectLabelPositionPattern.value;
 
   const tinyString = ISLCA11yStrings.tiny.value;
   const verySmallString = ISLCA11yStrings.verySmall.value;
@@ -35,7 +37,6 @@ define( require => {
   const largeString = ISLCA11yStrings.large.value;
   const veryLargeString = ISLCA11yStrings.veryLarge.value;
   const hugeString = ISLCA11yStrings.huge.value;
-
 
   const extremelyFarFromString = ISLCA11yStrings.extremelyFarFrom.value;
   const veryFarFromString = ISLCA11yStrings.veryFarFrom.value;
@@ -54,7 +55,6 @@ define( require => {
   const aLittleString = ISLCA11yStrings.aLittle.value;
   const aTinyBitString = ISLCA11yStrings.aTinyBit.value;
 
-  // TODO: create type to handle string arrays mapped from a given value
   const SIZE_STRINGS = [
     tinyString,
     verySmallString,
@@ -190,6 +190,14 @@ define( require => {
         size: this.getForceVectorSize()
       };
       return StringUtils.fillIn( pattern, fillObject );
+    }
+
+    static getPositionMeterMarkText( position ) {
+      return StringUtils.fillIn( positionMeterMarkPatternString, { position } );
+    }
+
+    static getObjectLabelPositionText( label ) {
+      return StringUtils.fillIn( objectLabelPositionPatternString, { label } );
     }
 
     getSizeFromIndex( index ) {

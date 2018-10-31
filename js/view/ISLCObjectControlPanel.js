@@ -50,7 +50,6 @@ define( function( require ) {
       align: 'right',
 
       // a11y
-      // TODO: REVIEW this
       tagName: 'li',
 
       numberControlOptions: {},

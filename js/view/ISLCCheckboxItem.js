@@ -58,7 +58,6 @@ define( function( require ) {
     } );
 
     // a11y
-    // TODO: review a11y implemntation ('accessibility' key in array)
     Checkbox.call( this, content, property, _.pick( options, [ 'boxWidth', 'tandem', 'accessibleName' ] ) );
   }
 
