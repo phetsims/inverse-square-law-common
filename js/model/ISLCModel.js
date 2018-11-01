@@ -9,13 +9,13 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var BooleanProperty = require( 'AXON/BooleanProperty' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var DerivedPropertyIO = require( 'AXON/DerivedPropertyIO' );
   var Emitter = require( 'AXON/Emitter' );
   var inherit = require( 'PHET_CORE/inherit' );
   var inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
   var NumberIO = require( 'TANDEM/types/NumberIO' );
-  var BooleanProperty = require( 'AXON/BooleanProperty' );
   var Range = require( 'DOT/Range' );
   var Util = require( 'DOT/Util' );
 

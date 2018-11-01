@@ -4,9 +4,9 @@ define( require => {
   'use strict';
 
   // modules
+  // const LinearFunction = require( 'DOT/LinearFunction' );
   const inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
   const ISLCA11yStrings = require( 'INVERSE_SQUARE_LAW_COMMON/ISLCA11yStrings' );
-  // const LinearFunction = require( 'DOT/LinearFunction' );
   const Property = require( 'AXON/Property' );
   const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   const Util = require( 'DOT/Util' );
