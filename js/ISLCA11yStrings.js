@@ -49,7 +49,7 @@ define( require => {
       value: 'Force on {{thisObject}} by {{otherObject}} is {{size}}, and vector points directly at {{otherObject}}.'
     },
     positionMeterMarkPattern: {
-      value: '{{position}} meter mark'
+      value: '{{positionUnit}} mark'
     },
     valueKilogramsPattern: {
       value: '{{value}} kilograms'

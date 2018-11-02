@@ -93,7 +93,18 @@ define( require => {
         modelValue: massString,
         valueUnits: unitsNewtonsString,
         distanceUnits: unitsMetersString,
-        valueUnitConversion: 1
+        valueUnitConversion: 1,
+
+        /**
+         * Handles custom defined formatting of the underlying object value if needed by subtypes.
+         * E.g. for converting 1e-6 newtons to 1 micronewton
+         * @param  {Number} value the model's forceProperty
+         * @return {Number}       converted value
+         */
+        convertForceValue: value => value,
+
+
+        convertDistanceApart: distance => distance
       }, options );
 
       // @private
@@ -106,11 +117,15 @@ define( require => {
       this._effortIndex = 0;
 
       // @protected
+      // TODO: consider always accessing model/object model properties through this.model
+      // this would reserve this.object1 & this.object2
       this.model = model;
       this.object1 = model.object1;
       this.object2 = model.object2;
       this.object1Label = object1Label;
       this.object2Label = object2Label;
+      this.convertForceValue = options.convertForceValue;
+      this.convertDistanceApart = options.convertDistanceApart;
 
       model.forceProperty.link( force => {
         this._vectorSizeIndex = this.getForceVectorIndex( force );
@@ -122,7 +137,7 @@ define( require => {
           this.object2.positionProperty ],
         ( x1, x2 ) => {
           // TODO: consider whether to calculate center to center or surface to surface or both
-          this._distanceBetween = Util.toFixedNumber( Math.abs( x1 - x2 ), 2 );
+          this._distanceBetween = Math.abs( x1 - x2 );
         }
       );
     }
@@ -148,7 +163,7 @@ define( require => {
 
       if ( this.model.forceValuesProperty.get() ) {
         fillObject.units = this._valueUnits;
-        fillObject.objectValue = this.getConvertedObjectValue();
+        fillObject.objectValue = this.convertForceValue( this.model.forceProperty.get() );
       }
 
       return StringUtils.fillIn( pattern, fillObject );
@@ -158,8 +173,8 @@ define( require => {
       const fillObject = {
         object1Label: this.object1Label,
         object2Label: this.object2Label,
-        qualitativeDistance: DISTANCE_STRINGS[ this.getDistanceIndex( this._distanceBetween ) ],
-        distance: this._distanceBetween,
+        qualitativeDistance: this.getQualitativeDistance(),
+        distance: this.convertDistanceApart(this._distanceBetween),
         distanceUnits: this._distanceUnits
       };
       return StringUtils.fillIn( distanceSpaceAndValueSummaryPatternString, fillObject );
@@ -176,7 +191,7 @@ define( require => {
     getForceVectorMagnitudeText() {
       const pattern = forceVectorMagnitudePatternString;
       const fillObject = {
-        objectValue: this.getConvertedObjectValue(),
+        objectValue: this.convertForceValue( this.model.forceProperty.get() ),
         units: this._valueUnits
       };
       return StringUtils.fillIn( pattern, fillObject );
@@ -192,8 +207,12 @@ define( require => {
       return StringUtils.fillIn( pattern, fillObject );
     }
 
-    static getPositionMeterMarkText( position ) {
-      return StringUtils.fillIn( positionMeterMarkPatternString, { position } );
+    getQualitativeDistance() {
+      return DISTANCE_STRINGS[ this.getDistanceIndex( this._distanceBetween ) ];
+    }
+
+    static getPositionMeterMarkText( positionUnit ) {
+      return StringUtils.fillIn( positionMeterMarkPatternString, { positionUnit } );
     }
 
     static getObjectLabelPositionText( label ) {
