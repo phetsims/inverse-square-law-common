@@ -132,6 +132,17 @@ define( require => {
     },
     aTinyBit: {
       value: 'a tiny bit'
+    },
+
+    // Ruler strings
+    rulerLabel: {
+      value: 'Ruler'
+    },
+    rulerHelpText: {
+      value: 'Move ruler to measure distance between spheres in meters.'
+    },
+    moveInFourDirections: {
+      value: 'move in four directions'
     }
 
   };

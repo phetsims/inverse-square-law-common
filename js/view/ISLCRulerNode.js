@@ -10,10 +10,12 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var AccessiblePeer = require( 'SCENERY/accessibility/AccessiblePeer' );
   var Bounds2 = require( 'DOT/Bounds2' );
   var FocusHighlightFromNode = require( 'SCENERY/accessibility/FocusHighlightFromNode' );
   var inherit = require( 'PHET_CORE/inherit' );
   var inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
+  var ISLCA11yStrings = require( 'INVERSE_SQUARE_LAW_COMMON/ISLCA11yStrings' );
   var KeyboardDragListener = require( 'SCENERY_PHET/accessibility/listeners/KeyboardDragListener' );
   var MovableDragHandler = require( 'SCENERY_PHET/input/MovableDragHandler' );
   var Node = require( 'SCENERY/nodes/Node' );
@@ -24,6 +26,9 @@ define( function( require ) {
 
   // strings
   var unitsCentimetersString = require( 'string!INVERSE_SQUARE_LAW_COMMON/units.centimeters' );
+  var rulerHelpTextString = ISLCA11yStrings.rulerHelpText.value;
+  var rulerLabelString = ISLCA11yStrings.rulerLabel.value;
+  var moveInFourDirectionsString = ISLCA11yStrings.moveInFourDirections.value;
 
   // constants
   var RULER_WIDTH = 500;
@@ -48,7 +53,8 @@ define( function( require ) {
       rulerInset: RULER_INSET,
 
       // a11y
-      moveOnHoldDelay: 750
+      moveOnHoldDelay: 750,
+      tagName: 'div'
     }, options );
 
     var majorTickLabels = options.majorTickLabels;
@@ -145,6 +151,16 @@ define( function( require ) {
       }
     } );
     this.addAccessibleInputListener( keyboardDragListener );
+
+    this.accessibleName = rulerLabelString;
+    this.helpText = rulerHelpTextString;
+    this.ariaRole = 'application';
+    this.setAccessibleAttribute( 'aria-roledescription', moveInFourDirectionsString );
+    this.addAriaDescribedbyAssociation( {
+      otherNode: this,
+      otherElementName: AccessiblePeer.DESCRIPTION_SIBLING,
+      thisElementName: AccessiblePeer.PRIMARY_SIBLING
+    } );
   }
 
   inverseSquareLawCommon.register( 'ISLCRulerNode', ISLCRulerNode );
