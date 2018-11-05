@@ -163,7 +163,7 @@ define( function( require ) {
     updateLabel: function( forceValue, forceValues ) {
 
       if ( forceValues ) {
-        var forceStr = Util.toFixed( forceValue, this.forceReadoutDecimalPlaces );
+        var forceStr = Util.toFixed( forceValue, forceValue === 0 ? 2 : this.forceReadoutDecimalPlaces );
 
         // group values together so that they are easy to read
         var pointLocation = forceStr.indexOf( '.' );
@@ -178,7 +178,7 @@ define( function( require ) {
             formattedString += forceStr.substr( i, 3 );
           }
 
-          if ( this.scientificNotationMode ) {
+          if ( this.scientificNotationMode && forceValue !== 0 ) {
             var precision = 2;
             var notationObject = ScientificNotationNode.toScientificNotation( forceValue, { mantissaDecimalPlaces: precision } );
             formattedString = notationObject.mantissa;
