@@ -149,6 +149,12 @@ define( require => {
     forceValuesCheckboxHelpText: {
       value: 'Explore value of forces in newtons.'
     },
+    forcesInExactValues: {
+      value: 'Forces in exact values.'
+    },
+    forcesNotInExactValues: {
+      value: 'Forces not in exact values.'
+    },
     scientificNotationCheckboxHelpText: {
       value: 'Listen to newtons in scientific notation.'
     }
