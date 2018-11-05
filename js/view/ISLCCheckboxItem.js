@@ -36,7 +36,7 @@ define( function( require ) {
       textMaxWidth: DEFAULT_MAX_TEXT_WIDTH,
       spacing: 10,
       padding: 8,
-
+      appendLabel: false,
       tandem: Tandem.required
     }, options );
 
@@ -58,7 +58,14 @@ define( function( require ) {
     } );
 
     // a11y
-    Checkbox.call( this, content, property, _.pick( options, [ 'boxWidth', 'tandem', 'accessibleName' ] ) );
+    Checkbox.call( this, content, property,
+      _.pick( options, [
+        'boxWidth',
+        'tandem',
+        'accessibleName',
+        'descriptionContent',
+        'appendLabel'
+       ] ) );
   }
 
   inverseSquareLawCommon.register( 'ISLCCheckboxItem', ISLCCheckboxItem );

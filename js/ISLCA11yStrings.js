@@ -143,6 +143,14 @@ define( require => {
     },
     moveInFourDirections: {
       value: 'move in four directions'
+    },
+
+    // common checkbox strings
+    forceValuesCheckboxHelpText: {
+      value: 'Explore value of forces in newtons.'
+    },
+    scientificNotationCheckboxHelpText: {
+      value: 'Listen to newtons in scientific notation.'
     }
 
   };
