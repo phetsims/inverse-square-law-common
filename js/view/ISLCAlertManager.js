@@ -1,3 +1,5 @@
+// Copyright 2017-2018, University of Colorado Boulder
+
 define( require => {
   'use strict';
 
