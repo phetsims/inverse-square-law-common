@@ -96,7 +96,7 @@ define( function( require ) {
     var maxX = model.rightObjectBoundary;
     var maxY = -modelHeight / 2 + modelRulerHeight; // top bound because Y is inverted
     var bounds = new Bounds2( minX, minY, maxX, maxY );
-    this.mouseArea = ruler.bounds;
+    this.mouseArea = ruler.bounds.eroded( 2 );
     this.touchArea = this.mouseArea;
 
     this.addInputListener( new MovableDragHandler( model.rulerPositionProperty, {
