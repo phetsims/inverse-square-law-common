@@ -15,7 +15,7 @@ define( require => {
       value: 'Force vectors are {{size}}.'
     },
     vectorSizeValueUnitsPattern: {
-      value: 'Force vectors are {{size}} at {{objectValue}} {{units}}.'
+      value: 'Force vectors are {{size}} at {{objectValueUnits}}.'
     },
     robotPullSummaryPattern: {
       value: 'Robots pulling {{effort}} keeping spheres in place.'
@@ -41,7 +41,7 @@ define( require => {
       value: 'Move spheres, closer or further from each other.'
     },
     forceVectorMagnitudePattern: {
-      value: 'Force vector magnitude is {{objectValue}} {{units}}.'
+      value: 'Force vector magnitude is {{objectValueUnits}}.'
     },
     forceAndVectorPattern: {
       value: 'Force on {{thisObject}} by {{otherObject}} is {{size}}, and vector points directly at {{otherObject}}.'
@@ -161,6 +161,17 @@ define( require => {
     },
     forcesInDecimal: {
       value: 'Forces in decimal format.'
+    },
+
+    // misc
+    scientificNotationPattern: {
+      value: '{{mantissa}} times ten to the {{exponent}}'
+    },
+    negativeValuePattern: {
+      value: 'negative {{value}}'
+    },
+    valuePattern: {
+      value: '{{value}}'
     }
   };
 

@@ -8,6 +8,7 @@ define( require => {
   const inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
   const ISLCA11yStrings = require( 'INVERSE_SQUARE_LAW_COMMON/ISLCA11yStrings' );
   const Property = require( 'AXON/Property' );
+  const ScientificNotationNode = require( 'SCENERY_PHET/ScientificNotationNode' );
   const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   const Util = require( 'DOT/Util' );
 
@@ -55,6 +56,10 @@ define( require => {
   const aLittleString = ISLCA11yStrings.aLittle.value;
   const aTinyBitString = ISLCA11yStrings.aTinyBit.value;
 
+  const scientificNotationPatternString = ISLCA11yStrings.scientificNotationPattern.value;
+  const negativeValuePatternString = ISLCA11yStrings.negativeValuePattern.value;
+  const valuePatternString = ISLCA11yStrings.valuePattern.value;
+
   const SIZE_STRINGS = [
     tinyString,
     verySmallString,
@@ -99,9 +104,9 @@ define( require => {
          * Handles custom defined formatting of the underlying object value if needed by subtypes.
          * E.g. for converting 1e-6 newtons to 1 micronewton
          * @param  {Number} value the model's forceProperty
-         * @return {Number}       converted value
+         * @return {String}       value converted to value and units string
          */
-        convertForceValue: value => value,
+        convertForceValue: value => `${value} newtons`,
 
 
         convertDistanceApart: distance => distance
@@ -115,6 +120,7 @@ define( require => {
       this._vectorSizeIndex = 0;
       this._distanceBetween = 0;
       this._effortIndex = 0;
+      this._convertForceValue = options.convertForceValue;
 
       // @protected
       // TODO: consider always accessing model/object model properties through this.model
@@ -124,7 +130,6 @@ define( require => {
       this.object2 = model.object2;
       this.object1Label = object1Label;
       this.object2Label = object2Label;
-      this.convertForceValue = options.convertForceValue;
       this.convertDistanceApart = options.convertDistanceApart;
 
       model.forceProperty.link( force => {
@@ -162,8 +167,8 @@ define( require => {
       fillObject.size = this.getForceVectorSize();
 
       if ( this.model.forceValuesProperty.get() ) {
-        fillObject.units = this._valueUnits;
-        fillObject.objectValue = this.convertForceValue( this.model.forceProperty.get() );
+        // fillObject.units = this._valueUnits;
+        fillObject.objectValueUnits = this._convertForceValue( this.model.forceProperty.get() );
       }
 
       return StringUtils.fillIn( pattern, fillObject );
@@ -188,11 +193,11 @@ define( require => {
       return StringUtils.fillIn( pattern, { effort } );
     }
 
+    // objectValue may need to handle returning the value and units
     getForceVectorMagnitudeText() {
       const pattern = forceVectorMagnitudePatternString;
       const fillObject = {
-        objectValue: this.convertForceValue( this.model.forceProperty.get() ),
-        units: this._valueUnits
+        objectValueUnits: this._convertForceValue( this.model.forceProperty.get() )
       };
       return StringUtils.fillIn( pattern, fillObject );
     }
@@ -217,6 +222,14 @@ define( require => {
 
     static getObjectLabelPositionText( label ) {
       return StringUtils.fillIn( objectLabelPositionPatternString, { label } );
+    }
+
+    static getForceInScientificNotation( forceValue, mantissaDecimalPlaces ) {
+      const { mantissa, exponent } = ScientificNotationNode.toScientificNotation( forceValue, { mantissaDecimalPlaces } );
+      const exponentPattern = exponent < 0 ? negativeValuePatternString : valuePatternString;
+      const exponentString = StringUtils.fillIn( exponentPattern, { value: Math.abs( exponent ) } );
+      const pattern = scientificNotationPatternString;
+      return StringUtils.fillIn( pattern, { mantissa, exponent: exponentString } );
     }
 
     getSizeFromIndex( index ) {

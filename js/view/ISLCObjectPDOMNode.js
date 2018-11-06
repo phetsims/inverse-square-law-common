@@ -58,6 +58,10 @@ define( require => {
     linkToRadiusPropery( callback ) {
       this.objectModel.radiusProperty.link( callback );
     }
+
+    linkToScientificNotationProperty( callback ) {
+      this.model.scientificNotationProperty.link( callback );
+    }
   }
 
   return inverseSquareLawCommon.register( 'ISLCObjectPDOMNode', ISLCObjectPDOMNode );
