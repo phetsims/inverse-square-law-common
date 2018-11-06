@@ -11,8 +11,6 @@ define( require => {
     /***************************
      * Summary Pattern Strings *
      ***************************/
-
-
     vectorSizePattern: {
       value: 'Force vectors are {{size}}.'
     },
@@ -157,8 +155,13 @@ define( require => {
     },
     scientificNotationCheckboxHelpText: {
       value: 'Listen to newtons in scientific notation.'
+    },
+    forcesInScientificNotation: {
+      value: 'Forces in scientific notation.'
+    },
+    forcesInDecimal: {
+      value: 'Forces in decimal format.'
     }
-
   };
 
   if ( assert ) { Object.freeze( ISLCA11yStrings ); }
