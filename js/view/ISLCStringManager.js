@@ -227,9 +227,9 @@ define( require => {
     static getForceInScientificNotation( forceValue, mantissaDecimalPlaces ) {
       const { mantissa, exponent } = ScientificNotationNode.toScientificNotation( forceValue, { mantissaDecimalPlaces } );
       const mantissaPattern = mantissa < 0 ? negativeValuePatternString : valuePatternString; // negative values are possible in Coulomb's Law
-      const mantissaString = StringUtils.fillIn( mantissaPattern, { value: mantissa } );
+      const mantissaString = StringUtils.fillIn( mantissaPattern, { value: Math.abs( mantissa ) } );
       const exponentPattern = exponent < 0 ? negativeValuePatternString : valuePatternString;
-      const exponentString = StringUtils.fillIn( exponentPattern, { value: exponent } );
+      const exponentString = StringUtils.fillIn( exponentPattern, { value: Math.abs( exponent ) } );
       const pattern = scientificNotationPatternString;
       return StringUtils.fillIn( pattern, { mantissa: mantissaString, exponent: exponentString } );
     }
