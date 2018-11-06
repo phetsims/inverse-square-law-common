@@ -165,7 +165,7 @@ define( require => {
 
     // misc
     scientificNotationPattern: {
-      value: '{{mantissa}} times ten to the {{exponent}}'
+      value: '{{mantissa}} &times; 10 to the {{exponent}}'
     },
     negativeValuePattern: {
       value: 'negative {{value}}'
