@@ -27,7 +27,7 @@ define( require => {
       value: 'Move spheres or change their {{massOrCharge}} to begin observations.'
     },
     distanceSpaceAndValueSummaryPattern: {
-      value: '{{object1Label}} and {{object2Label}} are {{qualitativeDistance}} each other, exactly {{distance}} {{distanceUnits}} apart.'
+      value: '{{object1Label}} and {{object2Label}} are {{qualitativeDistance}} each other, centers exactly {{distance}} {{distanceUnits}} apart.'
     },
 
     /******************
