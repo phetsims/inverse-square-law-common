@@ -59,6 +59,7 @@ define( require => {
   const scientificNotationPatternString = ISLCA11yStrings.scientificNotationPattern.value;
   const negativeValuePatternString = ISLCA11yStrings.negativeValuePattern.value;
   const valuePatternString = ISLCA11yStrings.valuePattern.value;
+  const valuesInUnitsPatternString = ISLCA11yStrings.valuesInUnitsPattern.value;
 
   const SIZE_STRINGS = [
     tinyString,
@@ -210,6 +211,11 @@ define( require => {
         size: this.getForceVectorSize()
       };
       return StringUtils.fillIn( pattern, fillObject );
+    }
+
+    getForceValuesInUnitsText() {
+      const pattern = valuesInUnitsPatternString;
+      return StringUtils.fillIn( pattern, { units: this._valueUnits } );
     }
 
     getQualitativeDistance() {

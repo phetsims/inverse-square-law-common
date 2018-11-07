@@ -10,19 +10,25 @@ define( require => {
   const utteranceQueue = require( 'SCENERY_PHET/accessibility/utteranceQueue' );
 
   // strings
-  const forcesInExactValuesString = ISLCA11yStrings.forcesInExactValues.value;
-  const forcesNotInExactValuesString = ISLCA11yStrings.forcesNotInExactValues.value;
+  const forceValuesHiddenString = ISLCA11yStrings.forceValuesHidden.value;
 
   class ISLCAlertManager {
-    constructor( model ) {
+    constructor( model, stringManager ) {
       this.model = model;
-      model.forceValuesProperty.lazyLink( showValues => {
-        this.alertForceValues( showValues );
-      } );
+      this.stringManager = stringManager;
+      // model.forceValuesProperty.lazyLink( showValues => {
+      //   this.alertForceValues( showValues );
+      // } );
     }
 
     alertForceValues( showValues ) {
-      const alert = showValues ? forcesInExactValuesString : forcesNotInExactValuesString;
+      let alert = '';
+      if ( showValues ) {
+        alert = this.stringManager.getForceValuesInUnitsText();
+      }
+      else {
+        alert = forceValuesHiddenString;
+      }
       const utterance = new Utterance( { alert, uniqueGroupId: 'forceValues' } );
       utteranceQueue.addToBack( utterance );
     }

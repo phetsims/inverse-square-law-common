@@ -147,20 +147,17 @@ define( require => {
     forceValuesCheckboxHelpText: {
       value: 'Explore value of forces in newtons.'
     },
-    forcesInExactValues: {
-      value: 'Forces in exact values.'
+    valuesInUnitsPattern: {
+      value: 'Values in {{units}}.'
     },
-    forcesNotInExactValues: {
-      value: 'Forces not in exact values.'
+    forceValuesHidden: {
+      value: 'Force values hidden.'
     },
     scientificNotationCheckboxHelpText: {
       value: 'Listen to newtons in scientific notation.'
     },
     forcesInScientificNotation: {
-      value: 'Forces in scientific notation.'
-    },
-    forcesInDecimal: {
-      value: 'Forces in decimal format.'
+      value: 'Values in newtons with scientific notation.'
     },
 
     // misc
