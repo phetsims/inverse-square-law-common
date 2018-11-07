@@ -129,7 +129,7 @@ define( require => {
       value: 'a little'
     },
     aTinyBit: {
-      value: 'a tiny bit'
+      value: 'very little'
     },
 
     // Ruler strings
