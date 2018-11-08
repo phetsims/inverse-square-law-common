@@ -20,7 +20,8 @@ define( function( require ) {
   var Text = require( 'SCENERY/nodes/Text' );
 
   // constants
-  var DEFAULT_MAX_TEXT_WIDTH = 120;
+  // panel maxWidth = 170. text max width = 170 - (2*10 panel xMargin) - (2*8 item padding)
+  var DEFAULT_MAX_TEXT_WIDTH = 134;
   var DEFAULT_TEXT_SIZE = 14;
 
   /**
