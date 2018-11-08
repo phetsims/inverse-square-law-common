@@ -163,7 +163,7 @@ define( function( require ) {
     updateLabel: function( forceValue, forceValues ) {
 
       if ( forceValues ) {
-        var forceStr = Util.toFixed( forceValue, forceValue === 0 ? 2 : this.forceReadoutDecimalPlaces );
+        var forceStr = Util.toFixed( forceValue, this.scientificNotationMode ? 2 : this.forceReadoutDecimalPlaces );
 
         // group values together so that they are easy to read
         var pointLocation = forceStr.indexOf( '.' );
