@@ -105,7 +105,8 @@ define( function( require ) {
       titleFont: new PhetFont( 12 ),
       valueFont: new PhetFont( 12 ),
       titleMaxWidth: TITLE_MAX_WIDTH,
-      valueMaxWidth: VALUE_MAX_WIDTH
+      valueMaxWidth: VALUE_MAX_WIDTH,
+      onFocus: function( event ) {}
     }, options.numberControlOptions );
 
     for ( var i = 0; i < options.numberControlOptions.additionalTicks.length; i++ ) {
@@ -125,6 +126,9 @@ define( function( require ) {
 
     Panel.call( this, numberControl, options );
 
+    numberControl.addAccessibleInputListener( {
+      focus: options.numberControlOptions.onFocus
+    } );
     // a11y - it looks nicer if the entire panel has a group focus highlight rather than the NumberControl
     assert && assert( options.numberControlOptions.groupFocusHighlight === undefined, 'ISLCObjectControlPanel sets group focus highlight' );
     numberControl.groupFocusHighlight = false;
