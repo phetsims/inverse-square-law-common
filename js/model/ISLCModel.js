@@ -16,6 +16,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
   var NumberIO = require( 'TANDEM/types/NumberIO' );
+  var Property = require( 'AXON/Property' );
   var Range = require( 'DOT/Range' );
   var Util = require( 'DOT/Util' );
 
