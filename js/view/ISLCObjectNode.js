@@ -291,6 +291,7 @@ define( function( require ) {
       },
       endDrag: function() {
         object.isDragging = false;
+        self.redrawForce();
       }
     };
 
@@ -383,14 +384,14 @@ define( function( require ) {
       this.objectCircle.setRadius( this.modelViewTransform.modelToViewDeltaX( this.objectModel.radiusProperty.get() ) );
       this.updateGradient( this.objectModel.baseColorProperty.get() );
 
+      // set the scale of the arrow based on the model value
+      this.arrowNode.redrawArrow( this.model.forceProperty.get() );
+
       // update the arrow label
       this.arrowNode.updateLabel( this.model.forceProperty.get(), this.model.forceValuesProperty.get() );
 
       // set the text position, positioning the center relative to the parent coordinate frame
       this.arrowNode.setArrowTextPosition( this.parentToLocalBounds( this.layoutBounds ) );
-
-      // set the scale of the arrow based on the model value
-      this.arrowNode.redrawArrow( this.model.forceProperty.get() );
 
       // update puller node visibility
       this.pullerNode.setPull( this.model.forceProperty.get(), this.objectCircle.width / 2 );

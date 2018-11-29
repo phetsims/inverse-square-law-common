@@ -29,7 +29,7 @@ define( function( require ) {
 
   // constants
   var ARROW_LENGTH = 8; // empirically determined
-  var TEXT_OFFSET = 5; // empirically determined to make sure text does not go out of bounds
+  var TEXT_OFFSET = 10; // empirically determined to make sure text does not go out of bounds
 
   /**
    * @param {Range} arrowForceRange - the range in force magnitude
@@ -145,6 +145,10 @@ define( function( require ) {
       this.arrowText.centerX = 0;
       var localToParentPoint = this.localToParentPoint( this.arrowText.center );
       if ( Math.floor( localToParentPoint.x - this.arrowText.width / 2 ) <= this.layoutBounds.left + TEXT_OFFSET ) {
+        // var newCenter = { x: this.layoutBounds.left + TEXT_OFFSET + ( this.arrowText.width / 2 ), y: this.arrowText.centerY };
+        // console.log( 'newCenter', newCenter );
+        // this.arrowText.centerX = newCenter.x;
+        // console.log( 'left arrow node', this.arrowText.left );
         this.arrowText.left = parentToLocalBounds.left + TEXT_OFFSET;
       }
 
