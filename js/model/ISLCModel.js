@@ -15,6 +15,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
   var NumberIO = require( 'ifphetio!PHET_IO/types/NumberIO' );
+  var Property = require( 'AXON/Property' );
   var BooleanProperty = require( 'AXON/BooleanProperty' );
   var Range = require( 'DOT/Range' );
   var Util = require( 'DOT/Util' );
@@ -88,11 +89,8 @@ define( function( require ) {
     };
 
     // a11y - necessary to reset the enabledRangeProperty to prevent object overlap, disposal not necessary
-    // We need to update the available range for each object when the opposing value, or position changes.
-    // However, we know the force will change when either of these attributes change, so we can link to that instead of
-    // linking to the four underlying attributes. Radius can change without changing force, so it must be linked to
-    // radius of each object
-    this.forceProperty.link( function() {
+    // We need to update the available range for each object when the either's radius or position changes.
+    Property.multilink( [ object1.positionProperty, object2.positionProperty ], function() {
       updateRange( object1 );
       updateRange( object2 );
     } );
