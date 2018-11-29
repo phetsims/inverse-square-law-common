@@ -216,12 +216,13 @@ define( function( require ) {
       y: 0.5,
       tandem: tandem.createTandem( 'markerLineShadow' )
     } ) );
-    this.addChild( new Path( markerLineShape, {
+    var markerLineShapeTop = new Path( markerLineShape, {
       stroke: options.arrowColor,
       lineDash: [ 4, 4 ],
       lineWidth: 2,
       tandem: tandem.createTandem( 'markerLine' )
-    } ) );
+    } );
+    this.addChild( markerLineShapeTop );
 
     var clickOffset;
 
@@ -269,6 +270,9 @@ define( function( require ) {
 
     object.baseColorProperty.link( function( baseColor ) {
       self.updateGradient( baseColor );
+      if ( options.attractNegative ) {
+        markerLineShapeTop.stroke = baseColor;
+      }
     } );
 
     this.redrawForce();
