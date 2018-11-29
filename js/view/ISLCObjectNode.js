@@ -15,6 +15,7 @@ define( function( require ) {
 
   // modules
   var AccessibleSlider = require( 'SUN/accessibility/AccessibleSlider' );
+  var Color = require( 'SCENERY/util/Color' );
   var Circle = require( 'SCENERY/nodes/Circle' );
   var inherit = require( 'PHET_CORE/inherit' );
   var inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
@@ -66,6 +67,10 @@ define( function( require ) {
 		'displayShadow',
 		'atomicScale'
 	];
+
+  var NEGATIVE_FILL = new Color( '#66f' );
+  var POSITIVE_FILL = new Color( '#f66' );
+  var ZERO_FILL = new Color( 'gray' );
 
   /**
    * @param {ISLCModel} model - the simulation model
@@ -271,7 +276,7 @@ define( function( require ) {
     object.baseColorProperty.link( function( baseColor ) {
       self.updateGradient( baseColor );
       if ( options.attractNegative ) {
-        markerLineShapeTop.stroke = baseColor;
+        markerLineShapeTop.stroke = getUpdatedFill( object.valueProperty.get() );
       }
     } );
 
@@ -321,6 +326,26 @@ define( function( require ) {
       };
       model.stepEmitter.addListener( checkForArrowAdded );
     }
+  }
+
+  /**
+   * Helper function to get a color based the force value
+   *
+   * @param {number} forceValue
+   * @returns {Color}
+   */
+  function getUpdatedFill( forceValue ) {
+
+    var fill;
+    if ( forceValue < 0 ) {
+      fill = NEGATIVE_FILL;
+    } else if ( forceValue > 0 ) {
+      fill = POSITIVE_FILL;
+    } else {
+      fill = ZERO_FILL;
+    }
+
+    return fill;
   }
 
   inverseSquareLawCommon.register( 'ISLCObjectNode', ISLCObjectNode );
