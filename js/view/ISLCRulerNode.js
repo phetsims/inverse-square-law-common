@@ -19,6 +19,7 @@ define( function( require ) {
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var RulerNode = require( 'SCENERY_PHET/RulerNode' );
   var KeyboardDragListener = require( 'SCENERY_PHET/accessibility/listeners/KeyboardDragListener' );
+  var Shape = require( 'KITE/Shape' );
   var Util = require( 'DOT/Util' );
   var Vector2 = require( 'DOT/Vector2' );
 
@@ -82,6 +83,9 @@ define( function( require ) {
     );
     this.addChild( ruler );
 
+    ruler.mouseArea = Shape.rectangle( 0, 0, ruler.bounds.width, RULER_HEIGHT );
+    ruler.touchArea = ruler.mouseArea;
+
     // @public - ruler node is never destroyed, no listener disposal necessary
     model.rulerPositionProperty.link( function( value ) {
       ruler.center = modelViewTransform.modelToViewPosition( value );
@@ -96,8 +100,6 @@ define( function( require ) {
     var maxX = model.rightObjectBoundary;
     var maxY = -modelHeight / 2 + modelRulerHeight; // top bound because Y is inverted
     var bounds = new Bounds2( minX, minY, maxX, maxY );
-    this.mouseArea = ruler.bounds.eroded( 2 );
-    this.touchArea = this.mouseArea;
 
     this.addInputListener( new MovableDragHandler( model.rulerPositionProperty, {
       dragBounds: bounds,
