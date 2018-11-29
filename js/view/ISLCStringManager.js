@@ -133,6 +133,9 @@ define( require => {
       this.object2Label = object2Label;
       this.convertDistanceApart = options.convertDistanceApart;
 
+      this.object1ValueChangedAlertText = '';
+      this.object2ValueChangedAlertText = '';
+
       model.forceProperty.link( force => {
         this._vectorSizeIndex = this.getForceVectorIndex( force );
         this._effortIndex = this.getEffortIndex( force );
@@ -146,6 +149,19 @@ define( require => {
           this._distanceBetween = Math.abs( x1 - x2 );
         }
       );
+
+      model.object1.valueProperty.link( ( value, oldValue ) => {
+        /*
+         * set the alert text for object1
+         * - how to check if the mass change will move the other object
+         */
+        // set all text related to object1
+
+      } );
+
+      model.object2.valueProperty.link( ( value, oldValue ) => {
+        // set the alert text for object2
+      } );
     }
 
     /////////////////////
@@ -198,9 +214,13 @@ define( require => {
     getForceVectorMagnitudeText() {
       const pattern = forceVectorMagnitudePatternString;
       const fillObject = {
-        objectValueUnits: this._convertForceValue( this.model.forceProperty.get() )
+        objectValueUnits: this.getForceValueText()
       };
       return StringUtils.fillIn( pattern, fillObject );
+    }
+
+    getForceValueText() {
+      return this._convertForceValue( this.model.forceProperty.get() ) ;
     }
 
     getForceBetweenAndVectorText( thisObject, otherObject ) {
