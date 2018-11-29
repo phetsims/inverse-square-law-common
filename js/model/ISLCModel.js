@@ -88,11 +88,8 @@ define( function( require ) {
     };
 
     // a11y - necessary to reset the enabledRangeProperty to prevent object overlap, disposal not necessary
-    // We need to update the available range for each object when the opposing value, or position changes.
-    // However, we know the force will change when either of these attributes change, so we can link to that instead of
-    // linking to the four underlying attributes. Radius can change without changing force, so it must be linked to
-    // radius of each object
-    this.forceProperty.link( function() {
+    // We need to update the available range for each object when the either's radius or position changes.
+    Property.multilink( [ object1.positionProperty, object2.positionProperty ], function() {
       updateRange( object1 );
       updateRange( object2 );
     } );
