@@ -29,7 +29,7 @@ define( function( require ) {
 
   // constants
   var ARROW_LENGTH = 8; // empirically determined
-  var TEXT_OFFSET = 5; // empirically determined to make sure text does not go out of bounds
+  var TEXT_OFFSET = 10; // empirically determined to make sure text does not go out of bounds
 
   /**
    * @param {Range} arrowForceRange - the range in force magnitude
