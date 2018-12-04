@@ -55,6 +55,18 @@ define( require => {
     objectLabelPositionPattern: {
       value: '{{label}} position'
     },
+    spherePositionProgressObjectPattern: {
+      value: '{{position}} meter mark, {{progress}} {{otherObjectLabel}}, force vectors {{size}}'
+    },
+    spherePositionProgressPattern: {
+      value: '{{position}} meter mark, {{progress}}, force vectors {{size}}'
+    },
+    spherePositionRegionObjectPattern: {
+      value: '{{position}} meter mark, {{region}} {{otherObjectLabel}}, force vectors {{size}}'
+    },
+    spherePositionRegionPattern: {
+      value: '{{position}} meter mark, {{region}}, force vectors {{size}}'
+    },
 
     /**********************
      * Qualitative Values *
@@ -84,17 +96,20 @@ define( require => {
     },
 
     // distance between objects/spheres
+    distanceObjectPattern: {
+      value: '{{distance}} {{otherObject}}'
+    },
     extremelyFarFrom: {
       value: 'extremely far from'
     },
     veryFarFrom: {
       value: 'very far from'
     },
-    notSoFarFrom: {
+    farFrom: {
       value: 'not so far from'
     },
-    somewhatCloseTo: {
-      value: 'somewhat close to'
+    notSoCloseTo: {
+      value: 'not so close to'
     },
     closeTo: {
       value: 'close to'
@@ -102,12 +117,43 @@ define( require => {
     veryCloseTo: {
       value: 'very close to'
     },
-    nextTo: {
-      value: 'next to'
+    extremelyCloseTo: {
+      value: 'extremely close to'
     },
-    rightNextTo: {
-      value: 'right next to'
+    extremelyFar: {
+      value: 'extremely far'
     },
+    veryFar: {
+      value: 'very far'
+    },
+    far: {
+      value: 'not so far'
+    },
+    notSoClose: {
+      value: 'not so close'
+    },
+    close: {
+      value: 'close'
+    },
+    veryClose: {
+      value: 'very close'
+    },
+    extremelyClose: {
+      value: 'extremely close'
+    },
+    closerTo: {
+      value: 'closer to'
+    },
+    fartherFrom: {
+      value: 'farther from'
+    },
+    closer: {
+      value: 'closer'
+    },
+    farther: {
+      value: 'farther'
+    },
+
 
     // puller robot effort
     veryHard: {

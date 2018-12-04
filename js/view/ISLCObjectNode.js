@@ -20,6 +20,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
   var ISLCForceArrowNode = require( 'INVERSE_SQUARE_LAW_COMMON/view/ISLCForceArrowNode' );
+  var ISLCObjectEnum = require( 'INVERSE_SQUARE_LAW_COMMON/view/ISLCObjectEnum' );
   var ISLCPullerNode = require( 'INVERSE_SQUARE_LAW_COMMON/view/ISLCPullerNode' );
   var ISLCStringManager = require( 'INVERSE_SQUARE_LAW_COMMON/view/ISLCStringManager' );
   var Node = require( 'SCENERY/nodes/Node' );
@@ -138,6 +139,10 @@ define( function( require ) {
     this.objectModel = object;
     this.model = model;
     this.modelViewTransform = modelViewTransform;
+
+    // @public
+    this.interactionCount = 0;
+    this.enum = object === model.object1 ? ISLCObjectEnum.OBJECT_ONE : ISLCObjectEnum.OBJECT_TWO;
 
     // the full range of force for the arrow node (note: this is distinct)
     var arrowForceRange = new Range( model.getMinForce(), model.getMaxForce() );
@@ -295,6 +300,7 @@ define( function( require ) {
       accessibleDecimalPlaces: 1,
       startDrag: function() {
         object.isDragging = true;
+        self.interactionCount++;
       },
       endDrag: function() {
         object.isDragging = false;
@@ -310,6 +316,12 @@ define( function( require ) {
       new BooleanProperty( true ), // always enabled
       accessibleSliderOptions
     );
+
+    this.addAccessibleInputListener( {
+      focus: function( event ) {
+        this.interactionCount = 0;
+      }
+    } );
 
     this.objectModel.radiusProperty.link( function() {
 

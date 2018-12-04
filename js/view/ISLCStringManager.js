@@ -7,6 +7,7 @@ define( require => {
   // const LinearFunction = require( 'DOT/LinearFunction' );
   const inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
   const ISLCA11yStrings = require( 'INVERSE_SQUARE_LAW_COMMON/ISLCA11yStrings' );
+  const ISLCObjectEnum = require( 'INVERSE_SQUARE_LAW_COMMON/view/ISLCObjectEnum' );
   const Property = require( 'AXON/Property' );
   const ScientificNotationNode = require( 'SCENERY_PHET/ScientificNotationNode' );
   const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
@@ -30,6 +31,10 @@ define( require => {
   const forceAndVectorPatternString = ISLCA11yStrings.forceAndVectorPattern.value;
   const positionMeterMarkPatternString = ISLCA11yStrings.positionMeterMarkPattern.value;
   const objectLabelPositionPatternString = ISLCA11yStrings.objectLabelPositionPattern.value;
+  const spherePositionProgressObjectPatternString = ISLCA11yStrings.spherePositionProgressObjectPattern.value;
+  const spherePositionProgressPatternString = ISLCA11yStrings.spherePositionProgressPattern.value;
+  const spherePositionRegionObjectPatternString = ISLCA11yStrings.spherePositionRegionObjectPattern.value;
+  const spherePositionRegionPatternString = ISLCA11yStrings.spherePositionRegionPattern.value;
 
   const tinyString = ISLCA11yStrings.tiny.value;
   const verySmallString = ISLCA11yStrings.verySmall.value;
@@ -41,12 +46,11 @@ define( require => {
 
   const extremelyFarFromString = ISLCA11yStrings.extremelyFarFrom.value;
   const veryFarFromString = ISLCA11yStrings.veryFarFrom.value;
-  const notSoFarFromString = ISLCA11yStrings.notSoFarFrom.value;
-  const somewhatCloseToString = ISLCA11yStrings.somewhatCloseTo.value;
+  const farFromString = ISLCA11yStrings.farFrom.value;
+  const notSoCloseToString = ISLCA11yStrings.notSoCloseTo.value;
   const closeToString = ISLCA11yStrings.closeTo.value;
   const veryCloseToString = ISLCA11yStrings.veryCloseTo.value;
-  const nextToString = ISLCA11yStrings.nextTo.value;
-  const rightNextToString = ISLCA11yStrings.rightNextTo.value;
+  const extremelyCloseToString = ISLCA11yStrings.extremelyCloseTo.value;
 
   const veryHardString = ISLCA11yStrings.veryHard.value;
   const hardString = ISLCA11yStrings.hard.value;
@@ -73,12 +77,11 @@ define( require => {
   const DISTANCE_STRINGS = [
     extremelyFarFromString,
     veryFarFromString,
-    notSoFarFromString,
-    somewhatCloseToString,
+    farFromString,
+    notSoCloseToString,
     closeToString,
     veryCloseToString,
-    nextToString,
-    rightNextToString
+    extremelyCloseToString
   ];
   const PULL_EFFORT_STINGS = [
     veryHardString,
@@ -89,6 +92,15 @@ define( require => {
     aLittleString,
     aTinyBitString
   ];
+
+  const SPHERE_POSITION_PATTERN_STRINGS = [
+    spherePositionRegionObjectPatternString,
+    spherePositionRegionPatternString,
+    spherePositionProgressObjectPatternString,
+    spherePositionProgressPatternString
+  ];
+
+  const { OBJECT_ONE } = ISLCObjectEnum;
 
   class ISLCStringManager {
     constructor( model, object1Label, object2Label, options ) {
@@ -236,6 +248,68 @@ define( require => {
     getForceValuesInUnitsText() {
       const pattern = valuesInUnitsPatternString;
       return StringUtils.fillIn( pattern, { units: this._valueUnits } );
+    }
+
+    getSpherePositionAriaValueText( newPosition, oldPosition, objectNode ) {
+      // if this is the first interaction after focus then we need the otherObject options
+      // how to determine this? There will likely need to be something on the ISLCObjectNode to track
+      // the number of interactions.
+      /*
+      addAccessibleInputListener: {
+        focus: () => { this._justFocused = true; this._interactionCount = 0; },
+        keydown: () => { this._interactionCount++; }
+      }
+      then, in the StringManager, we check if the interaction count < 2
+      - if yes, first interaction, includeOtherObject = true
+      - else, includeOtherObject = false
+
+      then, we need to check the changed value has crossed a boundary
+      this.positionRegionChanged( newValue, oldValue );
+      if positionRegionChanged, use regionPattern, else, use progressPattern
+       */
+      const thisObjectEnum = objectNode.enum;
+      const otherObjectLabel = thisObjectEnum === OBJECT_ONE ? 'object 1' : 'object 2';
+      const includeOtherObject = objectNode.interactionCount < 2;
+      const useRegionPattern = true;
+      // const useRegionPattern = this.positionRegionChanged( newPosition, oldPosition );
+      const movedCloser = thisObjectEnum === OBJECT_ONE ? newPosition > oldPosition : oldPosition > newPosition;
+      const fillObject = {
+        position: newPosition,
+        size: this.getForceVectorSize()
+      };
+
+      let index = 0;
+
+      if ( includeOtherObject ) {
+        // use from/to language => impacts both progress and region
+        index = 0;
+        fillObject.otherObjectLabel = otherObjectLabel;
+      }
+      else {
+        index = 1;
+      }
+
+      if ( useRegionPattern ) {
+        index += 0;
+        fillObject.region = this.getPositionRegionText( newPosition );
+      }
+      else {
+        index += 2;
+        fillObject.progress = movedCloser ? 'closer' : 'farther';
+      }
+
+      const pattern = SPHERE_POSITION_PATTERN_STRINGS[ index ];
+
+      return StringUtils.fillIn( pattern, fillObject );
+    }
+
+    getPositionRegionText( position ) {
+      if ( position > 4 ) {
+        return 'very far';
+      }
+      else {
+        return 'extremely close';
+      }
     }
 
     getQualitativeDistance() {
