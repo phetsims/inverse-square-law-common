@@ -154,7 +154,7 @@ define( function( require ) {
         }
       }
     } );
-    this.addAccessibleInputListener( keyboardDragListener );
+    this.addInputListener( keyboardDragListener );
 
     this.accessibleName = rulerLabelString;
     this.helpText = rulerHelpTextString;
