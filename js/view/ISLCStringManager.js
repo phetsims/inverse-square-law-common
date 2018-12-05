@@ -208,7 +208,7 @@ define( require => {
         object1Label: this.object1Label,
         object2Label: this.object2Label,
         qualitativeDistance: this.getQualitativeDistance(),
-        distance: this.convertDistanceApart(this._distanceBetween),
+        distance: this.convertDistanceApart( this._distanceBetween ),
         distanceUnits: this._distanceUnits
       };
       return StringUtils.fillIn( distanceSpaceAndValueSummaryPatternString, fillObject );
@@ -232,7 +232,7 @@ define( require => {
     }
 
     getForceValueText() {
-      return this._convertForceValue( this.model.forceProperty.get() ) ;
+      return this._convertForceValue( this.model.forceProperty.get() );
     }
 
     getForceBetweenAndVectorText( thisObject, otherObject ) {
@@ -255,7 +255,7 @@ define( require => {
       // how to determine this? There will likely need to be something on the ISLCObjectNode to track
       // the number of interactions.
       /*
-      addAccessibleInputListener: {
+      addInputListener: {
         focus: () => { this._justFocused = true; this._interactionCount = 0; },
         keydown: () => { this._interactionCount++; }
       }

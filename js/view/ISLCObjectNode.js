@@ -317,7 +317,7 @@ define( function( require ) {
       accessibleSliderOptions
     );
 
-    this.addAccessibleInputListener( {
+    this.addInputListener( {
       focus: function( event ) {
         this.interactionCount = 0;
       }
