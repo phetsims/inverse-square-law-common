@@ -126,7 +126,7 @@ define( function( require ) {
 
     Panel.call( this, numberControl, options );
 
-    numberControl.addAccessibleInputListener( {
+    numberControl.addInputListener( {
       focus: options.numberControlOptions.onFocus
     } );
     // a11y - it looks nicer if the entire panel has a group focus highlight rather than the NumberControl
