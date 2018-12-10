@@ -294,11 +294,11 @@ define( function( require ) {
     } );
 
     this.redrawForce();
-
+    var defaultStepSize = options.snapToNearest > 1 ? options.snapToNearest * 2 : ISLCQueryParameters.stepSize;
     var accessibleSliderOptions = {
-      keyboardStep: ISLCQueryParameters.stepSize,
+      keyboardStep: defaultStepSize,
       shiftKeyboardStep: options.snapToNearest,
-      pageKeyboardStep: ISLCQueryParameters.stepSize * 2,
+      pageKeyboardStep: defaultStepSize * 2,
       accessibleDecimalPlaces: 1,
       constrainValue: function( value ) {
         return Util.toFixedNumber( value, 1 );

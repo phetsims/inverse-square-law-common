@@ -56,19 +56,19 @@ define( require => {
       value: '{{label}} position'
     },
     spherePositionProgressObjectPattern: {
-      value: '{{position}} meter mark, {{progress}} {{otherObjectLabel}}.'
+      value: '{{position}} mark, {{progress}} {{otherObjectLabel}}.'
     },
     spherePositionProgressPattern: {
-      value: '{{position}} meter mark, {{progress}}.'
+      value: '{{position}} mark, {{progress}}.'
     },
     spherePositionRegionObjectPattern: {
-      value: '{{position}} meter mark, {{region}} {{otherObjectLabel}}.'
+      value: '{{position}} mark, {{region}} {{otherObjectLabel}}.'
     },
     spherePositionRegionPattern: {
-      value: '{{position}} meter mark, {{region}}.'
+      value: '{{position}} mark, {{region}}.'
     },
     spherePositionRegionLastStopPattern: {
-      value: '{{position}} meter mark, {{region}}, last stop.'
+      value: '{{position}} mark, {{region}}, last stop.'
     },
 
     /************************

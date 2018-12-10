@@ -149,7 +149,7 @@ define( require => {
         convertForceValue: value => `${value} newtons`,
 
 
-        convertDistanceApart: distance => distance
+        convertDistanceMetric: distance => distance
       }, options );
 
       // @private
@@ -172,7 +172,7 @@ define( require => {
       this.object2 = model.object2;
       this.object1Label = object1Label;
       this.object2Label = object2Label;
-      this.convertDistanceApart = options.convertDistanceApart;
+      this.convertDistanceMetric = options.convertDistanceMetric;
 
       this.object1ValueChangedAlertText = '';
       this.object2ValueChangedAlertText = '';
@@ -240,7 +240,7 @@ define( require => {
         object1Label: this.object1Label,
         object2Label: this.object2Label,
         qualitativeDistance: this.getQualitativeDistance(),
-        distance: this.convertDistanceApart( this._distanceBetween ),
+        distance: this.convertDistanceMetric( this._distanceBetween ),
         distanceUnits: this._distanceUnits
       };
       return StringUtils.fillIn( distanceSpaceAndValueSummaryPatternString, fillObject );
@@ -283,9 +283,12 @@ define( require => {
     }
 
     getSpherePositionAndRegionText( position, objectEnum ) {
+      position = this.formatPositionUnitMark( position );
       const otherObjectLabel = objectEnum === OBJECT_ONE ? this.object2Label : this.object1Label;
       const region = RELATIVE_DISTANCE_STRINGS[ this.getDistanceIndex( this._distanceBetween ) ];
-      return StringUtils.fillIn( spherePositionRegionObjectPatternString, { position, otherObjectLabel, region } );
+      const units = this._distanceUnits;
+      const fillObject =  { position, otherObjectLabel, region, units };
+      return StringUtils.fillIn( spherePositionRegionObjectPatternString, fillObject );
     }
 
     getSpherePositionAriaValueText( formattedPosition, objectNode ) {
@@ -294,9 +297,7 @@ define( require => {
       const includeOtherObject = objectNode.interactionCount < 2;
       const regionStringArray = includeOtherObject ? RELATIVE_DISTANCE_STRINGS : DISTANCE_STRINGS;
       const progressStringArray = includeOtherObject ? RELATIVE_PROGRESS_STRINGS : PROGRESS_STRINGS;
-      const fillObject = {
-        position: formattedPosition
-      };
+      const fillObject = { position: this.formatPositionUnitMark( formattedPosition ) };
 
       const objectPosition = thisObject.positionProperty.get();
       const { min, max } = thisObject.enabledRangeProperty.get();
