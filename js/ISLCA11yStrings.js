@@ -56,16 +56,26 @@ define( require => {
       value: '{{label}} position'
     },
     spherePositionProgressObjectPattern: {
-      value: '{{position}} meter mark, {{progress}} {{otherObjectLabel}}, force vectors {{size}}'
+      value: '{{position}} meter mark, {{progress}} {{otherObjectLabel}}.'
     },
     spherePositionProgressPattern: {
-      value: '{{position}} meter mark, {{progress}}, force vectors {{size}}'
+      value: '{{position}} meter mark, {{progress}}.'
     },
     spherePositionRegionObjectPattern: {
-      value: '{{position}} meter mark, {{region}} {{otherObjectLabel}}, force vectors {{size}}'
+      value: '{{position}} meter mark, {{region}} {{otherObjectLabel}}.'
     },
     spherePositionRegionPattern: {
-      value: '{{position}} meter mark, {{region}}, force vectors {{size}}'
+      value: '{{position}} meter mark, {{region}}.'
+    },
+    spherePositionRegionLastStopPattern: {
+      value: '{{position}} meter mark, {{region}}, last stop.'
+    },
+
+    /************************
+     * Force vector strings *
+     ************************/
+    forceVectorsSize: {
+      value: 'Force vectors {{size}}.'
     },
 
     /**********************
@@ -105,7 +115,7 @@ define( require => {
     veryFarFrom: {
       value: 'very far from'
     },
-    farFrom: {
+    notSoFarFrom: {
       value: 'not so far from'
     },
     notSoCloseTo: {
@@ -126,7 +136,7 @@ define( require => {
     veryFar: {
       value: 'very far'
     },
-    far: {
+    notSoFar: {
       value: 'not so far'
     },
     notSoClose: {

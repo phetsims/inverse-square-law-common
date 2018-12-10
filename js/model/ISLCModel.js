@@ -316,8 +316,10 @@ define( function( require ) {
      */
     snapToGrid: function( position ) {
       var snappedPosition = position;
+      var numDecimalPlaces = Util.numberOfDecimalPlaces( this.snapObjectsToNearest );
       if ( this.snapObjectsToNearest ) {
         snappedPosition = Util.roundSymmetric( position / this.snapObjectsToNearest ) * this.snapObjectsToNearest;
+        snappedPosition = Util.toFixedNumber( snappedPosition, numDecimalPlaces );
       }
 
       // now make sure that the snapped position is within the left and right boundaries for this model

@@ -21,7 +21,12 @@ define( function( require ) {
 
     // Shows boundary positions of the two objects, as .  The boundary positions for each
     // object will change depending on the size and position of both objects.
-    showDragBounds: { type: 'flag' }
+    showDragBounds: { type: 'flag' },
+
+    stepSize: {
+      type: 'number',
+      defaultValue: 0.5
+    }
   } );
 
   inverseSquareLawCommon.register( 'ISLCQueryParameters', ISLCQueryParameters );

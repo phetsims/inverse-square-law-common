@@ -22,6 +22,7 @@ define( function( require ) {
   var ISLCForceArrowNode = require( 'INVERSE_SQUARE_LAW_COMMON/view/ISLCForceArrowNode' );
   var ISLCObjectEnum = require( 'INVERSE_SQUARE_LAW_COMMON/view/ISLCObjectEnum' );
   var ISLCPullerNode = require( 'INVERSE_SQUARE_LAW_COMMON/view/ISLCPullerNode' );
+  var ISLCQueryParameters = require( 'INVERSE_SQUARE_LAW_COMMON/ISLCQueryParameters' );
   var ISLCStringManager = require( 'INVERSE_SQUARE_LAW_COMMON/view/ISLCStringManager' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Path = require( 'SCENERY/nodes/Path' );
@@ -31,6 +32,7 @@ define( function( require ) {
   var Shape = require( 'KITE/Shape' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
   var Tandem = require( 'TANDEM/Tandem' );
+  var Util = require( 'DOT/Util' );
 
   // phetio
   var BooleanProperty = require( 'AXON/BooleanProperty' );
@@ -294,10 +296,13 @@ define( function( require ) {
     this.redrawForce();
 
     var accessibleSliderOptions = {
-      keyboardStep: options.snapToNearest * 2,
+      keyboardStep: ISLCQueryParameters.stepSize,
       shiftKeyboardStep: options.snapToNearest,
-      pageKeyboardStep: options.snapToNearest * 10,
+      pageKeyboardStep: ISLCQueryParameters.stepSize * 2,
       accessibleDecimalPlaces: 1,
+      constrainValue: function( value ) {
+        return Util.toFixedNumber( value, 1 );
+      },
       startDrag: function() {
         object.isDragging = true;
         self.interactionCount++;
@@ -319,7 +324,8 @@ define( function( require ) {
 
     this.addInputListener( {
       focus: function( event ) {
-        this.interactionCount = 0;
+        self.interactionCount = 0;
+        self.resetAriaValueText();
       }
     } );
 
@@ -380,6 +386,15 @@ define( function( require ) {
      */
     updateGradient: function() {
       throw new Error( 'Update gradient must be implemented in subtypes.' );
+    },
+
+    /**
+     * Updates the AccessibleSlider's PDOM peer aria-valutext property directly.
+     *
+     * @public
+     */
+    resetAriaValueText: function() {
+      throw new Error( 'resetAriaValueText must be implemented in subtypes' );
     },
 
     /**
