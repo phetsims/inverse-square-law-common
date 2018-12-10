@@ -383,6 +383,7 @@ define( function( require ) {
      * Redraws the white radial gradient for the object - must be implemented in subtypes.
      *
      * @public
+     * @abstract
      */
     updateGradient: function() {
       throw new Error( 'Update gradient must be implemented in subtypes.' );
@@ -392,6 +393,7 @@ define( function( require ) {
      * Updates the AccessibleSlider's PDOM peer aria-valutext property directly.
      *
      * @public
+     * @abstract
      */
     resetAriaValueText: function() {
       throw new Error( 'resetAriaValueText must be implemented in subtypes' );
