@@ -294,14 +294,16 @@ define( function( require ) {
     } );
 
     this.redrawForce();
-    var defaultStepSize = options.snapToNearest > 1 ? options.snapToNearest * 2 : ISLCQueryParameters.stepSize;
+    debugger;
+    var defaultStepSize = QueryStringMachine.containsKey( 'stepSize' ) ? ISLCQueryParameters.stepSize : options.snapToNearest * 2;
     var accessibleSliderOptions = {
       keyboardStep: defaultStepSize,
       shiftKeyboardStep: options.snapToNearest,
       pageKeyboardStep: defaultStepSize * 2,
       accessibleDecimalPlaces: 1,
       constrainValue: function( value ) {
-        return Util.toFixedNumber( value, 1 );
+        var numberOfDecimalPlaces = Util.numberOfDecimalPlaces( options.snapToNearest );
+        return Util.toFixedNumber( value, numberOfDecimalPlaces );
       },
       startDrag: function() {
         object.isDragging = true;

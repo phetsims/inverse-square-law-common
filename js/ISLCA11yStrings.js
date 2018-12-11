@@ -210,7 +210,7 @@ define( require => {
       value: 'Force values hidden.'
     },
     scientificNotationCheckboxHelpText: {
-      value: 'Listen to newtons in scientific notation.'
+      value: 'Explore force values in scientific notation.'
     },
     forcesInScientificNotation: {
       value: 'Values in newtons with scientific notation.'
