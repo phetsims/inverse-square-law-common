@@ -294,7 +294,7 @@ define( function( require ) {
     } );
 
     this.redrawForce();
-    debugger;
+
     var defaultStepSize = QueryStringMachine.containsKey( 'stepSize' ) ? ISLCQueryParameters.stepSize : options.snapToNearest * 2;
     var accessibleSliderOptions = {
       keyboardStep: defaultStepSize,
