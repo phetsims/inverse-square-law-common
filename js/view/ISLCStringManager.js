@@ -253,7 +253,12 @@ define( require => {
       return StringUtils.fillIn( pattern, { effort } );
     }
 
-    // objectValue may need to handle returning the value and units
+    // TODO: string usage
+    getPositionFocusAlertText() {
+      const pattern = 'Force vectors {{size}}';
+      const size = this.getForceVectorSize();
+      return StringUtils.fillIn( pattern, { size } );
+    }
     getForceVectorMagnitudeText() {
       const pattern = forceVectorMagnitudePatternString;
       const fillObject = {
@@ -359,44 +364,6 @@ define( require => {
       const fillObject =  { position, otherObjectLabel, region, units };
       return StringUtils.fillIn( spherePositionRegionObjectPatternString, fillObject );
     }
-
-    // getSpherePositionAriaValueText( formattedPosition, objectNode ) {
-    //   const thisObject = objectNode.enum === OBJECT_ONE ? this.object1 : this.object2;
-    //   const otherObjectLabel = objectNode.enum === OBJECT_ONE ? this.object2Label : this.object1Label;
-    //   const includeOtherObject = objectNode.interactionCount < 2;
-    //   const regionStringArray = includeOtherObject ? RELATIVE_DISTANCE_STRINGS : DISTANCE_STRINGS;
-    //   const progressStringArray = includeOtherObject ? RELATIVE_PROGRESS_STRINGS : PROGRESS_STRINGS;
-    //   const fillObject = { position: this.formatPositionUnitMark( formattedPosition ) };
-    //
-    //   const objectPosition = thisObject.positionProperty.get();
-    //   const { min, max } = thisObject.enabledRangeProperty.get();
-    //   if ( objectPosition === min || objectPosition === max ) {
-    //     fillObject.region = DISTANCE_STRINGS[ this.getDistanceIndex( this._distanceBetween ) ];
-    //     return StringUtils.fillIn( spherePositionRegionLastStopPatternString, fillObject );
-    //   }
-    //
-    //   // TODO: document logic
-    //   let index = 0;
-    //
-    //   if ( includeOtherObject ) {
-    //     fillObject.otherObjectLabel = otherObjectLabel;
-    //   }
-    //   else {
-    //     index = 1;
-    //   }
-    //
-    //   if ( this._regionChanged ) {
-    //     fillObject.region = regionStringArray[ this.getDistanceIndex( this._distanceBetween ) ];
-    //   }
-    //   else {
-    //     index += 2;
-    //     fillObject.progress = this._movedCloser ? progressStringArray[ 0 ] : progressStringArray[ 1 ];
-    //   }
-    //
-    //   const pattern = SPHERE_POSITION_PATTERN_STRINGS[ index ];
-    //
-    //   return StringUtils.fillIn( pattern, fillObject );
-    // }
 
     getRegionTextFromDistance( distance ) {
       return DISTANCE_STRINGS[ this.getDistanceIndex( distance ) ];
