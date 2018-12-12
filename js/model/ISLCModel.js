@@ -323,7 +323,6 @@ define( function( require ) {
       // now make sure that the snapped position is within the left and right boundaries for this model
       snappedPosition = Math.min( snappedPosition, this.rightObjectBoundary );
       snappedPosition = Math.max( snappedPosition, this.leftObjectBoundary );
-
       return snappedPosition;
     },
 

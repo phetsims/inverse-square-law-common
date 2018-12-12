@@ -259,19 +259,10 @@ define( function( require ) {
       tandem: tandem.createTandem( 'dragHandler' )
     } ) );
 
-    // on reset, no objects are destroyed and properties are set to initial values
-    // no need to dispose of any of the below listeners
-    object.positionProperty.link( function( property ) {
-
-      // position this node and its force arrow with label
-      var transformedValue = modelViewTransform.modelToViewX( property );
-      self.x = transformedValue;
-      self.arrowNode.x = transformedValue;
-    } );
-
     model.forceValuesProperty.lazyLink( this.redrawForce.bind( this ) );
-    object.radiusProperty.lazyLink( this.redrawForce.bind( this ) );
-    model.forceProperty.lazyLink( this.redrawForce.bind( this ) );
+    // object.radiusProperty.lazyLink( this.redrawForce.bind( this ) );
+    object.valueProperty.lazyLink( this.redrawForce.bind( this ) );
+    // model.forceProperty.lazyLink( this.redrawForce.bind( this ) );
 
     object.baseColorProperty.link( function( baseColor ) {
       self.updateGradient( baseColor );
@@ -280,7 +271,18 @@ define( function( require ) {
       }
     } );
 
-    this.redrawForce();
+    // on reset, no objects are destroyed and properties are set to initial values
+    // no need to dispose of any of the below listeners
+    object.positionProperty.link( function( property ) {
+
+      // position this node and its force arrow with label
+      var transformedValue = modelViewTransform.modelToViewX( property );
+      self.x = transformedValue;
+      self.arrowNode.x = transformedValue;
+      self.redrawForce();
+    } );
+
+    // this.redrawForce();
 
     var accessibleSliderOptions = {
       keyboardStep: options.snapToNearest * 2,
