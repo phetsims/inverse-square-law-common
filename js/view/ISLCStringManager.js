@@ -189,7 +189,7 @@ define( require => {
       Property.multilink(
         [ this.object1.positionProperty, this.object2.positionProperty ],
         ( x1, x2 ) => {
-          this._distanceBetween = this.convertDistanceMetric( Math.abs( x1 - x2 ) );
+          this._distanceBetween = Math.abs( x1 - x2 );
         }
       );
 
@@ -283,6 +283,7 @@ define( require => {
 
     getSpherePositionAriaValueText( thisObjectEnum, distance, pattern, additionalFillObject ) {
       const otherObjectLabel = this.getOtherObjectLabel( thisObjectEnum );
+      distance = this.convertDistanceMetric( distance );
       const units = this._distanceUnits;
       const fillObject = { distance, units, otherObjectLabel };
       return StringUtils.fillIn( pattern, _.extend( fillObject, additionalFillObject ) );
@@ -309,7 +310,7 @@ define( require => {
       );
     }
 
-    getProgressPositionAndDistanceFromOtherObjectText( thisObjectEnum, closer, distance ) {
+    getProgressPositionAndDistanceFromOtherObjectText( thisObjectEnum, closer, distance = this._distanceBetween ) {
       const progress = closer ? closerString : fartherAwayString;
       return this.getSpherePositionAriaValueText(
         thisObjectEnum,
