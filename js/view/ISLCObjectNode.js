@@ -143,7 +143,6 @@ define( function( require ) {
     this.modelViewTransform = modelViewTransform;
 
     // @public
-    this.interactionCount = 0;
     this.enum = object === model.object1 ? ISLCObjectEnum.OBJECT_ONE : ISLCObjectEnum.OBJECT_TWO;
 
     // the full range of force for the arrow node (note: this is distinct)
@@ -307,7 +306,6 @@ define( function( require ) {
       },
       startDrag: function() {
         object.isDragging = true;
-        self.interactionCount++;
       },
       endDrag: function() {
         object.isDragging = false;
@@ -323,13 +321,6 @@ define( function( require ) {
       new BooleanProperty( true ), // always enabled
       accessibleSliderOptions
     );
-
-    this.addInputListener( {
-      focus: function( event ) {
-        self.interactionCount = 0;
-        self.resetAriaValueText();
-      }
-    } );
 
     this.objectModel.radiusProperty.link( function() {
 

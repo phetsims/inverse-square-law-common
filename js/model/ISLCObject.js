@@ -106,6 +106,12 @@ define( function( require ) {
     reset: function() {
       this.valueProperty.reset();
       this.positionProperty.reset();
+    },
+
+    isAtEdgeOfRange: function() {
+      var range = this.enabledRangeProperty.get();
+      var x = this.positionProperty.get();
+      return x === range.min || x === range.max;
     }
   } );
 } );

@@ -103,6 +103,7 @@ define( function( require ) {
 
       // update range if radius changed with "constant radius" setting (which didn't trigger other model updates)
       updateRange( object1 );
+      updateRange( object2 );
     } );
 
     this.object2.radiusProperty.link( function() {
@@ -111,6 +112,7 @@ define( function( require ) {
 
       // update range if radius changed with "constant radius" setting (which didn't trigger other model updates)
       updateRange( object2 );
+      updateRange( object1 );
     } );
   }
 

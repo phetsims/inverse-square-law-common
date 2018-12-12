@@ -26,7 +26,7 @@ define( require => {
     summaryInteractionHintPattern: {
       value: 'Move spheres or change their {{massOrCharge}} to begin observations.'
     },
-    distanceSpaceAndValueSummaryPattern: {
+    distanceAndValueSummaryPattern: {
       value: '{{object1Label}} and {{object2Label}} are {{qualitativeDistance}} each other, centers exactly {{distance}} {{distanceUnits}} apart.'
     },
 
@@ -71,11 +71,33 @@ define( require => {
       value: '{{position}} mark, {{region}}, last stop.'
     },
 
+    /*
+     * 12/11/18 update for position slider aria-valuetext
+     */
+    positionDistanceFromOtherObjectPattern: {
+      value: '{{position}} mark, {{distance}} {{units}} from {{otherObjectLabel}}.'
+    },
+    distanceFromOtherObjectPattern: {
+      value: '{{distance}} {{units}} from {{otherObjectLabel}}.'
+    },
+    progressDistanceFromOtherObjectPattern: {
+      value: '{{progress}}, {{distance}} {{units}} from {{otherObjectLabel}}.'
+    },
+    lastStopDistanceFromOtherObjectPattern: {
+      value: '{{region}}, last stop, {{distance}} {{units}} from {{otherObjectLabel}}.'
+    },
+
     /************************
      * Force vector strings *
      ************************/
     forceVectorsSize: {
       value: 'Force vectors {{size}}.'
+    },
+    vectorAlertNoValuePattern: {
+      value: 'Vectors {{changeOrSize}}.'
+    },
+    vectorAlertWithValuePattern: {
+      value: 'Vectors {{changeOrSize}}, forces now {{valueAndUnits}}.'
     },
 
     /**********************
@@ -160,8 +182,8 @@ define( require => {
     closer: {
       value: 'closer'
     },
-    farther: {
-      value: 'farther'
+    fartherAway: {
+      value: 'Farther away'
     },
 
 
