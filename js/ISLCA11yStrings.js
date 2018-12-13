@@ -7,14 +7,15 @@ define( require => {
   const inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
 
   const ISLCA11yStrings = {
+    // TODO: replace instances of {{objectValueUnits}} or {{valueAndUnits}} to {{value}} {{units}}
 
     /***************************
      * Summary Pattern Strings *
      ***************************/
-    vectorSizePattern: {
+    summaryVectorSizePattern: {
       value: 'Force vectors are {{size}}.'
     },
-    vectorSizeValueUnitsPattern: {
+    summaryVectorSizeValueUnitsPattern: {
       value: 'Force vectors are {{size}} at {{objectValueUnits}}.'
     },
     robotPullSummaryPattern: {
@@ -90,14 +91,23 @@ define( require => {
     /************************
      * Force vector strings *
      ************************/
-    forceVectorsSize: {
+    forceVectorSizePattern: {
       value: 'Force vectors {{size}}.'
     },
-    vectorAlertNoValuePattern: {
+    vectorSizeForcesValuePattern: {
+      value: 'Vectors {{size}}, forces {{valueAndUnits}}.'
+    },
+    vectorSizePattern: {
       value: 'Vectors {{changeOrSize}}.'
     },
-    vectorAlertWithValuePattern: {
+    vectorSizeForcesNowValuePattern: {
       value: 'Vectors {{changeOrSize}}, forces now {{valueAndUnits}}.'
+    },
+    getBigger: {
+      value: 'get bigger'
+    },
+    getSmaller: {
+      value: 'get smaller'
     },
 
     /**********************

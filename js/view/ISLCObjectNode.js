@@ -33,6 +33,8 @@ define( function( require ) {
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
   var Tandem = require( 'TANDEM/Tandem' );
   var Util = require( 'DOT/Util' );
+  var Utterance = require( 'SCENERY_PHET/accessibility/Utterance' );
+  var utteranceQueue = require( 'SCENERY_PHET/accessibility/utteranceQueue' );
 
   // phetio
   var BooleanProperty = require( 'AXON/BooleanProperty' );
@@ -85,7 +87,7 @@ define( function( require ) {
    * @param {Object} options
    * @constructor
    */
-  function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, pullForceRange, options ) {
+  function ISLCObjectNode( model, object, layoutBounds, stringManager, modelViewTransform, pullForceRange, options ) {
 
     var self = this;
 
@@ -294,7 +296,11 @@ define( function( require ) {
 
     this.redrawForce();
 
+    // a11y - for experimenting with default step sizes. Ignore if not explicitly set
     var defaultStepSize = QueryStringMachine.containsKey( 'stepSize' ) ? ISLCQueryParameters.stepSize : options.snapToNearest * 2;
+
+    var currentPosition = object.positionProperty.get();
+    var currentForce = model.forceProperty.get();
     var accessibleSliderOptions = {
       keyboardStep: defaultStepSize,
       shiftKeyboardStep: options.snapToNearest,
@@ -306,10 +312,34 @@ define( function( require ) {
       },
       startDrag: function() {
         object.isDragging = true;
+        currentPosition = object.positionProperty.get();
+        currentForce = model.forceProperty.get();
       },
       endDrag: function() {
+        var newPosition = object.positionProperty.get();
+        var newForce = model.forceProperty.get();
+        var forceGrowing = ( newForce - currentForce ) > 0;
+        var positionChanged = newPosition - currentPosition;
         object.isDragging = false;
         self.redrawForce();
+
+        // TODO: consider implementing with alertManager
+        // alertManager.positionSliderAlert( positionChanged );
+        if ( positionChanged ) {
+          // alert force vectors changed
+          // TODO: consider setting forceGrowing in ISLCStringManager
+          utteranceQueue.addToBack( new Utterance( {
+            alert: stringManager.getForceVectorsChangedAlertText( forceGrowing ),
+            uniqueGroupId: 'forceVectorChanged'
+          } ) );
+        }
+        else {
+          // alert state of force vectors
+          utteranceQueue.addToBack( new Utterance( {
+            alert: stringManager.getForceVectorStateAlertText(),
+            uniqueGroupId: 'forceVectorState'
+          } ) );
+        }
       },
       createAriaValueText: options.createAriaValueText
     };

@@ -18,29 +18,33 @@ define( require => {
   const unitsMetersString = require( 'string!INVERSE_SQUARE_LAW_COMMON/units.meters' );
   const unitsNewtonsString = require( 'string!INVERSE_SQUARE_LAW_COMMON/units.newtons' );
 
-  const vectorSizePatternString = ISLCA11yStrings.vectorSizePattern.value;
-  const vectorSizeValueUnitsPatternString = ISLCA11yStrings.vectorSizeValueUnitsPattern.value;
+  const summaryVectorSizePatternString = ISLCA11yStrings.summaryVectorSizePattern.value;
+  const summaryVectorSizeValueUnitsPatternString = ISLCA11yStrings.summaryVectorSizeValueUnitsPattern.value;
   const summaryInteractionHintPatternString = ISLCA11yStrings.summaryInteractionHintPattern.value;
   const distanceAndValueSummaryPatternString = ISLCA11yStrings.distanceAndValueSummaryPattern.value;
   const robotPullSummaryPatternString = ISLCA11yStrings.robotPullSummaryPattern.value;
   const robotPushSummaryPatternString = ISLCA11yStrings.robotPushSummaryPattern.value;
 
+  const vectorSizePatternString = ISLCA11yStrings.vectorSizePattern.value;
+  const forceVectorSizePatternString = ISLCA11yStrings.forceVectorSizePattern.value;
+  const vectorSizeForcesValuePatternString = ISLCA11yStrings.vectorSizeForcesValuePattern.value;
+  const vectorSizeForcesNowValuePatternString = ISLCA11yStrings.vectorSizeForcesNowValuePattern.value;
+
   // sphere strings
-  // const spherePositionHelpTextString = ISLCA11yStrings.spherePositionHelpText.value;
   const forceVectorMagnitudePatternString = ISLCA11yStrings.forceVectorMagnitudePattern.value;
   const forceAndVectorPatternString = ISLCA11yStrings.forceAndVectorPattern.value;
   const positionMeterMarkPatternString = ISLCA11yStrings.positionMeterMarkPattern.value;
   const objectLabelPositionPatternString = ISLCA11yStrings.objectLabelPositionPattern.value;
-  // const spherePositionProgressObjectPatternString = ISLCA11yStrings.spherePositionProgressObjectPattern.value;
-  // const spherePositionProgressPatternString = ISLCA11yStrings.spherePositionProgressPattern.value;
   const spherePositionRegionObjectPatternString = ISLCA11yStrings.spherePositionRegionObjectPattern.value;
-  // const spherePositionRegionPatternString = ISLCA11yStrings.spherePositionRegionPattern.value;
 
   /* new from 12/11/18 */
   const positionDistanceFromOtherObjectPatternString = ISLCA11yStrings.positionDistanceFromOtherObjectPattern.value;
   const progressDistanceFromOtherObjectPatternString = ISLCA11yStrings.progressDistanceFromOtherObjectPattern.value;
   const distanceFromOtherObjectPatternString = ISLCA11yStrings.distanceFromOtherObjectPattern.value;
   const lastStopDistanceFromOtherObjectPatternString = ISLCA11yStrings.lastStopDistanceFromOtherObjectPattern.value;
+
+  const getBiggerString = ISLCA11yStrings.getBigger.value;
+  const getSmallerString = ISLCA11yStrings.getSmaller.value;
 
   const tinyString = ISLCA11yStrings.tiny.value;
   const verySmallString = ISLCA11yStrings.verySmall.value;
@@ -221,8 +225,8 @@ define( require => {
     getForceVectorsSummaryText() {
       const fillObject = {};
       const pattern = this.model.forceValuesProperty.get() ?
-                      vectorSizeValueUnitsPatternString :
-                      vectorSizePatternString;
+                      summaryVectorSizeValueUnitsPatternString :
+                      summaryVectorSizePatternString;
 
       fillObject.size = this.getForceVectorSize();
 
@@ -251,6 +255,34 @@ define( require => {
                       robotPullSummaryPatternString;
       const effort = PULL_EFFORT_STINGS[ this._effortIndex ];
       return StringUtils.fillIn( pattern, { effort } );
+    }
+
+    getForceVectorsChangedAlertText( vectorsGrowing ) {
+      const changeOrSize = vectorsGrowing ? getBiggerString : getSmallerString;
+      const valueAndUnits = this.getForceValueText();
+      const fillObject = { changeOrSize };
+
+      let pattern = vectorSizePatternString;
+
+      if ( this.model.forceValuesProperty.get() ) {
+        pattern = vectorSizeForcesNowValuePatternString;
+        fillObject.valueAndUnits = valueAndUnits;
+      }
+
+      return StringUtils.fillIn( pattern, fillObject );
+    }
+
+    getForceVectorStateAlertText() {
+      const size = this.getForceVectorSize();
+      const fillObject = { size };
+      let pattern = forceVectorSizePatternString;
+
+      if ( this.model.forceValuesProperty.get() ) {
+        pattern = vectorSizeForcesValuePatternString;
+        fillObject.valueAndUnits = this.getForceValueText();
+      }
+
+      return StringUtils.fillIn( pattern, fillObject );
     }
 
     // TODO: string usage
