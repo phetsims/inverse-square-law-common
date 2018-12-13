@@ -325,20 +325,22 @@ define( function( require ) {
 
         // TODO: consider implementing with alertManager
         // alertManager.positionSliderAlert( positionChanged );
-        if ( positionChanged ) {
-          // alert force vectors changed
-          // TODO: consider setting forceGrowing in ISLCStringManager
-          utteranceQueue.addToBack( new Utterance( {
-            alert: stringManager.getForceVectorsChangedAlertText( forceGrowing ),
-            uniqueGroupId: 'forceVectorChanged'
-          } ) );
-        }
-        else {
-          // alert state of force vectors
-          utteranceQueue.addToBack( new Utterance( {
-            alert: stringManager.getForceVectorStateAlertText(),
-            uniqueGroupId: 'forceVectorState'
-          } ) );
+        if ( stringManager !== null ){
+          if ( positionChanged ) {
+            // alert force vectors changed
+            // TODO: consider setting forceGrowing in ISLCStringManager
+            utteranceQueue.addToBack( new Utterance( {
+              alert: stringManager.getForceVectorsChangedAlertText( forceGrowing ),
+              uniqueGroupId: 'forceVectorChanged'
+            } ) );
+          }
+          else {
+            // alert state of force vectors
+            utteranceQueue.addToBack( new Utterance( {
+              alert: stringManager.getForceVectorStateAlertText(),
+              uniqueGroupId: 'forceVectorState'
+            } ) );
+          }
         }
       },
       createAriaValueText: options.createAriaValueText
