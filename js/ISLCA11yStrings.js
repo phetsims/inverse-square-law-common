@@ -13,19 +13,19 @@ define( require => {
      * Summary Pattern Strings *
      ***************************/
     summaryVectorSizePattern: {
-      value: 'Force vectors are {{size}}.'
+      value: 'Force vector arrows are {{size}}.'
     },
     summaryVectorSizeValueUnitsPattern: {
-      value: 'Force vectors are {{size}} at {{objectValueUnits}}.'
+      value: 'Force vector arrows are {{size}} at {{objectValueUnits}}.'
     },
     robotPullSummaryPattern: {
-      value: 'Robots pulling {{effort}} keeping spheres in place.'
+      value: 'Robots pull {{effort}} keeping spheres in place.'
     },
     robotPushSummaryPattern: {
-      value: 'Robots pushing {{effort}} keeping spheres in place.'
+      value: 'Robots push {{effort}} keeping spheres in place.'
     },
     summaryInteractionHintPattern: {
-      value: 'Move spheres or change their {{massOrCharge}} to begin observations.'
+      value: 'Change position and {{massOrCharge}} of spheres to explore.'
     },
     distanceAndValueSummaryPattern: {
       value: '{{object1Label}} and {{object2Label}} are {{qualitativeDistance}} each other, centers exactly {{distance}} {{distanceUnits}} apart.'
