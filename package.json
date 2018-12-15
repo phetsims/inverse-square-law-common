@@ -11,5 +11,8 @@
   },
   "phet": {
     "requirejsNamespace": "INVERSE_SQUARE_LAW_COMMON"
+  },
+  "eslintConfig": {
+    "extends": "../chipper/eslint/.eslintrc.js"
   }
 }
