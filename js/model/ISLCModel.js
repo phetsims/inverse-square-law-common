@@ -128,6 +128,7 @@ define( function( require ) {
     step: function() {
       var minX = this.leftObjectBoundary;
       var maxX = this.rightObjectBoundary;
+      // var currentLocationObject1 =
       var locationObject1 = this.object1.positionProperty.get();
       var locationObject2 = this.object2.positionProperty.get();
 
@@ -161,7 +162,7 @@ define( function( require ) {
 
         // neither object is dragging, radius must have changed
         if ( this.object1.radiusLastChanged ) {
-          if ( locationObject2 !== maxX ) {
+          if ( locationObject2 >= maxX && locationObject2 !== this.object2.positionProperty.get() ) {
 
             // object2 is not at the edge update its position
             this.object2.positionProperty.set( locationObject2 );
@@ -173,7 +174,7 @@ define( function( require ) {
           }
         }
         else if ( this.object2.radiusLastChanged ) {
-          if ( locationObject1 !== minX ) {
+          if ( locationObject1 >= minX && locationObject1 !== this.object1.positionProperty.get() ) {
 
             // object1 is not at boundary, update position
             this.object1.positionProperty.set( locationObject1 );
