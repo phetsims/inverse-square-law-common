@@ -16,7 +16,8 @@ define( require => {
   // a11y strings
   const summaryVectorSizePatternString = ISLCA11yStrings.summaryVectorSizePattern.value;
   const summaryVectorSizeValueUnitsPatternString = ISLCA11yStrings.summaryVectorSizeValueUnitsPattern.value;
-
+  const forceVectorMagnitudeUnitsPatternString = ISLCA11yStrings.forceVectorMagnitudeUnitsPattern.value;
+  const forceAndVectorPatternString = ISLCA11yStrings.forceAndVectorPattern.value;
   const forceValueUnitsPatternString = ISLCA11yStrings.forceValueUnitsPattern.value;
 
   const tinyString = ISLCA11yStrings.tiny.value;
@@ -36,8 +37,6 @@ define( require => {
   const negativeValuePatternString = ISLCA11yStrings.negativeValuePattern.value;
   const valuePatternString = ISLCA11yStrings.valuePattern.value;
 
-  let describer = null;
-
   class ForceDescriber extends ISLCDescriber {
     constructor( model, object1Label, object2Label, options ) {
       super( model, object1Label, object2Label );
@@ -45,13 +44,13 @@ define( require => {
       options = _.extend( {
         units: unitsNewtonsString,
 
-        // for adding natural language to the force (e.g. '3 billion' instead of 3000000000)
-        forceValueToString: force => StringUtils.fillIn( '{{force}}', { force } ),
-
         // in some scenarios, the force units change. convertForce allows subtypes to define conversion behavior
         // integrates with forceValueToString for necessary conversions (e.g. 300000000 -> 3)
         // always takes place before forceValueToString
-        convertForce: force => force
+        convertForce: force => force,
+
+        // for adding natural language to the force (e.g. '3 billion' instead of 3000000000)
+        forceValueToString: value => StringUtils.fillIn( valuePatternString, { value } )
       }, options );
 
       this.units = options.units;
@@ -97,6 +96,23 @@ define( require => {
       return StringUtils.fillIn( pattern, fillObject );
     }
 
+    getForceVectorMagnitudeText() {
+      const pattern = forceVectorMagnitudeUnitsPatternString;
+      const forceValue = this.formattedForce;
+      const units = this.units;
+      return StringUtils.fillIn( pattern, { forceValue, units } );
+    }
+
+    getForceBetweenAndVectorText( thisObject, otherObject ) {
+      const pattern = forceAndVectorPatternString;
+      const fillObject = {
+        thisObject,
+        otherObject,
+        size: this.getForceVectorSize()
+      };
+      return StringUtils.fillIn( pattern, fillObject );
+    }
+
     static getForceInScientificNotation( forceValue, mantissaDecimalPlaces ) {
       const { mantissa, exponent } = ScientificNotationNode.toScientificNotation( forceValue, { mantissaDecimalPlaces } );
       const mantissaPattern = mantissa < 0 ? negativeValuePatternString : valuePatternString; // negative values are possible in Coulomb's Law
@@ -124,7 +140,7 @@ define( require => {
     }
 
     getForceVectorSize() {
-      return SIZE_STRINGS[ this._vectorSizeIndex ];
+      return SIZE_STRINGS[ this.vectorSizeIndex ];
     }
 
     /**
@@ -148,23 +164,6 @@ define( require => {
      */
     getEffortIndex( force ) {
       throw new Error( 'getEffortIndex MUST be implemented in subtypes.' );
-    }
-
-    /**
-     * Uses the singleton pattern to keep one instance of this describer for the entire lifetime of the sim.
-     * @returns {ForceDescriber}
-     */
-    static getDescriber() {
-      assert && assert( describer, 'describer has not yet been initialized' );
-      return describer;
-    }
-
-    /**
-     * Initialize the describer singleton
-     * @throws Error
-     */
-    static initialize( model, object1Label, object2Label, options ) {
-      describer = new ForceDescriber( model, object1Label, object2Label, options );
     }
   }
 

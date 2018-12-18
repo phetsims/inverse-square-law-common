@@ -9,8 +9,6 @@ define( require => {
 
   const { OBJECT_ONE, OBJECT_TWO } = ISLCObjectEnum;
 
-  let describer = null;
-
   class ISLCDescriber {
     constructor( model, object1Label, object2Label ) {
 

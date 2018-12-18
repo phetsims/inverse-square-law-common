@@ -44,11 +44,7 @@ define( require => {
     }
 
     linkToForceProperty( callback ) {
-      this.model.forceProperty.link( force => {
-        this.forceVectorMagnitudeItemNode.innerContent = this.stringManager.getForceVectorMagnitudeText();
-        this.forceBetweenAndVectorNode.innerContent = this.stringManager.getForceBetweenAndVectorText( this.thisObjectLabel, this.otherObjectLabel );
-        callback( force );
-      } );
+      this.model.forceProperty.link( callback );
     }
 
     linkToPositionProperty( callback ) {

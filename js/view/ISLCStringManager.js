@@ -18,8 +18,6 @@ define( require => {
   const unitsMetersString = require( 'string!INVERSE_SQUARE_LAW_COMMON/units.meters' );
   const unitsNewtonsString = require( 'string!INVERSE_SQUARE_LAW_COMMON/units.newtons' );
 
-  const summaryVectorSizePatternString = ISLCA11yStrings.summaryVectorSizePattern.value;
-  const summaryVectorSizeValueUnitsPatternString = ISLCA11yStrings.summaryVectorSizeValueUnitsPattern.value;
   const summaryInteractionHintPatternString = ISLCA11yStrings.summaryInteractionHintPattern.value;
   const distanceAndValueSummaryPatternString = ISLCA11yStrings.distanceAndValueSummaryPattern.value;
   const robotPullSummaryPatternString = ISLCA11yStrings.robotPullSummaryPattern.value;
@@ -32,7 +30,6 @@ define( require => {
 
   // sphere strings
   const forceVectorMagnitudePatternString = ISLCA11yStrings.forceVectorMagnitudePattern.value;
-  const forceAndVectorPatternString = ISLCA11yStrings.forceAndVectorPattern.value;
   const positionMeterMarkPatternString = ISLCA11yStrings.positionMeterMarkPattern.value;
   const objectLabelPositionPatternString = ISLCA11yStrings.objectLabelPositionPattern.value;
   const spherePositionRegionObjectPatternString = ISLCA11yStrings.spherePositionRegionObjectPattern.value;
@@ -223,22 +220,6 @@ define( require => {
       );
     }
 
-    getForceVectorsSummaryText() {
-      const fillObject = {};
-      const pattern = this.model.forceValuesProperty.get() ?
-                      summaryVectorSizeValueUnitsPatternString :
-                      summaryVectorSizePatternString;
-
-      fillObject.size = this.getForceVectorSize();
-
-      if ( this.model.forceValuesProperty.get() ) {
-        // fillObject.units = this.valueUnits;
-        fillObject.objectValueUnits = this._forceValueToString( this.model.forceProperty.get() );
-      }
-
-      return StringUtils.fillIn( pattern, fillObject );
-    }
-
     getObjectDistanceSummary() {
       const fillObject = {
         object1Label: this.object1Label,
@@ -306,16 +287,6 @@ define( require => {
 
     getForceValueText() {
       return this._forceValueToString( this.model.forceProperty.get() );
-    }
-
-    getForceBetweenAndVectorText( thisObject, otherObject ) {
-      const pattern = forceAndVectorPatternString;
-      const fillObject = {
-        thisObject,
-        otherObject,
-        size: this.getForceVectorSize()
-      };
-      return StringUtils.fillIn( pattern, fillObject );
     }
 
     getForceValuesInUnitsText() {
@@ -454,10 +425,6 @@ define( require => {
 
     getConvertedObjectValue( decimalPlaces = 7 ) {
       return Util.toFixedNumber( this.model.forceProperty.get() * this._valueUnitConversion, decimalPlaces );
-    }
-
-    getPositionRegionChanged( newDistance, oldDistance ) {
-      throw new Error( 'getPositionRegionChanged MUST be implemented in subtypes.' );
     }
 
     getForceVectorIndex( force ) {

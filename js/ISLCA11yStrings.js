@@ -44,6 +44,9 @@ define( require => {
     forceVectorMagnitudePattern: {
       value: 'Force vector magnitude is {{objectValueUnits}}.'
     },
+    forceVectorMagnitudeUnitsPattern: {
+      value: 'Force vector magnitude is {{forceValue}} {{units}}.'
+    },
     forceAndVectorPattern: {
       value: 'Force on {{thisObject}} by {{otherObject}} is {{size}}, and vector points directly at {{otherObject}}.'
     },
