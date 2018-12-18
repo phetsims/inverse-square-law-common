@@ -277,7 +277,7 @@ define( function( require ) {
       }
       else if ( object === this.object2 ) {
 
-        // the max value for the right object is the right edge minus the puller width and the radius of the obejct
+        // the max value for the right object is the right edge minus the puller width and the radius of the object
         maxX = this.rightObjectBoundary;
       }
 
