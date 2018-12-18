@@ -81,6 +81,7 @@ define( require => {
   const aTinyBitString = ISLCA11yStrings.aTinyBit.value;
 
   const scientificNotationPatternString = ISLCA11yStrings.scientificNotationPattern.value;
+  const scientificNotationPatternNoHtmlString = ISLCA11yStrings.scientificNotationPatternNoHtml.value;
   const negativeValuePatternString = ISLCA11yStrings.negativeValuePattern.value;
   const valuePatternString = ISLCA11yStrings.valuePattern.value;
   const valuesInUnitsPatternString = ISLCA11yStrings.valuesInUnitsPattern.value;
@@ -188,7 +189,7 @@ define( require => {
       model.forceProperty.link( force => {
         this._vectorSizeIndex = this.getForceVectorIndex( force );
         this._effortIndex = this.getEffortIndex( force );
-      } );
+    } );
 
       Property.multilink(
         [ this.object1.positionProperty, this.object2.positionProperty ],
@@ -270,6 +271,10 @@ define( require => {
       }
 
       return StringUtils.fillIn( pattern, fillObject );
+    }
+
+    static getVectorChangeDirection( vectorsGrowing ) {
+      return vectorsGrowing ? getBiggerString : getSmallerString;
     }
 
     getForceVectorStateAlertText() {
@@ -426,6 +431,16 @@ define( require => {
       const exponentPattern = exponent < 0 ? negativeValuePatternString : valuePatternString;
       const exponentString = StringUtils.fillIn( exponentPattern, { value: Math.abs( exponent ) } );
       const pattern = scientificNotationPatternString;
+      return StringUtils.fillIn( pattern, { mantissa: mantissaString, exponent: exponentString } );
+    }
+
+    static getForceInScientificNotationNoHtml( forceValue, mantissaDecimalPlaces ) {
+      const { mantissa, exponent } = ScientificNotationNode.toScientificNotation( forceValue, { mantissaDecimalPlaces } );
+      const mantissaPattern = mantissa < 0 ? negativeValuePatternString : valuePatternString; // negative values are possible in Coulomb's Law
+      const mantissaString = StringUtils.fillIn( mantissaPattern, { value: Math.abs( mantissa ) } );
+      const exponentPattern = exponent < 0 ? negativeValuePatternString : valuePatternString;
+      const exponentString = StringUtils.fillIn( exponentPattern, { value: Math.abs( exponent ) } );
+      const pattern = scientificNotationPatternNoHtmlString;
       return StringUtils.fillIn( pattern, { mantissa: mantissaString, exponent: exponentString } );
     }
 

@@ -162,7 +162,7 @@ define( function( require ) {
 
         // neither object is dragging, radius must have changed
         if ( this.object1.radiusLastChanged ) {
-          if ( locationObject2 >= maxX && locationObject2 !== this.object2.positionProperty.get() ) {
+          if ( locationObject2 <= maxX && locationObject2 !== this.object2.positionProperty.get() ) {
 
             // object2 is not at the edge update its position
             this.object2.positionProperty.set( locationObject2 );

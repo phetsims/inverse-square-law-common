@@ -16,7 +16,7 @@ define( require => {
       value: 'Force vector arrows are {{size}}.'
     },
     summaryVectorSizeValueUnitsPattern: {
-      value: 'Force vector arrows are {{size}} at {{objectValueUnits}}.'
+      value: 'Force vector arrows are {{size}} at {{forceValue}} {{units}}.'
     },
     robotPullSummaryPattern: {
       value: 'Robots pull {{effort}} keeping spheres in place.'
@@ -108,6 +108,9 @@ define( require => {
     },
     getSmaller: {
       value: 'get smaller'
+    },
+    forceValueUnitsPattern: {
+      value: '{{forceValue}} {{units}}'
     },
 
     /**********************
@@ -251,6 +254,9 @@ define( require => {
     // misc
     scientificNotationPattern: {
       value: '{{mantissa}} &times; 10 to the {{exponent}}'
+    },
+    scientificNotationPatternNoHtml: {
+      value: '{{mantissa}} times 10 to the {{exponent}}'
     },
     negativeValuePattern: {
       value: 'negative {{value}}'
