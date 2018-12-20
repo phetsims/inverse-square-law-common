@@ -142,14 +142,17 @@ define( function( require ) {
      * @param {Bounds2} parentToLocalBounds
      */
     setArrowTextPosition: function( parentToLocalBounds ) {
-      this.arrowText.centerX = 0;
-      var localToParentPoint = this.localToParentPoint( this.arrowText.center );
+      var arrowTextCenter = this.arrowText.center.copy();
+      arrowTextCenter.x = 0;
+      var localToParentPoint = this.localToParentPoint( arrowTextCenter );
       if ( Math.floor( localToParentPoint.x - this.arrowText.width / 2 ) <= this.layoutBounds.left + TEXT_OFFSET ) {
         this.arrowText.left = parentToLocalBounds.left + TEXT_OFFSET;
       }
-
-      if ( Math.ceil( localToParentPoint.x + this.arrowText.width / 2 ) >= this.layoutBounds.right - TEXT_OFFSET ) {
+      else if ( Math.ceil( localToParentPoint.x + this.arrowText.width / 2 ) >= this.layoutBounds.right - TEXT_OFFSET ) {
         this.arrowText.right = parentToLocalBounds.right - TEXT_OFFSET;
+      }
+      else {
+        this.arrowText.center = arrowTextCenter;
       }
     },
 
