@@ -52,7 +52,7 @@ define( function( require ) {
       // a11y
       tagName: 'li',
 
-      numberControlOptions: {},
+      numberControlOptions: null,
       tickLabelOptions: {},
 
       tandem: Tandem.required
@@ -73,7 +73,6 @@ define( function( require ) {
       layoutFunction: NumberControl.createLayoutFunction3( { xSpacing: 10 } ),
       minorTickSpacing: 2,
       minorTickLength: 6,
-      arrowButtonScale: 1,
       trackFillEnabled: 'black',
       thumbSize: THUMB_SIZE,
 
@@ -108,6 +107,12 @@ define( function( require ) {
       valueMaxWidth: VALUE_MAX_WIDTH,
       onFocus: function( event ) {}
     }, options.numberControlOptions );
+
+    options.numberControlOptions.arrowButtonOptions = _.extend( {
+      touchAreaXDilation: 15,
+      touchAreaYDilation: 15,
+      scale: 1
+    }, options.numberControlOptions.arrowButtonOptions );
 
     for ( var i = 0; i < options.numberControlOptions.additionalTicks.length; i++ ) {
       var tick = {
