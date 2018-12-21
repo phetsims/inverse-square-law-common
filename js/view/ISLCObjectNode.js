@@ -451,8 +451,8 @@ define( function( require ) {
       // set the scale of the arrow based on the model value
       this.arrowNode.redrawArrow( this.model.forceProperty.get() );
 
-      // update the arrow label
-      this.arrowNode.updateLabel( this.model.forceProperty.get(), this.model.forceValuesProperty.get() );
+      // update the arrow label - always display the force as a positive magnitude
+      this.arrowNode.updateLabel( Math.abs( this.model.forceProperty.get() ), this.model.forceValuesProperty.get() );
 
       // set the text position, positioning the center relative to the parent coordinate frame
       this.arrowNode.setArrowTextPosition( this.parentToLocalBounds( this.layoutBounds ) );
