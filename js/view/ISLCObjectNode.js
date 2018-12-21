@@ -274,7 +274,7 @@ define( function( require ) {
     } ) );
 
     model.forceValuesProperty.lazyLink( this.redrawForce.bind( this ) );
-    // object.radiusProperty.lazyLink( this.redrawForce.bind( this ) );
+    object.radiusProperty.lazyLink( this.redrawForce.bind( this ) );
     object.valueProperty.lazyLink( this.redrawForce.bind( this ) );
     model.forceProperty.lazyLink( this.redrawForce.bind( this ) );
 
