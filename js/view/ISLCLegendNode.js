@@ -75,6 +75,7 @@ define( function( require ) {
 
     legendArrowLine.centerX = this.localBounds.centerX;
     legendArrowLine.bottom = this.localBounds.maxY;
+    this.legendArrowLine = legendArrowLine;
   }
 
   inverseSquareLawCommon.register( 'ISLCLegendNode', ISLCLegendNode );
