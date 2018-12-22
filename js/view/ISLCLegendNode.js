@@ -34,7 +34,8 @@ define( function( require ) {
     Node.call( this );
     this.center.subtractXY( 0, 10 );
 
-    var legendArrowLine = new ArrowNode( 0, 100, width, 100, {
+    // @public (read-only) - layout for this type is often relative to this line
+    this.legendArrowLine = new ArrowNode( 0, 100, width, 100, {
       fill: options.fill,
       stroke: null,
       headHeight: 4,
@@ -44,21 +45,21 @@ define( function( require ) {
       doubleHead: true
     } );
 
-    this.addChild( legendArrowLine );
+    this.addChild( this.legendArrowLine );
 
     // create left and right end lines
-    var endLinesBottom = legendArrowLine.bottom + 2.5;
+    var endLinesBottom = this.legendArrowLine.bottom + 2.5;
     var endLinesTop = endLinesBottom - 10;
     var endLinesOptions = {
       stroke: options.fill,
       lineWidth: 1.25
     };
 
-    var leftEndLine = new Line( legendArrowLine.left, endLinesBottom, legendArrowLine.left, endLinesTop, endLinesOptions );
-    var rightEndLine = new Line( legendArrowLine.right, endLinesBottom, legendArrowLine.right, endLinesTop, endLinesOptions );
+    var leftEndLine = new Line( this.legendArrowLine.left, endLinesBottom, this.legendArrowLine.left, endLinesTop, endLinesOptions );
+    var rightEndLine = new Line( this.legendArrowLine.right, endLinesBottom, this.legendArrowLine.right, endLinesTop, endLinesOptions );
 
-    legendArrowLine.addChild( leftEndLine );
-    legendArrowLine.addChild( rightEndLine );
+    this.legendArrowLine.addChild( leftEndLine );
+    this.legendArrowLine.addChild( rightEndLine );
 
     var legendLabel = new Text( labelString, {
       fill: options.fill,
@@ -73,8 +74,8 @@ define( function( require ) {
     legendLabel.centerX = this.localBounds.centerX;
     legendLabel.bottom = this.localBounds.maxY - 18;
 
-    legendArrowLine.centerX = this.localBounds.centerX;
-    legendArrowLine.bottom = this.localBounds.maxY;
+    this.legendArrowLine.centerX = this.localBounds.centerX;
+    this.legendArrowLine.bottom = this.localBounds.maxY;
   }
 
   inverseSquareLawCommon.register( 'ISLCLegendNode', ISLCLegendNode );
