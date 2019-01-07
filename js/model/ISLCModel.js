@@ -15,6 +15,7 @@ define( function( require ) {
   var Emitter = require( 'AXON/Emitter' );
   var inherit = require( 'PHET_CORE/inherit' );
   var inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
+  var ISLCObjectEnum = require( 'INVERSE_SQUARE_LAW_COMMON/view/ISLCObjectEnum' );
   var NumberIO = require( 'TANDEM/types/NumberIO' );
   var Property = require( 'AXON/Property' );
   var Range = require( 'DOT/Range' );
@@ -51,6 +52,10 @@ define( function( require ) {
     // @public
     this.object1 = object1;
     this.object2 = object2;
+
+    // @public
+    // @a11y - needed for adjusting alerts when an object moves as a result of a radius increase
+    this.pushedObjectEnum = null;
 
     // @private
     this.snapObjectsToNearest = options.snapObjectsToNearest;
@@ -162,24 +167,40 @@ define( function( require ) {
 
         // neither object is dragging, radius must have changed
         if ( this.object1.radiusLastChanged ) {
-          if ( locationObject2 <= maxX && locationObject2 !== this.object2.positionProperty.get() ) {
+          if ( this.object2.positionProperty.get() < maxX ) {
 
             // object2 is not at the edge update its position
+            this.pushedObjectEnum = ISLCObjectEnum.OBJECT_TWO;
             this.object2.positionProperty.set( locationObject2 );
           }
           else {
+            if ( locationObject1 !== this.object1.positionProperty.get() ) {
+              // object1 moved
+              this.pushedObjectEnum = ISLCObjectEnum.OBJECT_ONE;
+            }
+            else {
+              this.pushedObjectEnum = null;
+            }
 
             // object2 is at the edge update object1 position
             this.object1.positionProperty.set( locationObject1 );
           }
         }
         else if ( this.object2.radiusLastChanged ) {
-          if ( locationObject1 >= minX && locationObject1 !== this.object1.positionProperty.get() ) {
+          if ( this.object1.positionProperty.get() > minX ) {
 
             // object1 is not at boundary, update position
+            this.pushedObjectEnum = ISLCObjectEnum.OBJECT_ONE;
             this.object1.positionProperty.set( locationObject1 );
           }
           else {
+            if ( locationObject2 !== this.object2.positionProperty.get() ) {
+              this.pushedObjectEnum = ISLCObjectEnum.OBJECT_TWO;
+            }
+            else {
+              this.pushedObjectEnum = null;
+            }
+
             this.object2.positionProperty.set( locationObject2 );
           }
         }

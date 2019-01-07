@@ -5,8 +5,14 @@ define( require => {
 
   // modules
   const inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
+  const ISLCA11yStrings = require( 'INVERSE_SQUARE_LAW_COMMON/ISLCA11yStrings' );
   const ISLCObjectEnum = require( 'INVERSE_SQUARE_LAW_COMMON/view/ISLCObjectEnum' );
+  const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
 
+  // strings
+  const summaryInteractionHintPatternString = ISLCA11yStrings.summaryInteractionHintPattern.value;
+
+  // constants
   const { OBJECT_ONE, OBJECT_TWO } = ISLCObjectEnum;
 
   class ISLCDescriber {
@@ -43,6 +49,13 @@ define( require => {
       const thisObject = OBJECT_ONE ? this.object1 : this.object2;
       const otherObject = OBJECT_ONE ? this.object2 : this.object1;
       return { thisObject, otherObject };
+    }
+
+    static getSummaryInteractionHint( massOrCharge ) {
+      return StringUtils.fillIn(
+        summaryInteractionHintPatternString,
+        { massOrCharge }
+      );
     }
   }
 

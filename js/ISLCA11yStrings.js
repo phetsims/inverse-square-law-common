@@ -28,7 +28,7 @@ define( require => {
       value: 'Change position and {{massOrCharge}} of spheres to explore.'
     },
     distanceAndValueSummaryPattern: {
-      value: '{{object1Label}} and {{object2Label}} are {{qualitativeDistance}} each other, centers exactly {{distance}} {{distanceUnits}} apart.'
+      value: '{{object1Label}} and {{object2Label}} are {{qualitativeDistance}} each other, centers exactly {{distance}} {{units}} apart.'
     },
 
     /******************
@@ -48,7 +48,7 @@ define( require => {
       value: 'Force vector magnitude is {{forceValue}} {{units}}.'
     },
     forceAndVectorPattern: {
-      value: 'Force on {{thisObject}} by {{otherObject}} is {{size}}, and vector points directly at {{otherObject}}.'
+      value: 'Force on {{thisObjectLabel}} by {{otherObjectLabel}} is {{size}}, and vector points directly at {{otherObjectLabel}}.'
     },
     positionMeterMarkPattern: {
       value: '{{positionUnit}} mark'
@@ -79,7 +79,7 @@ define( require => {
      * 12/11/18 update for position slider aria-valuetext
      */
     positionDistanceFromOtherObjectPattern: {
-      value: '{{position}} mark, {{distance}} {{units}} from {{otherObjectLabel}}.'
+      value: '{{position}} {{unit}} mark, {{distance}} {{units}} from {{otherObjectLabel}}.'
     },
     distanceFromOtherObjectPattern: {
       value: '{{distance}} {{units}} from {{otherObjectLabel}}.'
@@ -94,24 +94,54 @@ define( require => {
     /************************
      * Force vector strings *
      ************************/
+    /*
+     * from the doc, here are the possible alert text options:
+     * - Force vectors {{size}}. // on focus
+     * - Vectors {{size}}. // if an object reaches the end of its range and force values is unchecked
+     * - Vectors {{size}}, forces {{force}} {{units}}. // object reaches end of range, force values checked
+     * - {{proximity}}, vectors {{size}}.
+     * - {{proximity}}, vectors {{size}}, forces {{force}} {{units}}.
+     * - Vectors {{changeDirection}}.
+     * - vectors {{changedirection}}
+     * - vectors {{changeDirection}}, forces now {{force}} {{units}}
+     */
+    vectorChangePattern: {
+      value: 'Vectors {{changeDirection}}.'
+    },
+    vectorChangeForcesNowValuePattern: {
+      value: 'Vectors {{changeDirection}}, forces now {{forceValue}} {{units}}.'
+    },
+    vectorChangeClausePattern: {
+      value: 'vectors {{changeDirection}}'
+    },
+    vectorChangeForcesNowClausePattern: {
+      value: 'vectors {{changeDirection}}, forces now {{forceValue}} {{units}}'
+    },
     forceVectorSizePattern: {
       value: 'Force vectors {{size}}.'
     },
-    vectorSizeForcesValuePattern: {
-      value: 'Vectors {{size}}, forces {{valueAndUnits}}.'
-    },
     vectorSizePattern: {
-      value: 'Vectors {{changeOrSize}}.'
+      value: 'Vectors {{size}}.'
     },
-    vectorSizeForcesNowValuePattern: {
-      value: 'Vectors {{changeOrSize}}, forces now {{valueAndUnits}}.'
+    vectorSizeForcesValuePattern: {
+      value: 'Vectors {{size}}, forces {{forceValue}} {{units}}.'
     },
-    getBigger: {
-      value: 'get bigger'
+    vectorsSizeClausePattern: {
+      value: 'vectors {{size}}'
     },
-    getSmaller: {
-      value: 'get smaller'
+    forcesValueUnitsClausePattern: {
+      value: 'forces {{forceValue}} {{units}}'
     },
+    forcesNowValueUnitsClausePattern: {
+      value: 'forces now {{forceValue}} {{units}}'
+    },
+    // to be used in the alert manager
+    proximityForceClausePattern: {
+      value: '{{proximity}}, {{forceClause}}.'
+    },
+    // proximityVectorSizeForcesValuePattern: {
+    //   value: '{{proximity}}, vectors {{size}}, forces {{forceValue}} {{units}}.'
+    // },
     forceValueUnitsPattern: {
       value: '{{forceValue}} {{units}}'
     },
@@ -141,6 +171,12 @@ define( require => {
     },
     huge: {
       value: 'huge'
+    },
+    getBigger: {
+      value: 'get bigger'
+    },
+    getSmaller: {
+      value: 'get smaller'
     },
 
     // distance between objects/spheres
@@ -200,6 +236,12 @@ define( require => {
     },
     fartherAway: {
       value: 'Farther away'
+    },
+    left: {
+      value: 'left'
+    },
+    right: {
+      value: 'right'
     },
 
 

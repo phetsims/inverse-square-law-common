@@ -10,7 +10,7 @@ define( require => {
 
   class ISLCObjectPDOMNode extends Node {
 
-    constructor( model, objectEnum, stringManager, options ) {
+    constructor( model, objectEnum, options ) {
 
       options = _.extend( {
         thisObjectLabel: 'this object',
@@ -27,7 +27,6 @@ define( require => {
 
       this.model = model;
       this.objectModel = objectEnum === ISLCObjectEnum.OBJECT_ONE ? model.object1 : model.object2;
-      this.stringManager = stringManager;
       this.thisObjectLabel = options.thisObjectLabel;
       this.otherObjectLabel = options.otherObjectLabel;
 

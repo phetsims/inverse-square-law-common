@@ -4,6 +4,7 @@ define( require => {
   'use strict';
 
   // modules
+  const ForceDescriber = require( 'INVERSE_SQUARE_LAW_COMMON/view/describers/ForceDescriber' );
   const inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
   const ISLCA11yStrings = require( 'INVERSE_SQUARE_LAW_COMMON/ISLCA11yStrings' );
   const Utterance = require( 'SCENERY_PHET/accessibility/Utterance' );
@@ -13,18 +14,15 @@ define( require => {
   const forceValuesHiddenString = ISLCA11yStrings.forceValuesHidden.value;
 
   class ISLCAlertManager {
-    constructor( model, stringManager ) {
+    constructor( model ) {
       this.model = model;
-      this.stringManager = stringManager;
-      // model.forceValuesProperty.lazyLink( showValues => {
-      //   this.alertForceValues( showValues );
-      // } );
     }
 
-    alertForceValues( showValues ) {
+    static alertForceValues( showValues ) {
+      const forceDescriber = ForceDescriber.getDescriber();
       let alert = '';
       if ( showValues ) {
-        alert = this.stringManager.getForceValuesInUnitsText();
+        alert = forceDescriber.getValuesInUnitsText();
       }
       else {
         alert = forceValuesHiddenString;

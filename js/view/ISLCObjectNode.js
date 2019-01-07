@@ -17,16 +17,17 @@ define( function( require ) {
   var AccessibleSlider = require( 'SUN/accessibility/AccessibleSlider' );
   var Color = require( 'SCENERY/util/Color' );
   var Circle = require( 'SCENERY/nodes/Circle' );
+  var ForceDescriber = require( 'INVERSE_SQUARE_LAW_COMMON/view/describers/ForceDescriber' );
   var inherit = require( 'PHET_CORE/inherit' );
   var inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
   var ISLCForceArrowNode = require( 'INVERSE_SQUARE_LAW_COMMON/view/ISLCForceArrowNode' );
   var ISLCObjectEnum = require( 'INVERSE_SQUARE_LAW_COMMON/view/ISLCObjectEnum' );
   var ISLCPullerNode = require( 'INVERSE_SQUARE_LAW_COMMON/view/ISLCPullerNode' );
   var ISLCQueryParameters = require( 'INVERSE_SQUARE_LAW_COMMON/ISLCQueryParameters' );
-  var ISLCStringManager = require( 'INVERSE_SQUARE_LAW_COMMON/view/ISLCStringManager' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Path = require( 'SCENERY/nodes/Path' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  var PositionDescriber = require( 'INVERSE_SQUARE_LAW_COMMON/view/describers/PositionDescriber' );
   var Range = require( 'DOT/Range' );
   var RichText = require( 'SCENERY/nodes/RichText' );
   var Shape = require( 'KITE/Shape' );
@@ -87,7 +88,7 @@ define( function( require ) {
    * @param {Object} options
    * @constructor
    */
-  function ISLCObjectNode( model, object, layoutBounds, stringManager, modelViewTransform, pullForceRange, options ) {
+  function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, pullForceRange, options ) {
 
     var self = this;
 
@@ -136,7 +137,8 @@ define( function( require ) {
 
     // A11Y DRAFT
     assert && assert( options.createAriaValueText, 'ISLCObjectNode subtypes must define an aria-valuetext creation function' );
-    this.accessibleName = ISLCStringManager.getObjectLabelPositionText( options.label );
+    this.accessibleName = PositionDescriber.getObjectLabelPositionText( options.label );
+    var forceDescriber = ForceDescriber.getDescriber();
 
     // @protected
     this.layoutBounds = layoutBounds;
@@ -269,6 +271,8 @@ define( function( require ) {
       },
       end: function( event ) {
         object.isDragging = false;
+        // position change alert
+        // TODO: Do we activate alerts for mouse interactions?
       },
       tandem: tandem.createTandem( 'dragHandler' )
     } ) );
@@ -299,7 +303,7 @@ define( function( require ) {
     // a11y - for experimenting with default step sizes. Ignore if not explicitly set
     var defaultStepSize = QueryStringMachine.containsKey( 'stepSize' ) ? ISLCQueryParameters.stepSize : options.snapToNearest * 2;
 
-    var currentPosition = object.positionProperty.get();
+    var oldPosition = object.positionProperty.get();
     var currentForce = model.forceProperty.get();
     var accessibleSliderOptions = {
       keyboardStep: defaultStepSize,
@@ -312,32 +316,50 @@ define( function( require ) {
       },
       startDrag: function() {
         object.isDragging = true;
-        currentPosition = object.positionProperty.get();
+        oldPosition = object.positionProperty.get();
         currentForce = model.forceProperty.get();
       },
       endDrag: function() {
         var newPosition = object.positionProperty.get();
         var newForce = model.forceProperty.get();
         var forceGrowing = ( newForce - currentForce ) > 0;
-        var positionChanged = newPosition - currentPosition;
+        var positionChanged = newPosition !== oldPosition;
         object.isDragging = false;
         self.redrawForce();
 
+        /*
+         * perhaps is possible to distinguish between position updates initialized from dragging/keyboard interaction
+         * and from being pushed. This could be possible by setting a flag on startDrag (e.g. userInteracting). Then, somewhere
+         * we link to each object's position property. There, if the userInteracting flag is false, the movement must have
+         * come from being pushed, and we set the pushedObjectEnum to the appropriate object.
+         */
+
         // TODO: consider implementing with alertManager
         // alertManager.positionSliderAlert( positionChanged );
-        if ( stringManager !== null ){
+        /*
+         * new logic 12/31/18
+         * if positionChanged
+         *  if either object at edge or objects closest: Vectors {{size}}, forces [value] [units]
+         *  else: vectors change, forces now ...
+         * else
+         *  proximity, vector clause
+         */
+        if ( nodeDescriber !== null ){
+          let alert = forceDescriber.getVectorSizeText();
           if ( positionChanged ) {
             // alert force vectors changed
-            // TODO: consider setting forceGrowing in ISLCStringManager
+            if ( model.forceValuesProperty.get() ) {
+              alert = forceDescriber.getVectorSizeForceValueText();
+            }
             utteranceQueue.addToBack( new Utterance( {
-              alert: stringManager.getForceVectorsChangedAlertText( forceGrowing ),
+              alert: alert,
               uniqueGroupId: 'forceVectorChanged'
             } ) );
           }
           else {
             // alert state of force vectors
             utteranceQueue.addToBack( new Utterance( {
-              alert: stringManager.getForceVectorStateAlertText(),
+              alert: forceDescriber.getForceVectorStateAlertText(),
               uniqueGroupId: 'forceVectorState'
             } ) );
           }
