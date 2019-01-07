@@ -50,13 +50,15 @@ define( function( require ) {
       align: 'right',
 
       // a11y
-      tagName: 'li',
+      tagName: 'div',
 
-      numberControlOptions: {},
+      numberControlOptions: null,
       tickLabelOptions: {},
 
       tandem: Tandem.required
     }, options );
+
+    var tandem = options.tandem;
 
     // define first because they are used by numberControlOptions
     options.tickLabelOptions = _.extend( {
@@ -65,20 +67,46 @@ define( function( require ) {
 
     // options that are passed along to the number control
     options.numberControlOptions = _.extend( {
+      numberDisplayOptions: null,
 
-      // Don't fill in the {0}, it will be filled in by NumberControl
-      valuePattern: StringUtils.fillIn( pattern0Value1UnitsString, { value: '{0}', units: unitString } ),
+      sliderOptions: null,
+      arrowButtonOptions: {
+        scale: 1
+      },
+
+      additionalTicks: [],
 
       // layout options
       layoutFunction: NumberControl.createLayoutFunction3( { xSpacing: 10 } ),
+
+      // title and value text options
+      titleFont: new PhetFont( 12 ),
+      titleMaxWidth: TITLE_MAX_WIDTH,
+      onFocus: function( event ) {},
+
+      // phet-io
+      tandem: tandem.createTandem( 'numberControl' )
+    }, options.numberControlOptions );
+
+    options.numberControlOptions.numberDisplayOptions = _.extend( {
+      // Don't fill in the {0}, it will be filled in by NumberControl
+      valuePattern: StringUtils.fillIn( pattern0Value1UnitsString, { value: '{0}', units: unitString } ),
+      font: new PhetFont( 12 ),
+      align: 'right',
+      xMargin: 10,
+      yMargin: 4,
+      backgroundStroke: 'black',
+      maxWidth: VALUE_MAX_WIDTH,
+      cornerRadius: 3
+    }, options.numberControlOptions.numberDisplayOptions );
+
+    options.numberControlOptions.sliderOptions = _.extend( {
       minorTickSpacing: 2,
       minorTickLength: 6,
-      arrowButtonScale: 1,
       trackFillEnabled: 'black',
       thumbSize: THUMB_SIZE,
 
       // tick options
-      additionalTicks: [],
       majorTicks: [ {
         value: valueRange.min,
         label: new Text(
@@ -92,22 +120,9 @@ define( function( require ) {
           _.extend( { tandem: options.tandem.createTandem( 'majorTickMaxLabel' ) }, options.tickLabelOptions )
         )
       } ],
-      majorTickLength: 8,
-
-      valueAlign: 'right',
-      valueXMargin: 10,
-      valueYMargin: 4,
-      valueBackgroundStroke: 'black',
-      valueBackgroundCornerRadius: 3,
       tickLabelSpacing: 1,
-
-      // title and value text options
-      titleFont: new PhetFont( 12 ),
-      valueFont: new PhetFont( 12 ),
-      titleMaxWidth: TITLE_MAX_WIDTH,
-      valueMaxWidth: VALUE_MAX_WIDTH,
-      onFocus: function( event ) {}
-    }, options.numberControlOptions );
+      majorTickLength: 8
+    }, options.numberControlOptions.sliderOptions );
 
     for ( var i = 0; i < options.numberControlOptions.additionalTicks.length; i++ ) {
       var tick = {
@@ -116,16 +131,13 @@ define( function( require ) {
           tandem: options.tandem.createTandem( options.numberControlOptions.additionalTicks[ i ].tandemLabel )
         }, options.tickLabelOptions ) )
       };
-      options.numberControlOptions.majorTicks.push( tick );
+      options.numberControlOptions.sliderOptions.majorTicks.push( tick );
     }
-    var tandem = options.tandem;
 
-    var numberControl = new NumberControl( titleString, objectProperty, valueRange, _.extend( {
-      tandem: tandem.createTandem( 'numberControl' )
-    }, options.numberControlOptions ) );
+    var numberControl = new NumberControl( titleString, objectProperty, valueRange, options.numberControlOptions );
 
     Panel.call( this, numberControl, options );
-
+    // debugger;
     numberControl.addInputListener( {
       focus: options.numberControlOptions.onFocus
     } );
@@ -135,12 +147,12 @@ define( function( require ) {
 
     // a11y - creates highlight that appears around this node when any ancestor (like the
     // NumberControl) has focus
-    this.groupFocusHighlight = new GroupFocusHighlightFromNode( this, {
-      useLocalBounds: true,
-      dilationCoefficient: 3.7,
-      outerStroke: FocusHighlightPath.OUTER_DARK_GROUP_FOCUS_COLOR,
-      innerStroke: FocusHighlightPath.INNER_DARK_GROUP_FOCUS_COLOR
-    } );
+    // this.groupFocusHighlight = new GroupFocusHighlightFromNode( this, {
+    //   useLocalBounds: true,
+    //   dilationCoefficient: 3.7,
+    //   outerStroke: FocusHighlightPath.OUTER_DARK_GROUP_FOCUS_COLOR,
+    //   innerStroke: FocusHighlightPath.INNER_DARK_GROUP_FOCUS_COLOR
+    // } );
   }
 
   inverseSquareLawCommon.register( 'ISLCObjectControlPanel', ISLCObjectControlPanel );
