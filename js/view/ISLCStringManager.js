@@ -152,7 +152,7 @@ define( require => {
          * Handles custom defined formatting of the underlying object value if needed by subtypes.
          * E.g. for converting 1e-6 newtons to 1 micronewton
          * @param  {Number} value the model's forceProperty
-         * @return {String}       value converted to value and units string
+         * @returns {String}       value converted to value and units string
          */
         forceValueToString: value => `${value} newtons`,
 
