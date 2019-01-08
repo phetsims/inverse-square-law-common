@@ -134,13 +134,16 @@ define( function( require ) {
     ruler.addChild( focusHighlight );
 
     // @private (a11y) - supports keyboard interaction, private so it can be stepped
+    var keyboardDragDelta = modelViewTransform.modelToViewDeltaX( options.snapToNearest );
     var keyboardDragListener = new KeyboardDragListener( {
       dragBounds: bounds,
       locationProperty: model.rulerPositionProperty,
       transform: modelViewTransform,
       moveOnHoldDelay: options.moveOnHoldDelay,
-      downDelta: modelViewTransform.modelToViewDeltaX( options.snapToNearest ),
-      shiftDownDelta: modelViewTransform.modelToViewDeltaX( options.snapToNearest ),
+      downDelta: keyboardDragDelta,
+      shiftDownDelta: keyboardDragDelta,
+      dragVelocity: keyboardDragDelta * 60,
+      shiftDragVelocity: keyboardDragDelta * 60,
 
       // snap to nearest snapToNearest, called on end so that dragging doesn't snap to a value for as long
       // as key is held down
