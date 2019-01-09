@@ -81,11 +81,21 @@ define( require => {
     positionDistanceFromOtherObjectPattern: {
       value: '{{position}} {{unit}} mark, {{distance}} {{units}} from {{otherObjectLabel}}.'
     },
+    edgePositionDistanceFromOtherObjectPattern: {
+      value: '{{position}} {{unit}} mark, {{side}} edge, {{distance}} {{units}} from {{otherObjectLabel}}'
+    },
     distanceFromOtherObjectPattern: {
       value: '{{distance}} {{units}} from {{otherObjectLabel}}.'
     },
+    // closer/further away
     progressDistanceFromOtherObjectPattern: {
       value: '{{progress}}, {{distance}} {{units}} from {{otherObjectLabel}}.'
+    },
+    farthestFromOtherObjectPattern: {
+      value: 'Farthest from {{otherObjectLabel}}, {{distance}} {{units}} away.'
+    },
+    closestToOtherObjectPattern: {
+      value: 'Closest to {{otherObjectLabel}}, {{distance}} {{units}} away.'
     },
     lastStopDistanceFromOtherObjectPattern: {
       value: '{{region}}, last stop, {{distance}} {{units}} from {{otherObjectLabel}}.'
@@ -94,6 +104,12 @@ define( require => {
     /************************
      * Force vector strings *
      ************************/
+    regionForceClausePattern: {
+      value: '{{region}}, {{forceClause}}'
+    },
+    vectorForceClausePattern: {
+      value: '{{vectorClause}}, {{forceClause}}'
+    },
     /*
      * from the doc, here are the possible alert text options:
      * - Force vectors {{size}}. // on focus
@@ -232,7 +248,7 @@ define( require => {
       value: 'farther from'
     },
     closer: {
-      value: 'closer'
+      value: 'Closer'
     },
     fartherAway: {
       value: 'Farther away'

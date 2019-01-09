@@ -7,7 +7,7 @@ define( require => {
   const inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
   const ISLCA11yStrings = require( 'INVERSE_SQUARE_LAW_COMMON/ISLCA11yStrings' );
   const ISLCDescriber = require( 'INVERSE_SQUARE_LAW_COMMON/view/describers/ISLCDescriber' );
-  // const ISLCObjectEnum = require( 'INVERSE_SQUARE_LAW_COMMON/view/ISLCObjectEnum' );
+  const ISLCObjectEnum = require( 'INVERSE_SQUARE_LAW_COMMON/view/ISLCObjectEnum' );
   const Property = require( 'AXON/Property' );
   const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   // const Util = require( 'DOT/Util' );
@@ -21,9 +21,14 @@ define( require => {
 
   const positionDistanceFromOtherObjectPatternString = ISLCA11yStrings.positionDistanceFromOtherObjectPattern.value;
   const progressDistanceFromOtherObjectPatternString = ISLCA11yStrings.progressDistanceFromOtherObjectPattern.value;
+  const farthestFromOtherObjectPatternString = ISLCA11yStrings.farthestFromOtherObjectPattern.value;
+  const closestToOtherObjectPatternString = ISLCA11yStrings.closestToOtherObjectPattern.value;
   const distanceFromOtherObjectPatternString = ISLCA11yStrings.distanceFromOtherObjectPattern.value;
+  const edgePositionDistanceFromOtherObjectPatternString = ISLCA11yStrings.edgePositionDistanceFromOtherObjectPattern.value;
   const lastStopDistanceFromOtherObjectPatternString = ISLCA11yStrings.lastStopDistanceFromOtherObjectPattern.value;
 
+  const leftString = ISLCA11yStrings.left.value;
+  const rightString = ISLCA11yStrings.right.value;
   const extremelyFarFromString = ISLCA11yStrings.extremelyFarFrom.value;
   const veryFarFromString = ISLCA11yStrings.veryFarFrom.value;
   const notSoFarFromString = ISLCA11yStrings.notSoFarFrom.value;
@@ -62,6 +67,8 @@ define( require => {
     extremelyCloseString
   ];
 
+  const { OBJECT_ONE } = ISLCObjectEnum;
+
   let describer = null;
 
   class PositionDescriber extends ISLCDescriber {
@@ -86,7 +93,6 @@ define( require => {
       this.lastMoveCloser = false;
       this.movedCloser = false;
 
-
       Property.multilink(
         [ this.object1.positionProperty, this.object2.positionProperty ],
         ( x1, x2 ) => {
@@ -95,12 +101,25 @@ define( require => {
           this.lastMoveCloser = this.movedCloser;
 
           // update current values
-          this.distanceBetween = Math.abs( x1 - x2 );
-          this.movedCloser = this.distanceBetween < this.oldDistanceBetween;
+          this.distanceBetween = this.convertDistanceMetric( Math.abs( x1 - x2 ) );
+
+          // only set movedCloser if the user is manipulating the value, null otherwise for comparison on focus
+          if ( this.object1.isDragging || this.object2.isDragging ) {
+            this.movedCloser = this.distanceBetween < this.oldDistanceBetween;
+          }
+          else {
+            this.movedCloser = null;
+          }
         }
       );
     }
 
+    /**
+     * Returns the string used in the screen summary item displaying position information:
+     * '{{object1Label}} and {{object2Label}} are {{qualitativeDistance}} each other, centers exactly {{distance}} {{units}} apart.'
+     *
+     * @returns {string}
+     */
     getObjectDistanceSummary() {
       const distance = this.convertedDistance;
       const { object1Label, object2Label, qualitativeDistance, units } = this;
@@ -110,33 +129,58 @@ define( require => {
       );
     }
 
+    /**
+     * Helper function for dynamically creating the desired strings to set the aria-valuetext property for the desired
+     * HTML objects.
+     *
+     * @param  {ISLCObjectEnum} thisObjectEnum
+     * @param  {string}  pattern
+     * @param  {object}  additionalFillObject
+     * @returns {string}
+     */
     getSpherePositionAriaValueText( thisObjectEnum, pattern, additionalFillObject ) {
       const otherObjectLabel = this.getOtherObjectLabelFromEnum( thisObjectEnum );
       const distance = this.convertedDistance;
-      const units = this._distanceUnits;
+      const units = this.units;
       const fillObject = { distance, units, otherObjectLabel };
       return StringUtils.fillIn( pattern, _.extend( fillObject, additionalFillObject ) );
     }
 
+    /**
+     * Returns the filled in string '{{distance}} {{units}} from {{otherObjectLabel}}.'
+     *
+     * @param  {ISLCObjectEnum} thisObjectEnum
+     * @returns {string}
+     */
     getDistanceFromOtherObjectText( thisObjectEnum ) {
       return this.getSpherePositionAriaValueText(
         thisObjectEnum,
-        distanceFromOtherObjectPatternString,
-        { units: this.units }
+        distanceFromOtherObjectPatternString
       );
     }
 
+    /**
+     * Returns the string filled in string '{{position}} {{unit}} mark, {{distance}} {{units}} from {{otherObjectLabel}}.'
+     *
+     * @param  {ISLCObjectEnum} thisObjectEnum
+     * @returns {string}
+     */
     getPositionAndDistanceFromOtherObjectText( thisObjectEnum ) {
       const position = this.getConvertedPositionFromEnum( thisObjectEnum );
       const unit = this.unit;
-      const units = this.units;
       return this.getSpherePositionAriaValueText(
         thisObjectEnum,
         positionDistanceFromOtherObjectPatternString,
-        { position, unit, units }
+        { position, unit }
       );
     }
 
+    /**
+     * Returns the filled in string '{{progress}}, {{distance}} {{units}} from {{otherObjectLabel}}.'
+     *
+     * @param  {ISLCObjectEnum} thisObjectEnum
+     * @returns {string}
+     */
     getProgressPositionAndDistanceFromOtherObjectText( thisObjectEnum ) {
       const progress = this.movedCloser ? closerString : fartherAwayString;
       return this.getSpherePositionAriaValueText(
@@ -146,6 +190,55 @@ define( require => {
       );
     }
 
+    /**
+     * Returns the filled in string '{{position}} {{unit}} mark, {{side}} edge, {{distance}} {{units}} from {{otherObjectLabel}}'
+     *
+     * @param  {ISLCObjectEnum} thisObjectEnum
+     * @returns {string}
+     */
+    getPositionAtEdgeAndDistanceFromOtherObjectText( thisObjectEnum ) {
+      const side = thisObjectEnum === OBJECT_ONE ? leftString : rightString;
+      const unit = this.unit;
+      const position = this.getConvertedPositionFromEnum( thisObjectEnum );
+      return this.getSpherePositionAriaValueText(
+        thisObjectEnum,
+        edgePositionDistanceFromOtherObjectPatternString,
+        { position, side, unit }
+      );
+    }
+
+    /**
+     * Returns the filled in string 'Closest to {{otherObjectLabel}}, {{distance}} {{units}} away.'
+     *
+     * @param  {ISLCObjectEnum} thisObjectEnum
+     * @returns {string}
+     */
+    getClosestToOtherObjectText( thisObjectEnum ) {
+      return this.getSpherePositionAriaValueText(
+        thisObjectEnum,
+        closestToOtherObjectPatternString
+      );
+    }
+
+    /**
+     * Returns the filled in string 'Farthest from {{otherObjectLabel}}, {{distance}} {{units}} away.'
+     *
+     * @param  {ISLCObjectEnum} thisObjectEnum
+     * @returns {string}
+     */
+    getFarthestFromOtherObjectText( thisObjectEnum ) {
+      return this.getSpherePositionAriaValueText(
+        thisObjectEnum,
+        farthestFromOtherObjectPatternString
+      );
+    }
+
+    /**
+     * Returns the string '{{region}}, last stop, {{distance}} {{units}} from {{otherObjectLabel}}.'
+     *
+     * @param  {ISLCObjectEnum} thisObjectEnum
+     * @returns {string}
+     */
     getLastStopDistanceFromOtherObjectText( thisObjectEnum ) {
       const region = this.qualitativeDistance;
       return this.getSpherePositionAriaValueText(
@@ -155,24 +248,85 @@ define( require => {
       );
     }
 
-    // the createAriaValueText function is called AFTER the underlying property (position in this case) is updated
-    // the PositionDescriber links to the position properties of the objects before initializeAccessibleSlider, thus
-    // from the call of the returned function below, this.distanceBetween will be set to the latest value before the aria-valuetext
-    // is set from AccessibleSlider
+    /**
+     * Returns the desired value for the ISLCObjectNodes' aria-valuetext attributes when they receive keyboard focus.
+     *
+     * @param  {ISLCObjectEnum} thisObjectEnum
+     * @returns {string}
+     */
+    getFocusAriaValueText( thisObjectEnum ) {
+      let text = this.getPositionAndDistanceFromOtherObjectText( thisObjectEnum );
+
+      if ( this.objectAtEdge( thisObjectEnum ) ) {
+        text = this.getPositionAtEdgeAndDistanceFromOtherObjectText( thisObjectEnum );
+      }
+
+      if ( this.objectsClosest ) {
+        text = this.getClosestToOtherObjectText( thisObjectEnum );
+      }
+
+      return text;
+    }
+
+    /**
+     * Returns a function used by AccessibleSlider to format its aria-valuetext attribute. Of note is that this function
+     * is called AFTER the Slider's position Property has been set. Since, the PositionDescriber links to the PositionProperty
+     * prior to the call to initializeAccessibleSlider, we can ensure that PositionDescribers dynamic properties (e.g. distanceBetween )
+     * will be accurate when the below function is called.
+     *
+     * @param  {ISLCObjectEnum} objectEnum
+     * @returns {Function~inner}
+     */
     ariaValueTextCreator( objectEnum ) {
+
+      /**
+       * Function passed to initializeAccessibleSlider as an option to format its aria-valuetext attribute when the underlying
+       * property is changed via keyboard input.
+       *
+       * @param  {number} formattedValue - the position of the ISLCObject, trimmed to the appropriate number of decimal places
+       * @param  {number} oldValue       - the old position
+       * @returns {string}                - the string that will fill the aria-valuetext attribute
+       */
       return ( formattedValue, oldValue ) => {
-        const thisObject = this.getObjectFromEnum( objectEnum );
         let newAriaValueText = this.getDistanceFromOtherObjectText( objectEnum );
 
         if ( this.lastMoveCloser !== this.movedCloser ) {
           newAriaValueText = this.getProgressPositionAndDistanceFromOtherObjectText( objectEnum );
         }
-        if ( thisObject.isAtEdgeOfRange() ) {
-          // last stop
-          newAriaValueText = this.getLastStopDistanceFromOtherObjectText( objectEnum );
+
+        if ( this.objectAtEdge( objectEnum ) ) {
+          newAriaValueText = this.getFarthestFromOtherObjectText( objectEnum );
         }
+
+        if ( this.objectsClosest ) {
+          newAriaValueText = this.getClosestToOtherObjectText( objectEnum );
+        }
+
         return newAriaValueText;
       };
+    }
+
+    /**
+    * Returns true if the model object associated with the passed-in enum is at the left/right boundary of the sim.
+    *
+    * @param  {ISLCObjectEnum} objectEnum
+    * @returns {Boolean}
+    */
+    objectAtEdge( objectEnum ) {
+      const object = this.getObjectFromEnum( objectEnum );
+      const { min, max } = object.enabledRangeProperty.get();
+      const edgeValue = objectEnum === OBJECT_ONE ? min : max;
+      return object.positionProperty.get() === edgeValue;
+    }
+
+    /**
+     * Returns true only if the objects are the minimum possible width apart given their current radii.
+     *
+     * @param  {ISLCObjectEnum} objectEnum
+     * @returns {boolean}
+     */
+    get objectsClosest() {
+      return this.distanceBetween === this.model.getSumRadiusWithSeparation();
     }
 
     /***********************
@@ -181,29 +335,47 @@ define( require => {
 
     /**
      * Returns the distance between the objects with the user-defined conversion applied.
-     * @return {String}
+     * @returns {string}
      */
     get convertedDistance() {
       return this.convertDistanceMetric( this.distanceBetween );
     }
 
     /**
-     * Returns the qualitative distance
-     * @return {[type]} [description]
+     * Returns the qualitative distance (e.g. 'close')
+     * @returns {string}
      */
     get qualitativeDistance() {
       return DISTANCE_STRINGS[ this.getDistanceIndex( this.distanceBetween ) ];
     }
 
+    /**
+     * The qualitative distance relative to another object (e.g. 'very far from')
+     *
+     * @returns {string}
+     */
     get qualitativeRelativeDistance() {
       return RELATIVE_DISTANCE_STRINGS[ this.getDistanceIndex( this.distanceBetween ) ];
     }
 
+    /**
+     * Returns the adjusted position of the passed object. Conversion function and offset are determined by PositionDescriber
+     * constructor options.
+     *
+     * @param  {ISLCObjectEnum} objectEnum
+     * @returns {number}
+     */
     getConvertedPositionFromEnum( objectEnum ) {
       const object = this.getObjectFromEnum( objectEnum );
       return this.convertDistanceMetric( object.positionProperty.get() + this.centerOffset );
     }
 
+    /**
+     * Returns the filled in string '{{label}} position'.
+     *
+     * @param  {string} label
+     * @returns {string}
+     */
     static getObjectLabelPositionText( label ) {
       return StringUtils.fillIn( objectLabelPositionPatternString, { label } );
     }
@@ -233,7 +405,7 @@ define( require => {
      *
      * @abstract
      * @param  {Number} distance
-     * @return {Integer}
+     * @returns {Integer}
      */
     getDistanceIndex( distance ) {
       throw new Error( 'getDistanceIndex MUST be implemented in subtypes.' );

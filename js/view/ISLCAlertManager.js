@@ -13,6 +13,8 @@ define( require => {
   // strings
   const forceValuesHiddenString = ISLCA11yStrings.forceValuesHidden.value;
 
+  let manager = null;
+
   class ISLCAlertManager {
     constructor( model ) {
       this.model = model;
@@ -29,6 +31,16 @@ define( require => {
       }
       const utterance = new Utterance( { alert, uniqueGroupId: 'forceValues' } );
       utteranceQueue.addToBack( utterance );
+    }
+
+    static getManager() {
+      assert && assert( manager, 'AlertManagers must be initialized prior to use' );
+      return manager;
+    }
+
+    static initialize( subtype ) {
+      manager = subtype;
+      return manager;
     }
   }
 

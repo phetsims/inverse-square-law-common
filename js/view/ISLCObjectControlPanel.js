@@ -53,7 +53,7 @@ define( function( require ) {
       tagName: 'div',
 
       numberControlOptions: null,
-      tickLabelOptions: {},
+      tickLabelOptions: null,
 
       tandem: Tandem.required
     }, options );
@@ -82,7 +82,6 @@ define( function( require ) {
       // title and value text options
       titleFont: new PhetFont( 12 ),
       titleMaxWidth: TITLE_MAX_WIDTH,
-      onFocus: function( event ) {},
 
       // phet-io
       tandem: tandem.createTandem( 'numberControl' )
@@ -137,10 +136,7 @@ define( function( require ) {
     var numberControl = new NumberControl( titleString, objectProperty, valueRange, options.numberControlOptions );
 
     Panel.call( this, numberControl, options );
-    // debugger;
-    numberControl.addInputListener( {
-      focus: options.numberControlOptions.onFocus
-    } );
+
     // a11y - it looks nicer if the entire panel has a group focus highlight rather than the NumberControl
     assert && assert( options.numberControlOptions.groupFocusHighlight === undefined, 'ISLCObjectControlPanel sets group focus highlight' );
     numberControl.groupFocusHighlight = false;
@@ -153,6 +149,10 @@ define( function( require ) {
       outerStroke: FocusHighlightPath.OUTER_DARK_GROUP_FOCUS_COLOR,
       innerStroke: FocusHighlightPath.INNER_DARK_GROUP_FOCUS_COLOR
     } );
+
+    this.setAriaValueText = function( text ) {
+      numberControl.setAriaValueText( text );
+    };
   }
 
   inverseSquareLawCommon.register( 'ISLCObjectControlPanel', ISLCObjectControlPanel );

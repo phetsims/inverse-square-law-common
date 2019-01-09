@@ -17,9 +17,9 @@ define( function( require ) {
   var AccessibleSlider = require( 'SUN/accessibility/AccessibleSlider' );
   var Color = require( 'SCENERY/util/Color' );
   var Circle = require( 'SCENERY/nodes/Circle' );
-  var ForceDescriber = require( 'INVERSE_SQUARE_LAW_COMMON/view/describers/ForceDescriber' );
   var inherit = require( 'PHET_CORE/inherit' );
   var inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
+  var ISLCAlertManager = require( 'INVERSE_SQUARE_LAW_COMMON/view/ISLCAlertManager' );
   var ISLCForceArrowNode = require( 'INVERSE_SQUARE_LAW_COMMON/view/ISLCForceArrowNode' );
   var ISLCObjectEnum = require( 'INVERSE_SQUARE_LAW_COMMON/view/ISLCObjectEnum' );
   var ISLCPullerNode = require( 'INVERSE_SQUARE_LAW_COMMON/view/ISLCPullerNode' );
@@ -34,8 +34,6 @@ define( function( require ) {
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
   var Tandem = require( 'TANDEM/Tandem' );
   var Util = require( 'DOT/Util' );
-  var Utterance = require( 'SCENERY_PHET/accessibility/Utterance' );
-  var utteranceQueue = require( 'SCENERY_PHET/accessibility/utteranceQueue' );
 
   // phetio
   var BooleanProperty = require( 'AXON/BooleanProperty' );
@@ -131,14 +129,15 @@ define( function( require ) {
     var tandem = options.tandem;
 
     Node.call( this, {
-      // containerTagName: 'li',
+      containerTagName: 'div',
       tandem: tandem
     } );
 
     // A11Y DRAFT
-    assert && assert( options.createAriaValueText, 'ISLCObjectNode subtypes must define an aria-valuetext creation function' );
+    // assert && assert( options.createAriaValueText, 'ISLCObjectNode subtypes must define an aria-valuetext creation function' );
     this.accessibleName = PositionDescriber.getObjectLabelPositionText( options.label );
-    var forceDescriber = ForceDescriber.getDescriber();
+    var positionDescriber = PositionDescriber.getDescriber();
+    var alertManager = ISLCAlertManager.getManager();
 
     // @protected
     this.layoutBounds = layoutBounds;
@@ -304,7 +303,6 @@ define( function( require ) {
     var defaultStepSize = QueryStringMachine.containsKey( 'stepSize' ) ? ISLCQueryParameters.stepSize : options.snapToNearest * 2;
 
     var oldPosition = object.positionProperty.get();
-    var currentForce = model.forceProperty.get();
     var accessibleSliderOptions = {
       keyboardStep: defaultStepSize,
       shiftKeyboardStep: options.snapToNearest,
@@ -317,55 +315,20 @@ define( function( require ) {
       startDrag: function() {
         object.isDragging = true;
         oldPosition = object.positionProperty.get();
-        currentForce = model.forceProperty.get();
       },
       endDrag: function() {
         var newPosition = object.positionProperty.get();
-        var newForce = model.forceProperty.get();
-        var forceGrowing = ( newForce - currentForce ) > 0;
         var positionChanged = newPosition !== oldPosition;
         object.isDragging = false;
         self.redrawForce();
-
-        /*
-         * perhaps is possible to distinguish between position updates initialized from dragging/keyboard interaction
-         * and from being pushed. This could be possible by setting a flag on startDrag (e.g. userInteracting). Then, somewhere
-         * we link to each object's position property. There, if the userInteracting flag is false, the movement must have
-         * come from being pushed, and we set the pushedObjectEnum to the appropriate object.
-         */
-
-        // TODO: consider implementing with alertManager
-        // alertManager.positionSliderAlert( positionChanged );
-        /*
-         * new logic 12/31/18
-         * if positionChanged
-         *  if either object at edge or objects closest: Vectors {{size}}, forces [value] [units]
-         *  else: vectors change, forces now ...
-         * else
-         *  proximity, vector clause
-         */
-        if ( nodeDescriber !== null ){
-          let alert = forceDescriber.getVectorSizeText();
-          if ( positionChanged ) {
-            // alert force vectors changed
-            if ( model.forceValuesProperty.get() ) {
-              alert = forceDescriber.getVectorSizeForceValueText();
-            }
-            utteranceQueue.addToBack( new Utterance( {
-              alert: alert,
-              uniqueGroupId: 'forceVectorChanged'
-            } ) );
-          }
-          else {
-            // alert state of force vectors
-            utteranceQueue.addToBack( new Utterance( {
-              alert: forceDescriber.getForceVectorStateAlertText(),
-              uniqueGroupId: 'forceVectorState'
-            } ) );
-          }
+        if ( positionChanged ) {
+          alertManager.alertPositionChanged( positionDescriber.objectsClosest );
+        }
+        else {
+          alertManager.alertPositionUnchanged();
         }
       },
-      createAriaValueText: options.createAriaValueText
+      createAriaValueText: positionDescriber.ariaValueTextCreator( this.enum )
     };
 
     // initialize features that  make this node act like an accessible range input
@@ -376,6 +339,7 @@ define( function( require ) {
       accessibleSliderOptions
     );
 
+    // TODO: move to MassNode since ChargeNodes don't have a changing radiusProperty.
     this.objectModel.radiusProperty.link( function() {
 
       // a11y - update the focusHighlight with the radius (Accessibility.js setter)

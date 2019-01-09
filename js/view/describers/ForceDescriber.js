@@ -35,6 +35,7 @@ define( require => {
   const vectorChangeForcesNowValuePatternString = ISLCA11yStrings.vectorChangeForcesNowValuePattern.value;
   const vectorChangeClausePatternString = ISLCA11yStrings.vectorChangeClausePattern.value;
   const vectorChangeForcesNowClausePatternString = ISLCA11yStrings.vectorChangeForcesNowClausePattern.value;
+  const vectorForceClausePatternString = ISLCA11yStrings.vectorForceClausePattern.value;
 
   const tinyString = ISLCA11yStrings.tiny.value;
   const verySmallString = ISLCA11yStrings.verySmall.value;
@@ -182,7 +183,7 @@ define( require => {
      *    'Values in {{this.units}}.'
      *    'Values in newtons with scientific notation.'
      *
-     * @return {string}
+     * @returns {string}
      */
     getScientificNotationAlertText() {
 
@@ -197,7 +198,7 @@ define( require => {
      * Returns the filled in string '{{forceValue}} {{units}}' where forceValue is a formatted string. See the JSDoc for
      * the formattedForce getter for details.
      *
-     * @return {string}
+     * @returns {string}
      */
 
     getForceValueAndUnits() {
@@ -209,7 +210,7 @@ define( require => {
     /**
      * Returns the filled-in string 'Values in {{units}}'.
      *
-     * @return {string}
+     * @returns {string}
      */
     getValuesInUnitsText() {
       return StringUtils.fillIn( valuesInUnitsPatternString, { units: this.units } );
@@ -218,7 +219,7 @@ define( require => {
     /**
     * Returns the string 'Force vectors {{size}}' with the qualitative size string filled in.
     *
-    * @return {string}
+    * @returns {string}
     */
     getForceVectorSizeText() {
       const size = this.vectorSize;
@@ -228,7 +229,7 @@ define( require => {
     /**
      * Returns the string 'Vectors {{size}}.'
      *
-     * @return {string}
+     * @returns {string}
      */
     getVectorSizeText() {
       const size = this.vectorSize;
@@ -238,7 +239,7 @@ define( require => {
     /**
      * Returns the string 'Vectors {{size}}, forces {{forceValue}} {{units}}.'
      *
-     * @return {string}
+     * @returns {string}
      */
     getVectorSizeForceValueText() {
       const size = this.vectorSize;
@@ -248,9 +249,26 @@ define( require => {
     }
 
     /**
+     * Returns the filled in string 'vectors {{size}}, forces {{value}} {{units}}'. Will display in scientific notation
+     * if it's selected.
+     *
+     * @returns {string}
+     */
+    getVectorsAndForcesClause() {
+      const vectorClause = this.getVectorSizeClause();
+      if ( !this.model.forceValuesProperty.get() ) {
+        return vectorClause;
+      }
+      else {
+        const forceClause = this.getForcesClause();
+        return StringUtils.fillIn( vectorForceClausePatternString, { vectorClause, forceClause } );
+      }
+    }
+
+    /**
      * Returns the string 'vectors {{size}}' for use in larger pattern strings.
      *
-     * @return {string}
+     * @returns {string}
      */
     getVectorSizeClause() {
       const size = this.vectorSize;
@@ -260,7 +278,7 @@ define( require => {
     /**
     * Returns the string 'forces {{forceValue}} {{units}}' for use in larger pattern strings.
     *
-    * @return {string}
+    * @returns {string}
     */
     getForcesClause() {
       return this.fillForceClausePattern( forcesValueUnitsClausePatternString );
@@ -269,7 +287,7 @@ define( require => {
     /**
     * Returns the string 'forces now {{forceValue}} {{units}}' for use in larger pattern strings.
     *
-    * @return {string}
+    * @returns {string}
     */
     getForcesNowClause() {
       return this.fillForceClausePattern( forcesNowValueUnitsClausePatternString );
@@ -279,7 +297,7 @@ define( require => {
     * Fills in the passed in pattern with {{forceValue}} and {{units}}.
     *
     * @param {string} pattern
-    * @return {string}
+    * @returns {string}
     */
     fillForceClausePattern( pattern ) {
       const forceValue = this.formattedForce;
@@ -290,7 +308,7 @@ define( require => {
     /**
      * Returns the string 'Vectors {{changeDirection}}'.
      *
-     * @return {string}
+     * @returns {string}
      */
     getVectorChangeText() {
       const changeDirection = this.changeDirection;
@@ -300,7 +318,7 @@ define( require => {
     /**
      * Returns the filled-in string 'Vectors {{changeDirection}}, forces now {{forceValue}} {{units}}'.
      *
-     * @return {string}
+     * @returns {string}
      */
     getVectorChangeForcesNowText() {
       const changeDirection = this.changeDirection;
@@ -312,7 +330,7 @@ define( require => {
     /**
     * Returns the filled-in string 'vectors {{changeDirection}}' for use in larger pattern strings.
     *
-    * @return {string}
+    * @returns {string}
     */
     getVectorChangeClause() {
       const vectorChange = this.changeDirection;
@@ -323,7 +341,7 @@ define( require => {
     * Returns the filled-in string 'vectors {{changeDirection}}, forces now {{forceValue}} {{units}}' for use in larger
     * pattern strings.
     *
-    * @return {string}
+    * @returns {string}
     */
     getVectorChangeForcesNowClause() {
       const { changeDirection, units } = this;
@@ -334,7 +352,7 @@ define( require => {
     /**
      * Returns the qualitiative amount of pull/push the robots are currently exerting.
      *
-     * @return {string}
+     * @returns {string}
      */
     get robotEffort() {
       return PULL_EFFORT_STINGS[ this.effortIndex ];
@@ -343,7 +361,7 @@ define( require => {
     /**
      * Returns the qualitative size of force vectors.
      *
-     * @return {string}
+     * @returns {string}
      */
     get vectorSize() {
       return SIZE_STRINGS[ this.vectorSizeIndex ];
@@ -352,7 +370,7 @@ define( require => {
     /**
     * Returns the appropriate changed direction for the vectors ('get bigger/smaller'), if no change, null is returned.
     *
-    * @return {string|null}
+    * @returns {string|null}
     */
     get changeDirection() {
       return CHANGE_DIRECTIONS[ this.vectorChangeDirection + 1 ];
@@ -395,7 +413,7 @@ define( require => {
      *
      * @abstract
      * @param  {Number} force
-     * @return {Integer}
+     * @returns {Integer}
      */
     getForceVectorIndex( force ) {
       throw new Error( 'getForceVectorIndex MUST be implemented in subtypes.' );
@@ -406,7 +424,7 @@ define( require => {
      *
      * @abstract
      * @param  {Number} force
-     * @return {Integer}
+     * @returns {Integer}
      */
     getEffortIndex( force ) {
       throw new Error( 'getEffortIndex MUST be implemented in subtypes.' );
