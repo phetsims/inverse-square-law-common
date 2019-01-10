@@ -276,18 +276,9 @@ define( function( require ) {
       tandem: tandem.createTandem( 'dragHandler' )
     } ) );
 
-    // on reset, no objects are destroyed and properties are set to initial values
-    // no need to dispose of any of the below listeners
-    object.positionProperty.link( function( property ) {
-
-      // position this node and its force arrow with label
-      var transformedValue = modelViewTransform.modelToViewX( property );
-      self.x = transformedValue;
-      self.arrowNode.x = transformedValue;
-    } );
-
     model.forceValuesProperty.lazyLink( this.redrawForce.bind( this ) );
     object.radiusProperty.lazyLink( this.redrawForce.bind( this ) );
+    object.valueProperty.lazyLink( this.redrawForce.bind( this ) );
     model.forceProperty.lazyLink( this.redrawForce.bind( this ) );
 
     object.baseColorProperty.link( function( baseColor ) {
@@ -297,7 +288,18 @@ define( function( require ) {
       }
     } );
 
-    this.redrawForce();
+    // on reset, no objects are destroyed and properties are set to initial values
+    // no need to dispose of any of the below listeners
+    object.positionProperty.link( function( property ) {
+
+      // position this node and its force arrow with label
+      var transformedValue = modelViewTransform.modelToViewX( property );
+      self.x = transformedValue;
+      self.arrowNode.x = transformedValue;
+      self.redrawForce();
+    } );
+
+    // this.redrawForce();
 
     // a11y - for experimenting with default step sizes. Ignore if not explicitly set
     var defaultStepSize = QueryStringMachine.containsKey( 'stepSize' ) ? ISLCQueryParameters.stepSize : options.snapToNearest * 2;
@@ -435,8 +437,8 @@ define( function( require ) {
       // set the scale of the arrow based on the model value
       this.arrowNode.redrawArrow( this.model.forceProperty.get() );
 
-      // update the arrow label
-      this.arrowNode.updateLabel( this.model.forceProperty.get(), this.model.forceValuesProperty.get() );
+      // update the arrow label - always display the force as a positive magnitude
+      this.arrowNode.updateLabel( Math.abs( this.model.forceProperty.get() ), this.model.forceValuesProperty.get() );
 
       // set the text position, positioning the center relative to the parent coordinate frame
       this.arrowNode.setArrowTextPosition( this.parentToLocalBounds( this.layoutBounds ) );

@@ -298,7 +298,7 @@ define( function( require ) {
       }
       else if ( object === this.object2 ) {
 
-        // the max value for the right object is the right edge minus the puller width and the radius of the obejct
+        // the max value for the right object is the right edge minus the puller width and the radius of the object
         maxX = this.rightObjectBoundary;
       }
 
@@ -349,7 +349,6 @@ define( function( require ) {
       // now make sure that the snapped position is within the left and right boundaries for this model
       snappedPosition = Math.min( snappedPosition, this.rightObjectBoundary );
       snappedPosition = Math.max( snappedPosition, this.leftObjectBoundary );
-
       return snappedPosition;
     },
 
