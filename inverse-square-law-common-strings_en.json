@@ -26,6 +26,9 @@
   "scientificNotation": {
     "value": "Scientific Notation"
   },
+  "units.meter": {
+    "value": "meter"
+  },
   "units.meters": {
     "value": "meters"
   },
