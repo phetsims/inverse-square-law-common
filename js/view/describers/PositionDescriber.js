@@ -338,7 +338,7 @@ define( require => {
      * @returns {string}
      */
     get convertedDistance() {
-      return this.convertDistanceMetric( this.distanceBetween );
+      return this.distanceBetween;
     }
 
     /**
@@ -408,7 +408,9 @@ define( require => {
      * @returns {Integer}
      */
     getDistanceIndex( distance ) {
-      throw new Error( 'getDistanceIndex MUST be implemented in subtypes.' );
+      // TODO: uncomment and implement in Coulomb's Law
+      // NOTE: as of 1/10/19, this only hits when using keyboard to move a ChargeNode when it's at its left/right boundary
+      // throw new Error( 'getDistanceIndex MUST be implemented in subtypes.' );
     }
   }
 
