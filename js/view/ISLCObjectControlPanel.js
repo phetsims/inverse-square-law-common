@@ -50,10 +50,10 @@ define( function( require ) {
       align: 'right',
 
       // a11y
-      tagName: 'div',
+      tagName: 'li',
 
       numberControlOptions: null,
-      tickLabelOptions: null,
+      tickLabelOptions: {},
 
       tandem: Tandem.required
     }, options );
@@ -67,45 +67,20 @@ define( function( require ) {
 
     // options that are passed along to the number control
     options.numberControlOptions = _.extend( {
-      numberDisplayOptions: null,
-
-      sliderOptions: null,
-      arrowButtonOptions: {
-        scale: 1
-      },
-
-      additionalTicks: [],
+      // Don't fill in the {0}, it will be filled in by NumberControl
+      valuePattern: StringUtils.fillIn( pattern0Value1UnitsString, { value: '{0}', units: unitString } ),
 
       // layout options
       layoutFunction: NumberControl.createLayoutFunction3( { xSpacing: 10 } ),
-
-      // title and value text options
-      titleFont: new PhetFont( 12 ),
-      titleMaxWidth: TITLE_MAX_WIDTH,
-
-      // phet-io
-      tandem: tandem.createTandem( 'numberControl' )
-    }, options.numberControlOptions );
-
-    options.numberControlOptions.numberDisplayOptions = _.extend( {
-      // Don't fill in the {0}, it will be filled in by NumberControl
-      valuePattern: StringUtils.fillIn( pattern0Value1UnitsString, { value: '{0}', units: unitString } ),
-      font: new PhetFont( 12 ),
-      align: 'right',
-      xMargin: 10,
-      yMargin: 4,
-      backgroundStroke: 'black',
-      maxWidth: VALUE_MAX_WIDTH,
-      cornerRadius: 3
-    }, options.numberControlOptions.numberDisplayOptions );
-
-    options.numberControlOptions.sliderOptions = _.extend( {
       minorTickSpacing: 2,
       minorTickLength: 6,
       trackFillEnabled: 'black',
       thumbSize: THUMB_SIZE,
 
+
+
       // tick options
+      additionalTicks: [],
       majorTicks: [ {
         value: valueRange.min,
         label: new Text(
@@ -119,9 +94,30 @@ define( function( require ) {
           _.extend( { tandem: options.tandem.createTandem( 'majorTickMaxLabel' ) }, options.tickLabelOptions )
         )
       } ],
+      majorTickLength: 8,
+
+      valueAlign: 'right',
+      valueXMargin: 10,
+      valueYMargin: 4,
+      valueBackgroundStroke: 'black',
+      valueBackgroundCornerRadius: 3,
       tickLabelSpacing: 1,
-      majorTickLength: 8
-    }, options.numberControlOptions.sliderOptions );
+
+      // title and value text options
+      titleFont: new PhetFont( 12 ),
+      valueFont: new PhetFont( 12 ),
+      titleMaxWidth: TITLE_MAX_WIDTH,
+      valueMaxWidth: VALUE_MAX_WIDTH,
+
+      // phet-io
+      tandem: tandem.createTandem( 'numberControl' )
+    }, options.numberControlOptions );
+
+    options.numberControlOptions.arrowButtonOptions = _.extend( {
+      touchAreaXDilation: 15,
+      touchAreaYDilation: 15,
+      scale: 1
+    }, options.numberControlOptions.arrowButtonOptions );
 
     for ( var i = 0; i < options.numberControlOptions.additionalTicks.length; i++ ) {
       var tick = {

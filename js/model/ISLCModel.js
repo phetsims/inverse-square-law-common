@@ -214,7 +214,7 @@ define( function( require ) {
      * Helper function to for accessing and mapping force ranges in the inheriting sims' views
      *
      * @public
-     * @return {number} the smallest possible force magnitude
+     * @returns {number} the smallest possible force magnitude
      */
     getMinForce: function() {
       var maxDistance = Math.abs( this.rightObjectBoundary - this.leftObjectBoundary );
@@ -231,7 +231,7 @@ define( function( require ) {
      * Helper function to for accessing and mapping force ranges in the inheriting sims' views
      *
      * @public
-     * @return {number} the largest possible force magnitude
+     * @returns {number} the largest possible force magnitude
      */
     getMaxForce: function() {
       var maxValue = this.object1.valueRange.max;
@@ -244,7 +244,7 @@ define( function( require ) {
      *
      * @public
      * @param  {number} value - the object's mass or charge
-     * @return {number} the distance between the objects' centers
+     * @returns {number} the distance between the objects' centers
      */
     getMinDistance: function( value ) {
 
@@ -260,7 +260,7 @@ define( function( require ) {
      * @param  {number} v1 - the first object's mass or charge
      * @param  {number} v2 - the second object's mass or charge
      * @param  {number} distance - the distance between the objects' centers
-     * @return {number} the force between the two objects
+     * @returns {number} the force between the two objects
      */
     calculateForce: function( v1, v2, distance ) {
       assert && assert( distance > 0, 'must have non zero distance between objects' );
@@ -272,7 +272,7 @@ define( function( require ) {
      * the two objects.  This is used throughout the model.
      *
      * @public
-     * @return {number}
+     * @returns {number}
      */
     getSumRadiusWithSeparation: function() {
       return this.snapToGrid(
@@ -285,7 +285,7 @@ define( function( require ) {
      *
      * @private
      * @param  {ISLCObject} object
-     * @return {number}
+     * @returns {number}
      */
     getObjectMaxPosition: function( object ) {
 
@@ -310,7 +310,7 @@ define( function( require ) {
      *
      * @private
      * @param  {ISLCObject} object
-     * @return {number}
+     * @returns {number}
      */
     getObjectMinPosition: function( object ) {
 
@@ -336,7 +336,7 @@ define( function( require ) {
      *
      * @private
      * @param  {number} position
-     * @return {number}
+     * @returns {number}
      */
     snapToGrid: function( position ) {
       var snappedPosition = position;
