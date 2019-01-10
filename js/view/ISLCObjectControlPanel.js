@@ -126,7 +126,7 @@ define( function( require ) {
           tandem: options.tandem.createTandem( options.numberControlOptions.additionalTicks[ i ].tandemLabel )
         }, options.tickLabelOptions ) )
       };
-      options.numberControlOptions.sliderOptions.majorTicks.push( tick );
+      options.numberControlOptions.majorTicks.push( tick );
     }
 
     var numberControl = new NumberControl( titleString, objectProperty, valueRange, options.numberControlOptions );
