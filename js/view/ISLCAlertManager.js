@@ -19,6 +19,10 @@ define( require => {
   let manager = null;
 
   class ISLCAlertManager {
+
+    /**
+     * @param {ISLCModel} model
+     */
     constructor( model ) {
       this.model = model;
       this.forceDescriber = ForceDescriber.getDescriber();
