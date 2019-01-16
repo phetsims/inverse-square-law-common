@@ -13,6 +13,7 @@ define( function( require ) {
   var AccessiblePeer = require( 'SCENERY/accessibility/AccessiblePeer' );
   var Bounds2 = require( 'DOT/Bounds2' );
   var FocusHighlightFromNode = require( 'SCENERY/accessibility/FocusHighlightFromNode' );
+  var GrabDragInteraction = require( 'SCENERY_PHET/accessibility/GrabDragInteraction' );
   var inherit = require( 'PHET_CORE/inherit' );
   var inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
   var ISLCA11yStrings = require( 'INVERSE_SQUARE_LAW_COMMON/ISLCA11yStrings' );
@@ -27,6 +28,8 @@ define( function( require ) {
 
   // strings
   var unitsCentimetersString = require( 'string!INVERSE_SQUARE_LAW_COMMON/units.centimeters' );
+
+  // a11y strings
   var rulerHelpTextString = ISLCA11yStrings.rulerHelpText.value;
   var rulerLabelString = ISLCA11yStrings.rulerLabel.value;
   var moveInFourDirectionsString = ISLCA11yStrings.moveInFourDirections.value;
@@ -54,9 +57,10 @@ define( function( require ) {
       rulerInset: RULER_INSET,
 
       // a11y
-      moveOnHoldDelay: 750,
-      tagName: 'div'
+      moveOnHoldDelay: 750
     }, options );
+
+    assert && assert( options.tagName === undefined, 'RulerNode sets its own tagName, see GrabDragInteraction usage below.' );
 
     var majorTickLabels = options.majorTickLabels;
     var rulerUnitString = options.unitString;
@@ -92,11 +96,6 @@ define( function( require ) {
     ruler.mouseArea = Shape.rectangle( 0, 0, ruler.bounds.width, RULER_HEIGHT );
     ruler.touchArea = ruler.mouseArea;
 
-    // @public - ruler node is never destroyed, no listener disposal necessary
-    model.rulerPositionProperty.link( function( value ) {
-      ruler.center = modelViewTransform.modelToViewPosition( value );
-    } );
-
     // ruler drag bounds (in model coordinate frame) - assumes a single point scale inverted Y mapping
     var modelHeight = modelViewTransform.viewToModelDeltaY( screenHeight );
     var modelRulerHeight = modelViewTransform.viewToModelDeltaY( this.height );
@@ -129,7 +128,7 @@ define( function( require ) {
 
     // a11y - custom, layerable focus highlight
     var focusHighlight = new FocusHighlightFromNode( ruler, { useLocalBounds: true } );
-    this.setFocusHighlight( focusHighlight);
+    this.setFocusHighlight( focusHighlight );
 
     ruler.addChild( focusHighlight );
 
@@ -155,20 +154,66 @@ define( function( require ) {
         }
       }
     } );
-    this.addInputListener( keyboardDragListener );
 
-    this.accessibleName = rulerLabelString;
-    this.helpText = rulerHelpTextString;
-    this.ariaRole = 'application';
-    this.setAccessibleAttribute( 'aria-roledescription', moveInFourDirectionsString );
-    this.addAriaDescribedbyAssociation( {
-      otherNode: this,
-      otherElementName: AccessiblePeer.DESCRIPTION_SIBLING,
-      thisElementName: AccessiblePeer.PRIMARY_SIBLING
+    // a11y - add the "grab button" interaction
+    this.a11yGrabDragInteraction = new GrabDragInteraction( this, {
+      objectToGrabString: rulerLabelString,
+
+      // Empirically determined values to place the cue above the book.
+      grabCueOptions: {
+        x: 150,
+        y: -40
+      },
+      grabbableOptions: {
+        appendDescription: true,
+        helpText: rulerHelpTextString,
+        focusHighlight: focusHighlight
+      },
+
+      // whenever converting from grabbable -> draggable, this function is called
+      onDraggable: () => {
+        this.setAccessibleAttribute( 'aria-roledescription', moveInFourDirectionsString );
+        this.addAriaDescribedbyAssociation( {
+          otherNode: this,
+          otherElementName: AccessiblePeer.DESCRIPTION_SIBLING,
+          thisElementName: AccessiblePeer.PRIMARY_SIBLING
+        } );
+      },
+
+      // whenever converting from draggable -> grabbable, this function is called
+      onGrabbable: () => {
+        if ( this.hasAccessibleAttribute( 'aria-roledescription' ) ) {
+          this.removeAccessibleAttribute( 'aria-roledescription' );
+        }
+        this.ariaDescribedbyAssociations = [];
+      },
+
+      listenersForDrag: [ keyboardDragListener ]
+    } );
+
+    // @public - ruler node is never destroyed, no listener disposal necessary
+    // Called after the focusHighlight has been added as a child to the ruler
+    model.rulerPositionProperty.link( function( value ) {
+
+      // Because the focus highlight is `focusHighlightLayerable`, the highlight for `this`
+      // is a child of the ruler. As a result the "center" includes the focusHighlight as well
+      // as some child added to it in GrabDragInteraction, and so it is easiest to set the center
+      // disregarding the focusHighlight. See https://github.com/phetsims/gravity-force-lab/issues/140
+      ruler.removeChild( focusHighlight );
+      ruler.center = modelViewTransform.modelToViewPosition( value );
+      ruler.addChild( focusHighlight );
     } );
   }
 
   inverseSquareLawCommon.register( 'ISLCRulerNode', ISLCRulerNode );
 
-  return inherit( Node, ISLCRulerNode );
+  return inherit( Node, ISLCRulerNode, {
+
+    /**
+     * @public
+     */
+    reset: function() {
+      this.a11yGrabDragInteraction.reset();
+    }
+  } );
 } );
