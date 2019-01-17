@@ -13,6 +13,6 @@
     "requirejsNamespace": "INVERSE_SQUARE_LAW_COMMON"
   },
   "eslintConfig": {
-    "extends": "../chipper/eslint/.eslintrc.js"
+    "extends": "../chipper/eslint/sim_eslintrc.js"
   }
 }
