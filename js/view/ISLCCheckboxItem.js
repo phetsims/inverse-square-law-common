@@ -58,7 +58,6 @@ define( function( require ) {
       children: [ new HStrut( maxWidth + options.padding ), labelContent ]
     } );
 
-    // a11y
     Checkbox.call( this, content, property,
       _.pick( options, [
         'boxWidth',
