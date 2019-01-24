@@ -23,7 +23,6 @@ define( function( require ) {
   var ISLCForceArrowNode = require( 'INVERSE_SQUARE_LAW_COMMON/view/ISLCForceArrowNode' );
   var ISLCObjectEnum = require( 'INVERSE_SQUARE_LAW_COMMON/view/ISLCObjectEnum' );
   var ISLCPullerNode = require( 'INVERSE_SQUARE_LAW_COMMON/view/ISLCPullerNode' );
-  var ISLCQueryParameters = require( 'INVERSE_SQUARE_LAW_COMMON/ISLCQueryParameters' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Path = require( 'SCENERY/nodes/Path' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
@@ -40,38 +39,38 @@ define( function( require ) {
 
   // constants
   var LABEL_MAX_WIDTH = 20; // empirically determined through testing with long strings
-	var ARROW_OPTION_KEYS = [
-		'defaultDirection',
-		'attractNegative', // if true, arrows will point towards each other if forces is negative
-		'arrowNodeLineWidth',
+  var ARROW_OPTION_KEYS = [
+    'defaultDirection',
+    'attractNegative', // if true, arrows will point towards each other if forces is negative
+    'arrowNodeLineWidth',
 
-		// label options
-		'otherObjectLabel', // label for the other object exerting a force on this object
-		'label', // label for this object
-		'arrowLabelFont',
-		'arrowLabelFill',
-		'arrowLabelStroke',
-		'forceReadoutDecimalPlaces', // number of decimal places in force readout
+    // label options
+    'otherObjectLabel', // label for the other object exerting a force on this object
+    'label', // label for this object
+    'arrowLabelFont',
+    'arrowLabelFill',
+    'arrowLabelStroke',
+    'forceReadoutDecimalPlaces', // number of decimal places in force readout
 
-		// arrow node arguments
-		'forceArrowHeight',
+    // arrow node arguments
+    'forceArrowHeight',
 
-		// arrow node options
-		'maxArrowWidth', // max width of the arrow when when redrawn, in view coordinates - used in mapping function
-		'headHeight',
-		'headWidth',
-		'tailWidth',
-		'arrowStroke',
-		'arrowFill'
-	];
-	var PULLER_OPTION_KEYS = [
-		'ropeLength',
-		'shadowMinWidth',
-		'shadowMaxWidth',
-		'attractNegative',
-		'displayShadow',
-		'atomicScale'
-	];
+    // arrow node options
+    'maxArrowWidth', // max width of the arrow when when redrawn, in view coordinates - used in mapping function
+    'headHeight',
+    'headWidth',
+    'tailWidth',
+    'arrowStroke',
+    'arrowFill'
+  ];
+  var PULLER_OPTION_KEYS = [
+    'ropeLength',
+    'shadowMinWidth',
+    'shadowMaxWidth',
+    'attractNegative',
+    'displayShadow',
+    'atomicScale'
+  ];
 
   var NEGATIVE_FILL = new Color( '#66f' );
   var POSITIVE_FILL = new Color( '#f66' );
@@ -98,6 +97,7 @@ define( function( require ) {
       attractNegative: false,
       forceReadoutDecimalPlaces: 12, // number of decimal places in force readout
       snapToNearest: null, // {number} if present, object node will snap to the nearest snapToNearest value on drag
+      stepSize: null, // {number} step size when moving the object keyboard. By default based on snapToNearest, see below.
 
       // options for the label, in the lower center of the sphere
       labelFill: '#fff',
@@ -127,6 +127,12 @@ define( function( require ) {
     }, options );
 
     var tandem = options.tandem;
+
+    // use snapToNearest if stepSize is not provided
+    if ( options.stepSize === null ) {
+      assert && assert( options.snapToNearest );
+      options.stepSize = options.snapToNearest * 2;
+    }
 
     Node.call( this, {
       containerTagName: 'div',
@@ -299,16 +305,11 @@ define( function( require ) {
       self.redrawForce();
     } );
 
-    // this.redrawForce();
-
-    // a11y - for experimenting with default step sizes. Ignore if not explicitly set
-    var defaultStepSize = QueryStringMachine.containsKey( 'stepSize' ) ? ISLCQueryParameters.stepSize : options.snapToNearest * 2;
-
     var oldPosition = object.positionProperty.get();
     var accessibleSliderOptions = {
-      keyboardStep: defaultStepSize,
+      keyboardStep: options.stepSize,
       shiftKeyboardStep: options.snapToNearest,
-      pageKeyboardStep: defaultStepSize * 2,
+      pageKeyboardStep: options.stepSize * 2,
       accessibleDecimalPlaces: 1,
       constrainValue: function( value ) {
         var numberOfDecimalPlaces = Util.numberOfDecimalPlaces( options.snapToNearest );
@@ -379,9 +380,11 @@ define( function( require ) {
     var fill;
     if ( forceValue < 0 ) {
       fill = NEGATIVE_FILL;
-    } else if ( forceValue > 0 ) {
+    }
+    else if ( forceValue > 0 ) {
       fill = POSITIVE_FILL;
-    } else {
+    }
+    else {
       fill = ZERO_FILL;
     }
 
