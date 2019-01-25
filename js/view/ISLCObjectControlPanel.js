@@ -145,10 +145,6 @@ define( function( require ) {
       outerStroke: FocusHighlightPath.OUTER_DARK_GROUP_FOCUS_COLOR,
       innerStroke: FocusHighlightPath.INNER_DARK_GROUP_FOCUS_COLOR
     } );
-
-    this.setAriaValueText = function( text ) {
-      numberControl.setAriaValueText( text );
-    };
   }
 
   inverseSquareLawCommon.register( 'ISLCObjectControlPanel', ISLCObjectControlPanel );
