@@ -307,11 +307,11 @@ define( require => {
     }
 
     /**
-    * Returns true if the model object associated with the passed-in enum is at the left/right boundary of the sim.
-    *
-    * @param  {ISLCObjectEnum} objectEnum
-    * @returns {Boolean}
-    */
+     * Returns true if the model object associated with the passed-in enum is at the left/right boundary of the sim.
+     *
+     * @param  {ISLCObjectEnum} objectEnum
+     * @returns {Boolean}
+     */
     objectAtEdge( objectEnum ) {
       const object = this.getObjectFromEnum( objectEnum );
       const { min, max } = object.enabledRangeProperty.get();
