@@ -55,6 +55,9 @@ define( function( require ) {
       numberControlOptions: null,
       tickLabelOptions: {},
 
+      // to add listeners to the numberControl as desired, no need to dispose them.
+      numberControlListener: {},
+
       tandem: Tandem.required
     }, options );
 
@@ -76,8 +79,6 @@ define( function( require ) {
       minorTickLength: 6,
       trackFillEnabled: 'black',
       thumbSize: THUMB_SIZE,
-
-
 
       // tick options
       additionalTicks: [],
@@ -130,6 +131,9 @@ define( function( require ) {
     }
 
     var numberControl = new NumberControl( titleString, objectProperty, valueRange, options.numberControlOptions );
+
+    // no need to remove
+    numberControl.addInputListener( options.numberControlListener );
 
     Panel.call( this, numberControl, options );
 
