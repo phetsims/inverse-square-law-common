@@ -16,8 +16,15 @@ define( require => {
   const { OBJECT_ONE, OBJECT_TWO } = ISLCObjectEnum;
 
   class ISLCDescriber {
+
+    /**
+     * @param {ISLCModel} model
+     * @param {string} object1Label
+     * @param {string} object2Label
+     */
     constructor( model, object1Label, object2Label ) {
 
+      // @private
       this.model = model;
       this.object1 = model.object1;
       this.object2 = model.object2;
@@ -25,32 +32,52 @@ define( require => {
       this.object2Label = object2Label;
     }
 
+    /**
+     * @param {ISLCObjectEnum} objectEnum
+     * @returns {Mass}
+     */
     getObjectFromEnum( objectEnum ) {
       return objectEnum === OBJECT_ONE ? this.object1 : this.object2;
     }
 
+    /**
+     * @param {ISLCObjectEnum} objectEnum
+     * @returns {Mass}
+     */
     getOtherObjectFromEnum( objectEnum ) {
       return objectEnum === OBJECT_ONE ? this.object2 : this.object1;
     }
 
+    /**
+     * @param {ISLCObjectEnum} objectEnum
+     * @returns {string}
+     */
     getObjectLabelFromEnum( objectEnum ) {
       return objectEnum === OBJECT_ONE ? this.object1Label : this.object2Label;
     }
 
+    /**
+     * @param {ISLCObjectEnum} objectEnum
+     * @returns {string}
+     */
     getOtherObjectLabelFromEnum( objectEnum ) {
       return objectEnum === OBJECT_ONE ? this.object2Label : this.object1Label;
     }
 
+    /**
+     * @param {ISLCObjectEnum} objectEnum
+     * @returns {ISLCObjectEnum}
+     */
     getOtherObjectEnum( objectEnum ) {
       return objectEnum === OBJECT_ONE ? OBJECT_TWO : OBJECT_ONE;
     }
 
-    getObjectsFromEnum( objectEnum ) {
-      const thisObject = OBJECT_ONE ? this.object1 : this.object2;
-      const otherObject = OBJECT_ONE ? this.object2 : this.object1;
-      return { thisObject, otherObject };
-    }
-
+    /**
+     * TODO: as of writing this is only used by GFL, should it be moved out of here?
+     * Static function to get interaction hint
+     * @param massOrCharge
+     * @returns {*|string}
+     */
     static getSummaryInteractionHint( massOrCharge ) {
       return StringUtils.fillIn(
         summaryInteractionHintPatternString,
