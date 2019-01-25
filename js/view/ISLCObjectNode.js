@@ -151,7 +151,7 @@ define( function( require ) {
     this.model = model;
     this.modelViewTransform = modelViewTransform;
 
-    // @public
+    // @public - which object this instance is (one or two)
     this.enum = object === model.object1 ? ISLCObjectEnum.OBJECT_ONE : ISLCObjectEnum.OBJECT_TWO;
 
     // the full range of force for the arrow node (note: this is distinct)
