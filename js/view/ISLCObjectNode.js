@@ -83,6 +83,7 @@ define( function( require ) {
    * @param {ModelViewTransform2} modelViewTransform
    * @param {Range} pullForceRange - empirically determined range of force values (usu. min/max) for puller image mapping
    * @param {Object} options
+   * @mixes AccessibleSlider
    * @constructor
    */
   function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, pullForceRange, options ) {
