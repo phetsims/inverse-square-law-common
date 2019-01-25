@@ -39,7 +39,7 @@ define( require => {
       value: 'Sphere Positions'
     },
     spherePositionHelpText: {
-      value: 'Move spheres, closer or further from each other.'
+      value: 'Move spheres, closer or farther from each other.'
     },
     forceVectorMagnitudePattern: {
       value: 'Force vector magnitude is {{objectValueUnits}}.'
