@@ -217,10 +217,10 @@ define( require => {
     }
 
     /**
-    * Returns the string 'Force vectors {{size}}' with the qualitative size string filled in.
-    *
-    * @returns {string}
-    */
+     * Returns the string 'Force vectors {{size}}' with the qualitative size string filled in.
+     *
+     * @returns {string}
+     */
     getForceVectorSizeText() {
       const size = this.vectorSize;
       return StringUtils.fillIn( forceVectorSizePatternString, { size } );
@@ -276,29 +276,29 @@ define( require => {
     }
 
     /**
-    * Returns the string 'forces {{forceValue}} {{units}}' for use in larger pattern strings.
-    *
-    * @returns {string}
-    */
+     * Returns the string 'forces {{forceValue}} {{units}}' for use in larger pattern strings.
+     *
+     * @returns {string}
+     */
     getForcesClause() {
       return this.fillForceClausePattern( forcesValueUnitsClausePatternString );
     }
 
     /**
-    * Returns the string 'forces now {{forceValue}} {{units}}' for use in larger pattern strings.
-    *
-    * @returns {string}
-    */
+     * Returns the string 'forces now {{forceValue}} {{units}}' for use in larger pattern strings.
+     *
+     * @returns {string}
+     */
     getForcesNowClause() {
       return this.fillForceClausePattern( forcesNowValueUnitsClausePatternString );
     }
 
     /**
-    * Fills in the passed in pattern with {{forceValue}} and {{units}}.
-    *
-    * @param {string} pattern
-    * @returns {string}
-    */
+     * Fills in the passed in pattern with {{forceValue}} and {{units}}.
+     *
+     * @param {string} pattern
+     * @returns {string}
+     */
     fillForceClausePattern( pattern ) {
       const forceValue = this.formattedForce;
       const units = this.units;
@@ -328,21 +328,21 @@ define( require => {
     }
 
     /**
-    * Returns the filled-in string 'vectors {{changeDirection}}' for use in larger pattern strings.
-    *
-    * @returns {string}
-    */
+     * Returns the filled-in string 'vectors {{changeDirection}}' for use in larger pattern strings.
+     *
+     * @returns {string}
+     */
     getVectorChangeClause() {
       const vectorChange = this.changeDirection;
       return StringUtils.fillIn( vectorChangeClausePatternString, { vectorChange } );
     }
 
     /**
-    * Returns the filled-in string 'vectors {{changeDirection}}, forces now {{forceValue}} {{units}}' for use in larger
-    * pattern strings.
-    *
-    * @returns {string}
-    */
+     * Returns the filled-in string 'vectors {{changeDirection}}, forces now {{forceValue}} {{units}}' for use in larger
+     * pattern strings.
+     *
+     * @returns {string}
+     */
     getVectorChangeForcesNowClause() {
       const { changeDirection, units } = this;
       const forceValue = this.formattedForce;
@@ -368,10 +368,10 @@ define( require => {
     }
 
     /**
-    * Returns the appropriate changed direction for the vectors ('get bigger/smaller'), if no change, null is returned.
-    *
-    * @returns {string|null}
-    */
+     * Returns the appropriate changed direction for the vectors ('get bigger/smaller'), if no change, null is returned.
+     *
+     * @returns {string|null}
+     */
     get changeDirection() {
       return CHANGE_DIRECTIONS[ this.vectorChangeDirection + 1 ];
     }
@@ -416,7 +416,7 @@ define( require => {
      * @returns {Integer}
      */
     getForceVectorIndex( force ) {
-      // TODO: uncomment and implement in coulombs law, commented so asserts will pass
+      // TODO: uncomment and implement in coulombs law, commented so asserts will pass, see https://github.com/phetsims/inverse-square-law-common/issues/58
       // throw new Error( 'getForceVectorIndex MUST be implemented in subtypes.' );
     }
 
@@ -428,7 +428,7 @@ define( require => {
      * @returns {Integer}
      */
     getEffortIndex( force ) {
-      // TODO: uncomment and implement in coulombs law, commented so asserts will pass
+      // TODO: uncomment and implement in coulombs law, commented so asserts will pass, https://github.com/phetsims/inverse-square-law-common/issues/58
       // throw new Error( 'getEffortIndex MUST be implemented in subtypes.' );
     }
   }

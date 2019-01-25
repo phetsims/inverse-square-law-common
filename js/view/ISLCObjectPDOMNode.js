@@ -13,13 +13,14 @@ define( require => {
     constructor( model, objectEnum, options ) {
 
       options = _.extend( {
+        // TODO: these should be required at some point. https://github.com/phetsims/inverse-square-law-common/issues/58
         thisObjectLabel: 'this object',
         otherObjectLabel: 'other object'
       }, options );
 
       const a11yOptions = _.extend( {
         labelTagName: 'h3',
-        labelContent: 'default content',
+        labelContent: 'default content', // TODO: these should be required at some point. https://github.com/phetsims/inverse-square-law-common/issues/58
         tagName: 'ul'
       }, options.a11yOptions );
 
