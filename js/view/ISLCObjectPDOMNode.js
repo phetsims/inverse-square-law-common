@@ -10,26 +10,27 @@ define( require => {
 
   class ISLCObjectPDOMNode extends Node {
 
-    constructor( model, objectEnum, options ) {
+    constructor( model, objectEnum, config ) {
 
-      options = _.extend( {
-        // TODO: these should be required at some point. https://github.com/phetsims/inverse-square-law-common/issues/58
-        thisObjectLabel: 'this object',
-        otherObjectLabel: 'other object'
-      }, options );
+      config = _.extend( {
+        object1Label: null, // @required
+        object2Label: null // @required
+      }, config );
+
+      assert && assert( config.object2Label && config.object1Label, 'required params must be specified' );
 
       const a11yOptions = _.extend( {
         labelTagName: 'h3',
         labelContent: 'default content', // TODO: these should be required at some point. https://github.com/phetsims/inverse-square-law-common/issues/58
         tagName: 'ul'
-      }, options.a11yOptions );
+      }, config.a11yOptions );
 
       super( a11yOptions );
 
       this.model = model;
       this.objectModel = objectEnum === ISLCObjectEnum.OBJECT_ONE ? model.object1 : model.object2;
-      this.thisObjectLabel = options.thisObjectLabel;
-      this.otherObjectLabel = options.otherObjectLabel;
+      this.thisObjectLabel = objectEnum === ISLCObjectEnum.OBJECT_ONE ? config.object1Label : config.object2Label;
+      this.otherObjectLabel = objectEnum === ISLCObjectEnum.OBJECT_ONE ? config.object2Label : config.object1Label;
 
       // @public
       this.forceVectorMagnitudeItemNode = new Node( { tagName: 'li' } );

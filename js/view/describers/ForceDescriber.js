@@ -159,6 +159,11 @@ define( require => {
       return StringUtils.fillIn( pattern, { forceValue, units } );
     }
 
+    /**
+     * @param {string} thisObjectLabel
+     * @param {string} otherObjectLabel
+     * @returns {string}
+     */
     getForceBetweenAndVectorText( thisObjectLabel, otherObjectLabel ) {
       const pattern = forceAndVectorPatternString;
       const fillObject = {
