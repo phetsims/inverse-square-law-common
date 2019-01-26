@@ -22,6 +22,7 @@ define( require => {
   const forceValueUnitsPatternString = ISLCA11yStrings.forceValueUnitsPattern.value;
   const robotPullSummaryPatternString = ISLCA11yStrings.robotPullSummaryPattern.value;
   const robotPushSummaryPatternString = ISLCA11yStrings.robotPushSummaryPattern.value;
+  const vectorsString = ISLCA11yStrings.vectors.value;
   const forceVectorSizePatternString = ISLCA11yStrings.forceVectorSizePattern.value;
   const vectorSizePatternString = ISLCA11yStrings.vectorSizePattern.value;
   const vectorSizeForcesValuePatternString = ISLCA11yStrings.vectorSizeForcesValuePattern.value;
@@ -101,7 +102,11 @@ define( require => {
         // for adding natural language to the force (e.g. '3 billion' instead of 3000000000)
         forceValueToString: value => StringUtils.fillIn( valuePatternString, { value } ),
 
-        forceArrowsString: forceVectorArrowsString
+        // {string} for simplification in GFLB
+        forceArrowsString: forceVectorArrowsString,
+
+        // {string} for simplification in GFLB
+        vectorsString: vectorsString
       }, options );
 
       // @private
@@ -114,12 +119,15 @@ define( require => {
       this.effortIndex = 0;
       this.vectorChangeDirection = 0; // 1 -> growing, 0 -> no change, -1 -> shrinking
 
-      // both of these string patterns can vary based on options
+      // these string patterns can vary based on options
       this.summaryVectorSizePatternString = StringUtils.fillIn( summaryVectorSizePatternString, {
         forceVectorArrows: options.forceArrowsString
       } );
       this.summaryVectorSizeValueUnitsPatternString = StringUtils.fillIn( summaryVectorSizeValueUnitsPatternString, {
         forceVectorArrows: options.forceArrowsString
+      } );
+      this.forceVectorSizePatternString = StringUtils.fillIn( forceVectorSizePatternString, {
+        vectors: options.vectorsString
       } );
 
       model.forceProperty.link( ( force, oldForce ) => {
@@ -240,7 +248,7 @@ define( require => {
      */
     getForceVectorSizeText() {
       const size = this.vectorSize;
-      return StringUtils.fillIn( forceVectorSizePatternString, { size } );
+      return StringUtils.fillIn( this.forceVectorSizePatternString, { size } );
     }
 
     /**
