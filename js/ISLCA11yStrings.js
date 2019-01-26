@@ -12,11 +12,14 @@ define( require => {
     /***************************
      * Summary Pattern Strings *
      ***************************/
+    forceVectorArrows:{
+      value: 'Force vector arrows'
+    },
     summaryVectorSizePattern: {
-      value: 'Force vector arrows are {{size}}.'
+      value: '{{forceVectorArrows}} are {{size}}.'
     },
     summaryVectorSizeValueUnitsPattern: {
-      value: 'Force vector arrows are {{size}} at {{forceValue}} {{units}}.'
+      value: '{{forceVectorArrows}} are {{size}} at {{forceValue}} {{units}}.'
     },
     robotPullSummaryPattern: {
       value: 'Robots pull {{effort}} keeping spheres in place.'

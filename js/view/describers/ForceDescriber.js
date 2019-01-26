@@ -14,6 +14,7 @@ define( require => {
   const unitsNewtonsString = require( 'string!INVERSE_SQUARE_LAW_COMMON/units.newtons' );
 
   // a11y strings
+  const forceVectorArrowsString = ISLCA11yStrings.forceVectorArrows.value;
   const summaryVectorSizePatternString = ISLCA11yStrings.summaryVectorSizePattern.value;
   const summaryVectorSizeValueUnitsPatternString = ISLCA11yStrings.summaryVectorSizeValueUnitsPattern.value;
   const forceVectorMagnitudeUnitsPatternString = ISLCA11yStrings.forceVectorMagnitudeUnitsPattern.value;
@@ -98,9 +99,12 @@ define( require => {
         convertForce: force => force,
 
         // for adding natural language to the force (e.g. '3 billion' instead of 3000000000)
-        forceValueToString: value => StringUtils.fillIn( valuePatternString, { value } )
+        forceValueToString: value => StringUtils.fillIn( valuePatternString, { value } ),
+
+        forceArrowsString: forceVectorArrowsString
       }, options );
 
+      // @private
       this.units = options.units;
       this.forceValueToString = options.forceValueToString;
       this.convertForce = options.convertForce;
@@ -109,6 +113,14 @@ define( require => {
       this.vectorSizeIndex = 0;
       this.effortIndex = 0;
       this.vectorChangeDirection = 0; // 1 -> growing, 0 -> no change, -1 -> shrinking
+
+      // both of these string patterns can vary based on options
+      this.summaryVectorSizePatternString = StringUtils.fillIn( summaryVectorSizePatternString, {
+        forceVectorArrows: options.forceArrowsString
+      } );
+      this.summaryVectorSizeValueUnitsPatternString = StringUtils.fillIn( summaryVectorSizeValueUnitsPatternString, {
+        forceVectorArrows: options.forceArrowsString
+      } );
 
       model.forceProperty.link( ( force, oldForce ) => {
         const forceDelta = force - oldForce;
@@ -139,12 +151,12 @@ define( require => {
 
     getForceVectorsSummaryText() {
       const fillObject = {};
-      let pattern = summaryVectorSizePatternString;
+      let pattern = this.summaryVectorSizePatternString;
 
       fillObject.size = this.vectorSize;
 
       if ( this.showForces ) {
-        pattern = summaryVectorSizeValueUnitsPatternString;
+        pattern = this.summaryVectorSizeValueUnitsPatternString;
         fillObject.forceValue = this.formattedForce;
         fillObject.units = this.units;
       }
