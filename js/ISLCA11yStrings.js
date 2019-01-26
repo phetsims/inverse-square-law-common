@@ -125,10 +125,13 @@ define( require => {
      * - vectors {{changeDirection}}, forces now {{force}} {{units}}
      */
     vectorChangePattern: {
-      value: 'Vectors {{changeDirection}}.'
+      value: '{{vectorsCapitalized}} {{changeDirection}}.'
     },
     vectorChangeForcesNowValuePattern: {
-      value: 'Vectors {{changeDirection}}, forces now {{forceValue}} {{units}}.'
+      value: '{{vectorsCapitalized}} {{changeDirection}}, forces now {{forceValue}} {{units}}.'
+    },
+    vectorsCapitalized: {
+      value: 'Vectors'
     },
     vectorChangeClausePattern: {
       value: 'vectors {{changeDirection}}'

@@ -57,6 +57,7 @@ define( require => {
       let alertText = this.forceDescriber.getVectorChangeText();
       let edgeAlertText = this.forceDescriber.getVectorSizeText();
 
+      // if force values checkbox is enabled
       if ( this.model.forceValuesProperty.get() ) {
         alertText = this.forceDescriber.getVectorChangeForcesNowText();
         edgeAlertText = this.forceDescriber.getVectorSizeForceValueText();

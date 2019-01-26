@@ -34,6 +34,7 @@ define( require => {
   const forcesInScientificNotationString = ISLCA11yStrings.forcesInScientificNotation.value;
 
   const vectorChangePatternString = ISLCA11yStrings.vectorChangePattern.value;
+  const vectorsCapitalizedString = ISLCA11yStrings.vectorsCapitalized.value;
   const vectorChangeForcesNowValuePatternString = ISLCA11yStrings.vectorChangeForcesNowValuePattern.value;
   const vectorChangeClausePatternString = ISLCA11yStrings.vectorChangeClausePattern.value;
   const vectorChangeForcesNowClausePatternString = ISLCA11yStrings.vectorChangeForcesNowClausePattern.value;
@@ -102,11 +103,10 @@ define( require => {
         // for adding natural language to the force (e.g. '3 billion' instead of 3000000000)
         forceValueToString: value => StringUtils.fillIn( valuePatternString, { value } ),
 
-        // {string} for simplification in GFLB
+        // {string} - all for simplification in GFLB
         forceArrowsString: forceVectorArrowsString,
-
-        // {string} for simplification in GFLB
-        vectorsString: vectorsString
+        vectorsString: vectorsString,
+        vectorsCapitalizedString: vectorsCapitalizedString
       }, options );
 
       // @private
@@ -119,7 +119,7 @@ define( require => {
       this.effortIndex = 0;
       this.vectorChangeDirection = 0; // 1 -> growing, 0 -> no change, -1 -> shrinking
 
-      // these string patterns can vary based on options
+      // @private - these string patterns can vary based on options
       this.summaryVectorSizePatternString = StringUtils.fillIn( summaryVectorSizePatternString, {
         forceVectorArrows: options.forceArrowsString
       } );
@@ -128,6 +128,12 @@ define( require => {
       } );
       this.forceVectorSizePatternString = StringUtils.fillIn( forceVectorSizePatternString, {
         vectors: options.vectorsString
+      } );
+      this.vectorChangePatternString = StringUtils.fillIn( vectorChangePatternString, {
+        vectorsCapitalized: options.vectorsCapitalizedString
+      } );
+      this.vectorChangeForcesNowValuePatternString = StringUtils.fillIn( vectorChangeForcesNowValuePatternString, {
+        vectorsCapitalized: options.vectorsCapitalizedString
       } );
 
       model.forceProperty.link( ( force, oldForce ) => {
@@ -337,7 +343,7 @@ define( require => {
      */
     getVectorChangeText() {
       const changeDirection = this.changeDirection;
-      return StringUtils.fillIn( vectorChangePatternString, { changeDirection } );
+      return StringUtils.fillIn( this.vectorChangePatternString, { changeDirection } );
     }
 
     /**
@@ -349,7 +355,7 @@ define( require => {
       const changeDirection = this.changeDirection;
       const forceValue = this.formattedForce;
       const units = this.units;
-      return StringUtils.fillIn( vectorChangeForcesNowValuePatternString, { changeDirection, forceValue, units } );
+      return StringUtils.fillIn( this.vectorChangeForcesNowValuePatternString, { changeDirection, forceValue, units } );
     }
 
     /**
