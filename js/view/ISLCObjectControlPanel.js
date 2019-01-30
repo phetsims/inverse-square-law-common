@@ -53,10 +53,11 @@ define( function( require ) {
       tagName: 'li',
 
       numberControlOptions: null,
-      tickLabelOptions: {},
+      tickLabelOptions: null,
+      additionalTicks: [],
 
       // to add listeners to the numberControl as desired, no need to dispose them.
-      numberControlListener: {},
+      numberControlListener: _.noop,
 
       tandem: Tandem.required
     }, options );
@@ -69,19 +70,46 @@ define( function( require ) {
     }, options.tickLabelOptions );
 
     // options that are passed along to the number control
-    options.numberControlOptions = _.extend( {
-      // Don't fill in the {0}, it will be filled in by NumberControl
-      valuePattern: StringUtils.fillIn( pattern0Value1UnitsString, { value: '{0}', units: unitString } ),
+    var numberControlOptions = _.extend( {
 
       // layout options
       layoutFunction: NumberControl.createLayoutFunction3( { xSpacing: 10 } ),
-      minorTickSpacing: 2,
-      minorTickLength: 6,
+      numberDisplayOptions: null,
+      sliderOptions: null,
+
+      // title and value text options
+      titleFont: new PhetFont( 12 ),
+      titleMaxWidth: TITLE_MAX_WIDTH,
+
+      // phet-io
+      tandem: tandem.createTandem( 'numberControl' )
+    }, options.numberControlOptions );
+
+    numberControlOptions.numberDisplayOptions = _.extend( {
+      // Don't fill in the {0}, it will be filled in by NumberControl
+      valuePattern: StringUtils.fillIn( pattern0Value1UnitsString, { value: '{0}', units: unitString } ),
+      align: 'right',
+      xMargin: 10,
+      yMargin: 4,
+      backgroundStroke: 'black',
+      cornerRadius: 3,
+      font: new PhetFont( 12 ),
+      maxWidth: VALUE_MAX_WIDTH
+    }, options.numberControlOptions.numberDisplayOptions );
+
+    numberControlOptions.arrowButtonOptions = _.extend( {
+      touchAreaXDilation: 15,
+      touchAreaYDilation: 15,
+      scale: 1
+    }, numberControlOptions.arrowButtonOptions );
+
+    numberControlOptions.sliderOptions = _.extend( {
       trackFillEnabled: 'black',
       thumbSize: THUMB_SIZE,
 
       // tick options
-      additionalTicks: [],
+      minorTickSpacing: 2,
+      minorTickLength: 6,
       majorTicks: [ {
         value: valueRange.min,
         label: new Text(
@@ -96,49 +124,29 @@ define( function( require ) {
         )
       } ],
       majorTickLength: 8,
+      tickLabelSpacing: 1
+    }, options.numberControlOptions.sliderOptions );
 
-      valueAlign: 'right',
-      valueXMargin: 10,
-      valueYMargin: 4,
-      valueBackgroundStroke: 'black',
-      valueBackgroundCornerRadius: 3,
-      tickLabelSpacing: 1,
-
-      // title and value text options
-      titleFont: new PhetFont( 12 ),
-      valueFont: new PhetFont( 12 ),
-      titleMaxWidth: TITLE_MAX_WIDTH,
-      valueMaxWidth: VALUE_MAX_WIDTH,
-
-      // phet-io
-      tandem: tandem.createTandem( 'numberControl' )
-    }, options.numberControlOptions );
-
-    options.numberControlOptions.arrowButtonOptions = _.extend( {
-      touchAreaXDilation: 15,
-      touchAreaYDilation: 15,
-      scale: 1
-    }, options.numberControlOptions.arrowButtonOptions );
-
-    for ( var i = 0; i < options.numberControlOptions.additionalTicks.length; i++ ) {
+    for ( var i = 0; i < options.additionalTicks.length; i++ ) {
       var tick = {
-        value: options.numberControlOptions.additionalTicks[ i ].value,
-        label: new Text( options.numberControlOptions.additionalTicks[ i ].value, _.extend( {
-          tandem: options.tandem.createTandem( options.numberControlOptions.additionalTicks[ i ].tandemLabel )
+        value: options.additionalTicks[ i ].value,
+        label: new Text( options.additionalTicks[ i ].value, _.extend( {
+          tandem: options.tandem.createTandem( options.additionalTicks[ i ].tandemLabel )
         }, options.tickLabelOptions ) )
       };
-      options.numberControlOptions.majorTicks.push( tick );
+      numberControlOptions.sliderOptions.majorTicks.push( tick );
     }
 
-    var numberControl = new NumberControl( titleString, objectProperty, valueRange, options.numberControlOptions );
+    var numberControl = new NumberControl( titleString, objectProperty, valueRange, numberControlOptions );
 
     // no need to remove
     numberControl.addInputListener( options.numberControlListener );
 
+    options =  _.omit( options, [ 'numberControlOptions', 'tickLabelOptions', 'numberControlListener' ] );
     Panel.call( this, numberControl, options );
 
     // a11y - it looks nicer if the entire panel has a group focus highlight rather than the NumberControl
-    assert && assert( options.numberControlOptions.groupFocusHighlight === undefined, 'ISLCObjectControlPanel sets group focus highlight' );
+    assert && assert( numberControlOptions.groupFocusHighlight === undefined, 'ISLCObjectControlPanel sets group focus highlight' );
     numberControl.groupFocusHighlight = false;
 
     // a11y - creates highlight that appears around this node when any ancestor (like the
