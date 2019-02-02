@@ -105,6 +105,7 @@ define( require => {
 
         // {string} - all for simplification in GFLB
         forceArrowsString: forceVectorArrowsString,
+        forceArrowsLower: vectorsString,
         vectorsString: vectorsString,
         vectorsCapitalizedString: vectorsCapitalizedString
       }, options );
@@ -134,6 +135,9 @@ define( require => {
       } );
       this.vectorChangeForcesNowValuePatternString = StringUtils.fillIn( vectorChangeForcesNowValuePatternString, {
         vectorsCapitalized: options.vectorsCapitalizedString
+      } );
+      this.vectorsSizeClausePatternString = StringUtils.fillIn( vectorsSizeClausePatternString, {
+        vectors: options.forceArrowsLower
       } );
 
       model.forceProperty.link( ( force, oldForce ) => {
@@ -303,7 +307,7 @@ define( require => {
      */
     getVectorSizeClause() {
       const size = this.vectorSize;
-      return StringUtils.fillIn( vectorsSizeClausePatternString, { size } );
+      return StringUtils.fillIn( this.vectorsSizeClausePatternString, { size } );
     }
 
     /**
