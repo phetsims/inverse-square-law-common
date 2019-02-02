@@ -139,6 +139,12 @@ define( require => {
       this.vectorsSizeClausePatternString = StringUtils.fillIn( vectorsSizeClausePatternString, {
         vectors: options.forceArrowsLower
       } );
+      this.vectorChangeClausePatternString = StringUtils.fillIn( vectorChangeClausePatternString, {
+        vectors: options.forceArrowsLower
+      } );
+      this.vectorChangeForcesNowClausePatternString = StringUtils.fillIn( vectorChangeForcesNowClausePatternString, {
+        vectors: options.forceArrowsLower
+      } );
 
       model.forceProperty.link( ( force, oldForce ) => {
         const forceDelta = force - oldForce;
@@ -369,7 +375,7 @@ define( require => {
      */
     getVectorChangeClause() {
       const vectorChange = this.changeDirection;
-      return StringUtils.fillIn( vectorChangeClausePatternString, { changeDirection: vectorChange } );
+      return StringUtils.fillIn( this.vectorChangeClausePatternString, { changeDirection: vectorChange } );
     }
 
     /**
@@ -381,7 +387,7 @@ define( require => {
     getVectorChangeForcesNowClause() {
       const { changeDirection, units } = this;
       const forceValue = this.formattedForce;
-      return StringUtils.fillIn( vectorChangeForcesNowClausePatternString, { changeDirection, forceValue, units } );
+      return StringUtils.fillIn( this.vectorChangeForcesNowClausePatternString, { changeDirection, forceValue, units } );
     }
 
     /**

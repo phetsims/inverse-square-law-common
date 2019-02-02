@@ -23,8 +23,8 @@ define( function( require ) {
 
   /**
    * @param {number} forceConstant the appropriate force constant (e.g. G or k)
-   * @param {object} object1 - the first Mass or Charge object
-   * @param {object} object2 - the second Mass or Charge object
+   * @param {ISLCObject} object1 - the first Mass or Charge object
+   * @param {ISLCObject} object2 - the second Mass or Charge object
    * @param {Vector2} leftBoundary - absolute boundary for the left object
    * @param {Vector2} rightBoundary - absolute boundary for the right object
    * @param {Tandem} tandem
