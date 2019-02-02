@@ -365,7 +365,7 @@ define( require => {
      */
     getVectorChangeClause() {
       const vectorChange = this.changeDirection;
-      return StringUtils.fillIn( vectorChangeClausePatternString, { vectorChange } );
+      return StringUtils.fillIn( vectorChangeClausePatternString, { changeDirection: vectorChange } );
     }
 
     /**
