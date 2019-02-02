@@ -30,8 +30,14 @@ define( require => {
     summaryInteractionHintPattern: {
       value: 'Change position and {{massOrCharge}} of spheres to explore.'
     },
+    quantitativeAndQualitativePattern: {
+      value: '{{qualitativeClause}}{{quantitativeClause}}.'
+    },
     distanceAndValueSummaryPattern: {
-      value: '{{object1Label}} and {{object2Label}} are {{qualitativeDistance}} each other, centers exactly {{distance}} {{units}} apart.'
+      value: '{{object1Label}} and {{object2Label}} are {{qualitativeDistance}} each other'
+    },
+    centersExactlyPattern: {
+      value: ', centers exactly {{distance}} {{units}} apart'
     },
 
     /******************

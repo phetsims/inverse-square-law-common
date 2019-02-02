@@ -18,6 +18,8 @@ define( require => {
 
   const objectLabelPositionPatternString = ISLCA11yStrings.objectLabelPositionPattern.value; // [object] position
   const distanceAndValueSummaryPatternString = ISLCA11yStrings.distanceAndValueSummaryPattern.value;
+  const centersExactlyPatternString = ISLCA11yStrings.centersExactlyPattern.value;
+  const quantitativeAndQualitativePatternString = ISLCA11yStrings.quantitativeAndQualitativePattern.value;
 
   const positionDistanceFromOtherObjectPatternString = ISLCA11yStrings.positionDistanceFromOtherObjectPattern.value;
   const progressDistanceFromOtherObjectPatternString = ISLCA11yStrings.progressDistanceFromOtherObjectPattern.value;
@@ -118,14 +120,28 @@ define( require => {
      * Returns the string used in the screen summary item displaying position information:
      * '{{object1Label}} and {{object2Label}} are {{qualitativeDistance}} each other, centers exactly {{distance}} {{units}} apart.'
      *
+     * @param {boolean} [withoutQuantitative] - whether or not to omit the quantitative clause
      * @returns {string}
      */
-    getObjectDistanceSummary() {
+    getObjectDistanceSummary( withoutQuantitative ) {
       const distance = this.convertedDistance;
       const { object1Label, object2Label, qualitativeDistance, units } = this;
-      return StringUtils.fillIn(
+
+      console.log( this.distanceBetween );
+
+      const qualitativeClause = StringUtils.fillIn(
         distanceAndValueSummaryPatternString,
-        { object1Label, object2Label, qualitativeDistance, distance, units }
+        { object1Label, object2Label, qualitativeDistance }
+      );
+      const quantitativeClause = StringUtils.fillIn(
+        centersExactlyPatternString,
+        { distance, units }
+      );
+
+      return StringUtils.fillIn( quantitativeAndQualitativePatternString, {
+          qualitativeClause: qualitativeClause,
+          quantitativeClause: withoutQuantitative ? '' : quantitativeClause
+        }
       );
     }
 
