@@ -127,8 +127,6 @@ define( require => {
       const distance = this.convertedDistance;
       const { object1Label, object2Label, qualitativeDistance, units } = this;
 
-      console.log( this.distanceBetween );
-
       const qualitativeClause = StringUtils.fillIn(
         distanceAndValueSummaryPatternString,
         { object1Label, object2Label, qualitativeDistance }
