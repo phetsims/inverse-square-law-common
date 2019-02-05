@@ -103,6 +103,9 @@ define( require => {
         // for adding natural language to the force (e.g. '3 billion' instead of 3000000000)
         forceValueToString: value => StringUtils.fillIn( valuePatternString, { value } ),
 
+        // {string} - see getForceBetweenAndVectorText() for usage. Be careful that template vars are named correctly.
+        forceAndVectorPatternString: forceAndVectorPatternString,
+
         // {string} - all for simplification in GFLB
         forceArrowsString: forceVectorArrowsString,
         forceArrowsLower: vectorsString,
@@ -119,6 +122,7 @@ define( require => {
       this.vectorSizeIndex = 0;
       this.effortIndex = 0;
       this.vectorChangeDirection = 0; // 1 -> growing, 0 -> no change, -1 -> shrinking
+      this.forceAndVectorPatternString = options.forceAndVectorPatternString;
 
       // @private - these string patterns can vary based on options
       this.summaryVectorSizePatternString = StringUtils.fillIn( summaryVectorSizePatternString, {
@@ -201,7 +205,7 @@ define( require => {
      * @returns {string}
      */
     getForceBetweenAndVectorText( thisObjectLabel, otherObjectLabel ) {
-      const pattern = forceAndVectorPatternString;
+      const pattern = this.forceAndVectorPatternString;
       const fillObject = {
         thisObjectLabel,
         otherObjectLabel,
@@ -387,7 +391,11 @@ define( require => {
     getVectorChangeForcesNowClause() {
       const { changeDirection, units } = this;
       const forceValue = this.formattedForce;
-      return StringUtils.fillIn( this.vectorChangeForcesNowClausePatternString, { changeDirection, forceValue, units } );
+      return StringUtils.fillIn( this.vectorChangeForcesNowClausePatternString, {
+        changeDirection,
+        forceValue,
+        units
+      } );
     }
 
     /**
