@@ -50,9 +50,6 @@ define( require => {
     spherePositionHelpText: {
       value: 'Move spheres, closer or farther from each other.'
     },
-    forceVectorMagnitudePattern: {
-      value: 'Force vector magnitude is {{objectValueUnits}}.'
-    },
     forceVectorMagnitudeUnitsPattern: {
       value: 'Force vector magnitude is {{forceValue}} {{units}}.'
     },
