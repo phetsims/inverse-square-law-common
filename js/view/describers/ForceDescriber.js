@@ -106,6 +106,9 @@ define( require => {
         // {string} - see getForceBetweenAndVectorText() for usage. Be careful that template vars are named correctly.
         forceAndVectorPatternString: forceAndVectorPatternString,
 
+        // {string} - see getForceVectorMagnitudeText() for usage. Be careful that template vars are named correctly.
+        forceVectorMagnitudeUnitsPatternString: forceVectorMagnitudeUnitsPatternString,
+
         // {string} - all for simplification in GFLB
         forceArrowsString: forceVectorArrowsString,
         forceArrowsLower: vectorsString,
@@ -123,6 +126,7 @@ define( require => {
       this.effortIndex = 0;
       this.vectorChangeDirection = 0; // 1 -> growing, 0 -> no change, -1 -> shrinking
       this.forceAndVectorPatternString = options.forceAndVectorPatternString;
+      this.forceVectorMagnitudeUnitsPatternString = options.forceVectorMagnitudeUnitsPatternString;
 
       // @private - these string patterns can vary based on options
       this.summaryVectorSizePatternString = StringUtils.fillIn( summaryVectorSizePatternString, {
@@ -192,11 +196,18 @@ define( require => {
       return StringUtils.fillIn( pattern, fillObject );
     }
 
-    getForceVectorMagnitudeText() {
-      const pattern = forceVectorMagnitudeUnitsPatternString;
+    /**
+     * @param {string} thisObjectLabel
+     * @param {string} otherObjectLabel
+     * @returns {string}
+     */
+    getForceVectorMagnitudeText( thisObjectLabel, otherObjectLabel ) {
+      const pattern = this.forceVectorMagnitudeUnitsPatternString;
       const forceValue = this.formattedForce;
       const units = this.units;
-      return StringUtils.fillIn( pattern, { forceValue, units } );
+
+      // In BASICS the object labels are used, in regular the fillin is a no-op because those keys aren't present.
+      return StringUtils.fillIn( pattern, { forceValue, units, thisObjectLabel, otherObjectLabel } );
     }
 
     /**
