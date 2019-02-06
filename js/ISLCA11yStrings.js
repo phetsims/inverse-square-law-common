@@ -65,25 +65,10 @@ define( require => {
     objectLabelPositionPattern: {
       value: '{{label}} position'
     },
-    spherePositionProgressObjectPattern: {
-      value: '{{position}} mark, {{progress}} {{otherObjectLabel}}.'
-    },
-    spherePositionProgressPattern: {
-      value: '{{position}} mark, {{progress}}.'
-    },
-    spherePositionRegionObjectPattern: {
-      value: '{{position}} mark, {{region}} {{otherObjectLabel}}.'
-    },
-    spherePositionRegionPattern: {
-      value: '{{position}} mark, {{region}}.'
-    },
-    spherePositionRegionLastStopPattern: {
-      value: '{{position}} mark, {{region}}, last stop.'
-    },
 
-    /*
-     * 12/11/18 update for position slider aria-valuetext
-     */
+    /**********************************
+     * Position Slider aria-valuetext *
+     **********************************/
     positionMarkPattern: {
       value: '{{position}} {{unit}} mark'
     },
