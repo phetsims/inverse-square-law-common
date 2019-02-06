@@ -65,7 +65,6 @@ define( function( require ) {
       }
     );
 
-    // a11y - initialize the accessible slider
     var enabledRange = new Range( options.leftObjectBoundary, options.rightObjectBoundary );
 
     // @public {Property.<Range>}- set by ISLCModel when the force changes

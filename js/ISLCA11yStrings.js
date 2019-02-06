@@ -324,6 +324,13 @@ define( require => {
     },
     valuePattern: {
       value: '{{value}}'
+    },
+
+    atLeftEdge: {
+      value: 'At left edge.'
+    },
+    atRightEdge: {
+      value: 'At right edge.'
     }
   };
 

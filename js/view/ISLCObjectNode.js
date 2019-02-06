@@ -304,6 +304,14 @@ define( function( require ) {
       self.x = transformedValue;
       self.arrowNode.x = transformedValue;
       self.redrawForce();
+
+      // a11y edge alerts
+      if ( positionDescriber.objectAtMinEdge( self.enum ) ) {
+        alertManager.alertAtLeftEdge();
+      }
+      else if ( positionDescriber.objectAtMaxEdge( self.enum ) ) {
+        alertManager.alertAtRightEdge();
+      }
     } );
 
     var oldPosition = object.positionProperty.get();
@@ -335,7 +343,8 @@ define( function( require ) {
       createAriaValueText: positionDescriber.ariaValueTextCreator( this.enum )
     };
 
-    // initialize features that  make this node act like an accessible range input
+    // a11y - initialize the accessible slider
+    // these features make this Node act like an accessible range input
     this.initializeAccessibleSlider(
       object.positionProperty,
       object.enabledRangeProperty,

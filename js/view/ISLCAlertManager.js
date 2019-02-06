@@ -15,6 +15,8 @@ define( require => {
   // strings
   const forceValuesHiddenString = ISLCA11yStrings.forceValuesHidden.value;
   const regionForceClausePatternString = ISLCA11yStrings.regionForceClausePattern.value;
+  const atLeftEdgeString = ISLCA11yStrings.atLeftEdge.value;
+  const atRightEdgeString = ISLCA11yStrings.atRightEdge.value;
 
   let manager = null;
 
@@ -43,13 +45,13 @@ define( require => {
 
     alertPositionChanged( endAtEdge ) {
       const alert = this.getPositionChangedAlertText( endAtEdge );
-      const utterance = new Utterance( { alert, uniqueGroupId: 'position' } );
+      const utterance = new Utterance( { alert: alert, uniqueGroupId: 'position' } );
       utteranceQueue.addToBack( utterance );
     }
 
     alertPositionUnchanged() {
       const alert = this.getPositionUnchangedAlertText();
-      const utterance = new Utterance( { alert, uniqueGroupId: 'position' } );
+      const utterance = new Utterance( { alert: alert, uniqueGroupId: 'position' } );
       utteranceQueue.addToBack( utterance );
     }
 
@@ -71,6 +73,16 @@ define( require => {
       const forceClause = this.forceDescriber.getVectorsAndForcesClause();
       const region = positionDescriber.qualitativeDistance;
       return StringUtils.fillIn( regionForceClausePatternString, { region, forceClause } );
+    }
+
+    alertAtLeftEdge() {
+      const utterance = new Utterance( { alert: atLeftEdgeString, uniqueGroupId: 'position' } );
+      utteranceQueue.addToBack( utterance );
+    }
+
+    alertAtRightEdge() {
+      const utterance = new Utterance( { alert: atRightEdgeString, uniqueGroupId: 'position' } );
+      utteranceQueue.addToBack( utterance );
     }
 
     static getManager() {

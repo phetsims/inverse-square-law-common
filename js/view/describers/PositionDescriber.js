@@ -94,6 +94,8 @@ define( require => {
       this.distanceBetween = 0;
       this.oldDistanceBetween = 0;
       this.lastMoveCloser = false;
+
+      // @private - Whether or not the masses moved closer last position change. only set when an object is dragging.
       this.movedCloser = false;
 
       Property.multilink(
@@ -339,13 +341,30 @@ define( require => {
      * Returns true if the model object associated with the passed-in enum is at the left/right boundary of the sim.
      *
      * @param  {ISLCObjectEnum} objectEnum
-     * @returns {Boolean}
+     * @returns {boolean}
      */
     objectAtEdge( objectEnum ) {
+      return this.objectAtMinEdge( objectEnum ) || this.objectAtMaxEdge( objectEnum );
+    }
+
+    /**
+     * Returns true if the model object associated with the passed-in enum is at the left boundary of the sim.
+     * @param  {ISLCObjectEnum} objectEnum
+     * @returns {boolean}
+     */
+    objectAtMinEdge( objectEnum ) {
       const object = this.getObjectFromEnum( objectEnum );
-      const { min, max } = object.enabledRangeProperty.get();
-      const edgeValue = objectEnum === OBJECT_ONE ? min : max;
-      return object.positionProperty.get() === edgeValue;
+      return object.positionProperty.get() === object.enabledRangeProperty.get().min;
+    }
+
+    /**
+     * Returns true if the model object associated with the passed-in enum is at the left boundary of the sim.
+     * @param  {ISLCObjectEnum} objectEnum
+     * @returns {boolean}
+     */
+    objectAtMaxEdge( objectEnum ) {
+      const object = this.getObjectFromEnum( objectEnum );
+      return object.positionProperty.get() === object.enabledRangeProperty.get().max;
     }
 
     /**
