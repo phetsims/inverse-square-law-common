@@ -21,6 +21,7 @@ define( require => {
   const centersExactlyPatternString = ISLCA11yStrings.centersExactlyPattern.value;
   const quantitativeAndQualitativePatternString = ISLCA11yStrings.quantitativeAndQualitativePattern.value;
 
+  const positionMarkPatternString = ISLCA11yStrings.positionMarkPattern.value;
   const positionDistanceFromOtherObjectPatternString = ISLCA11yStrings.positionDistanceFromOtherObjectPattern.value;
   const progressDistanceFromOtherObjectPatternString = ISLCA11yStrings.progressDistanceFromOtherObjectPattern.value;
   const farthestFromOtherObjectPatternString = ISLCA11yStrings.farthestFromOtherObjectPattern.value;
@@ -151,6 +152,7 @@ define( require => {
      * @param  {string}  pattern
      * @param  {object}  additionalFillObject
      * @returns {string}
+     * @private
      */
     getSpherePositionAriaValueText( thisObjectEnum, pattern, additionalFillObject ) {
       const otherObjectLabel = this.getOtherObjectLabelFromEnum( thisObjectEnum );
@@ -174,18 +176,30 @@ define( require => {
     }
 
     /**
+     * fillIn just the position mark clause of some sentences
+     * @param {ISLCObjectEnum} thisObjectEnum
+     * @returns {string}
+     */
+    getPositionMark( thisObjectEnum ) {
+      const position = this.getConvertedPositionFromEnum( thisObjectEnum );
+      const unit = this.unit;
+      return StringUtils.fillIn( positionMarkPatternString, {
+        position, unit
+      } );
+    }
+
+    /**
      * Returns the string filled in string '{{position}} {{unit}} mark, {{distance}} {{units}} from {{otherObjectLabel}}.'
      *
      * @param  {ISLCObjectEnum} thisObjectEnum
      * @returns {string}
      */
     getPositionAndDistanceFromOtherObjectText( thisObjectEnum ) {
-      const position = this.getConvertedPositionFromEnum( thisObjectEnum );
-      const unit = this.unit;
+      const positionMark = this.getPositionMark( thisObjectEnum );
       return this.getSpherePositionAriaValueText(
         thisObjectEnum,
         positionDistanceFromOtherObjectPatternString,
-        { position, unit }
+        { positionMark }
       );
     }
 
@@ -212,12 +226,11 @@ define( require => {
      */
     getPositionAtEdgeAndDistanceFromOtherObjectText( thisObjectEnum ) {
       const side = thisObjectEnum === OBJECT_ONE ? leftString : rightString;
-      const unit = this.unit;
-      const position = this.getConvertedPositionFromEnum( thisObjectEnum );
+      const positionMark = this.getPositionMark( thisObjectEnum );
       return this.getSpherePositionAriaValueText(
         thisObjectEnum,
         edgePositionDistanceFromOtherObjectPatternString,
-        { position, side, unit }
+        { positionMark, side }
       );
     }
 
@@ -228,9 +241,11 @@ define( require => {
      * @returns {string}
      */
     getClosestToOtherObjectText( thisObjectEnum ) {
+      const positionMark = this.getPositionMark( thisObjectEnum );
       return this.getSpherePositionAriaValueText(
         thisObjectEnum,
-        closestToOtherObjectPatternString
+        closestToOtherObjectPatternString,
+        { positionMark }
       );
     }
 

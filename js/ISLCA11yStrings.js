@@ -84,11 +84,14 @@ define( require => {
     /*
      * 12/11/18 update for position slider aria-valuetext
      */
+    positionMarkPattern: {
+      value: '{{position}} {{unit}} mark'
+    },
     positionDistanceFromOtherObjectPattern: {
-      value: '{{position}} {{unit}} mark, {{distance}} {{units}} from {{otherObjectLabel}}.'
+      value: '{{positionMark}}, {{distance}} {{units}} from {{otherObjectLabel}}.'
     },
     edgePositionDistanceFromOtherObjectPattern: {
-      value: '{{position}} {{unit}} mark, {{side}} edge, {{distance}} {{units}} from {{otherObjectLabel}}'
+      value: '{{positionMark}}, {{side}} edge, {{distance}} {{units}} from {{otherObjectLabel}}'
     },
     distanceFromOtherObjectPattern: {
       value: '{{distance}} {{units}} from {{otherObjectLabel}}.'
@@ -101,7 +104,7 @@ define( require => {
       value: 'Farthest from {{otherObjectLabel}}, {{distance}} {{units}} away.'
     },
     closestToOtherObjectPattern: {
-      value: 'Closest to {{otherObjectLabel}}, {{distance}} {{units}} away.'
+      value: '{{positionMark}}, closest to {{otherObjectLabel}}, {{distance}} {{units}} away.'
     },
     lastStopDistanceFromOtherObjectPattern: {
       value: '{{region}}, last stop, {{distance}} {{units}} from {{otherObjectLabel}}.'
