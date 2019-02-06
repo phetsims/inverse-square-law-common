@@ -137,17 +137,18 @@ define( function( require ) {
       numberControlOptions.sliderOptions.majorTicks.push( tick );
     }
 
-    var numberControl = new NumberControl( titleString, objectProperty, valueRange, numberControlOptions );
+    // @protected
+    this.numberControl = new NumberControl( titleString, objectProperty, valueRange, numberControlOptions );
 
     // no need to remove
-    numberControl.addInputListener( options.numberControlListener );
+    this.numberControl.addInputListener( options.numberControlListener );
 
-    options =  _.omit( options, [ 'numberControlOptions', 'tickLabelOptions', 'numberControlListener' ] );
-    Panel.call( this, numberControl, options );
+    options = _.omit( options, [ 'numberControlOptions', 'tickLabelOptions', 'numberControlListener' ] );
+    Panel.call( this, this.numberControl, options );
 
     // a11y - it looks nicer if the entire panel has a group focus highlight rather than the NumberControl
     assert && assert( numberControlOptions.groupFocusHighlight === undefined, 'ISLCObjectControlPanel sets group focus highlight' );
-    numberControl.groupFocusHighlight = false;
+    this.numberControl.groupFocusHighlight = false;
 
     // a11y - creates highlight that appears around this node when any ancestor (like the
     // NumberControl) has focus
