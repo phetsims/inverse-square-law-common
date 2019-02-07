@@ -86,6 +86,7 @@ define( function( require ) {
     }, options.numberControlOptions );
 
     numberControlOptions.numberDisplayOptions = _.extend( {
+      //TODO #59, no need to do value:'{0}'
       // Don't fill in the {0}, it will be filled in by NumberControl
       valuePattern: StringUtils.fillIn( pattern0Value1UnitsString, { value: '{0}', units: unitString } ),
       align: 'right',
