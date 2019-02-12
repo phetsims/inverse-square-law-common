@@ -24,7 +24,7 @@ define( require => {
   const positionMarkPatternString = ISLCA11yStrings.positionMarkPattern.value;
   const positionDistanceFromOtherObjectPatternString = ISLCA11yStrings.positionDistanceFromOtherObjectPattern.value;
   const progressDistanceFromOtherObjectPatternString = ISLCA11yStrings.progressDistanceFromOtherObjectPattern.value;
-  const farthestFromOtherObjectPatternString = ISLCA11yStrings.farthestFromOtherObjectPattern.value;
+  const arrivedAtEdgePatternString = ISLCA11yStrings.arrivedAtEdgePattern.value;
   const closestToOtherObjectPatternString = ISLCA11yStrings.closestToOtherObjectPattern.value;
   const distanceFromOtherObjectPatternString = ISLCA11yStrings.distanceFromOtherObjectPattern.value;
   const edgePositionDistanceFromOtherObjectPatternString = ISLCA11yStrings.edgePositionDistanceFromOtherObjectPattern.value;
@@ -152,7 +152,7 @@ define( require => {
      *
      * @param  {ISLCObjectEnum} thisObjectEnum
      * @param  {string}  pattern
-     * @param  {object}  additionalFillObject
+     * @param  {object}  [additionalFillObject]
      * @returns {string}
      * @private
      */
@@ -252,16 +252,20 @@ define( require => {
     }
 
     /**
-     * Returns the filled in string 'Farthest from {{otherObjectLabel}}, {{distance}} {{units}} away.'
+     * Returns the filled in string 'At {{side}} edge, {{distance}} {{units}} away.'
      *
      * @param  {ISLCObjectEnum} thisObjectEnum
      * @returns {string}
      */
-    getFarthestFromOtherObjectText( thisObjectEnum ) {
-      return this.getSpherePositionAriaValueText(
-        thisObjectEnum,
-        farthestFromOtherObjectPatternString
-      );
+    getArrivedAtEdgeText( thisObjectEnum ) {
+      assert && assert( this.objectAtEdge( thisObjectEnum ) );
+
+      // Fill in the specific piece before passing it to the general sphere position fillIn method call.
+      const pattern = StringUtils.fillIn( arrivedAtEdgePatternString, {
+        side: this.getSideFromObjectEnum( thisObjectEnum )
+      } );
+
+      return this.getSpherePositionAriaValueText( thisObjectEnum, pattern );
     }
 
     /**
@@ -326,7 +330,7 @@ define( require => {
         }
 
         if ( this.objectAtEdge( objectEnum ) ) {
-          newAriaValueText = this.getFarthestFromOtherObjectText( objectEnum );
+          newAriaValueText = this.getArrivedAtEdgeText( objectEnum );
         }
 
         if ( this.objectsClosest ) {
@@ -365,6 +369,24 @@ define( require => {
     objectAtMaxEdge( objectEnum ) {
       const object = this.getObjectFromEnum( objectEnum );
       return object.positionProperty.get() === object.enabledRangeProperty.get().max;
+    }
+
+
+    /**
+     * Return 'left' or 'right' depending on what edge the object is at. Will assert out if object is not at a side.
+     * @param {ISLCObjectEnum} objectEnum
+     * @returns {string}
+     */
+    getSideFromObjectEnum( objectEnum ) {
+      if ( this.objectAtMinEdge( objectEnum ) ) {
+        return leftString;
+      }
+      else if ( this.objectAtMaxEdge( objectEnum ) ) {
+        return rightString;
+      }
+      else {
+        assert && assert( false, 'objectEnum not at edge' );
+      }
     }
 
     /**

@@ -304,14 +304,6 @@ define( function( require ) {
       self.x = transformedValue;
       self.arrowNode.x = transformedValue;
       self.redrawForce();
-
-      // a11y edge alerts
-      if ( positionDescriber.objectAtMinEdge( self.enum ) ) {
-        alertManager.alertAtLeftEdge();
-      }
-      else if ( positionDescriber.objectAtMaxEdge( self.enum ) ) {
-        alertManager.alertAtRightEdge();
-      }
     } );
 
     var oldPosition = object.positionProperty.get();

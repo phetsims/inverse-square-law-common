@@ -85,8 +85,8 @@ define( require => {
     progressDistanceFromOtherObjectPattern: {
       value: '{{progress}}, {{distance}} {{units}} from {{otherObjectLabel}}.'
     },
-    farthestFromOtherObjectPattern: {
-      value: 'Farthest from {{otherObjectLabel}}, {{distance}} {{units}} away.'
+    arrivedAtEdgePattern: {
+      value: 'At {{side}} edge, {{distance}} {{units}} away.'
     },
     closestToOtherObjectPattern: {
       value: '{{positionMark}}, closest to {{otherObjectLabel}}, {{distance}} {{units}} away.'
@@ -324,13 +324,6 @@ define( require => {
     },
     valuePattern: {
       value: '{{value}}'
-    },
-
-    atLeftEdge: {
-      value: 'At left edge.'
-    },
-    atRightEdge: {
-      value: 'At right edge.'
     }
   };
 
