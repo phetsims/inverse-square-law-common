@@ -75,9 +75,6 @@ define( require => {
     positionDistanceFromOtherObjectPattern: {
       value: '{{positionMark}}, {{distance}} {{units}} from {{otherObjectLabel}}.'
     },
-    edgePositionDistanceFromOtherObjectPattern: {
-      value: '{{positionMark}}, {{side}} edge, {{distance}} {{units}} from {{otherObjectLabel}}'
-    },
     distanceFromOtherObjectPattern: {
       value: '{{distance}} {{units}} from {{otherObjectLabel}}.'
     },
@@ -89,11 +86,19 @@ define( require => {
       value: 'At {{side}} edge, {{distance}} {{units}} away.'
     },
     closestToOtherObjectPattern: {
-      value: '{{positionMark}}, {{side}} edge, {{distance}} {{units}} from {{otherObjectLabel}}.'
+      value: '{{positionMark}}, {{edgePhrase}}, {{distance}} {{units}} from {{otherObjectLabel}}.'
     },
     lastStopDistanceFromOtherObjectPattern: {
       value: '{{region}}, last stop, {{distance}} {{units}} from {{otherObjectLabel}}.'
     },
+    sidePattern: {
+      value: '{{side}} edge'
+    },
+
+    lastStop: {
+      value: 'last stop'
+    },
+
 
     /************************
      * Force vector strings *

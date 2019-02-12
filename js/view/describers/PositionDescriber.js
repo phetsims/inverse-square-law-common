@@ -24,9 +24,10 @@ define( require => {
   const progressDistanceFromOtherObjectPatternString = ISLCA11yStrings.progressDistanceFromOtherObjectPattern.value;
   const arrivedAtEdgePatternString = ISLCA11yStrings.arrivedAtEdgePattern.value;
   const closestToOtherObjectPatternString = ISLCA11yStrings.closestToOtherObjectPattern.value;
+  const sidePatternString = ISLCA11yStrings.sidePattern.value;
   const distanceFromOtherObjectPatternString = ISLCA11yStrings.distanceFromOtherObjectPattern.value;
-  const edgePositionDistanceFromOtherObjectPatternString = ISLCA11yStrings.edgePositionDistanceFromOtherObjectPattern.value;
   const lastStopDistanceFromOtherObjectPatternString = ISLCA11yStrings.lastStopDistanceFromOtherObjectPattern.value;
+  const lastStopString = ISLCA11yStrings.lastStop.value;
 
   const leftString = ISLCA11yStrings.left.value;
   const rightString = ISLCA11yStrings.right.value;
@@ -219,33 +220,21 @@ define( require => {
     }
 
     /**
-     * Returns the filled in string '{{position}} {{unit}} mark, {{side}} edge, {{distance}} {{units}} from {{otherObjectLabel}}'
+     * Special case string for when an object is at an "edge." Here "edge" is defined as either touching
+     * a boundary, or touching the other object. This is because in both cases, this object cannot move further in
+     * that direction
      *
      * @param  {ISLCObjectEnum} thisObjectEnum
      * @returns {string}
      */
-    getPositionAtEdgeAndDistanceFromOtherObjectText( thisObjectEnum ) {
-      const side = this.getSideFromObjectEnum( thisObjectEnum );
+    getEdgeValueText( thisObjectEnum ) {
       const positionMark = this.getPositionMark( thisObjectEnum );
-      return this.getSpherePositionAriaValueText(
-        thisObjectEnum,
-        edgePositionDistanceFromOtherObjectPatternString,
-        { positionMark, side }
-      );
-    }
+      const edgePhrase = this.getEdgePhrase( thisObjectEnum );
 
-    /**
-     * Returns the filled in string 'Closest to {{otherObjectLabel}}, {{distance}} {{units}} away.'
-     *
-     * @param  {ISLCObjectEnum} thisObjectEnum
-     * @returns {string}
-     */
-    getClosestToOtherObjectText( thisObjectEnum ) {
-      const positionMark = this.getPositionMark( thisObjectEnum );
       return this.getSpherePositionAriaValueText(
         thisObjectEnum,
         closestToOtherObjectPatternString,
-        { positionMark }
+        { positionMark: positionMark, edgePhrase: edgePhrase }
       );
     }
 
@@ -287,14 +276,10 @@ define( require => {
     getFocusAriaValueText( thisObjectEnum ) {
       let text = this.getPositionAndDistanceFromOtherObjectText( thisObjectEnum );
 
+      // this covers when the object is at edges, and closest to the other mass
       if ( this.objectAtEdge( thisObjectEnum ) ) {
-        text = this.getPositionAtEdgeAndDistanceFromOtherObjectText( thisObjectEnum );
+        text = this.getEdgeValueText( thisObjectEnum );
       }
-
-      if ( this.objectsClosest ) {
-        text = this.getClosestToOtherObjectText( thisObjectEnum );
-      }
-
       return text;
     }
 
@@ -328,8 +313,8 @@ define( require => {
           newAriaValueText = this.getArrivedAtEdgeText( objectEnum );
         }
 
-        if ( this.objectsClosest ) {
-          newAriaValueText = this.getClosestToOtherObjectText( objectEnum );
+        if ( this.objectsClosest() ) {
+          newAriaValueText = this.getEdgeValueText( objectEnum );
         }
 
         return newAriaValueText;
@@ -337,7 +322,23 @@ define( require => {
     }
 
     /**
-     * Returns true if the model object associated with the passed-in enum is at the left/right boundary of the sim.
+     * Since ISLCObject.enabledRangeProperty is affected by the other object, this method determines if the object is
+     * actually at the edge of the sliding area, not just if you are stuck next to the other mass
+     * ( for that see this.objectAtEdge())
+     * @param {ISLCObjectEnum} objectEnum
+     * @returns {boolean}
+     */
+    objectAtEdgeIgnoreOtherObject( objectEnum ) {
+      return ( this.isObject1( objectEnum ) && this.objectAtMinEdge( objectEnum ) ) ||
+             ( this.isObject2( objectEnum ) && this.objectAtMaxEdge( objectEnum ) );
+
+    }
+
+    /**
+     * Returns true if the model object associated with the passed-in enum is at the left/right boundary of the object's
+     * available movement. This means that if a mass can't move left anymore because it is up against
+     * a mass on that side, then this function will return true. To figure out if a mass is at the complete
+     * edge of the slider range, see this.objectAtEdgeIgnoreOtherObject().
      *
      * @param  {ISLCObjectEnum} objectEnum
      * @returns {boolean}
@@ -366,6 +367,16 @@ define( require => {
       return object.positionProperty.get() === object.enabledRangeProperty.get().max;
     }
 
+    /**
+     * returns something like "left edge" or "right edge"
+     * @param {ISLCObjectEnum} objectEnum
+     * @returns {string}
+     */
+    getSideAndEdge( objectEnum ) {
+      return StringUtils.fillIn( sidePatternString, {
+        side: this.getSideFromObjectEnum( objectEnum )
+      } );
+    }
 
     /**
      * Return 'left' or 'right' depending on what edge the object is at. Will assert out if object is not at a side.
@@ -385,12 +396,30 @@ define( require => {
     }
 
     /**
+     * @param {ISLCObjectEnum} objectEnum
+     * @returns {string}
+     */
+    getEdgePhrase( objectEnum ) {
+      let edgeClause = 'this is a test';
+
+      if ( this.objectAtEdgeIgnoreOtherObject( objectEnum ) ) {
+        edgeClause = this.getSideAndEdge( objectEnum );
+      }
+      else if ( this.objectsClosest() ) {
+        edgeClause = lastStopString;
+      }
+      else {
+        assert && assert( false, 'why is this called if not at a border' );
+      }
+      return edgeClause;
+    }
+
+    /**
      * Returns true only if the objects are the minimum possible width apart given their current radii.
      *
-     * @param  {ISLCObjectEnum} objectEnum
      * @returns {boolean}
      */
-    get objectsClosest() {
+    objectsClosest() {
       return this.distanceBetween === this.model.getSumRadiusWithSeparation();
     }
 

@@ -33,6 +33,24 @@ define( require => {
     }
 
     /**
+     * @public
+     * @param {ISLCObjectEnum} objectEnum
+     * @returns {boolean}
+     */
+    isObject1( objectEnum ) {
+      return objectEnum === OBJECT_ONE;
+    }
+
+    /**
+     * @public
+     * @param {ISLCObjectEnum} objectEnum
+     * @returns {boolean}
+     */
+    isObject2( objectEnum ) {
+      return objectEnum === OBJECT_TWO;
+    }
+
+    /**
      * @param {ISLCObjectEnum} objectEnum
      * @returns {Mass}
      */

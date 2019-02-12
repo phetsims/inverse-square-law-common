@@ -326,7 +326,7 @@ define( function( require ) {
         object.isDragging = false;
         self.redrawForce();
         if ( positionChanged ) {
-          alertManager.alertPositionChanged( positionDescriber.objectsClosest );
+          alertManager.alertPositionChanged( positionDescriber.objectsClosest() );
         }
         else {
           alertManager.alertPositionUnchanged();
