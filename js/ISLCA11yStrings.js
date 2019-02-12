@@ -89,7 +89,7 @@ define( require => {
       value: 'At {{side}} edge, {{distance}} {{units}} away.'
     },
     closestToOtherObjectPattern: {
-      value: '{{positionMark}}, closest to {{otherObjectLabel}}, {{distance}} {{units}} away.'
+      value: '{{positionMark}}, {{side}} edge, {{distance}} {{units}} from {{otherObjectLabel}}.'
     },
     lastStopDistanceFromOtherObjectPattern: {
       value: '{{region}}, last stop, {{distance}} {{units}} from {{otherObjectLabel}}.'

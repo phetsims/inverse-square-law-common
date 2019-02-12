@@ -35,9 +35,12 @@ define( function( require ) {
     var self = this;
 
     options = _.extend( {
+
+      // in meters
       leftObjectBoundary: ISLCConstants.LEFT_OBJECT_BOUNDARY,
       rightObjectBoundary: ISLCConstants.RIGHT_OBJECT_BOUNDARY,
-      tandemUnits: 'kilograms'
+
+      tandemUnits: 'kilograms' // TODO: this is not used
     }, options );
 
     // @public

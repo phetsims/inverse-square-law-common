@@ -7,10 +7,8 @@ define( require => {
   const inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
   const ISLCA11yStrings = require( 'INVERSE_SQUARE_LAW_COMMON/ISLCA11yStrings' );
   const ISLCDescriber = require( 'INVERSE_SQUARE_LAW_COMMON/view/describers/ISLCDescriber' );
-  const ISLCObjectEnum = require( 'INVERSE_SQUARE_LAW_COMMON/view/ISLCObjectEnum' );
   const Property = require( 'AXON/Property' );
   const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
-  // const Util = require( 'DOT/Util' );
 
   // strings
   const unitsMetersString = require( 'string!INVERSE_SQUARE_LAW_COMMON/units.meters' );
@@ -70,8 +68,6 @@ define( require => {
     extremelyCloseString
   ];
 
-  const { OBJECT_ONE } = ISLCObjectEnum;
-
   let describer = null;
 
   class PositionDescriber extends ISLCDescriber {
@@ -91,6 +87,7 @@ define( require => {
       this.pushedObjectEnum = null;
       this.convertDistanceMetric = options.convertDistanceMetric;
 
+      // in meters
       this.distanceBetween = 0;
       this.oldDistanceBetween = 0;
       this.lastMoveCloser = false;
@@ -127,6 +124,7 @@ define( require => {
      * @returns {string}
      */
     getObjectDistanceSummary( withoutQuantitative ) {
+      assert && assert( typeof withoutQuantitative === 'boolean' );
       const distance = this.convertedDistance;
       const { object1Label, object2Label, qualitativeDistance, units } = this;
 
@@ -227,7 +225,7 @@ define( require => {
      * @returns {string}
      */
     getPositionAtEdgeAndDistanceFromOtherObjectText( thisObjectEnum ) {
-      const side = thisObjectEnum === OBJECT_ONE ? leftString : rightString;
+      const side = this.getSideFromObjectEnum( thisObjectEnum );
       const positionMark = this.getPositionMark( thisObjectEnum );
       return this.getSpherePositionAriaValueText(
         thisObjectEnum,
@@ -260,12 +258,9 @@ define( require => {
     getArrivedAtEdgeText( thisObjectEnum ) {
       assert && assert( this.objectAtEdge( thisObjectEnum ) );
 
-      // Fill in the specific piece before passing it to the general sphere position fillIn method call.
-      const pattern = StringUtils.fillIn( arrivedAtEdgePatternString, {
+      return this.getSpherePositionAriaValueText( thisObjectEnum, arrivedAtEdgePatternString, {
         side: this.getSideFromObjectEnum( thisObjectEnum )
       } );
-
-      return this.getSpherePositionAriaValueText( thisObjectEnum, pattern );
     }
 
     /**
