@@ -441,7 +441,7 @@ define( require => {
      * @returns {boolean}
      */
     objectsClosest() {
-      return this.distanceBetween === this.model.getSumRadiusWithSeparation();
+      return this.distanceBetween === this.convertDistanceMetric( this.model.getSumRadiusWithSeparation() );
     }
 
     /***********************
