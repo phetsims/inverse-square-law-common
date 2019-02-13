@@ -206,7 +206,7 @@ define( require => {
 
     // distance between objects/spheres
     distanceObjectPattern: {
-      value: '{{distance}} {{otherObject}}'
+      value: '{{distance}} {{otherObjectLabel}}'
     },
     extremelyFarFrom: {
       value: 'extremely far from'

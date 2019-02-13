@@ -25,6 +25,7 @@ define( require => {
   const arrivedAtEdgePatternString = ISLCA11yStrings.arrivedAtEdgePattern.value;
   const closestToOtherObjectPatternString = ISLCA11yStrings.closestToOtherObjectPattern.value;
   const sidePatternString = ISLCA11yStrings.sidePattern.value;
+  const distanceObjectPatternString = ISLCA11yStrings.distanceObjectPattern.value;
   const distanceFromOtherObjectPatternString = ISLCA11yStrings.distanceFromOtherObjectPattern.value;
   const distanceFromOtherObjectSentencePatternString = ISLCA11yStrings.distanceFromOtherObjectSentencePattern.value;
   const lastStopDistanceFromOtherObjectPatternString = ISLCA11yStrings.lastStopDistanceFromOtherObjectPattern.value;
@@ -80,6 +81,8 @@ define( require => {
         unit: unitsMeterString,
         units: unitsMetersString,
         centerOffset: 0,
+
+        // {number} => {number}
         convertDistanceMetric: distance => distance
       }, options );
 
@@ -96,6 +99,9 @@ define( require => {
 
       // @private - Whether or not the masses moved closer last position change. only set when an object is dragging.
       this.movedCloser = false;
+
+      // @protected - to support GFLB which has a "Show distance" checkbox, see https://github.com/phetsims/gravity-force-lab-basics/issues/88
+      this.useQuantitativeDistance = true;
 
       Property.multilink(
         [ this.object1.positionProperty, this.object2.positionProperty ],
@@ -147,6 +153,34 @@ define( require => {
     }
 
     /**
+     * @private
+     * @param {number} distance
+     * @param {string} units
+     * @param {string} otherObjectLabel
+     * @returns {string}
+     */
+    getQuantitativeDistanceClause( distance, units, otherObjectLabel ) {
+      return StringUtils.fillIn( distanceFromOtherObjectPatternString, {
+        distance: distance,
+        units: units,
+        otherObjectLabel: otherObjectLabel
+      } );
+    }
+
+
+    /**
+     * @private
+     * @param {string} otherObjectLabel
+     * @returns {string}
+     */
+    getQualitativeDistanceClause( otherObjectLabel ) {
+      return StringUtils.fillIn( distanceObjectPatternString, {
+        distance: this.qualitativeRelativeDistance(),
+        otherObjectLabel: otherObjectLabel
+      } );
+    }
+
+    /**
      * Helper function for dynamically creating the desired strings to set the aria-valuetext property for the desired
      * HTML objects.
      *
@@ -174,12 +208,18 @@ define( require => {
       else {
         StringUtils.assertContainsKey( pattern, 'distanceFromOtherObject' );
 
-        // fill distance related template vars into sub pattern and expect to fill a whole clause with output
-        fillObject.distanceFromOtherObject = StringUtils.fillIn( distanceFromOtherObjectPatternString, {
-          distance: distance,
-          units: units,
-          otherObjectLabel: otherObjectLabel
-        } );
+        // fill in with quantitative distance
+        if ( this.useQuantitativeDistance ) {
+
+          // fill distance related template vars into sub pattern and expect to fill a whole clause with output
+          fillObject.distanceFromOtherObject = this.getQuantitativeDistanceClause( distance, units, otherObjectLabel );
+        }
+        else {
+
+          // use qualitative distance instead
+          fillObject.distanceFromOtherObject = this.getQualitativeDistanceClause( otherObjectLabel );
+        }
+
       }
 
       return StringUtils.fillIn( pattern, fillObject );
@@ -469,7 +509,7 @@ define( require => {
      *
      * @returns {string}
      */
-    get qualitativeRelativeDistance() {
+    qualitativeRelativeDistance() {
       return RELATIVE_DISTANCE_STRINGS[ this.getDistanceIndex( this.distanceBetween ) ];
     }
 
