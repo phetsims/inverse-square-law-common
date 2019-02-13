@@ -23,12 +23,13 @@ define( require => {
   const positionDistanceFromOtherObjectPatternString = ISLCA11yStrings.positionDistanceFromOtherObjectPattern.value;
   const progressDistanceFromOtherObjectPatternString = ISLCA11yStrings.progressDistanceFromOtherObjectPattern.value;
   const arrivedAtEdgePatternString = ISLCA11yStrings.arrivedAtEdgePattern.value;
+  const edgeDistancePatternString = ISLCA11yStrings.edgeDistancePattern.value;
   const closestToOtherObjectPatternString = ISLCA11yStrings.closestToOtherObjectPattern.value;
   const sidePatternString = ISLCA11yStrings.sidePattern.value;
-  const distanceObjectPatternString = ISLCA11yStrings.distanceObjectPattern.value;
+  const distanceAndUnitsPatternString = ISLCA11yStrings.distanceAndUnitsPattern.value;
+  const quantitativeDistancePatternString = ISLCA11yStrings.quantitativeDistancePattern.value;
   const distanceFromOtherObjectPatternString = ISLCA11yStrings.distanceFromOtherObjectPattern.value;
   const distanceFromOtherObjectSentencePatternString = ISLCA11yStrings.distanceFromOtherObjectSentencePattern.value;
-  const lastStopDistanceFromOtherObjectPatternString = ISLCA11yStrings.lastStopDistanceFromOtherObjectPattern.value;
   const lastStopString = ISLCA11yStrings.lastStop.value;
 
   const leftString = ISLCA11yStrings.left.value;
@@ -154,28 +155,43 @@ define( require => {
 
     /**
      * @private
-     * @param {number} distance
-     * @param {string} units
-     * @param {string} otherObjectLabel
      * @returns {string}
      */
-    getQuantitativeDistanceClause( distance, units, otherObjectLabel ) {
-      return StringUtils.fillIn( distanceFromOtherObjectPatternString, {
+    getDistanceAndUnits() {
+      const distance = this.convertedDistance;
+      const units = this.units;
+
+      return StringUtils.fillIn( distanceAndUnitsPatternString, {
         distance: distance,
-        units: units,
-        otherObjectLabel: otherObjectLabel
+        units: units
       } );
     }
 
-
     /**
+     * Fill in distance and units into quantitative clause
      * @private
-     * @param {string} otherObjectLabel
      * @returns {string}
      */
-    getQualitativeDistanceClause( otherObjectLabel ) {
-      return StringUtils.fillIn( distanceObjectPatternString, {
-        distance: this.qualitativeRelativeDistance(),
+    getQuantitativeDistanceClause() {
+      return StringUtils.fillIn( quantitativeDistancePatternString, {
+        distanceAndUnits: this.getDistanceAndUnits()
+      } );
+    }
+
+    /**
+     * Depending on whether or not quantitative distance is set, get the appropriate distance string.
+     * @param {ISLCObjectEnum} thisObjectEnum
+     * @returns {string}
+     */
+    getDistanceClause( thisObjectEnum ) {
+      const otherObjectLabel = this.getOtherObjectLabelFromEnum( thisObjectEnum );
+
+      const distanceClause = this.useQuantitativeDistance ?
+                             this.getQuantitativeDistanceClause() :
+                             this.qualitativeRelativeDistance();
+
+      return StringUtils.fillIn( distanceFromOtherObjectPatternString, {
+        distance: distanceClause,
         otherObjectLabel: otherObjectLabel
       } );
     }
@@ -193,34 +209,10 @@ define( require => {
      * @private
      */
     getSpherePositionAriaValueText( thisObjectEnum, pattern, additionalFillObject, fillInDistanceDirectly ) {
-      const otherObjectLabel = this.getOtherObjectLabelFromEnum( thisObjectEnum );
-      const distance = this.convertedDistance;
-      const units = this.units;
 
-      const fillObject = _.extend( {}, additionalFillObject );
-
-      // fill distance related template vars directly into the provided pattern
-      if ( fillInDistanceDirectly ) {
-        fillObject.distance = distance;
-        fillObject.units = units;
-        fillObject.otherObjectLabel = otherObjectLabel;
-      }
-      else {
-        StringUtils.assertContainsKey( pattern, 'distanceFromOtherObject' );
-
-        // fill in with quantitative distance
-        if ( this.useQuantitativeDistance ) {
-
-          // fill distance related template vars into sub pattern and expect to fill a whole clause with output
-          fillObject.distanceFromOtherObject = this.getQuantitativeDistanceClause( distance, units, otherObjectLabel );
-        }
-        else {
-
-          // use qualitative distance instead
-          fillObject.distanceFromOtherObject = this.getQualitativeDistanceClause( otherObjectLabel );
-        }
-
-      }
+      const fillObject = _.extend( {
+        distanceFromOtherObject: this.getDistanceClause( thisObjectEnum )
+      }, additionalFillObject );
 
       return StringUtils.fillIn( pattern, fillObject );
     }
@@ -309,24 +301,21 @@ define( require => {
     getArrivedAtEdgeText( thisObjectEnum ) {
       assert && assert( this.objectAtEdge( thisObjectEnum ) );
 
-      return this.getSpherePositionAriaValueText( thisObjectEnum, arrivedAtEdgePatternString, {
-        side: this.getSideFromObjectEnum( thisObjectEnum )
-      }, true /* fill in distance directly to this string */ );
-    }
+      const distanceClause = this.useQuantitativeDistance ?
 
-    /**
-     * Returns the string '{{region}}, last stop, {{distance}} {{units}} from {{otherObjectLabel}}.'
-     *
-     * @param  {ISLCObjectEnum} thisObjectEnum
-     * @returns {string}
-     */
-    getLastStopDistanceFromOtherObjectText( thisObjectEnum ) {
-      const region = this.qualitativeDistance;
-      return this.getSpherePositionAriaValueText(
-        thisObjectEnum,
-        lastStopDistanceFromOtherObjectPatternString,
-        { region }
-      );
+        // quantitative distance
+                             StringUtils.fillIn( edgeDistancePatternString, {
+                               distanceAndUnits: this.getDistanceAndUnits()
+                             } ) :
+
+        // qualitative distance
+                             this.getDistanceClause( thisObjectEnum );
+
+      // partially fill in the string with the "side" template var
+      return StringUtils.fillIn( arrivedAtEdgePatternString, {
+        side: this.getSideFromObjectEnum( thisObjectEnum ),
+        distanceClause: distanceClause
+      } );
     }
 
     /**

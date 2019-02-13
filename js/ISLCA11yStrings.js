@@ -70,8 +70,14 @@ define( require => {
      * Position Slider aria-valuetext *
      **********************************/
 
+    distanceAndUnitsPattern: {
+      value: '{{distance}} {{units}}'
+    },
+    quantitativeDistancePattern: {
+      value: '{{distanceAndUnits}} from'
+    },
     distanceFromOtherObjectPattern: {
-      value: '{{distance}} {{units}} from {{otherObjectLabel}}'
+      value: '{{distance}} {{otherObjectLabel}}'
     },
     positionMarkPattern: {
       value: '{{position}} {{unit}} mark'
@@ -86,14 +92,14 @@ define( require => {
     progressDistanceFromOtherObjectPattern: {
       value: '{{progress}}, {{distanceFromOtherObject}}.'
     },
+    edgeDistancePattern: {
+      value: '{{distanceAndUnits}} away'
+    },
     arrivedAtEdgePattern: {
-      value: 'At {{side}} edge, {{distance}} {{units}} away.'
+      value: 'At {{side}} edge, {{distanceClause}}.'
     },
     closestToOtherObjectPattern: {
       value: '{{positionMark}}, {{edgePhrase}}, {{distanceFromOtherObject}}.'
-    },
-    lastStopDistanceFromOtherObjectPattern: {
-      value: '{{region}}, last stop, {{distanceFromOtherObject}}.'
     },
     sidePattern: {
       value: '{{side}} edge'
@@ -202,11 +208,6 @@ define( require => {
     },
     getSmaller: {
       value: 'get smaller'
-    },
-
-    // distance between objects/spheres
-    distanceObjectPattern: {
-      value: '{{distance}} {{otherObjectLabel}}'
     },
     extremelyFarFrom: {
       value: 'extremely far from'
