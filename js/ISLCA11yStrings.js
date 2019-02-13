@@ -69,27 +69,31 @@ define( require => {
     /**********************************
      * Position Slider aria-valuetext *
      **********************************/
+
+    distanceFromOtherObjectPattern: {
+      value: '{{distance}} {{units}} from {{otherObjectLabel}}'
+    },
     positionMarkPattern: {
       value: '{{position}} {{unit}} mark'
     },
     positionDistanceFromOtherObjectPattern: {
-      value: '{{positionMark}}, {{distance}} {{units}} from {{otherObjectLabel}}.'
+      value: '{{positionMark}}, {{distanceFromOtherObject}}.'
     },
-    distanceFromOtherObjectPattern: {
-      value: '{{distance}} {{units}} from {{otherObjectLabel}}.'
+    distanceFromOtherObjectSentencePattern: {
+      value: '{{distanceFromOtherObject}}.'
     },
     // closer/further away
     progressDistanceFromOtherObjectPattern: {
-      value: '{{progress}}, {{distance}} {{units}} from {{otherObjectLabel}}.'
+      value: '{{progress}}, {{distanceFromOtherObject}}.'
     },
     arrivedAtEdgePattern: {
       value: 'At {{side}} edge, {{distance}} {{units}} away.'
     },
     closestToOtherObjectPattern: {
-      value: '{{positionMark}}, {{edgePhrase}}, {{distance}} {{units}} from {{otherObjectLabel}}.'
+      value: '{{positionMark}}, {{edgePhrase}}, {{distanceFromOtherObject}}.'
     },
     lastStopDistanceFromOtherObjectPattern: {
-      value: '{{region}}, last stop, {{distance}} {{units}} from {{otherObjectLabel}}.'
+      value: '{{region}}, last stop, {{distanceFromOtherObject}}.'
     },
     sidePattern: {
       value: '{{side}} edge'

@@ -26,6 +26,7 @@ define( require => {
   const closestToOtherObjectPatternString = ISLCA11yStrings.closestToOtherObjectPattern.value;
   const sidePatternString = ISLCA11yStrings.sidePattern.value;
   const distanceFromOtherObjectPatternString = ISLCA11yStrings.distanceFromOtherObjectPattern.value;
+  const distanceFromOtherObjectSentencePatternString = ISLCA11yStrings.distanceFromOtherObjectSentencePattern.value;
   const lastStopDistanceFromOtherObjectPatternString = ISLCA11yStrings.lastStopDistanceFromOtherObjectPattern.value;
   const lastStopString = ISLCA11yStrings.lastStop.value;
 
@@ -152,15 +153,36 @@ define( require => {
      * @param  {ISLCObjectEnum} thisObjectEnum
      * @param  {string}  pattern
      * @param  {object}  [additionalFillObject]
+     * @param  {boolean}  [fillInDistanceDirectly] - when true, the provided pattern will be used as the pattern for
+     *                                               filling in the distance clause too.
      * @returns {string}
      * @private
      */
-    getSpherePositionAriaValueText( thisObjectEnum, pattern, additionalFillObject ) {
+    getSpherePositionAriaValueText( thisObjectEnum, pattern, additionalFillObject, fillInDistanceDirectly ) {
       const otherObjectLabel = this.getOtherObjectLabelFromEnum( thisObjectEnum );
       const distance = this.convertedDistance;
       const units = this.units;
-      const fillObject = { distance, units, otherObjectLabel };
-      return StringUtils.fillIn( pattern, _.extend( fillObject, additionalFillObject ) );
+
+      const fillObject = _.extend( {}, additionalFillObject );
+
+      // fill distance related template vars directly into the provided pattern
+      if ( fillInDistanceDirectly ) {
+        fillObject.distance = distance;
+        fillObject.units = units;
+        fillObject.otherObjectLabel = otherObjectLabel;
+      }
+      else {
+        StringUtils.assertContainsKey( pattern, 'distanceFromOtherObject' );
+
+        // fill distance related template vars into sub pattern and expect to fill a whole clause with output
+        fillObject.distanceFromOtherObject = StringUtils.fillIn( distanceFromOtherObjectPatternString, {
+          distance: distance,
+          units: units,
+          otherObjectLabel: otherObjectLabel
+        } );
+      }
+
+      return StringUtils.fillIn( pattern, fillObject );
     }
 
     /**
@@ -172,7 +194,7 @@ define( require => {
     getDistanceFromOtherObjectText( thisObjectEnum ) {
       return this.getSpherePositionAriaValueText(
         thisObjectEnum,
-        distanceFromOtherObjectPatternString
+        distanceFromOtherObjectSentencePatternString
       );
     }
 
@@ -249,7 +271,7 @@ define( require => {
 
       return this.getSpherePositionAriaValueText( thisObjectEnum, arrivedAtEdgePatternString, {
         side: this.getSideFromObjectEnum( thisObjectEnum )
-      } );
+      }, true /* fill in distance directly to this string */ );
     }
 
     /**
@@ -400,7 +422,7 @@ define( require => {
      * @returns {string}
      */
     getEdgePhrase( objectEnum ) {
-      let edgeClause = 'this is a test';
+      let edgeClause = null;
 
       if ( this.objectAtEdgeIgnoreOtherObject( objectEnum ) ) {
         edgeClause = this.getSideAndEdge( objectEnum );
@@ -408,9 +430,8 @@ define( require => {
       else if ( this.objectsClosest() ) {
         edgeClause = lastStopString;
       }
-      else {
-        assert && assert( false, 'why is this called if not at a border' );
-      }
+
+      assert && assert( edgeClause, 'why is this called if not at a border' );
       return edgeClause;
     }
 
