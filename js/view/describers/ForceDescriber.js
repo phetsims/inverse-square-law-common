@@ -78,7 +78,7 @@ define( require => {
 
 
   const getScientificNotationTextFromPattern = ( forceValue, mantissaDecimalPlaces, pattern ) => {
-    const { mantissa, exponent } = ScientificNotationNode.toScientificNotation( forceValue, { mantissaDecimalPlaces } );
+    const { mantissa, exponent } = ScientificNotationNode.toScientificNotation( forceValue, { mantissaDecimalPlaces: mantissaDecimalPlaces } );
     const mantissaPattern = mantissa < 0 ? negativeValuePatternString : valuePatternString; // negative values are possible in Coulomb's Law
     const mantissaString = StringUtils.fillIn( mantissaPattern, { value: Math.abs( mantissa ) } );
     const exponentPattern = exponent < 0 ? negativeValuePatternString : valuePatternString;
@@ -101,7 +101,7 @@ define( require => {
         convertForce: force => force,
 
         // for adding natural language to the force (e.g. '3 billion' instead of 3000000000)
-        forceValueToString: value => StringUtils.fillIn( valuePatternString, { value } ),
+        forceValueToString: value => StringUtils.fillIn( valuePatternString, { value: value } ),
 
         // {string} - see getForceBetweenAndVectorText() for usage. Be careful that template vars are named correctly.
         forceAndVectorPatternString: forceAndVectorPatternString,
@@ -207,7 +207,7 @@ define( require => {
       const units = this.units;
 
       // In BASICS the object labels are used, in regular the fillin is a no-op because those keys aren't present.
-      return StringUtils.fillIn( pattern, { forceValue, units, thisObjectLabel, otherObjectLabel } );
+      return StringUtils.fillIn( pattern, { forceValue: forceValue, units: units, thisObjectLabel: thisObjectLabel, otherObjectLabel: otherObjectLabel } );
     }
 
     /**
@@ -218,8 +218,8 @@ define( require => {
     getForceBetweenAndVectorText( thisObjectLabel, otherObjectLabel ) {
       const pattern = this.forceAndVectorPatternString;
       const fillObject = {
-        thisObjectLabel,
-        otherObjectLabel,
+        thisObjectLabel: thisObjectLabel,
+        otherObjectLabel: otherObjectLabel,
         size: this.vectorSize
       };
       return StringUtils.fillIn( pattern, fillObject );
@@ -230,7 +230,7 @@ define( require => {
                       robotPushSummaryPatternString :
                       robotPullSummaryPatternString;
       const effort = this.robotEffort;
-      return StringUtils.fillIn( pattern, { effort } );
+      return StringUtils.fillIn( pattern, { effort: effort } );
     }
 
     /**
@@ -260,7 +260,7 @@ define( require => {
     getForceValueAndUnits() {
       const force = this.formattedForce;
       const units = this.units;
-      return StringUtils.fillIn( forceValueUnitsPatternString, { force, units } );
+      return StringUtils.fillIn( forceValueUnitsPatternString, { force: force, units: units } );
     }
 
     /**
@@ -279,7 +279,7 @@ define( require => {
      */
     getForceVectorSizeText() {
       const size = this.vectorSize;
-      return StringUtils.fillIn( this.forceVectorSizePatternString, { size } );
+      return StringUtils.fillIn( this.forceVectorSizePatternString, { size: size } );
     }
 
     /**
@@ -289,7 +289,7 @@ define( require => {
      */
     getVectorSizeText() {
       const size = this.vectorSize;
-      return StringUtils.fillIn( vectorSizePatternString, { size } );
+      return StringUtils.fillIn( vectorSizePatternString, { size: size } );
     }
 
     /**
@@ -301,7 +301,7 @@ define( require => {
       const size = this.vectorSize;
       const forceValue = this.formattedForce;
       const units = this.units;
-      return StringUtils.fillIn( vectorSizeForcesValuePatternString, { size, forceValue, units } );
+      return StringUtils.fillIn( vectorSizeForcesValuePatternString, { size: size, forceValue: forceValue, units: units } );
     }
 
     /**
@@ -317,7 +317,7 @@ define( require => {
       }
       else {
         const forceClause = this.getForcesClause();
-        return StringUtils.fillIn( vectorForceClausePatternString, { vectorClause, forceClause } );
+        return StringUtils.fillIn( vectorForceClausePatternString, { vectorClause: vectorClause, forceClause: forceClause } );
       }
     }
 
@@ -328,7 +328,7 @@ define( require => {
      */
     getVectorSizeClause() {
       const size = this.vectorSize;
-      return StringUtils.fillIn( this.vectorsSizeClausePatternString, { size } );
+      return StringUtils.fillIn( this.vectorsSizeClausePatternString, { size: size } );
     }
 
     /**
@@ -358,7 +358,7 @@ define( require => {
     fillForceClausePattern( pattern ) {
       const forceValue = this.formattedForce;
       const units = this.units;
-      return StringUtils.fillIn( pattern, { forceValue, units } );
+      return StringUtils.fillIn( pattern, { forceValue: forceValue, units: units } );
     }
 
     /**
@@ -368,7 +368,7 @@ define( require => {
      */
     getVectorChangeText() {
       const changeDirection = this.changeDirection;
-      return StringUtils.fillIn( this.vectorChangePatternString, { changeDirection } );
+      return StringUtils.fillIn( this.vectorChangePatternString, { changeDirection: changeDirection } );
     }
 
     /**
@@ -380,7 +380,7 @@ define( require => {
       const changeDirection = this.changeDirection;
       const forceValue = this.formattedForce;
       const units = this.units;
-      return StringUtils.fillIn( this.vectorChangeForcesNowValuePatternString, { changeDirection, forceValue, units } );
+      return StringUtils.fillIn( this.vectorChangeForcesNowValuePatternString, { changeDirection: changeDirection, forceValue: forceValue, units: units } );
     }
 
     /**
@@ -403,9 +403,9 @@ define( require => {
       const { changeDirection, units } = this;
       const forceValue = this.formattedForce;
       return StringUtils.fillIn( this.vectorChangeForcesNowClausePatternString, {
-        changeDirection,
-        forceValue,
-        units
+        changeDirection: changeDirection,
+        forceValue: forceValue,
+        units: units
       } );
     }
 

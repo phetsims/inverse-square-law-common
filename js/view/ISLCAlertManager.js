@@ -37,7 +37,7 @@ define( require => {
       else {
         alert = forceValuesHiddenString;
       }
-      const utterance = new Utterance( { alert, uniqueGroupId: 'forceValues' } );
+      const utterance = new Utterance( { alert: alert, uniqueGroupId: 'forceValues' } );
       utteranceQueue.addToBack( utterance );
     }
 
@@ -70,7 +70,7 @@ define( require => {
       const positionDescriber = PositionDescriber.getDescriber();
       const forceClause = this.forceDescriber.getVectorsAndForcesClause();
       const region = positionDescriber.qualitativeDistance;
-      return StringUtils.fillIn( regionForceClausePatternString, { region, forceClause } );
+      return StringUtils.fillIn( regionForceClausePatternString, { region: region, forceClause: forceClause } );
     }
 
     static getManager() {

@@ -99,7 +99,7 @@ define( require => {
     static getSummaryInteractionHint( massOrCharge ) {
       return StringUtils.fillIn(
         summaryInteractionHintPatternString,
-        { massOrCharge }
+        { massOrCharge: massOrCharge }
       );
     }
   }

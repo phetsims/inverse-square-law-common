@@ -139,11 +139,11 @@ define( require => {
 
       const qualitativeClause = StringUtils.fillIn(
         distanceAndValueSummaryPatternString,
-        { object1Label, object2Label, qualitativeDistance }
+        { object1Label: object1Label, object2Label: object2Label, qualitativeDistance: qualitativeDistance }
       );
       const quantitativeClause = StringUtils.fillIn(
         centersExactlyPatternString,
-        { distance, units }
+        { distance: distance, units: units }
       );
 
       return StringUtils.fillIn( quantitativeAndQualitativePatternString, {
@@ -239,7 +239,7 @@ define( require => {
       const position = this.getConvertedPositionFromEnum( thisObjectEnum );
       const unit = this.unit;
       return StringUtils.fillIn( positionMarkPatternString, {
-        position, unit
+        position: position, unit: unit
       } );
     }
 
@@ -254,7 +254,7 @@ define( require => {
       return this.getSpherePositionAriaValueText(
         thisObjectEnum,
         positionDistanceFromOtherObjectPatternString,
-        { positionMark }
+        { positionMark: positionMark }
       );
     }
 
@@ -269,7 +269,7 @@ define( require => {
       return this.getSpherePositionAriaValueText(
         thisObjectEnum,
         progressDistanceFromOtherObjectPatternString,
-        { progress }
+        { progress: progress }
       );
     }
 
@@ -521,7 +521,7 @@ define( require => {
      * @returns {string}
      */
     static getObjectLabelPositionText( label ) {
-      return StringUtils.fillIn( objectLabelPositionPatternString, { label } );
+      return StringUtils.fillIn( objectLabelPositionPatternString, { label: label } );
     }
 
     /**
