@@ -208,7 +208,12 @@ define( require => {
       const units = this.units;
 
       // In BASICS the object labels are used, in regular the fillin is a no-op because those keys aren't present.
-      return StringUtils.fillIn( pattern, { forceValue: forceValue, units: units, thisObjectLabel: thisObjectLabel, otherObjectLabel: otherObjectLabel } );
+      return StringUtils.fillIn( pattern, {
+        forceValue: forceValue,
+        units: units,
+        thisObjectLabel: thisObjectLabel,
+        otherObjectLabel: otherObjectLabel
+      } );
     }
 
     /**
@@ -302,7 +307,11 @@ define( require => {
       const size = this.vectorSize;
       const forceValue = this.formattedForce;
       const units = this.units;
-      return StringUtils.fillIn( this.vectorSizeForcesValuePatternString, { size: size, forceValue: forceValue, units: units } );
+      return StringUtils.fillIn( this.vectorSizeForcesValuePatternString, {
+        size: size,
+        forceValue: forceValue,
+        units: units
+      } );
     }
 
     /**
@@ -318,7 +327,10 @@ define( require => {
       }
       else {
         const forceClause = this.getForcesClause();
-        return StringUtils.fillIn( vectorForceClausePatternString, { vectorClause: vectorClause, forceClause: forceClause } );
+        return StringUtils.fillIn( vectorForceClausePatternString, {
+          vectorClause: vectorClause,
+          forceClause: forceClause
+        } );
       }
     }
 
@@ -381,7 +393,11 @@ define( require => {
       const changeDirection = this.changeDirection;
       const forceValue = this.formattedForce;
       const units = this.units;
-      return StringUtils.fillIn( this.vectorChangeForcesNowValuePatternString, { changeDirection: changeDirection, forceValue: forceValue, units: units } );
+      return StringUtils.fillIn( this.vectorChangeForcesNowValuePatternString, {
+        changeDirection: changeDirection,
+        forceValue: forceValue,
+        units: units
+      } );
     }
 
     /**

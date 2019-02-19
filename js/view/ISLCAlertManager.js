@@ -41,8 +41,8 @@ define( require => {
       utteranceQueue.addToBack( utterance );
     }
 
-    alertPositionChanged( endAtEdge ) {
-      const alert = this.getPositionChangedAlertText( endAtEdge );
+    alertPositionChanged( objectsTouching ) {
+      const alert = this.getPositionChangedAlertText( objectsTouching );
       const utterance = new Utterance( { alert: alert, uniqueGroupId: 'position' } );
       utteranceQueue.addToBack( utterance );
     }
@@ -53,7 +53,7 @@ define( require => {
       utteranceQueue.addToBack( utterance );
     }
 
-    getPositionChangedAlertText( endAtEdge ) {
+    getPositionChangedAlertText( objectsTouching ) {
       let alertText = this.forceDescriber.getVectorChangeText();
       let edgeAlertText = this.forceDescriber.getVectorSizeText();
 
@@ -63,7 +63,7 @@ define( require => {
         edgeAlertText = this.forceDescriber.getVectorSizeForceValueText();
       }
 
-      return endAtEdge ? edgeAlertText : alertText;
+      return objectsTouching ? edgeAlertText : alertText;
     }
 
     getPositionUnchangedAlertText() {
