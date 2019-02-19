@@ -75,8 +75,6 @@ define( require => {
   const valuePatternString = ISLCA11yStrings.valuePattern.value;
 
   // helper functions
-
-
   const getScientificNotationTextFromPattern = ( forceValue, mantissaDecimalPlaces, pattern ) => {
     const { mantissa, exponent } = ScientificNotationNode.toScientificNotation( forceValue, { mantissaDecimalPlaces: mantissaDecimalPlaces } );
     const mantissaPattern = mantissa < 0 ? negativeValuePatternString : valuePatternString; // negative values are possible in Coulomb's Law
@@ -142,6 +140,9 @@ define( require => {
         vectorsCapitalized: options.vectorsCapitalizedString
       } );
       this.vectorChangeForcesNowValuePatternString = StringUtils.fillIn( vectorChangeForcesNowValuePatternString, {
+        vectorsCapitalized: options.vectorsCapitalizedString
+      } );
+      this.vectorSizeForcesValuePatternString = StringUtils.fillIn( vectorSizeForcesValuePatternString, {
         vectorsCapitalized: options.vectorsCapitalizedString
       } );
       this.vectorsSizeClausePatternString = StringUtils.fillIn( vectorsSizeClausePatternString, {
@@ -293,7 +294,7 @@ define( require => {
     }
 
     /**
-     * Returns the string 'Vectors {{size}}, forces {{forceValue}} {{units}}.'
+     * Returns the string 'Vectors {{size}}, forces now {{forceValue}} {{units}}.'
      *
      * @returns {string}
      */
@@ -301,7 +302,7 @@ define( require => {
       const size = this.vectorSize;
       const forceValue = this.formattedForce;
       const units = this.units;
-      return StringUtils.fillIn( vectorSizeForcesValuePatternString, { size: size, forceValue: forceValue, units: units } );
+      return StringUtils.fillIn( this.vectorSizeForcesValuePatternString, { size: size, forceValue: forceValue, units: units } );
     }
 
     /**
