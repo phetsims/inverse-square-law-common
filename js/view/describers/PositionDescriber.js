@@ -274,14 +274,14 @@ define( require => {
     }
 
     /**
-     * Special case string for when an object is at an "edge." Here "edge" is defined as either touching
-     * a boundary, or touching the other object. This is because in both cases, this object cannot move further in
-     * that direction
+     * Special case string for when an object is at a boundary. This either means touching
+     * an edge, or touching the other object. This is because in both cases, this object cannot move further in
+     * that direction.
      *
      * @param  {ISLCObjectEnum} thisObjectEnum
      * @returns {string}
      */
-    getEdgeValueText( thisObjectEnum ) {
+    getBoundaryTouchingValueText( thisObjectEnum ) {
       const positionMark = this.getPositionMark( thisObjectEnum );
       const edgePhrase = this.getEdgePhrase( thisObjectEnum );
 
@@ -299,7 +299,7 @@ define( require => {
      * @returns {string}
      */
     getArrivedAtEdgeText( thisObjectEnum ) {
-      assert && assert( this.objectAtEdge( thisObjectEnum ) );
+      assert && assert( this.objectTouchingBoundary( thisObjectEnum ) );
 
       const distanceClause = this.useQuantitativeDistance ?
 
@@ -313,7 +313,7 @@ define( require => {
 
       // partially fill in the string with the "side" template var
       return StringUtils.fillIn( arrivedAtEdgePatternString, {
-        side: this.getSideFromObjectEnum( thisObjectEnum ),
+        side: this.getEdgeFromObjectEnum( thisObjectEnum ),
         distanceClause: distanceClause
       } );
     }
@@ -328,8 +328,8 @@ define( require => {
       let text = this.getPositionAndDistanceFromOtherObjectText( thisObjectEnum );
 
       // this covers when the object is at edges, and closest to the other mass
-      if ( this.objectAtEdge( thisObjectEnum ) ) {
-        text = this.getEdgeValueText( thisObjectEnum );
+      if ( this.objectTouchingBoundary( thisObjectEnum ) ) {
+        text = this.getBoundaryTouchingValueText( thisObjectEnum );
       }
       return text;
     }
@@ -360,12 +360,12 @@ define( require => {
           newAriaValueText = this.getProgressPositionAndDistanceFromOtherObjectText( objectEnum );
         }
 
-        if ( this.objectAtEdge( objectEnum ) ) {
+        if ( this.objectAtEdgeIgnoreOtherObject( objectEnum ) ) {
           newAriaValueText = this.getArrivedAtEdgeText( objectEnum );
         }
 
         if ( this.objectsClosest() ) {
-          newAriaValueText = this.getEdgeValueText( objectEnum );
+          newAriaValueText = this.getBoundaryTouchingValueText( objectEnum );
         }
 
         return newAriaValueText;
@@ -380,8 +380,8 @@ define( require => {
      * @returns {boolean}
      */
     objectAtEdgeIgnoreOtherObject( objectEnum ) {
-      return ( this.isObject1( objectEnum ) && this.objectAtMinEdge( objectEnum ) ) ||
-             ( this.isObject2( objectEnum ) && this.objectAtMaxEdge( objectEnum ) );
+      return ( this.isObject1( objectEnum ) && this.objectAtTouchingMin( objectEnum ) ) ||
+             ( this.isObject2( objectEnum ) && this.objectAtTouchingMax( objectEnum ) );
 
     }
 
@@ -394,26 +394,28 @@ define( require => {
      * @param  {ISLCObjectEnum} objectEnum
      * @returns {boolean}
      */
-    objectAtEdge( objectEnum ) {
-      return this.objectAtMinEdge( objectEnum ) || this.objectAtMaxEdge( objectEnum );
+    objectTouchingBoundary( objectEnum ) {
+      return this.objectAtTouchingMin( objectEnum ) || this.objectAtTouchingMax( objectEnum );
     }
 
     /**
-     * Returns true if the model object associated with the passed-in enum is at the left boundary of the sim.
+     * Returns true if the model object associated with the passed-in enum is at the left boundary of its currently
+     * enabled range. Note that when the objects are touching, their enabledRanges will be limited by the other object.
      * @param  {ISLCObjectEnum} objectEnum
      * @returns {boolean}
      */
-    objectAtMinEdge( objectEnum ) {
+    objectAtTouchingMin( objectEnum ) {
       const object = this.getObjectFromEnum( objectEnum );
       return object.positionProperty.get() === object.enabledRangeProperty.get().min;
     }
 
     /**
-     * Returns true if the model object associated with the passed-in enum is at the left boundary of the sim.
+     * Returns true if the model object associated with the passed-in enum is at the right boundary of its currently
+     * enabled range. Note that when the objects are touching, their enabledRanges will be limited by the other object.
      * @param  {ISLCObjectEnum} objectEnum
      * @returns {boolean}
      */
-    objectAtMaxEdge( objectEnum ) {
+    objectAtTouchingMax( objectEnum ) {
       const object = this.getObjectFromEnum( objectEnum );
       return object.positionProperty.get() === object.enabledRangeProperty.get().max;
     }
@@ -425,7 +427,7 @@ define( require => {
      */
     getSideAndEdge( objectEnum ) {
       return StringUtils.fillIn( sidePatternString, {
-        side: this.getSideFromObjectEnum( objectEnum )
+        side: this.getEdgeFromObjectEnum( objectEnum )
       } );
     }
 
@@ -434,11 +436,11 @@ define( require => {
      * @param {ISLCObjectEnum} objectEnum
      * @returns {string}
      */
-    getSideFromObjectEnum( objectEnum ) {
-      if ( this.objectAtMinEdge( objectEnum ) ) {
+    getEdgeFromObjectEnum( objectEnum ) {
+      if ( this.objectAtTouchingMin( objectEnum ) && this.isObject1( objectEnum ) ) {
         return leftString;
       }
-      else if ( this.objectAtMaxEdge( objectEnum ) ) {
+      else if ( this.objectAtTouchingMax( objectEnum ) && this.isObject2( objectEnum ) ) {
         return rightString;
       }
       else {
