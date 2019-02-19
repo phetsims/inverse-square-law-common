@@ -155,7 +155,7 @@ define( require => {
       value: 'Vectors {{size}}.'
     },
     vectorSizeForcesValuePattern: {
-      value: 'Vectors {{size}}, forces {{forceValue}} {{units}}.'
+      value: 'Vectors {{size}}, forces now {{forceValue}} {{units}}.'
     },
     vectorsSizeClausePattern: {
       value: '{{vectors}} {{size}}'
