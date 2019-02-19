@@ -34,42 +34,50 @@ define( require => {
 
   const leftString = ISLCA11yStrings.left.value;
   const rightString = ISLCA11yStrings.right.value;
+  const farthestFromString = ISLCA11yStrings.farthestFrom.value;
   const extremelyFarFromString = ISLCA11yStrings.extremelyFarFrom.value;
   const veryFarFromString = ISLCA11yStrings.veryFarFrom.value;
-  const notSoFarFromString = ISLCA11yStrings.notSoFarFrom.value;
+  const farFromString = ISLCA11yStrings.farFrom.value;
   const notSoCloseToString = ISLCA11yStrings.notSoCloseTo.value;
   const closeToString = ISLCA11yStrings.closeTo.value;
   const veryCloseToString = ISLCA11yStrings.veryCloseTo.value;
   const extremelyCloseToString = ISLCA11yStrings.extremelyCloseTo.value;
+  const closestToString = ISLCA11yStrings.closestTo.value;
 
+  const farthestString = ISLCA11yStrings.farthest.value;
   const extremelyFarString = ISLCA11yStrings.extremelyFar.value;
   const veryFarString = ISLCA11yStrings.veryFar.value;
-  const notSoFarString = ISLCA11yStrings.notSoFar.value;
+  const farString = ISLCA11yStrings.far.value;
   const notSoCloseString = ISLCA11yStrings.notSoClose.value;
   const closeString = ISLCA11yStrings.close.value;
   const veryCloseString = ISLCA11yStrings.veryClose.value;
   const extremelyCloseString = ISLCA11yStrings.extremelyClose.value;
+  const closestString = ISLCA11yStrings.closest.value;
   const closerString = ISLCA11yStrings.closer.value;
   const fartherAwayString = ISLCA11yStrings.fartherAway.value;
 
   const RELATIVE_DISTANCE_STRINGS = [
+    farthestFromString,
     extremelyFarFromString,
     veryFarFromString,
-    notSoFarFromString,
+    farFromString,
     notSoCloseToString,
     closeToString,
     veryCloseToString,
-    extremelyCloseToString
+    extremelyCloseToString,
+    closestToString
   ];
 
   const DISTANCE_STRINGS = [
+    farthestString,
     extremelyFarString,
     veryFarString,
-    notSoFarString,
+    farString,
     notSoCloseString,
     closeString,
     veryCloseString,
-    extremelyCloseString
+    extremelyCloseString,
+    closestString
   ];
 
   let describer = null;

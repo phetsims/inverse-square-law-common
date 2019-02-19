@@ -209,14 +209,17 @@ define( require => {
     getSmaller: {
       value: 'get smaller'
     },
+    farthestFrom: {
+      value: 'farthest from'
+    },
     extremelyFarFrom: {
       value: 'extremely far from'
     },
     veryFarFrom: {
       value: 'very far from'
     },
-    notSoFarFrom: {
-      value: 'not so far from'
+    farFrom: {
+      value: 'far from'
     },
     notSoCloseTo: {
       value: 'not so close to'
@@ -230,14 +233,20 @@ define( require => {
     extremelyCloseTo: {
       value: 'extremely close to'
     },
+    closestTo: {
+      value: 'closest to'
+    },
+    farthest: {
+      value: 'farthest'
+    },
     extremelyFar: {
       value: 'extremely far'
     },
     veryFar: {
       value: 'very far'
     },
-    notSoFar: {
-      value: 'not so far'
+    far: {
+      value: 'far'
     },
     notSoClose: {
       value: 'not so close'
@@ -250,6 +259,9 @@ define( require => {
     },
     extremelyClose: {
       value: 'extremely close'
+    },
+    closest: {
+      value: 'closest'
     },
     closerTo: {
       value: 'closer to'
