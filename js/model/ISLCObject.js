@@ -50,8 +50,6 @@ define( function( require ) {
       range: new Range( options.leftObjectBoundary, options.rightObjectBoundary )
     } );
 
-    this.positionProperty.link( () => console.log( this.positionProperty.value ) );
-
     // @public {Property.<number>} - the mass or charge of the object in kilograms or coulombs
     this.valueProperty = new NumberProperty( initialMass, {
       tandem: tandem.createTandem( 'valueProperty' ),
