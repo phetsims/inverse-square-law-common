@@ -50,6 +50,8 @@ define( function( require ) {
       range: new Range( options.leftObjectBoundary, options.rightObjectBoundary )
     } );
 
+    this.positionProperty.link( () => console.log( this.positionProperty.value ) );
+
     // @public {Property.<number>} - the mass or charge of the object in kilograms or coulombs
     this.valueProperty = new NumberProperty( initialMass, {
       tandem: tandem.createTandem( 'valueProperty' ),
@@ -95,9 +97,10 @@ define( function( require ) {
      * Calculate radius for the object - must be implemented in subtypes.
      *
      * @public
+     * @abstract
      */
     calculateRadius: function() {
-      throw new Error( 'calculateRadius must be implemented in descendent types' );
+      assert && assert( false, 'calculateRadius must be implemented in descendent types' );
     },
 
     /**
@@ -108,12 +111,6 @@ define( function( require ) {
     reset: function() {
       this.valueProperty.reset();
       this.positionProperty.reset();
-    },
-
-    isAtEdgeOfRange: function() {
-      var range = this.enabledRangeProperty.get();
-      var x = this.positionProperty.get();
-      return x === range.min || x === range.max;
     }
   } );
 } );

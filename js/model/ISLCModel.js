@@ -54,8 +54,8 @@ define( function( require ) {
     this.object2 = object2;
 
     // @public
-    // @a11y - needed for adjusting alerts when an object moves as a result of a radius increase
-    this.pushedObjectEnum = null;
+    // {Property.<ISLCObjectEnum|null>} - needed for adjusting alerts when an object moves as a result of a radius increase
+    this.pushedObjectEnumProperty = new Property( null );
 
     // @private
     this.snapObjectsToNearest = options.snapObjectsToNearest;
@@ -119,6 +119,30 @@ define( function( require ) {
       updateRange( object2 );
       updateRange( object1 );
     } );
+
+    // wire up logic to update the state of the pushedObjectEnumProperty
+    const createPushedPositionListener = objectEnum => {
+      return () => {
+        if ( this.object1.isDragging || this.object2.isDragging ) {
+          this.pushedObjectEnumProperty.value = null;
+        }
+        else {
+          // This conditional should only be hit if the mass has changed in addition to the position
+          this.pushedObjectEnumProperty.value = objectEnum;
+        }
+      };
+    };
+    object1.positionProperty.link( createPushedPositionListener( ISLCObjectEnum.OBJECT_ONE ) );
+    object2.positionProperty.link( createPushedPositionListener( ISLCObjectEnum.OBJECT_TWO ) );
+
+    // when the mass is lessened, there is no way that pushed an object, so set to null
+    const massChangedListener = ( newMass, oldMass ) => {
+      if ( oldMass > newMass ) {
+        this.pushedObjectEnumProperty.value = null;
+      }
+    };
+    object1.valueProperty.link( massChangedListener );
+    object2.valueProperty.link( massChangedListener );
   }
 
   inverseSquareLawCommon.register( 'ISLCModel', ISLCModel );
@@ -133,7 +157,7 @@ define( function( require ) {
     step: function() {
       var minX = this.leftObjectBoundary;
       var maxX = this.rightObjectBoundary;
-      // var currentLocationObject1 =
+
       var locationObject1 = this.object1.positionProperty.get();
       var locationObject2 = this.object2.positionProperty.get();
 
@@ -170,17 +194,9 @@ define( function( require ) {
           if ( this.object2.positionProperty.get() < maxX ) {
 
             // object2 is not at the edge update its position
-            this.pushedObjectEnum = ISLCObjectEnum.OBJECT_TWO;
             this.object2.positionProperty.set( locationObject2 );
           }
           else {
-            if ( locationObject1 !== this.object1.positionProperty.get() ) {
-              // object1 moved
-              this.pushedObjectEnum = ISLCObjectEnum.OBJECT_ONE;
-            }
-            else {
-              this.pushedObjectEnum = null;
-            }
 
             // object2 is at the edge update object1 position
             this.object1.positionProperty.set( locationObject1 );
@@ -190,16 +206,9 @@ define( function( require ) {
           if ( this.object1.positionProperty.get() > minX ) {
 
             // object1 is not at boundary, update position
-            this.pushedObjectEnum = ISLCObjectEnum.OBJECT_ONE;
             this.object1.positionProperty.set( locationObject1 );
           }
           else {
-            if ( locationObject2 !== this.object2.positionProperty.get() ) {
-              this.pushedObjectEnum = ISLCObjectEnum.OBJECT_TWO;
-            }
-            else {
-              this.pushedObjectEnum = null;
-            }
 
             this.object2.positionProperty.set( locationObject2 );
           }
@@ -329,6 +338,14 @@ define( function( require ) {
       }
 
       return this.snapToGrid( minX );
+    },
+
+    /**
+     * Get whether or not the position of a mass was most recently changed based on the other pushing it.
+     * @returns {boolean}
+     */
+    massWasPushed: function() {
+      return this.pushedObjectEnumProperty.value !== null;
     },
 
     /**

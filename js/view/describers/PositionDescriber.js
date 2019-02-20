@@ -98,12 +98,15 @@ define( require => {
       this.unit = options.unit;
       this.units = options.units;
       this.centerOffset = options.centerOffset;
-      this.pushedObjectEnum = null;
       this.convertDistanceMetric = options.convertDistanceMetric;
 
-      // in meters
+      // @private {number} - in meters, already converted with optional formatting function
       this.distanceBetween = 0;
+
+      // @private - in converted distance
       this.oldDistanceBetween = 0;
+
+      // @public
       this.lastMoveCloser = false;
 
       // @private - Whether or not the masses moved closer last position change. only set when an object is dragging.
