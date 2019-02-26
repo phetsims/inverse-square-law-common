@@ -28,7 +28,7 @@ define( require => {
       }, config );
 
       assert && assert( config.object2Label && config.object1Label, 'required params must be specified' );
-      assert && assert( config.labelContent, 'Required param "labelContent" must be specified.' )
+      assert && assert( config.labelContent, 'Required param "labelContent" must be specified.' );
 
       super( config );
 
