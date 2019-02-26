@@ -19,18 +19,18 @@ define( require => {
 
       config = _.extend( {
         object1Label: null, // @required
-        object2Label: null // @required
+        object2Label: null, // @required
+
+        // a11y
+        labelTagName: 'h3',
+        labelContent: null, // @required
+        tagName: 'ul'
       }, config );
 
       assert && assert( config.object2Label && config.object1Label, 'required params must be specified' );
+      assert && assert( config.labelContent, 'Required param "labelContent" must be specified.' )
 
-      const a11yOptions = _.extend( {
-        labelTagName: 'h3',
-        labelContent: 'default content', // TODO: these should be required at some point. https://github.com/phetsims/inverse-square-law-common/issues/58
-        tagName: 'ul'
-      }, config.a11yOptions );
-
-      super( a11yOptions );
+      super( config );
 
       // @private
       this.model = model;
