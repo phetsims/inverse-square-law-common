@@ -1,4 +1,4 @@
-// Copyright 2018, University of Colorado Boulder
+// Copyright 2018-2019, University of Colorado Boulder
 
 define( require => {
   'use strict';
@@ -514,6 +514,7 @@ define( require => {
     }
 
     /**
+     * TODO: rename to `qualitativeDistanceString`
      * Returns the qualitative distance (e.g. 'close')
      * @returns {string}
      */
@@ -522,6 +523,7 @@ define( require => {
     }
 
     /**
+     * TODO: rename to `qualitativeRelativeDistanceString` and make a getter
      * The qualitative distance relative to another object (e.g. 'very far from')
      *
      * @returns {string}

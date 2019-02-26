@@ -1,4 +1,4 @@
-// Copyright 2017-2018, University of Colorado Boulder
+// Copyright 2017-2019, University of Colorado Boulder
 
 define( require => {
   'use strict';
@@ -10,6 +10,11 @@ define( require => {
 
   class ISLCObjectPDOMNode extends Node {
 
+    /**
+     * @param {ISLCModel} model
+     * @param {ISLCObjectEnum} objectEnum
+     * @param {Object} config
+     */
     constructor( model, objectEnum, config ) {
 
       config = _.extend( {
@@ -27,12 +32,13 @@ define( require => {
 
       super( a11yOptions );
 
+      // @private
       this.model = model;
       this.objectModel = objectEnum === ISLCObjectEnum.OBJECT_ONE ? model.object1 : model.object2;
       this.thisObjectLabel = objectEnum === ISLCObjectEnum.OBJECT_ONE ? config.object1Label : config.object2Label;
       this.otherObjectLabel = objectEnum === ISLCObjectEnum.OBJECT_ONE ? config.object2Label : config.object1Label;
 
-      // @public
+      // @protected
       this.forceVectorMagnitudeItemNode = new Node( { tagName: 'li' } );
       this.forceBetweenAndVectorNode = new Node( { tagName: 'li' } );
 
@@ -44,20 +50,9 @@ define( require => {
       } );
     }
 
+    // @protected
     linkToForceProperty( callback ) {
       this.model.forceProperty.link( callback );
-    }
-
-    linkToPositionProperty( callback ) {
-      this.objectModel.positionProperty.link( callback );
-    }
-
-    linkToRadiusPropery( callback ) {
-      this.objectModel.radiusProperty.link( callback );
-    }
-
-    linkToScientificNotationProperty( callback ) {
-      this.model.scientificNotationProperty.link( callback );
     }
   }
 
