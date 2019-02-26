@@ -136,6 +136,9 @@ define( require => {
       this.forceVectorSizePatternString = StringUtils.fillIn( forceVectorSizePatternString, {
         vectors: options.vectorsString
       } );
+      this.vectorSizePatternString = StringUtils.fillIn( vectorSizePatternString, {
+        vectorsCapitalized: options.vectorsCapitalizedString
+      } );
       this.vectorChangePatternString = StringUtils.fillIn( vectorChangePatternString, {
         vectorsCapitalized: options.vectorsCapitalizedString
       } );
@@ -295,7 +298,7 @@ define( require => {
      */
     getVectorSizeText() {
       const size = this.vectorSize;
-      return StringUtils.fillIn( vectorSizePatternString, { size: size } );
+      return StringUtils.fillIn( this.vectorSizePatternString, { size: size } );
     }
 
     /**
