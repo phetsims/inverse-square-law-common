@@ -18,6 +18,7 @@ define( require => {
   const distanceAndValueSummaryPatternString = ISLCA11yStrings.distanceAndValueSummaryPattern.value;
   const centersExactlyPatternString = ISLCA11yStrings.centersExactlyPattern.value;
   const quantitativeAndQualitativePatternString = ISLCA11yStrings.quantitativeAndQualitativePattern.value;
+  const centersOfObjectsDistancePatternString = ISLCA11yStrings.centersOfObjectsDistancePattern.value;
 
   const positionMarkPatternString = ISLCA11yStrings.positionMarkPattern.value;
   const positionDistanceFromOtherObjectPatternString = ISLCA11yStrings.positionDistanceFromOtherObjectPattern.value;
@@ -112,7 +113,10 @@ define( require => {
       // @private - Whether or not the masses moved closer last position change. only set when an object is dragging.
       this.movedCloser = false;
 
-      // @protected - to support GFLB which has a "Show distance" checkbox, see https://github.com/phetsims/gravity-force-lab-basics/issues/88
+      // @protected - Many descriptions use a quantitative form when distance values are showing, and use qualitative
+      // descriptions when distance values are hidden. Furthermore some descriptions in the REGULAR version are
+      // "simplified" from quantitative to qualitative forms in the BASICS version.
+      // see https://github.com/phetsims/gravity-force-lab-basics/issues/88
       this.useQuantitativeDistance = true;
 
       Property.multilink(
@@ -137,31 +141,42 @@ define( require => {
     }
 
     /**
-     * Returns the string used in the screen summary item displaying position information:
+     * Returns the string used in the screen summary item displaying position/distance information:
      * '{{object1Label}} and {{object2Label}} are {{qualitativeDistance}} each other, centers exactly {{distance}} {{units}} apart.'
-     *
-     * @param {boolean} [withoutQuantitative] - whether or not to omit the quantitative clause
+     * GFLB can toggle if distance is showing, and so additional logic is added here to support removing the quantitative
+     * "centers exactly" suffix.
      * @returns {string}
      */
-    getObjectDistanceSummary( withoutQuantitative ) {
-      assert && assert( typeof withoutQuantitative === 'boolean' );
+    getObjectDistanceSummary() {
       const distance = this.convertedDistance;
-      const { object1Label, object2Label, qualitativeDistance, units } = this;
+      const { object1Label, object2Label, units } = this;
 
-      const qualitativeClause = StringUtils.fillIn(
+      const qualitativeDistanceClause = StringUtils.fillIn(
         distanceAndValueSummaryPatternString,
-        { object1Label: object1Label, object2Label: object2Label, qualitativeDistance: qualitativeDistance }
+        {
+          object1Label: object1Label,
+          object2Label: object2Label,
+          qualitativeDistance: this.qualitativeRelativeDistance()
+        }
       );
-      const quantitativeClause = StringUtils.fillIn(
+      const quantitativeDistanceClause = StringUtils.fillIn(
         centersExactlyPatternString,
         { distance: distance, units: units }
       );
 
-      return StringUtils.fillIn( quantitativeAndQualitativePatternString, {
-          qualitativeClause: qualitativeClause,
-          quantitativeClause: withoutQuantitative ? '' : quantitativeClause
+      let summary = StringUtils.fillIn( quantitativeAndQualitativePatternString, {
+          qualitativeClause: qualitativeDistanceClause,
+          quantitativeClause: this.useQuantitativeDistance ? quantitativeDistanceClause : ''
         }
       );
+
+      // if we don't want the "centers extactly" suffix, then add "Centers of" as a prefix
+      if ( !this.useQuantitativeDistance ) {
+        summary = StringUtils.fillIn( centersOfObjectsDistancePatternString, {
+          objectsDistanceClause: summary
+        } );
+      }
+      return summary;
     }
 
     /**

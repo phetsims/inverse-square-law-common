@@ -36,6 +36,9 @@ define( require => {
     distanceAndValueSummaryPattern: {
       value: '{{object1Label}} and {{object2Label}} are {{qualitativeDistance}} each other'
     },
+    centersOfObjectsDistancePattern: {
+      value: 'Centers of {{objectsDistanceClause}}'
+    },
     centersExactlyPattern: {
       value: ', centers exactly {{distance}} {{units}} apart'
     },
