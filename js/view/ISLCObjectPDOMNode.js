@@ -49,11 +49,6 @@ define( require => {
         this.forceVectorMagnitudeItemNode.visible = showValues;
       } );
     }
-
-    // @protected
-    linkToForceProperty( callback ) {
-      this.model.forceProperty.link( callback );
-    }
   }
 
   return inverseSquareLawCommon.register( 'ISLCObjectPDOMNode', ISLCObjectPDOMNode );

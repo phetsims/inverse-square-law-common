@@ -122,6 +122,7 @@ define( require => {
       Property.multilink(
         [ this.object1.positionProperty, this.object2.positionProperty ],
         ( x1, x2 ) => {
+
           // set former values
           this.oldDistanceBetween = this.distanceBetween;
           this.lastMoveCloser = this.movedCloser;
@@ -170,7 +171,7 @@ define( require => {
         }
       );
 
-      // if we don't want the "centers extactly" suffix, then add "Centers of" as a prefix
+      // if we don't want the "centers exactly" suffix, then add "Centers of" as a prefix
       if ( !this.useQuantitativeDistance ) {
         summary = StringUtils.fillIn( centersOfObjectsDistancePatternString, {
           objectsDistanceClause: summary
