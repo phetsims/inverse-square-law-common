@@ -33,8 +33,11 @@ define( require => {
     quantitativeAndQualitativePattern: {
       value: '{{qualitativeClause}}{{quantitativeClause}}.'
     },
+    qualitativeDistanceEachOtherPattern: {
+      value: '{{qualitativeDistance}} each other'
+    },
     distanceAndValueSummaryPattern: {
-      value: '{{object1Label}} and {{object2Label}} are {{qualitativeDistance}} each other'
+      value: '{{object1Label}} and {{object2Label}} are {{qualitativeDistanceFromEachOther}}'
     },
     centersOfObjectsDistancePattern: {
       value: 'Centers of {{objectsDistanceClause}}'

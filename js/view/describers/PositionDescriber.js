@@ -16,6 +16,7 @@ define( require => {
 
   const objectLabelPositionPatternString = ISLCA11yStrings.objectLabelPositionPattern.value; // [object] position
   const distanceAndValueSummaryPatternString = ISLCA11yStrings.distanceAndValueSummaryPattern.value;
+  const qualitativeDistanceEachOtherPatternString = ISLCA11yStrings.qualitativeDistanceEachOtherPattern.value;
   const centersExactlyPatternString = ISLCA11yStrings.centersExactlyPattern.value;
   const quantitativeAndQualitativePatternString = ISLCA11yStrings.quantitativeAndQualitativePattern.value;
   const centersOfObjectsDistancePatternString = ISLCA11yStrings.centersOfObjectsDistancePattern.value;
@@ -142,6 +143,17 @@ define( require => {
     }
 
     /**
+     * Like "close to each other" or "far from each other"
+     * @protected
+     * @returns {string}
+     */
+    getQualitativeDistanceFromEachOther() {
+      return StringUtils.fillIn( qualitativeDistanceEachOtherPatternString, {
+        qualitativeDistance: this.qualitativeRelativeDistance()
+      } );
+    }
+
+    /**
      * Returns the string used in the screen summary item displaying position/distance information:
      * '{{object1Label}} and {{object2Label}} are {{qualitativeDistance}} each other, centers exactly {{distance}} {{units}} apart.'
      * GFLB can toggle if distance is showing, and so additional logic is added here to support removing the quantitative
@@ -157,7 +169,7 @@ define( require => {
         {
           object1Label: object1Label,
           object2Label: object2Label,
-          qualitativeDistance: this.qualitativeRelativeDistance()
+          qualitativeDistanceFromEachOther: this.getQualitativeDistanceFromEachOther()
         }
       );
       const quantitativeDistanceClause = StringUtils.fillIn(
@@ -181,7 +193,7 @@ define( require => {
     }
 
     /**
-     * @private
+     * @protected
      * @returns {string}
      */
     getDistanceAndUnits() {
