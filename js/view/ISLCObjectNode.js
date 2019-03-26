@@ -311,7 +311,7 @@ define( function( require ) {
       keyboardStep: options.stepSize,
       shiftKeyboardStep: options.snapToNearest,
       pageKeyboardStep: options.stepSize * 2,
-      accessibleDecimalPlaces: 1,
+      a11yDecimalPlaces: 1,
       constrainValue: function( value ) {
         var numberOfDecimalPlaces = Util.numberOfDecimalPlaces( options.snapToNearest );
         return Util.toFixedNumber( value, numberOfDecimalPlaces );
