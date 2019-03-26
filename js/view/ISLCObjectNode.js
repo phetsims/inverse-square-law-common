@@ -141,7 +141,7 @@ define( function( require ) {
     } );
 
     // A11Y DRAFT
-    // assert && assert( options.createAriaValueText, 'ISLCObjectNode subtypes must define an aria-valuetext creation function' );
+    // assert && assert( options.a11yCreateAriaValueText, 'ISLCObjectNode subtypes must define an aria-valuetext creation function' );
     this.accessibleName = PositionDescriber.getObjectLabelPositionText( options.label );
     var positionDescriber = PositionDescriber.getDescriber();
     var alertManager = ISLCAlertManager.getManager();
@@ -332,7 +332,7 @@ define( function( require ) {
           alertManager.alertPositionUnchanged();
         }
       },
-      createAriaValueText: positionDescriber.ariaValueTextCreator( this.enum )
+      a11yCreateAriaValueText: positionDescriber.ariaValueTextCreator( this.enum )
     };
 
     // a11y - initialize the accessible slider
