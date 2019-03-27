@@ -132,8 +132,10 @@ define( function( require ) {
         }
       };
     };
-    object1.positionProperty.link( createPushedPositionListener( ISLCObjectEnum.OBJECT_ONE ) );
-    object2.positionProperty.link( createPushedPositionListener( ISLCObjectEnum.OBJECT_TWO ) );
+
+    // lazy link so we don't have a strange initial condition even though we haven't moved the pushers.
+    object1.positionProperty.lazyLink( createPushedPositionListener( ISLCObjectEnum.OBJECT_ONE ) );
+    object2.positionProperty.lazyLink( createPushedPositionListener( ISLCObjectEnum.OBJECT_TWO ) );
 
     // when the mass is lessened, there is no way that pushed an object, so set to null
     const massChangedListener = ( newMass, oldMass ) => {
