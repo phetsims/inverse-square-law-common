@@ -25,6 +25,8 @@ define( require => {
      */
     constructor( model ) {
       this.model = model;
+
+      // @protected
       this.forceDescriber = ForceDescriber.getDescriber();
     }
 
