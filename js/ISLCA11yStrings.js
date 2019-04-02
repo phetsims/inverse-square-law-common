@@ -62,9 +62,6 @@ define( require => {
     forceAndVectorPattern: {
       value: 'Force on {{thisObjectLabel}} by {{otherObjectLabel}} is {{size}}, and vector points directly at {{otherObjectLabel}}.'
     },
-    positionMeterMarkPattern: {
-      value: '{{positionUnit}} mark'
-    },
     valueKilogramsPattern: {
       value: '{{value}} kilograms'
     },
