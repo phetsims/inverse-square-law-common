@@ -409,16 +409,6 @@ define( function( require ) {
     },
 
     /**
-     * Updates the AccessibleSlider's PDOM peer aria-valutext property directly.
-     *
-     * @public
-     * @abstract
-     */
-    resetAriaValueText: function() {
-      throw new Error( 'resetAriaValueText must be implemented in subtypes' );
-    },
-
-    /**
      * Sets whether or not the readouts above the arrows use scientific notation in their display of the value.
      *
      * @public
