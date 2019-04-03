@@ -21,18 +21,22 @@ define( require => {
   const quantitativeAndQualitativePatternString = ISLCA11yStrings.quantitativeAndQualitativePattern.value;
   const centersOfObjectsDistancePatternString = ISLCA11yStrings.centersOfObjectsDistancePattern.value;
 
-  const positionMarkPatternString = ISLCA11yStrings.positionMarkPattern.value;
   const positionDistanceFromOtherObjectPatternString = ISLCA11yStrings.positionDistanceFromOtherObjectPattern.value;
   const progressDistanceFromOtherObjectPatternString = ISLCA11yStrings.progressDistanceFromOtherObjectPattern.value;
-  const arrivedAtEdgePatternString = ISLCA11yStrings.arrivedAtEdgePattern.value;
-  const edgeDistancePatternString = ISLCA11yStrings.edgeDistancePattern.value;
-  const closestToOtherObjectPatternString = ISLCA11yStrings.closestToOtherObjectPattern.value;
   const sidePatternString = ISLCA11yStrings.sidePattern.value;
   const distanceAndUnitsPatternString = ISLCA11yStrings.distanceAndUnitsPattern.value;
   const quantitativeDistancePatternString = ISLCA11yStrings.quantitativeDistancePattern.value;
   const distanceFromOtherObjectPatternString = ISLCA11yStrings.distanceFromOtherObjectPattern.value;
   const distanceFromOtherObjectSentencePatternString = ISLCA11yStrings.distanceFromOtherObjectSentencePattern.value;
   const lastStopString = ISLCA11yStrings.lastStop.value;
+
+  // track landmarks
+  const leftSideOfTrackString = ISLCA11yStrings.leftSideOfTrack.value;
+  const rightSideOfTrackString = ISLCA11yStrings.rightSideOfTrack.value;
+  const lastStopRightString = ISLCA11yStrings.lastStopRight.value;
+  const lastStopLeftString = ISLCA11yStrings.lastStopLeft.value;
+  const trackEndLeftString = ISLCA11yStrings.trackEndLeft.value;
+  const trackEndRightString = ISLCA11yStrings.trackEndRight.value;
 
   const leftString = ISLCA11yStrings.left.value;
   const rightString = ISLCA11yStrings.right.value;
@@ -91,7 +95,7 @@ define( require => {
       options = _.extend( {
         unit: unitsMeterString,
         units: unitsMetersString,
-        centerOffset: 0,
+        centerOffset: 0, // {number} the point considered the "center" of the track space
 
         // {number} => {number}
         convertDistanceMetric: distance => distance
@@ -270,31 +274,35 @@ define( require => {
     }
 
     /**
-     * fillIn just the position mark clause of some sentences
-     * @param {ISLCObjectEnum} thisObjectEnum
+     * Map object positions to landmarks. This is not a traditional linear/numeric mapping
+     * but instead it is based on the two objects and if they are touching each other or the edges.
+     * @param {ISLCObjectEnum} objectEnum
      * @returns {string}
      */
-    getPositionMark( thisObjectEnum ) {
-      const position = this.getConvertedPositionFromEnum( thisObjectEnum );
-      const unit = this.unit;
-      return StringUtils.fillIn( positionMarkPatternString, {
-        position: position, unit: unit
-      } );
-    }
+    getPositionLandmark( objectEnum ) {
 
-    /**
-     * Returns the string filled in string '{{position}} {{unit}} mark, {{distance}} {{units}} from {{otherObjectLabel}}.'
-     *
-     * @param  {ISLCObjectEnum} thisObjectEnum
-     * @returns {string}
-     */
-    getPositionAndDistanceFromOtherObjectText( thisObjectEnum ) {
-      const positionMark = this.getPositionMark( thisObjectEnum );
-      return this.getSpherePositionAriaValueText(
-        thisObjectEnum,
-        positionDistanceFromOtherObjectPatternString,
-        { positionMark: positionMark }
-      );
+      // object 1 touching left
+      if ( this.object1AtMin( objectEnum ) ) {
+        return trackEndLeftString;
+      }
+
+      // object 2 touching right
+      else if ( this.object2AtMax( objectEnum ) ) {
+        return trackEndRightString;
+      }
+
+      // objects touching each other
+      else if ( this.objectTouchingBoundary( objectEnum ) ) {
+        return this.isObject1( objectEnum ) ? lastStopRightString : lastStopLeftString;
+      }
+
+      // objects not touching any boundary, based on the side relative to the center
+      else {
+        const object = this.getObjectFromEnum( objectEnum );
+
+        // TODO: why does centerOffset not work as expected here?
+        return object.positionProperty.get() < 0 ? leftSideOfTrackString : rightSideOfTrackString;
+      }
     }
 
     /**
@@ -313,64 +321,19 @@ define( require => {
     }
 
     /**
-     * Special case string for when an object is at a boundary. This either means touching
-     * an edge, or touching the other object. This is because in both cases, this object cannot move further in
-     * that direction.
-     *
-     * @param  {ISLCObjectEnum} thisObjectEnum
-     * @returns {string}
-     */
-    getBoundaryTouchingValueText( thisObjectEnum ) {
-      const positionMark = this.getPositionMark( thisObjectEnum );
-      const edgePhrase = this.getEdgePhrase( thisObjectEnum );
-
-      return this.getSpherePositionAriaValueText(
-        thisObjectEnum,
-        closestToOtherObjectPatternString,
-        { positionMark: positionMark, edgePhrase: edgePhrase }
-      );
-    }
-
-    /**
-     * Returns the filled in string 'At {{side}} edge, {{distance}} {{units}} away.'
-     *
-     * @param  {ISLCObjectEnum} thisObjectEnum
-     * @returns {string}
-     */
-    getArrivedAtEdgeText( thisObjectEnum ) {
-      assert && assert( this.objectTouchingBoundary( thisObjectEnum ) );
-
-      const distanceClause = this.useQuantitativeDistance ?
-
-        // quantitative distance
-                             StringUtils.fillIn( edgeDistancePatternString, {
-                               distanceAndUnits: this.getDistanceAndUnits()
-                             } ) :
-
-        // qualitative distance
-                             this.getDistanceClause( thisObjectEnum );
-
-      // partially fill in the string with the "side" template var
-      return StringUtils.fillIn( arrivedAtEdgePatternString, {
-        side: this.getEdgeFromObjectEnum( thisObjectEnum ),
-        distanceClause: distanceClause
-      } );
-    }
-
-    /**
+     * The aria-value text when
      * Returns the desired value for the ISLCObjectNodes' aria-valuetext attributes when they receive keyboard focus.
      *
      * @param  {ISLCObjectEnum} thisObjectEnum
      * @returns {string}
      */
     getFocusAriaValueText( thisObjectEnum ) {
-      let text = this.getPositionAndDistanceFromOtherObjectText( thisObjectEnum );
-
-      // this covers when the object is at edges, and closest to the other mass
-      if ( this.objectTouchingBoundary( thisObjectEnum ) ) {
-        text = this.getBoundaryTouchingValueText( thisObjectEnum );
-      }
-      return text;
+      const positionMark = this.getPositionLandmark( thisObjectEnum );
+      return this.getSpherePositionAriaValueText(
+        thisObjectEnum,
+        positionDistanceFromOtherObjectPatternString,
+        { positionLandmark: positionMark }
+      );
     }
 
     /**
@@ -393,23 +356,40 @@ define( require => {
        * @returns {string}                - the string that will fill the aria-valuetext attribute
        */
       return ( formattedValue, oldValue ) => {
+
+        // "normally" should just be short distance
         let newAriaValueText = this.getDistanceFromOtherObjectText( objectEnum );
 
+        // closer/farther text
         if ( this.lastMoveCloser !== this.movedCloser ) {
           newAriaValueText = this.getProgressPositionAndDistanceFromOtherObjectText( objectEnum );
         }
 
-        if ( this.objectAtEdgeIgnoreOtherObject( objectEnum ) ) {
-          newAriaValueText = this.getArrivedAtEdgeText( objectEnum );
-        }
-
-        if ( this.objectsClosest() ) {
-          newAriaValueText = this.getBoundaryTouchingValueText( objectEnum );
+        // border/edge cases use the same as on focus value text
+        if ( this.objectsClosest() || this.objectAtEdgeIgnoreOtherObject( objectEnum ) ) {
+          newAriaValueText = this.getFocusAriaValueText( objectEnum );
         }
 
         return newAriaValueText;
       };
     }
+
+    /**
+     * @param {ISLCObjectEnum} objectEnum
+     * @returns {boolean}
+     */
+    object1AtMin( objectEnum ) {
+      return this.isObject1( objectEnum ) && this.objectAtTouchingMin( objectEnum );
+    }
+
+    /**
+     * @param {ISLCObjectEnum} objectEnum
+     * @returns {boolean}
+     */
+    object2AtMax( objectEnum ) {
+      return this.isObject2( objectEnum ) && this.objectAtTouchingMax( objectEnum );
+    }
+
 
     /**
      * Since ISLCObject.enabledRangeProperty is affected by the other object, this method determines if the object is
@@ -419,8 +399,7 @@ define( require => {
      * @returns {boolean}
      */
     objectAtEdgeIgnoreOtherObject( objectEnum ) {
-      return ( this.isObject1( objectEnum ) && this.objectAtTouchingMin( objectEnum ) ) ||
-             ( this.isObject2( objectEnum ) && this.objectAtTouchingMax( objectEnum ) );
+      return this.object1AtMin( objectEnum ) || this.object2AtMax( objectEnum );
 
     }
 

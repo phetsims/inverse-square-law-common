@@ -82,27 +82,36 @@ define( require => {
     distanceFromOtherObjectPattern: {
       value: '{{distance}} {{otherObjectLabel}}'
     },
-    positionMarkPattern: {
-      value: '{{position}} {{unit}} mark'
-    },
     positionDistanceFromOtherObjectPattern: {
-      value: '{{positionMark}}, {{distanceFromOtherObject}}.'
+      value: '{{positionLandmark}}, {{distanceFromOtherObject}}.'
     },
     distanceFromOtherObjectSentencePattern: {
       value: '{{distanceFromOtherObject}}.'
     },
+
+    // position landmarks
+    leftSideOfTrack: {
+      value: 'Left side of track'
+    },
+    rightSideOfTrack: {
+      value: 'Right side of track'
+    },
+    lastStopRight: {
+      value: 'Last stop right'
+    },
+    lastStopLeft: {
+      value: 'Last stop left'
+    },
+    trackEndLeft: {
+      value: 'Track end left'
+    },
+    trackEndRight: {
+      value: 'Track end right'
+    },
+
     // closer/further away
     progressDistanceFromOtherObjectPattern: {
       value: '{{progress}}, {{distanceFromOtherObject}}.'
-    },
-    edgeDistancePattern: {
-      value: '{{distanceAndUnits}} away'
-    },
-    arrivedAtEdgePattern: {
-      value: 'At {{side}} edge, {{distanceClause}}.'
-    },
-    closestToOtherObjectPattern: {
-      value: '{{positionMark}}, {{edgePhrase}}, {{distanceFromOtherObject}}.'
     },
     sidePattern: {
       value: '{{side}} edge'
