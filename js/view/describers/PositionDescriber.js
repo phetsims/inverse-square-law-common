@@ -537,7 +537,7 @@ define( require => {
     }
 
     /**
-     * Returns the filled in string '{{label}} position'.
+     * Returns the filled in movable object position label.
      *
      * @param  {string} label
      * @returns {string}

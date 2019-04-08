@@ -66,7 +66,7 @@ define( require => {
       value: '{{value}} kilograms'
     },
     objectLabelPositionPattern: {
-      value: '{{label}} position'
+      value: 'Move {{label}}'
     },
 
     /**********************************
