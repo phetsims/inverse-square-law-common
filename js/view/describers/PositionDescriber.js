@@ -355,7 +355,8 @@ define( require => {
 
         // When distance isn't checked, the qualitative alerts are the same between region changes, so add a space such
         // that the AT will still read the value text each time. See https://github.com/phetsims/gravity-force-lab-basics/issues/113#issuecomment-481413715
-        if ( !this.model.showDistanceProperty.get() && previousText === newAriaValueText ) {
+        // TODO: this code is specific to GFL:B and should not go here, see https://github.com/phetsims/gravity-force-lab-basics/issues/113
+        if ( this.model.showDistanceProperty && !this.model.showDistanceProperty.get() && previousText === newAriaValueText ) {
           newAriaValueText = newAriaValueText + ' ';
         }
 
