@@ -112,10 +112,11 @@ define( require => {
       // @private - in converted distance
       this.oldDistanceBetween = 0;
 
-      // @public
+      // @public {boolean|null} - previous value of this.movedCloser
       this.lastMoveCloser = false;
 
       // @private - Whether or not the masses moved closer last position change. only set when an object is dragging.
+      // {boolean|null} - null if the user isn't interacting specifically with the objects
       this.movedCloser = false;
 
       // @protected - Many descriptions use a quantitative form when distance values are showing, and use qualitative
@@ -261,19 +262,6 @@ define( require => {
     }
 
     /**
-     * Returns the filled in string '{{distance}} {{units}} from {{otherObjectLabel}}.'
-     *
-     * @param  {ISLCObjectEnum} thisObjectEnum
-     * @returns {string}
-     */
-    getDistanceFromOtherObjectText( thisObjectEnum ) {
-      return this.getSpherePositionAriaValueText(
-        thisObjectEnum,
-        distanceFromOtherObjectSentencePatternString
-      );
-    }
-
-    /**
      * Map object positions to landmarks. This is not a traditional linear/numeric mapping
      * but instead it is based on the two objects and if they are touching each other or the edges.
      * @param {ISLCObjectEnum} objectEnum
@@ -343,22 +331,17 @@ define( require => {
      * will be accurate when the below function is called.
      *
      * @param  {ISLCObjectEnum} objectEnum
-     * @returns {Function~inner}
+     * @returns {Function}
      */
     ariaValueTextCreator( objectEnum ) {
 
-      /**
-       * Function passed to initializeAccessibleSlider as an option to format its aria-valuetext attribute when the underlying
-       * property is changed via keyboard input.
-       *
-       * @param  {number} formattedValue - the position of the ISLCObject, trimmed to the appropriate number of decimal places
-       * @param  {number} oldValue       - the old position
-       * @returns {string}                - the string that will fill the aria-valuetext attribute
-       */
-      return ( formattedValue, oldValue ) => {
+      // keep track of the previous value text
+      let previousText = '';
+
+      return () => {
 
         // "normally" should just be short distance
-        let newAriaValueText = this.getDistanceFromOtherObjectText( objectEnum );
+        let newAriaValueText = this.getSpherePositionAriaValueText( objectEnum, distanceFromOtherObjectSentencePatternString );
 
         // closer/farther text
         if ( this.lastMoveCloser !== this.movedCloser ) {
@@ -370,6 +353,13 @@ define( require => {
           newAriaValueText = this.getFocusAriaValueText( objectEnum );
         }
 
+        // When distance isn't checked, the qualitative alerts are the same between region changes, so add a space such
+        // that the AT will still read the value text each time. See https://github.com/phetsims/gravity-force-lab-basics/issues/113#issuecomment-481413715
+        if ( !this.model.showDistanceProperty.get() && previousText === newAriaValueText ) {
+          newAriaValueText = newAriaValueText + ' ';
+        }
+
+        previousText = newAriaValueText;
         return newAriaValueText;
       };
     }
