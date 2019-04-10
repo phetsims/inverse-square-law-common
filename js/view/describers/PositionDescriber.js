@@ -333,11 +333,11 @@ define( require => {
      * @param  {ISLCObjectEnum} objectEnum
      * @returns {Function}
      */
-    ariaValueTextCreator( objectEnum ) {
+    getOnChangeAriaValueTextCreator( objectEnum ) {
 
-      // keep track of the previous value text
-      let previousText = '';
 
+      // NOTE: AccessibleValueHandler supports parameters to this function, but recognize that subtypes override this
+      // method before adding these, see https://github.com/phetsims/gravity-force-lab-basics/issues/113
       return () => {
 
         // "normally" should just be short distance
@@ -353,14 +353,6 @@ define( require => {
           newAriaValueText = this.getFocusAriaValueText( objectEnum );
         }
 
-        // When distance isn't checked, the qualitative alerts are the same between region changes, so add a space such
-        // that the AT will still read the value text each time. See https://github.com/phetsims/gravity-force-lab-basics/issues/113#issuecomment-481413715
-        // TODO: this code is specific to GFL:B and should not go here, see https://github.com/phetsims/gravity-force-lab-basics/issues/113
-        if ( this.model.showDistanceProperty && !this.model.showDistanceProperty.get() && previousText === newAriaValueText ) {
-          newAriaValueText = newAriaValueText + ' ';
-        }
-
-        previousText = newAriaValueText;
         return newAriaValueText;
       };
     }

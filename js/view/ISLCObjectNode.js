@@ -332,7 +332,7 @@ define( function( require ) {
           alertManager.alertPositionUnchanged();
         }
       },
-      a11yCreateValueChangeAriaValueText: positionDescriber.ariaValueTextCreator( this.enum ),
+      a11yCreateValueChangeAriaValueText: positionDescriber.getOnChangeAriaValueTextCreator( this.enum ),
       a11yCreateOnFocusAriaValueText: () => positionDescriber.getFocusAriaValueText( this.enum )
     };
 
