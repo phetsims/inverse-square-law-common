@@ -28,6 +28,11 @@ define( require => {
 
       // @protected
       this.forceDescriber = ForceDescriber.getDescriber();
+
+      // @public {Utterance} - utterances to be added to utteranceQueue, can be used to leverage
+      // alertStable feature so this alert content doesn't hit the user too frequently
+      this.forceUtterance = new Utterance();
+      this.positionUtterance = new Utterance();
     }
 
     static alertForceValues( showValues ) {
@@ -39,20 +44,21 @@ define( require => {
       else {
         alert = forceValuesHiddenString;
       }
-      const utterance = new Utterance( { alert: alert, uniqueGroupId: 'forceValues' } );
-      utteranceQueue.addToBack( utterance );
+
+      this.forceUtterance.alert = alert;
+      utteranceQueue.addToBack( this.forceUtterance );
     }
 
     alertPositionChanged( objectsTouching ) {
       const alert = this.getPositionChangedAlertText( objectsTouching );
-      const utterance = new Utterance( { alert: alert, uniqueGroupId: 'position' } );
-      utteranceQueue.addToBack( utterance );
+      this.positionUtterance.alert = alert;
+      utteranceQueue.addToBack( this.positionUtterance );
     }
 
     alertPositionUnchanged() {
       const alert = this.getPositionUnchangedAlertText();
-      const utterance = new Utterance( { alert: alert, uniqueGroupId: 'position' } );
-      utteranceQueue.addToBack( utterance );
+      this.positionUtterance.alert = alert;
+      utteranceQueue.addToBack( this.positionUtterance );
     }
 
     getPositionChangedAlertText( objectsTouching ) {
