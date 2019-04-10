@@ -35,7 +35,7 @@ define( require => {
       this.positionUtterance = new Utterance();
     }
 
-    static alertForceValues( showValues ) {
+    alertForceValues( showValues ) {
       const forceDescriber = ForceDescriber.getDescriber();
       let alert = '';
       if ( showValues ) {
