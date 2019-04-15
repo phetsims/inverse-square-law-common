@@ -61,10 +61,22 @@ define( require => {
 
 
   const SIZE_STRINGS = [
-    tinyString, verySmallString, smallString, mediumSizeString, largeString, veryLargeString, hugeString
+    tinyString,
+    verySmallString,
+    smallString,
+    mediumSizeString,
+    largeString,
+    veryLargeString,
+    hugeString
   ];
   const PULL_EFFORT_STINGS = [
-    veryHardString, hardString, moderatelyString, gentlyString, lighlyString, aLittleString, aTinyBitString
+    veryHardString,
+    hardString,
+    moderatelyString,
+    gentlyString,
+    lighlyString,
+    aLittleString,
+    aTinyBitString
   ];
   const CHANGE_DIRECTIONS = [ getSmallerString, null, getBiggerString ];
 
