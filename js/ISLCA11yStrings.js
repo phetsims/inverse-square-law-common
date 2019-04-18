@@ -308,7 +308,7 @@ define( require => {
     gently: {
       value: 'gently'
     },
-    lighly: {
+    lightly: {
       value: 'lightly'
     },
     aLittle: {

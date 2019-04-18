@@ -55,7 +55,7 @@ define( require => {
   const hardString = ISLCA11yStrings.hard.value;
   const moderatelyString = ISLCA11yStrings.moderately.value;
   const gentlyString = ISLCA11yStrings.gently.value;
-  const lighlyString = ISLCA11yStrings.lighly.value;
+  const lighlyString = ISLCA11yStrings.lightly.value;
   const aLittleString = ISLCA11yStrings.aLittle.value;
   const aTinyBitString = ISLCA11yStrings.aTinyBit.value;
 
