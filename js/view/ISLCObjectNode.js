@@ -82,11 +82,12 @@ define( function( require ) {
    * @param {Bounds2} layoutBounds - bounds of the screen view containing the object
    * @param {ModelViewTransform2} modelViewTransform
    * @param {Range} pullForceRange - empirically determined range of force values (usu. min/max) for puller image mapping
+   * @param {ISLCAlertManager} alertManager
    * @param {Object} options
    * @mixes AccessibleSlider
    * @constructor
    */
-  function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, pullForceRange, options ) {
+  function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, pullForceRange, alertManager, options ) {
 
     var self = this;
 
@@ -140,11 +141,12 @@ define( function( require ) {
       tandem: tandem
     } );
 
+    assert && assert( alertManager instanceof ISLCAlertManager );
+
     // A11Y DRAFT
     // assert && assert( options.a11yCreateValueChangeAriaValueText, 'ISLCObjectNode subtypes must define an aria-valuetext creation function' );
     this.accessibleName = PositionDescriber.getObjectLabelPositionText( options.label );
     var positionDescriber = PositionDescriber.getDescriber();
-    var alertManager = ISLCAlertManager.getManager();
 
     // @protected
     this.layoutBounds = layoutBounds;

@@ -16,8 +16,6 @@ define( require => {
   const forceValuesHiddenString = ISLCA11yStrings.forceValuesHidden.value;
   const regionForceClausePatternString = ISLCA11yStrings.regionForceClausePattern.value;
 
-  let manager = null;
-
   class ISLCAlertManager {
 
     /**
@@ -79,16 +77,6 @@ define( require => {
       const forceClause = this.forceDescriber.getVectorsAndForcesClause();
       const region = positionDescriber.qualitativeDistance;
       return StringUtils.fillIn( regionForceClausePatternString, { region: region, forceClause: forceClause } );
-    }
-
-    static getManager() {
-      assert && assert( manager, 'AlertManagers must be initialized prior to use' );
-      return manager;
-    }
-
-    static initialize( subtype ) {
-      manager = subtype;
-      return manager;
     }
   }
 
