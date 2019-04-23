@@ -20,12 +20,13 @@ define( require => {
 
     /**
      * @param {ISLCModel} model
+     * @param {ForceDescriber} forceDescriber
      */
-    constructor( model ) {
+    constructor( model, forceDescriber ) {
       this.model = model;
 
       // @protected
-      this.forceDescriber = ForceDescriber.getDescriber();
+      this.forceDescriber = forceDescriber;
 
       // @public {Utterance} - utterances to be added to utteranceQueue, can be used to leverage
       // alertStable feature so this alert content doesn't hit the user too frequently
@@ -34,10 +35,9 @@ define( require => {
     }
 
     alertForceValues( showValues ) {
-      const forceDescriber = ForceDescriber.getDescriber();
       let alert = '';
       if ( showValues ) {
-        alert = forceDescriber.getValuesInUnitsText();
+        alert = this.forceDescriber.getValuesInUnitsText();
       }
       else {
         alert = forceValuesHiddenString;
