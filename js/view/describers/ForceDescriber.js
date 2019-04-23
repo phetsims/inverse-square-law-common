@@ -96,8 +96,6 @@ define( require => {
     return StringUtils.fillIn( pattern, { mantissa: mantissaString, exponent: exponentString } );
   };
 
-  let describer = null;
-
   class ForceDescriber extends ISLCDescriber {
     constructor( model, object1Label, object2Label, options ) {
       super( model, object1Label, object2Label );
@@ -477,26 +475,6 @@ define( require => {
     static getForceInScientificNotationNoHtml( forceValue, mantissaDecimalPlaces ) {
       const pattern = scientificNotationPatternNoHtmlString;
       return getScientificNotationTextFromPattern( forceValue, mantissaDecimalPlaces, pattern );
-    }
-
-    /**
-     * Uses the singleton pattern to keep one instance of this describer for the entire lifetime of the sim.
-     * @returns {ForceDescriber}
-     */
-    static getDescriber() {
-      assert && assert( describer, 'describer has not yet been initialized' );
-      return describer;
-    }
-
-    /**
-     * Initialize the describer singleton
-     * @throws Error
-     */
-    static initialize( subtype ) {
-      assert && assert( describer === null, 'cannot call initialize more than once per ForceDescriber instance' );
-      assert && assert( subtype instanceof ForceDescriber, 'cannot initialize ForceDescriber without a subtype' );
-      describer = subtype;
-      return describer;
     }
 
     /**

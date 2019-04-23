@@ -20,12 +20,15 @@ define( require => {
     /**
      * @param {ISLCModel} model
      * @param {ForceDescriber} forceDescriber
+     * @param {PositionDescriber} positionDescriber
      */
-    constructor( model, forceDescriber ) {
+    constructor( model, forceDescriber, positionDescriber ) {
       this.model = model;
 
+      assert && assert( positionDescriber instanceof PositionDescriber );
       // @protected
       this.forceDescriber = forceDescriber;
+      this.positionDescriber = positionDescriber;
 
       // @public {Utterance} - utterances to be added to utteranceQueue, can be used to leverage
       // alertStable feature so this alert content doesn't hit the user too frequently
@@ -72,9 +75,8 @@ define( require => {
     }
 
     getPositionUnchangedAlertText() {
-      const positionDescriber = PositionDescriber.getDescriber();
       const forceClause = this.forceDescriber.getVectorsAndForcesClause();
-      const region = positionDescriber.qualitativeDistance;
+      const region = this.positionDescriber.qualitativeDistance;
       return StringUtils.fillIn( regionForceClausePatternString, { region: region, forceClause: forceClause } );
     }
   }

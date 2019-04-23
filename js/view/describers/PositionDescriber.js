@@ -86,8 +86,6 @@ define( require => {
     closestString
   ];
 
-  let describer = null;
-
   class PositionDescriber extends ISLCDescriber {
     constructor( model, object1Label, object2Label, options ) {
       super( model, object1Label, object2Label );
@@ -527,25 +525,6 @@ define( require => {
      */
     static getObjectLabelPositionText( label ) {
       return StringUtils.fillIn( objectLabelPositionPatternString, { label: label } );
-    }
-
-    /**
-     * Uses the singleton pattern to keep one instance of this describer for the entire lifetime of the sim.
-     * @returns {ForceDescriber}
-     */
-    static getDescriber() {
-      assert && assert( describer, 'describer has not yet been initialized' );
-      return describer;
-    }
-
-    /**
-     * Initialize the describer singleton
-     * @throws Error
-     */
-    static initialize( subtype ) {
-      assert && assert( subtype, 'cannot initialize ForceDescriber without a subtype' );
-      describer = subtype;
-      return describer;
     }
 
     /**
