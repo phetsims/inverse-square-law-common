@@ -19,7 +19,6 @@ define( function( require ) {
   var MAX_DISTANCE_FROM_CENTER = 5; // meters, empirically determined boundary for objects
 
   var ISLCConstants = {
-    G: 6.67384E-11, // gravitational constant
     k: 8.987551E9, // Coulomb's constant
 
     coulombsPerAtomicUnit: 1.6021766208E-19, // atomic unit in C
