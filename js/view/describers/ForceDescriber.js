@@ -59,7 +59,6 @@ define( require => {
   const aLittleString = ISLCA11yStrings.aLittle.value;
   const aTinyBitString = ISLCA11yStrings.aTinyBit.value;
 
-
   const SIZE_STRINGS = [
     tinyString,
     verySmallString,
@@ -125,12 +124,10 @@ define( require => {
       }, options );
 
       // @private
+      this.forceProperty = model.forceProperty;
       this.units = options.units;
       this.forceValueToString = options.forceValueToString;
       this.convertForce = options.convertForce;
-      this.oldForce = model.forceProperty.get();
-      this.lastForceDelta = 0; // for adding 'a lot' to alerts if the force change is sufficiently large
-      this.vectorSizeIndex = 0;
       this.effortIndex = 0;
       this.vectorChangeDirection = 0; // 1 -> growing, 0 -> no change, -1 -> shrinking
       this.forceAndVectorPatternString = options.forceAndVectorPatternString;
@@ -170,10 +167,7 @@ define( require => {
 
       model.forceProperty.link( ( force, oldForce ) => {
         const forceDelta = force - oldForce;
-        this.vectorSizeIndex = this.getForceVectorIndex( force );
         this.effortIndex = this.getEffortIndex( force );
-        this.oldForce = oldForce;
-        this.lastForceDelta = Math.abs( forceDelta );
         if ( forceDelta !== 0 ) {
           this.vectorChangeDirection = forceDelta / Math.abs( forceDelta );
         }
@@ -454,7 +448,7 @@ define( require => {
      * @returns {string}
      */
     get vectorSize() {
-      return SIZE_STRINGS[ this.vectorSizeIndex ];
+      return SIZE_STRINGS[ this.getForceVectorIndex( this.forceProperty.get() ) ];
     }
 
     /**
@@ -482,8 +476,8 @@ define( require => {
      * newtons, so it's necessary for sim-specific subtypes to specify this logic.
      *
      * @abstract
-     * @param  {Number} force
-     * @returns {Integer}
+     * @param  {number} force
+     * @returns {number} - integer index to get value from SIZE_STRINGS
      */
     getForceVectorIndex( force ) {
       // TODO: uncomment and implement in coulombs law, commented so asserts will pass, see https://github.com/phetsims/inverse-square-law-common/issues/58
@@ -494,8 +488,8 @@ define( require => {
      * Returns the mapped puller index based on the provided force.
      *
      * @abstract
-     * @param  {Number} force
-     * @returns {Integer}
+     * @param  {number} force
+     * @returns {number} - integer index to get value from PULL_EFFORT_STINGS
      */
     getEffortIndex( force ) {
       // TODO: uncomment and implement in coulombs law, commented so asserts will pass, https://github.com/phetsims/inverse-square-law-common/issues/58
