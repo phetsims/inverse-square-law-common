@@ -335,7 +335,6 @@ define( function( require ) {
         }
       },
       a11yCreateValueChangeAriaValueText: positionDescriber.getOnChangeAriaValueTextCreator( this.enum ),
-      a11yCreateOnFocusAriaValueText: () => positionDescriber.getFocusAriaValueText( this.enum )
     };
 
     // a11y - initialize the accessible slider

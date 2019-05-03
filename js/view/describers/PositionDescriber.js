@@ -22,7 +22,7 @@ define( require => {
   const centersOfObjectsDistancePatternString = ISLCA11yStrings.centersOfObjectsDistancePattern.value;
 
   const positionDistanceFromOtherObjectPatternString = ISLCA11yStrings.positionDistanceFromOtherObjectPattern.value;
-  const progressDistanceFromOtherObjectPatternString = ISLCA11yStrings.progressDistanceFromOtherObjectPattern.value;
+  // const progressDistanceFromOtherObjectPatternString = ISLCA11yStrings.progressDistanceFromOtherObjectPattern.value;
   const sidePatternString = ISLCA11yStrings.sidePattern.value;
   const distanceAndUnitsPatternString = ISLCA11yStrings.distanceAndUnitsPattern.value;
   const quantitativeDistancePatternString = ISLCA11yStrings.quantitativeDistancePattern.value;
@@ -59,8 +59,8 @@ define( require => {
   const veryCloseString = ISLCA11yStrings.veryClose.value;
   const extremelyCloseString = ISLCA11yStrings.extremelyClose.value;
   const closestString = ISLCA11yStrings.closest.value;
-  const closerString = ISLCA11yStrings.closer.value;
-  const fartherAwayString = ISLCA11yStrings.fartherAway.value;
+  // const closerString = ISLCA11yStrings.closer.value;
+  // const fartherAwayString = ISLCA11yStrings.fartherAway.value;
 
   const RELATIVE_DISTANCE_STRINGS = [
     farthestFromString,
@@ -291,36 +291,21 @@ define( require => {
       }
     }
 
-    /**
-     * Returns the filled in string '{{progress}}, {{distance}} {{units}} from {{otherObjectLabel}}.'
-     *
-     * @param  {ISLCObjectEnum} thisObjectEnum
-     * @returns {string}
-     */
-    getProgressPositionAndDistanceFromOtherObjectText( thisObjectEnum ) {
-      const progress = this.movedCloser ? closerString : fartherAwayString;
-      return this.getSpherePositionAriaValueText(
-        thisObjectEnum,
-        progressDistanceFromOtherObjectPatternString,
-        { progress: progress }
-      );
-    }
-
-    /**
-     * The aria-value text when
-     * Returns the desired value for the ISLCObjectNodes' aria-valuetext attributes when they receive keyboard focus.
-     *
-     * @param  {ISLCObjectEnum} thisObjectEnum
-     * @returns {string}
-     */
-    getFocusAriaValueText( thisObjectEnum ) {
-      const positionMark = this.getPositionLandmark( thisObjectEnum );
-      return this.getSpherePositionAriaValueText(
-        thisObjectEnum,
-        positionDistanceFromOtherObjectPatternString,
-        { positionLandmark: positionMark }
-      );
-    }
+    // TODO: this "close/farther" piece will likely move to alerts, see https://github.com/phetsims/gravity-force-lab-basics/issues/124
+    // /**
+    //  * Returns the filled in string '{{progress}}, {{distance}} {{units}} from {{otherObjectLabel}}.'
+    //  *
+    //  * @param  {ISLCObjectEnum} thisObjectEnum
+    //  * @returns {string}
+    //  */
+    // getProgressPositionAndDistanceFromOtherObjectText( thisObjectEnum ) {
+    //   const progress = this.movedCloser ? closerString : fartherAwayString;
+    //   return this.getSpherePositionAriaValueText(
+    //     thisObjectEnum,
+    //     progressDistanceFromOtherObjectPatternString,
+    //     { progress: progress }
+    //   );
+    // }
 
     /**
      * Returns a function used by AccessibleSlider to format its aria-valuetext attribute. Of note is that this function
@@ -332,26 +317,25 @@ define( require => {
      * @returns {Function}
      */
     getOnChangeAriaValueTextCreator( objectEnum ) {
-
+      let previousPositionLandmark = null;
 
       // NOTE: AccessibleValueHandler supports parameters to this function, but recognize that subtypes override this
       // method before adding these, see https://github.com/phetsims/gravity-force-lab-basics/issues/113
       return () => {
 
-        // "normally" should just be short distance
-        let newAriaValueText = this.getSpherePositionAriaValueText( objectEnum, distanceFromOtherObjectSentencePatternString );
+        const newPositionLandmark = this.getPositionLandmark( objectEnum );
+        if ( previousPositionLandmark !== newPositionLandmark ) {
+          previousPositionLandmark = newPositionLandmark;
 
-        // closer/farther text
-        if ( this.lastMoveCloser !== this.movedCloser ) {
-          newAriaValueText = this.getProgressPositionAndDistanceFromOtherObjectText( objectEnum );
+          return this.getSpherePositionAriaValueText(
+            objectEnum,
+            positionDistanceFromOtherObjectPatternString,
+            { positionLandmark: newPositionLandmark }
+          );
         }
-
-        // border/edge cases use the same as on focus value text
-        if ( this.objectsClosest() || this.objectAtEdgeIgnoreOtherObject( objectEnum ) ) {
-          newAriaValueText = this.getFocusAriaValueText( objectEnum );
+        else {
+          return this.getSpherePositionAriaValueText( objectEnum, distanceFromOtherObjectSentencePatternString );
         }
-
-        return newAriaValueText;
       };
     }
 
