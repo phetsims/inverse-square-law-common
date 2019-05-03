@@ -334,7 +334,7 @@ define( function( require ) {
           alertManager.alertPositionUnchanged();
         }
       },
-      a11yCreateValueChangeAriaValueText: positionDescriber.getOnChangeAriaValueTextCreator( this.enum ),
+      a11yCreateValueChangeAriaValueText: positionDescriber.getOnChangeAriaValueTextCreator( this.enum )
     };
 
     // a11y - initialize the accessible slider
