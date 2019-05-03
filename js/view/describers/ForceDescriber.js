@@ -96,7 +96,15 @@ define( require => {
   };
 
   class ForceDescriber extends ISLCDescriber {
-    constructor( model, object1Label, object2Label, options ) {
+
+    /**
+     * @param {ISLCModel} model
+     * @param {string} object1Label
+     * @param {string} object2Label
+     * @param {PositionDescriber} positionDescriber
+     * @param {Object} options
+     */
+    constructor( model, object1Label, object2Label, positionDescriber, options ) {
       super( model, object1Label, object2Label );
 
       options = _.extend( {
@@ -124,6 +132,7 @@ define( require => {
       }, options );
 
       // @private
+      this.positionDescriber = positionDescriber;
       this.forceProperty = model.forceProperty;
       this.units = options.units;
       this.forceValueToString = options.forceValueToString;
@@ -132,6 +141,8 @@ define( require => {
       this.vectorChangeDirection = 0; // 1 -> growing, 0 -> no change, -1 -> shrinking
       this.forceAndVectorPatternString = options.forceAndVectorPatternString;
       this.forceVectorMagnitudeUnitsPatternString = options.forceVectorMagnitudeUnitsPatternString;
+      this.vectorsString = options.vectorsString;
+      this.vectorsCapitalizedString = options.vectorsCapitalizedString;
 
       // @private - these string patterns can vary based on options
       this.summaryVectorSizePatternString = StringUtils.fillIn( summaryVectorSizePatternString, {
@@ -147,9 +158,6 @@ define( require => {
         vectorsCapitalized: options.vectorsCapitalizedString
       } );
       this.vectorChangePatternString = StringUtils.fillIn( vectorChangePatternString, {
-        vectorsCapitalized: options.vectorsCapitalizedString
-      } );
-      this.vectorChangeForcesNowValuePatternString = StringUtils.fillIn( vectorChangeForcesNowValuePatternString, {
         vectorsCapitalized: options.vectorsCapitalizedString
       } );
       this.vectorSizeForcesValuePatternString = StringUtils.fillIn( vectorSizeForcesValuePatternString, {
@@ -400,7 +408,12 @@ define( require => {
       const changeDirection = this.changeDirection;
       const forceValue = this.formattedForce;
       const units = this.units;
-      return StringUtils.fillIn( this.vectorChangeForcesNowValuePatternString, {
+      const positionProgress = this.positionDescriber.getPositionProgressClause();
+      return StringUtils.fillIn( vectorChangeForcesNowValuePatternString, {
+
+        // if no position progress, then capitalize the next piece
+        vectors: positionProgress ? this.vectorsString : this.vectorsCapitalizedString,
+        positionProgressClause: positionProgress,
         changeDirection: changeDirection,
         forceValue: forceValue,
         units: units

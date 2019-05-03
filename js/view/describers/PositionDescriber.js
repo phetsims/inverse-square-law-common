@@ -22,7 +22,7 @@ define( require => {
   const centersOfObjectsDistancePatternString = ISLCA11yStrings.centersOfObjectsDistancePattern.value;
 
   const positionDistanceFromOtherObjectPatternString = ISLCA11yStrings.positionDistanceFromOtherObjectPattern.value;
-  // const progressDistanceFromOtherObjectPatternString = ISLCA11yStrings.progressDistanceFromOtherObjectPattern.value;
+  const positionProgressClauseString = ISLCA11yStrings.positionProgressClause.value;
   const sidePatternString = ISLCA11yStrings.sidePattern.value;
   const distanceAndUnitsPatternString = ISLCA11yStrings.distanceAndUnitsPattern.value;
   const quantitativeDistancePatternString = ISLCA11yStrings.quantitativeDistancePattern.value;
@@ -59,8 +59,8 @@ define( require => {
   const veryCloseString = ISLCA11yStrings.veryClose.value;
   const extremelyCloseString = ISLCA11yStrings.extremelyClose.value;
   const closestString = ISLCA11yStrings.closest.value;
-  // const closerString = ISLCA11yStrings.closer.value;
-  // const fartherAwayString = ISLCA11yStrings.fartherAway.value;
+  const closerString = ISLCA11yStrings.closer.value;
+  const fartherAwayString = ISLCA11yStrings.fartherAway.value;
 
   const RELATIVE_DISTANCE_STRINGS = [
     farthestFromString,
@@ -291,21 +291,20 @@ define( require => {
       }
     }
 
-    // TODO: this "close/farther" piece will likely move to alerts, see https://github.com/phetsims/gravity-force-lab-basics/issues/124
-    // /**
-    //  * Returns the filled in string '{{progress}}, {{distance}} {{units}} from {{otherObjectLabel}}.'
-    //  *
-    //  * @param  {ISLCObjectEnum} thisObjectEnum
-    //  * @returns {string}
-    //  */
-    // getProgressPositionAndDistanceFromOtherObjectText( thisObjectEnum ) {
-    //   const progress = this.movedCloser ? closerString : fartherAwayString;
-    //   return this.getSpherePositionAriaValueText(
-    //     thisObjectEnum,
-    //     progressDistanceFromOtherObjectPatternString,
-    //     { progress: progress }
-    //   );
-    // }
+    /**
+     * Get the position change clause, like closer/farther strings. Will return an empty string if this clause doesn't
+     * apply to the current state of the object positions (if movement wasn't
+     * @returns {string}
+     */
+    getPositionProgressClause() {
+      if ( this.lastMoveCloser !== this.movedCloser ) {
+        return '';
+      }
+      const positionString = this.movedCloser ? closerString : fartherAwayString;
+      return StringUtils.fillIn( positionProgressClauseString, {
+        progress: positionString
+      } );
+    }
 
     /**
      * Returns a function used by AccessibleSlider to format its aria-valuetext attribute. Of note is that this function

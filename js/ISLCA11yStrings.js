@@ -110,8 +110,8 @@ define( require => {
     },
 
     // closer/further away
-    progressDistanceFromOtherObjectPattern: {
-      value: '{{progress}}, {{distanceFromOtherObject}}.'
+    positionProgressClause: {
+      value: '{{progress}}, '
     },
     sidePattern: {
       value: '{{side}} edge'
@@ -146,7 +146,7 @@ define( require => {
       value: '{{vectorsCapitalized}} {{changeDirection}}.'
     },
     vectorChangeForcesNowValuePattern: {
-      value: '{{vectorsCapitalized}} {{changeDirection}}, forces now {{forceValue}} {{units}}.'
+      value: '{{positionProgressClause}}{{vectors}} {{changeDirection}}, forces now {{forceValue}} {{units}}.'
     },
     vectorsCapitalized: {
       value: 'Vectors'
