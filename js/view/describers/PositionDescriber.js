@@ -297,7 +297,9 @@ define( require => {
      * @returns {string}
      */
     getPositionProgressClause() {
-      if ( this.lastMoveCloser !== this.movedCloser ) {
+
+      // No change, so there shouldn't be a progress clause
+      if ( this.lastMoveCloser === this.movedCloser ) {
         return '';
       }
       const positionString = this.movedCloser ? closerString : fartherAwayString;

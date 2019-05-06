@@ -143,7 +143,7 @@ define( require => {
       this.vectorChangeDirection = 0; // 1 -> growing, 0 -> no change, -1 -> shrinking
       this.forceAndVectorPatternString = options.forceAndVectorPatternString;
       this.forceVectorMagnitudeUnitsPatternString = options.forceVectorMagnitudeUnitsPatternString;
-      this.vectorsString = options.vectorsString;
+      this.forceVectorsString = options.forceVectorsString;
       this.vectorsCapitalizedString = options.vectorsCapitalizedString;
 
       // @private - these string patterns can vary based on options
@@ -414,7 +414,7 @@ define( require => {
       return StringUtils.fillIn( vectorChangeForcesNowValuePatternString, {
 
         // if no position progress, then capitalize the next piece
-        vectors: positionProgress ? this.vectorsString : this.vectorsCapitalizedString,
+        vectors: positionProgress ? this.forceVectorsString : this.vectorsCapitalizedString,
         positionProgressClause: positionProgress,
         changeDirection: changeDirection,
         forceValue: forceValue,
