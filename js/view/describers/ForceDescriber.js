@@ -124,9 +124,11 @@ define( require => {
         // {string} - see getForceVectorMagnitudeText() for usage. Be careful that template vars are named correctly.
         forceVectorMagnitudeUnitsPatternString: forceVectorMagnitudeUnitsPatternString,
 
-        // {string} - all for simplification in GFLB
-        forceArrowsString: forceVectorArrowsString,
-        forceArrowsLower: vectorsString,
+        // {string} - all options below used for simplification in GFLB
+        forceVectorsCapitalizedString: forceVectorArrowsString,
+
+        // different usage for GFLB than "vectorsString" see usages below as well as GFLBForceDescriber
+        forceVectorsString: vectorsString,
         vectorsString: vectorsString,
         vectorsCapitalizedString: vectorsCapitalizedString
       }, options );
@@ -146,10 +148,10 @@ define( require => {
 
       // @private - these string patterns can vary based on options
       this.summaryVectorSizePatternString = StringUtils.fillIn( summaryVectorSizePatternString, {
-        forceVectorArrows: options.forceArrowsString
+        forceVectorArrows: options.forceVectorsCapitalizedString
       } );
       this.summaryVectorSizeValueUnitsPatternString = StringUtils.fillIn( summaryVectorSizeValueUnitsPatternString, {
-        forceVectorArrows: options.forceArrowsString
+        forceVectorArrows: options.forceVectorsCapitalizedString
       } );
       this.forceVectorSizePatternString = StringUtils.fillIn( forceVectorSizePatternString, {
         vectors: options.vectorsString
@@ -164,13 +166,13 @@ define( require => {
         vectorsCapitalized: options.vectorsCapitalizedString
       } );
       this.vectorsSizeClausePatternString = StringUtils.fillIn( vectorsSizeClausePatternString, {
-        vectors: options.forceArrowsLower
+        vectors: options.forceVectorsString
       } );
       this.vectorChangeClausePatternString = StringUtils.fillIn( vectorChangeClausePatternString, {
-        vectors: options.forceArrowsLower
+        vectors: options.forceVectorsString
       } );
       this.vectorChangeForcesNowClausePatternString = StringUtils.fillIn( vectorChangeForcesNowClausePatternString, {
-        vectors: options.forceArrowsLower
+        vectors: options.forceVectorsString
       } );
 
       model.forceProperty.link( ( force, oldForce ) => {
