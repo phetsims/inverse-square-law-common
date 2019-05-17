@@ -7,8 +7,10 @@ define( require => {
   const inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
   const ISLCA11yStrings = require( 'INVERSE_SQUARE_LAW_COMMON/ISLCA11yStrings' );
   const ISLCDescriber = require( 'INVERSE_SQUARE_LAW_COMMON/view/describers/ISLCDescriber' );
+  const LinearFunction = require( 'DOT/LinearFunction' );
   const ScientificNotationNode = require( 'SCENERY_PHET/ScientificNotationNode' );
   const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
+  const Util = require( 'DOT/Util' );
 
   // strings
   const unitsNewtonsString = require( 'string!INVERSE_SQUARE_LAW_COMMON/units.newtons' );
@@ -68,13 +70,13 @@ define( require => {
     hugeString
   ];
   const PULL_EFFORT_STINGS = [
-    veryHardString,
-    hardString,
-    moderatelyString,
-    gentlyString,
-    lighlyString,
+    aTinyBitString,
     aLittleString,
-    aTinyBitString
+    lighlyString,
+    gentlyString,
+    moderatelyString,
+    hardString,
+    veryHardString
   ];
   const CHANGE_DIRECTIONS = [ getSmallerString, null, getBiggerString ];
 
@@ -138,7 +140,7 @@ define( require => {
       this.units = options.units;
       this.forceValueToString = options.forceValueToString;
       this.convertForce = options.convertForce;
-      this.effortIndex = 0;
+      this.forceToPullIndex = new LinearFunction( model.getMinForce(), model.getMaxForce(), 0, 6, true );
       this.vectorChangeDirection = 0; // 1 -> growing, 0 -> no change, -1 -> shrinking
       this.forceAndVectorPatternString = options.forceAndVectorPatternString;
       this.forceVectorMagnitudeUnitsPatternString = options.forceVectorMagnitudeUnitsPatternString;
@@ -173,7 +175,6 @@ define( require => {
 
       model.forceProperty.link( ( force, oldForce ) => {
         const forceDelta = force - oldForce;
-        this.effortIndex = this.getEffortIndex( force );
         if ( forceDelta !== 0 ) {
           this.vectorChangeDirection = forceDelta / Math.abs( forceDelta );
         }
@@ -440,7 +441,8 @@ define( require => {
      * @returns {string}
      */
     get robotEffort() {
-      return PULL_EFFORT_STINGS[ this.effortIndex ];
+      const effortIndex = Util.roundSymmetric( this.forceToPullIndex( this.forceProperty.get() ) );
+      return PULL_EFFORT_STINGS[ effortIndex ];
     }
 
     /**
@@ -483,18 +485,6 @@ define( require => {
     getForceVectorIndex( force ) {
       // TODO: uncomment and implement in coulombs law, commented so asserts will pass, see https://github.com/phetsims/inverse-square-law-common/issues/58
       // throw new Error( 'getForceVectorIndex MUST be implemented in subtypes.' );
-    }
-
-    /**
-     * Returns the mapped puller index based on the provided force.
-     *
-     * @abstract
-     * @param  {number} force
-     * @returns {number} - integer index to get value from PULL_EFFORT_STINGS
-     */
-    getEffortIndex( force ) {
-      // TODO: uncomment and implement in coulombs law, commented so asserts will pass, https://github.com/phetsims/inverse-square-law-common/issues/58
-      // throw new Error( 'getEffortIndex MUST be implemented in subtypes.' );
     }
   }
 

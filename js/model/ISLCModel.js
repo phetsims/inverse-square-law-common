@@ -25,13 +25,13 @@ define( function( require ) {
    * @param {number} forceConstant the appropriate force constant (e.g. G or k)
    * @param {ISLCObject} object1 - the first Mass or Charge object
    * @param {ISLCObject} object2 - the second Mass or Charge object
-   * @param {Vector2} leftBoundary - absolute boundary for the left object
-   * @param {Vector2} rightBoundary - absolute boundary for the right object
+   * @param {Range} locationRange- in meters, location range for the objects, min is the left bouncary for left object,
+   *                              and the same for max/right
    * @param {Tandem} tandem
    * @param {Object} [options]
    * @constructor
    */
-  function ISLCModel( forceConstant, object1, object2, leftBoundary, rightBoundary, tandem, options ) {
+  function ISLCModel( forceConstant, object1, object2, locationRange, tandem, options ) {
 
     var self = this;
 
@@ -41,8 +41,8 @@ define( function( require ) {
     }, options );
 
     // @public (read-only)
-    this.leftObjectBoundary = leftBoundary;
-    this.rightObjectBoundary = rightBoundary;
+    this.leftObjectBoundary = locationRange.min;
+    this.rightObjectBoundary = locationRange.max;
 
     // @public {Property.<boolean>}- whether to display the force values
     this.forceValuesProperty = new BooleanProperty( true, {
@@ -224,6 +224,8 @@ define( function( require ) {
     /**
      * Helper function to for accessing and mapping force ranges in the inheriting sims' views
      *
+     * Note: this function assumes that the ranges of both objects' values are the same
+     *
      * @public
      * @returns {number} the smallest possible force magnitude
      */
@@ -240,6 +242,8 @@ define( function( require ) {
 
     /**
      * Helper function to for accessing and mapping force ranges in the inheriting sims' views
+     *
+     * Note: this function assumes that the ranges of both objects' values are the same
      *
      * @public
      * @returns {number} the largest possible force magnitude

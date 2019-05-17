@@ -81,14 +81,13 @@ define( function( require ) {
    * @param {ISLCObject} object - the associated object's model within the sim
    * @param {Bounds2} layoutBounds - bounds of the screen view containing the object
    * @param {ModelViewTransform2} modelViewTransform
-   * @param {Range} pullForceRange - empirically determined range of force values (usu. min/max) for puller image mapping
    * @param {ISLCAlertManager} alertManager
    * @param {PositionDescriber} positionDescriber
    * @param {Object} options
    * @mixes AccessibleSlider
    * @constructor
    */
-  function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, pullForceRange, alertManager, positionDescriber, options ) {
+  function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertManager, positionDescriber, options ) {
 
     var self = this;
 
@@ -141,6 +140,8 @@ define( function( require ) {
       containerTagName: 'div',
       tandem: tandem
     } );
+
+    const pullForceRange = new Range( model.getMinForce(), model.getMaxForce() );
 
     assert && assert( alertManager instanceof ISLCAlertManager );
 
