@@ -23,7 +23,6 @@ define( require => {
   const robotPullSummaryPatternString = ISLCA11yStrings.robotPullSummaryPattern.value;
   const robotPushSummaryPatternString = ISLCA11yStrings.robotPushSummaryPattern.value;
   const vectorsString = ISLCA11yStrings.vectors.value;
-  const forceVectorSizePatternString = ISLCA11yStrings.forceVectorSizePattern.value;
   const vectorSizePatternString = ISLCA11yStrings.vectorSizePattern.value;
   const vectorSizeForcesValuePatternString = ISLCA11yStrings.vectorSizeForcesValuePattern.value;
   const vectorsSizeClausePatternString = ISLCA11yStrings.vectorsSizeClausePattern.value;
@@ -152,9 +151,6 @@ define( require => {
       } );
       this.summaryVectorSizeValueUnitsPatternString = StringUtils.fillIn( summaryVectorSizeValueUnitsPatternString, {
         forceVectorArrows: options.forceVectorsCapitalizedString
-      } );
-      this.forceVectorSizePatternString = StringUtils.fillIn( forceVectorSizePatternString, {
-        vectors: options.vectorsString
       } );
       this.vectorSizePatternString = StringUtils.fillIn( vectorSizePatternString, {
         vectorsCapitalized: options.vectorsCapitalizedString
@@ -293,16 +289,6 @@ define( require => {
      */
     getValuesInUnitsText() {
       return StringUtils.fillIn( valuesInUnitsPatternString, { units: this.units } );
-    }
-
-    /**
-     * Returns the string 'Force vectors {{size}}' with the qualitative size string filled in.
-     *
-     * @returns {string}
-     */
-    getForceVectorSizeText() {
-      const size = this.vectorSize;
-      return StringUtils.fillIn( this.forceVectorSizePatternString, { size: size } );
     }
 
     /**

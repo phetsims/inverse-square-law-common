@@ -56,9 +56,6 @@ define( function( require ) {
       tickLabelOptions: null,
       additionalTicks: [],
 
-      // to add listeners to the numberControl as desired, no need to dispose them.
-      numberControlListener: _.noop,
-
       tandem: Tandem.required
     }, options );
 
@@ -139,10 +136,7 @@ define( function( require ) {
     // @protected
     this.numberControl = new NumberControl( titleString, objectProperty, valueRange, numberControlOptions );
 
-    // no need to remove
-    this.numberControl.addInputListener( options.numberControlListener );
-
-    options = _.omit( options, [ 'numberControlOptions', 'tickLabelOptions', 'numberControlListener' ] );
+    options = _.omit( options, [ 'numberControlOptions', 'tickLabelOptions' ] );
     Panel.call( this, this.numberControl, options );
 
     // a11y - it looks nicer if the entire panel has a group focus highlight rather than the NumberControl
