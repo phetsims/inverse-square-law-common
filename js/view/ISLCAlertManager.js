@@ -4,12 +4,13 @@ define( require => {
   'use strict';
 
   // modules
+  const ActivationUtterance = require( 'SCENERY_PHET/accessibility/ActivationUtterance' );
   const inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
   const ISLCA11yStrings = require( 'INVERSE_SQUARE_LAW_COMMON/ISLCA11yStrings' );
   const PositionDescriber = require( 'INVERSE_SQUARE_LAW_COMMON/view/describers/PositionDescriber' );
   const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
-  const Utterance = require( 'SCENERY_PHET/accessibility/Utterance' );
   const utteranceQueue = require( 'SCENERY_PHET/accessibility/utteranceQueue' );
+  const ValueChangeUtterance = require( 'SCENERY_PHET/accessibility/ValueChangeUtterance' );
 
   // strings
   const forceValuesHiddenString = ISLCA11yStrings.forceValuesHidden.value;
@@ -32,11 +33,11 @@ define( require => {
 
       // @public {Utterance} - utterances to be added to utteranceQueue, can be used to leverage
       // alertStable feature so this alert content doesn't hit the user too frequently
-      this.forceUtterance = new Utterance();
-      this.positionUtterance = new Utterance();
+      this.showForceValuesUtterance = new ActivationUtterance();
+      this.positionUtterance = new ValueChangeUtterance();
     }
 
-    alertForceValues( showValues ) {
+    alertShowForceValues( showValues ) {
       let alert = '';
       if ( showValues ) {
         alert = this.forceDescriber.getValuesInUnitsText();
@@ -45,19 +46,17 @@ define( require => {
         alert = forceValuesHiddenString;
       }
 
-      this.forceUtterance.alert = alert;
-      utteranceQueue.addToBack( this.forceUtterance );
+      this.showForceValuesUtterance.alert = alert;
+      utteranceQueue.addToBack( this.showForceValuesUtterance );
     }
 
     alertPositionChanged( objectsTouching ) {
-      const alert = this.getPositionChangedAlertText( objectsTouching );
-      this.positionUtterance.alert = alert;
+      this.positionUtterance.alert = this.getPositionChangedAlertText( objectsTouching );
       utteranceQueue.addToBack( this.positionUtterance );
     }
 
     alertPositionUnchanged() {
-      const alert = this.getPositionUnchangedAlertText();
-      this.positionUtterance.alert = alert;
+      this.positionUtterance.alert = this.getPositionUnchangedAlertText();
       utteranceQueue.addToBack( this.positionUtterance );
     }
 
