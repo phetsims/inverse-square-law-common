@@ -127,7 +127,10 @@ define( function( require ) {
           this.pushedObjectEnumProperty.value = null;
         }
         else {
-          // This conditional should only be hit if the mass has changed in addition to the position
+
+          // This conditional should only be hit if the mass has changed in addition to the position. Since the object's
+          // valueProperty would be set in the previous frame, and then this frame's step function would update the
+          // position. This was understood to be the truth by @zepumph while working on https://github.com/phetsims/gravity-force-lab-basics/issues/132
           this.pushedObjectEnumProperty.value = objectEnum;
         }
       };
@@ -389,6 +392,9 @@ define( function( require ) {
         this.object1.reset();
         this.object2.reset();
       }
+
+      // This needs to be reset after the objects, see https://github.com/phetsims/gravity-force-lab-basics/issues/132
+      this.pushedObjectEnumProperty.reset();
     }
   } );
 } );
