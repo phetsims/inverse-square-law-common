@@ -5,7 +5,6 @@
  *
  * @author  Michael Barlow
  */
-
 define( function( require ) {
   'use strict';
 

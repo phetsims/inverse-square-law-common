@@ -1,5 +1,12 @@
 // Copyright 2018-2019, University of Colorado Boulder
 
+/**
+ * Responsible for logic associated with the formation of audio description strings related to the positions of the
+ * ISLCObject instances and interactions associated with the changes of those positions.
+ *
+ * @author Michael Kauzmann (PhET Interactive Simulations)
+ * @author Michael Barlow (PhET Interactive Simulations)
+ */
 define( require => {
   'use strict';
 

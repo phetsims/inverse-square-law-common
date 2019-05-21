@@ -1,5 +1,10 @@
 // Copyright 2017-2018, University of Colorado Boulder
 
+/**
+ * Object containing a11y related strings for the repo.
+ * @author Michael Kauzmann (PhET Interactive Simulations)
+ * @author Michael Barlow (PhET Interactive Simulations)
+ */
 define( require => {
   'use strict';
 

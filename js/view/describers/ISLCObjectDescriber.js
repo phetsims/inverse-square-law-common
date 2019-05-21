@@ -1,5 +1,11 @@
-// Copyright 2018, University of Colorado Boulder
+// Copyright 2018-2019, University of Colorado Boulder
 
+/**
+ * Type used to create auditory description related strings associated with the two ISLCObject instances and their state.
+ *
+ * @author Michael Kauzmann (PhET Interactive Simulations)
+ * @author Michael Barlow (PhET Interactive Simulations)
+ */
 define( require => {
   'use strict';
 

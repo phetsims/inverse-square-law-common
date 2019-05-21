@@ -1,5 +1,13 @@
-// Copyright 2017-2018, University of Colorado Boulder
+// Copyright 2017-2019, University of Colorado Boulder
 
+/**
+ * Base type for all AlertManager instances. In general AlertManagers are responsible for sending alerts through the
+ * utteranceQueue powering the aria-live alerts. This base type covers alerting that occurs due to changes in the
+ * ISLCModel. Subtype alert managers are likely needed to alert state that is added in ISLCModel subtypes.
+ *
+ * @author Michael Kauzmann (PhET Interactive Simulations)
+ * @author Michael Barlow (PhET Interactive Simulations)
+ */
 define( require => {
   'use strict';
 
@@ -8,13 +16,11 @@ define( require => {
   const inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
   const ISLCA11yStrings = require( 'INVERSE_SQUARE_LAW_COMMON/ISLCA11yStrings' );
   const PositionDescriber = require( 'INVERSE_SQUARE_LAW_COMMON/view/describers/PositionDescriber' );
-  const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   const utteranceQueue = require( 'SCENERY_PHET/accessibility/utteranceQueue' );
   const ValueChangeUtterance = require( 'SCENERY_PHET/accessibility/ValueChangeUtterance' );
 
   // strings
   const forceValuesHiddenString = ISLCA11yStrings.forceValuesHidden.value;
-  const regionForceClausePatternString = ISLCA11yStrings.regionForceClausePattern.value;
 
   class ISLCAlertManager {
 
@@ -24,12 +30,12 @@ define( require => {
      * @param {PositionDescriber} positionDescriber
      */
     constructor( model, forceDescriber, positionDescriber ) {
-      this.model = model;
 
       assert && assert( positionDescriber instanceof PositionDescriber );
       // @protected
       this.forceDescriber = forceDescriber;
       this.positionDescriber = positionDescriber;
+      this.model = model;
 
       // @public {Utterance} - utterances to be added to utteranceQueue, can be used to leverage
       // alertStable feature so this alert content doesn't hit the user too frequently
@@ -37,9 +43,14 @@ define( require => {
       this.positionUtterance = new ValueChangeUtterance();
     }
 
-    alertShowForceValues( showValues ) {
+    /**
+     * Alert for when the show force values Property changes
+     * @param {boolean} showForceValues
+     * @public
+     */
+    alertShowForceValues( showForceValues ) {
       let alert = '';
-      if ( showValues ) {
+      if ( showForceValues ) {
         alert = this.forceDescriber.getValuesInUnitsText();
       }
       else {
@@ -50,33 +61,23 @@ define( require => {
       utteranceQueue.addToBack( this.showForceValuesUtterance );
     }
 
+    /**
+     * Alert for when the attempted movement of an ISLCObject's position results in a positional movement.
+     * @public
+     * @param {boolean} objectsTouching - true if the two objects are as close as they can be given their current radii.
+     */
     alertPositionChanged( objectsTouching ) {
-      this.positionUtterance.alert = this.getPositionChangedAlertText( objectsTouching );
+      this.positionUtterance.alert = this.forceDescriber.getPositionChangedAlertText( objectsTouching );
       utteranceQueue.addToBack( this.positionUtterance );
     }
 
+    /**
+     * Alert for when the attempted movement of an ISLCObject's position results in no positional movement.
+     * @public
+     */
     alertPositionUnchanged() {
-      this.positionUtterance.alert = this.getPositionUnchangedAlertText();
+      this.positionUtterance.alert = this.forceDescriber.getPositionUnchangedAlertText();
       utteranceQueue.addToBack( this.positionUtterance );
-    }
-
-    getPositionChangedAlertText( objectsTouching ) {
-      let alertText = this.forceDescriber.getVectorChangeText();
-      let edgeAlertText = this.forceDescriber.getVectorSizeText();
-
-      // if force values checkbox is enabled
-      if ( this.model.forceValuesProperty.get() ) {
-        alertText = this.forceDescriber.getVectorChangeForcesNowText();
-        edgeAlertText = this.forceDescriber.getVectorSizeForceValueText();
-      }
-
-      return objectsTouching ? edgeAlertText : alertText;
-    }
-
-    getPositionUnchangedAlertText() {
-      const forceClause = this.forceDescriber.getVectorsAndForcesClause();
-      const region = this.positionDescriber.qualitativeDistance;
-      return StringUtils.fillIn( regionForceClausePatternString, { region: region, forceClause: forceClause } );
     }
   }
 

@@ -1,5 +1,12 @@
 // Copyright 2018, University of Colorado Boulder
 
+/**
+ * Responsible for logic associated with the formation of audio description strings related to the model
+ * force and interactions associated with the changes in force.
+ *
+ * @author Michael Kauzmann (PhET Interactive Simulations)
+ * @author Michael Barlow (PhET Interactive Simulations)
+ */
 define( require => {
   'use strict';
 
@@ -40,6 +47,7 @@ define( require => {
   const vectorChangeClausePatternString = ISLCA11yStrings.vectorChangeClausePattern.value;
   const vectorChangeForcesNowClausePatternString = ISLCA11yStrings.vectorChangeForcesNowClausePattern.value;
   const vectorForceClausePatternString = ISLCA11yStrings.vectorForceClausePattern.value;
+  const regionForceClausePatternString = ISLCA11yStrings.regionForceClausePattern.value;
 
   const tinyString = ISLCA11yStrings.tiny.value;
   const verySmallString = ISLCA11yStrings.verySmall.value;
@@ -485,6 +493,37 @@ define( require => {
     getForceVectorIndex( force ) {
       // TODO: uncomment and implement in coulombs law, commented so asserts will pass, see https://github.com/phetsims/inverse-square-law-common/issues/58
       // throw new Error( 'getForceVectorIndex MUST be implemented in subtypes.' );
+    }
+
+
+    /**
+     * Alert text for when ISLCObject position changes
+     * @public
+     * @param objectsTouching
+     * @returns {string}
+     */
+    getPositionChangedAlertText( objectsTouching ) {
+      let alertText = this.getVectorChangeText();
+      let edgeAlertText = this.getVectorSizeText();
+
+      // if force values checkbox is enabled
+      if ( this.model.forceValuesProperty.get() ) {
+        alertText = this.getVectorChangeForcesNowText();
+        edgeAlertText = this.getVectorSizeForceValueText();
+      }
+
+      return objectsTouching ? edgeAlertText : alertText;
+    }
+
+    /**
+     * Alert text for when ISLCObject position does not change even though there was a drag.
+     * @public
+     * @returns {string}
+     */
+    getPositionUnchangedAlertText() {
+      const forceClause = this.getVectorsAndForcesClause();
+      const region = this.positionDescriber.qualitativeDistance;
+      return StringUtils.fillIn( regionForceClausePatternString, { region: region, forceClause: forceClause } );
     }
   }
 

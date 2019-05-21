@@ -1,5 +1,12 @@
-// Copyright 2018, University of Colorado Boulder
+// Copyright 2018-2019, University of Colorado Boulder
 
+/**
+ * Base type for all ISLC associated Describer types. In general, this stores state that is useful to have for any describer
+ * instance.
+ *
+ * @author Michael Kauzmann (PhET Interactive Simulations)
+ * @author Michael Barlow (PhET Interactive Simulations)
+ */
 define( require => {
   'use strict';
 
@@ -25,7 +32,7 @@ define( require => {
     constructor( model, object1Label, object2Label ) {
 
       // @private
-      this.model = model; // TODO: does this need to be here?
+      this.model = model;
       this.object1 = model.object1;
       this.object2 = model.object2;
       this.object1Label = object1Label;

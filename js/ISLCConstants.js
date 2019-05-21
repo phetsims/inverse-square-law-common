@@ -5,7 +5,6 @@
  *
  * @author Jesse Greenberg
  */
-
 define( function( require ) {
   'use strict';
 

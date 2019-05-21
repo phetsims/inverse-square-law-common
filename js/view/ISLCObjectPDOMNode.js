@@ -1,5 +1,11 @@
 // Copyright 2017-2019, University of Colorado Boulder
 
+/**
+ * Node that creates the PDOM description for the ISLCObject. This Node has no visual output.
+ *
+ * @author Michael Kauzmann (PhET Interactive Simulations)
+ * @author Michael Barlow (PhET Interactive Simulations)
+ */
 define( require => {
   'use strict';
 

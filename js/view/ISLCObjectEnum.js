@@ -1,5 +1,10 @@
-  // Copyright 2017, University of Colorado Boulder
+// Copyright 2017, University of Colorado Boulder
 
+/**
+ * Enumeration for the two ISLCObjects in the sim.
+ * @author Michael Kauzmann (PhET Interactive Simulations)
+ * @author Michael Barlow (PhET Interactive Simulations)
+ */
 define( require => {
   'use strict';
 
