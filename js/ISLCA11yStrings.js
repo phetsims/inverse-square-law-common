@@ -88,18 +88,18 @@ define( require => {
       value: '{{distance}} {{otherObjectLabel}}'
     },
     positionDistanceFromOtherObjectPattern: {
-      value: '{{positionRegion}}, {{distanceFromOtherObject}}.'
+      value: '{{positionRegion}}, {{distanceFromOtherObject}}'
     },
     distanceFromOtherObjectSentencePattern: {
-      value: '{{distanceFromOtherObject}}.'
+      value: '{{distanceFromOtherObject}}'
     },
 
     // position landmarks
     leftSideOfTrack: {
-      value: 'Left side of track'
+      value: 'left side of track'
     },
     rightSideOfTrack: {
-      value: 'Right side of track'
+      value: 'right side of track'
     },
     lastStopRight: {
       value: 'Last stop right'
