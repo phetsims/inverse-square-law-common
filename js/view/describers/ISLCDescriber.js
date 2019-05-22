@@ -98,6 +98,17 @@ define( require => {
     }
 
     /**
+     * @public
+     * @param {ISLCObject} object
+     * @returns {boolean}
+     */
+    getEnumFromObject( object ) {
+      return object === this.object1 ? OBJECT_ONE :
+             object === this.object2 ? OBJECT_TWO :
+             assert && assert( false, 'unrecognized ISLCObject' );
+    }
+
+    /**
      * TODO: as of writing this is only used by GFL, should it be moved out of here?
      * Static function to get interaction hint
      * @param massOrCharge

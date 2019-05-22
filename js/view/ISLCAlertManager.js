@@ -64,10 +64,10 @@ define( require => {
     /**
      * Alert for when the attempted movement of an ISLCObject's position results in a positional movement.
      * @public
-     * @param {boolean} objectsTouching - true if the two objects are as close as they can be given their current radii.
+     * @param {ISLCObject} object - the ISLCObject that changed position
      */
-    alertPositionChanged( objectsTouching ) {
-      this.positionUtterance.alert = this.forceDescriber.getPositionChangedAlertText( objectsTouching );
+    alertPositionChanged( object) {
+      this.positionUtterance.alert = this.forceDescriber.getVectorChangeText( object );
       utteranceQueue.addToBack( this.positionUtterance );
     }
 

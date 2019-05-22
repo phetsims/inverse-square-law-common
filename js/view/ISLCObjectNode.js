@@ -328,8 +328,10 @@ define( function( require ) {
         var positionChanged = newPosition !== oldPosition;
         object.isDragging = false;
         self.redrawForce();
+
+        // TODO: these alerts should occur on mouse as well
         if ( positionChanged ) {
-          alertManager.alertPositionChanged( positionDescriber.objectsClosest() );
+          alertManager.alertPositionChanged( object);
         }
         else {
           alertManager.alertPositionUnchanged();

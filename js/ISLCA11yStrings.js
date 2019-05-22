@@ -88,7 +88,7 @@ define( require => {
       value: '{{distance}} {{otherObjectLabel}}'
     },
     positionDistanceFromOtherObjectPattern: {
-      value: '{{positionLandmark}}, {{distanceFromOtherObject}}.'
+      value: '{{positionRegion}}, {{distanceFromOtherObject}}.'
     },
     distanceFromOtherObjectSentencePattern: {
       value: '{{distanceFromOtherObject}}.'
@@ -115,8 +115,8 @@ define( require => {
     },
 
     // closer/further away
-    positionProgressClause: {
-      value: '{{progress}}, '
+    positionProgressOrLandmarkClause: {
+      value: '{{progressOrLandmark}}, '
     },
     sidePattern: {
       value: '{{side}} edge'
@@ -131,7 +131,7 @@ define( require => {
      * Force vector strings *
      ************************/
     regionForceClausePattern: {
-      value: '{{region}}, {{forceClause}}'
+      value: '{{region}}, {{forceClause}}.'
     },
     vectorForceClausePattern: {
       value: '{{vectorClause}}, {{forceClause}}'
@@ -148,10 +148,13 @@ define( require => {
      * - vectors {{changeDirection}}, forces now {{force}} {{units}}
      */
     vectorChangePattern: {
-      value: '{{vectorsCapitalized}} {{changeDirection}}.'
+      value: '{{positionProgressOrLandmarkClause}}{{vectors}} {{changeDirection}}'
+    },
+    vectorChangeSentencePattern: {
+      value: '{{vectorChange}}.'
     },
     vectorChangeForcesNowValuePattern: {
-      value: '{{positionProgressClause}}{{vectors}} {{changeDirection}}, forces now {{forceValue}} {{units}}.'
+      value: '{{vectorChangeClause}}, forces now {{forceValue}} {{units}}.'
     },
     vectorsCapitalized: {
       value: 'Vectors'

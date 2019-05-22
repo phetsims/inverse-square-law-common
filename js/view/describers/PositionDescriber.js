@@ -29,7 +29,7 @@ define( require => {
   const centersOfObjectsDistancePatternString = ISLCA11yStrings.centersOfObjectsDistancePattern.value;
 
   const positionDistanceFromOtherObjectPatternString = ISLCA11yStrings.positionDistanceFromOtherObjectPattern.value;
-  const positionProgressClauseString = ISLCA11yStrings.positionProgressClause.value;
+  const positionProgressOrLandmarkClauseString = ISLCA11yStrings.positionProgressOrLandmarkClause.value;
   const sidePatternString = ISLCA11yStrings.sidePattern.value;
   const distanceAndUnitsPatternString = ISLCA11yStrings.distanceAndUnitsPattern.value;
   const quantitativeDistancePatternString = ISLCA11yStrings.quantitativeDistancePattern.value;
@@ -246,72 +246,51 @@ define( require => {
     }
 
     /**
-     * Helper function for dynamically creating the desired strings to set the aria-valuetext property for the desired
-     * HTML objects.
-     *
-     * @param  {ISLCObjectEnum} thisObjectEnum
-     * @param  {string}  pattern
-     * @param  {object}  [additionalFillObject]
-     * @param  {boolean}  [fillInDistanceDirectly] - when true, the provided pattern will be used as the pattern for
-     *                                               filling in the distance clause too.
-     * @returns {string}
-     * @private
-     */
-    getSpherePositionAriaValueText( thisObjectEnum, pattern, additionalFillObject, fillInDistanceDirectly ) {
-
-      const fillObject = _.extend( {
-        distanceFromOtherObject: this.getDistanceClause( thisObjectEnum )
-      }, additionalFillObject );
-
-      return StringUtils.fillIn( pattern, fillObject );
-    }
-
-    /**
-     * Map object positions to landmarks. This is not a traditional linear/numeric mapping
-     * but instead it is based on the two objects and if they are touching each other or the edges.
+     * There are only two positional regions, left/right side of track.
      * @param {ISLCObjectEnum} objectEnum
      * @returns {string}
      */
-    getPositionLandmark( objectEnum ) {
+    getCurrentPositionRegion( objectEnum ) {
+
+      // objects not touching any boundary, based on the side relative to the center
+      const object = this.getObjectFromEnum( objectEnum );
+
+      // TODO: why does centerOffset not work as expected here?
+      return object.positionProperty.get() < 0 ? leftSideOfTrackString : rightSideOfTrackString;
+    }
+
+    /**
+     * Get the position change clause, like closer/farther strings.
+     * @returns {string|null} - null if there isn't a position progress or landmark clause
+     */
+    getPositionProgressOrLandmarkClause( object ) {
+      const objectEnum = this.getEnumFromObject( object );
+
+      let positionString = this.movedCloser ? closerString : fartherAwayString;
+
 
       // object 1 touching left
       if ( this.object1AtMin( objectEnum ) ) {
-        return trackEndLeftString;
+        positionString = trackEndLeftString;
       }
 
       // object 2 touching right
       else if ( this.object2AtMax( objectEnum ) ) {
-        return trackEndRightString;
+        positionString = trackEndRightString;
       }
 
       // objects touching each other
       else if ( this.objectTouchingBoundary( objectEnum ) ) {
-        return this.isObject1( objectEnum ) ? lastStopRightString : lastStopLeftString;
+        positionString = this.isObject1( objectEnum ) ? lastStopRightString : lastStopLeftString;
       }
 
-      // objects not touching any boundary, based on the side relative to the center
-      else {
-        const object = this.getObjectFromEnum( objectEnum );
-
-        // TODO: why does centerOffset not work as expected here?
-        return object.positionProperty.get() < 0 ? leftSideOfTrackString : rightSideOfTrackString;
+      // No change, so if not covered by above edge cases, there shouldn't be a progress clause
+      else if ( this.lastMoveCloser === this.movedCloser ) {
+        return null;
       }
-    }
 
-    /**
-     * Get the position change clause, like closer/farther strings. Will return an empty string if this clause doesn't
-     * apply to the current state of the object positions (if movement wasn't
-     * @returns {string}
-     */
-    getPositionProgressClause() {
-
-      // No change, so there shouldn't be a progress clause
-      if ( this.lastMoveCloser === this.movedCloser ) {
-        return '';
-      }
-      const positionString = this.movedCloser ? closerString : fartherAwayString;
-      return StringUtils.fillIn( positionProgressClauseString, {
-        progress: positionString
+      return StringUtils.fillIn( positionProgressOrLandmarkClauseString, {
+        progressOrLandmark: positionString
       } );
     }
 
@@ -325,24 +304,28 @@ define( require => {
      * @returns {Function}
      */
     getOnChangeAriaValueTextCreator( objectEnum ) {
-      let previousPositionLandmark = null;
+      let previousPositionRegion = null;
 
       // NOTE: AccessibleValueHandler supports parameters to this function, but recognize that subtypes override this
       // method before adding these, see https://github.com/phetsims/gravity-force-lab-basics/issues/113
       return () => {
+        const distanceClause = this.getDistanceClause( objectEnum );
 
-        const newPositionLandmark = this.getPositionLandmark( objectEnum );
-        if ( previousPositionLandmark !== newPositionLandmark ) {
-          previousPositionLandmark = newPositionLandmark;
+        const newPositionRegion = this.getCurrentPositionRegion( objectEnum );
 
-          return this.getSpherePositionAriaValueText(
-            objectEnum,
-            positionDistanceFromOtherObjectPatternString,
-            { positionLandmark: newPositionLandmark }
-          );
+        // Only include the region if it is different from the previous. The key
+        if ( previousPositionRegion !== newPositionRegion ) {
+          previousPositionRegion = newPositionRegion;
+
+          return StringUtils.fillIn( positionDistanceFromOtherObjectPatternString, {
+            positionRegion: newPositionRegion,
+            distanceFromOtherObject: distanceClause
+          } );
         }
         else {
-          return this.getSpherePositionAriaValueText( objectEnum, distanceFromOtherObjectSentencePatternString );
+          return StringUtils.fillIn( distanceFromOtherObjectSentencePatternString, {
+            distanceFromOtherObject: distanceClause
+          } );
         }
       };
     }

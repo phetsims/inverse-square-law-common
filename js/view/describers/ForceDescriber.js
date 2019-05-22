@@ -44,6 +44,7 @@ define( require => {
   const vectorChangePatternString = ISLCA11yStrings.vectorChangePattern.value;
   const vectorsCapitalizedString = ISLCA11yStrings.vectorsCapitalized.value;
   const vectorChangeForcesNowValuePatternString = ISLCA11yStrings.vectorChangeForcesNowValuePattern.value;
+  const vectorChangeSentencePatternString = ISLCA11yStrings.vectorChangeSentencePattern.value;
   const vectorChangeClausePatternString = ISLCA11yStrings.vectorChangeClausePattern.value;
   const vectorChangeForcesNowClausePatternString = ISLCA11yStrings.vectorChangeForcesNowClausePattern.value;
   const vectorForceClausePatternString = ISLCA11yStrings.vectorForceClausePattern.value;
@@ -163,9 +164,6 @@ define( require => {
         forceVectorArrows: options.forceVectorsCapitalizedString
       } );
       this.vectorSizePatternString = StringUtils.fillIn( vectorSizePatternString, {
-        vectorsCapitalized: options.vectorsCapitalizedString
-      } );
-      this.vectorChangePatternString = StringUtils.fillIn( vectorChangePatternString, {
         vectorsCapitalized: options.vectorsCapitalizedString
       } );
       this.vectorSizeForcesValuePatternString = StringUtils.fillIn( vectorSizeForcesValuePatternString, {
@@ -387,34 +385,40 @@ define( require => {
     }
 
     /**
-     * Returns the string 'Vectors {{changeDirection}}'.
-     *
+     * Get text when an object has changed position, and the force value has as a result.
+     * @param {ISLCObject} object - the object that changed position
      * @returns {string}
      */
-    getVectorChangeText() {
+    getVectorChangeText( object ) {
       const changeDirection = this.changeDirection;
-      return StringUtils.fillIn( this.vectorChangePatternString, { changeDirection: changeDirection } );
-    }
+      const positionOrLandmark = this.positionDescriber.getPositionProgressOrLandmarkClause( object );
 
-    /**
-     * Returns the filled-in string 'Vectors {{changeDirection}}, forces now {{forceValue}} {{units}}'.
-     *
-     * @returns {string}
-     */
-    getVectorChangeForcesNowText() {
-      const changeDirection = this.changeDirection;
-      const forceValue = this.formattedForce;
-      const units = this.units;
-      const positionProgress = this.positionDescriber.getPositionProgressClause();
-      return StringUtils.fillIn( vectorChangeForcesNowValuePatternString, {
+      // Fill in the base clause of the vector changing.
+      const vectorChangeClause = StringUtils.fillIn( vectorChangePatternString, {
 
         // if no position progress, then capitalize the next piece
-        vectors: positionProgress ? this.forceVectorsString : this.vectorsCapitalizedString,
-        positionProgressClause: positionProgress,
-        changeDirection: changeDirection,
-        forceValue: forceValue,
-        units: units
+        vectors: positionOrLandmark ? this.forceVectorsString : this.vectorsCapitalizedString,
+        positionOrLandmarkOrLandmarkClause: positionOrLandmark ? positionOrLandmark : '',
+        changeDirection: changeDirection
       } );
+
+      // Add info like "forces now" only if force values checkbox is enabled
+      if ( this.model.forceValuesProperty.get() ) {
+        const forceValue = this.formattedForce;
+        const units = this.units;
+        return StringUtils.fillIn( vectorChangeForcesNowValuePatternString, {
+          vectorChangeClause: vectorChangeClause,
+          forceValue: forceValue,
+          units: units
+        } );
+      }
+      else {
+
+        // Make the vectorChangeClause into a sentence.
+        return StringUtils.fillIn( vectorChangeSentencePatternString, {
+          vectorChange: vectorChangeClause
+        } );
+      }
     }
 
     /**
@@ -495,33 +499,17 @@ define( require => {
       // throw new Error( 'getForceVectorIndex MUST be implemented in subtypes.' );
     }
 
-
-    /**
-     * Alert text for when ISLCObject position changes
-     * @public
-     * @param objectsTouching
-     * @returns {string}
-     */
-    getPositionChangedAlertText( objectsTouching ) {
-      let alertText = this.getVectorChangeText();
-      let edgeAlertText = this.getVectorSizeText();
-
-      // if force values checkbox is enabled
-      if ( this.model.forceValuesProperty.get() ) {
-        alertText = this.getVectorChangeForcesNowText();
-        edgeAlertText = this.getVectorSizeForceValueText();
-      }
-
-      return objectsTouching ? edgeAlertText : alertText;
-    }
-
     /**
      * Alert text for when ISLCObject position does not change even though there was a drag.
      * @public
      * @returns {string}
      */
     getPositionUnchangedAlertText() {
+
+      // TODO: do we need this intermediary funciton? Or can we inline `getVectorsAndForcesClause`
       const forceClause = this.getVectorsAndForcesClause();
+
+      // TODO: here we want to have the region capitalized, since it is at the beginning of the sentence, see https://github.com/phetsims/gravity-force-lab-basics/issues/124
       const region = this.positionDescriber.qualitativeDistance;
       return StringUtils.fillIn( regionForceClausePatternString, { region: region, forceClause: forceClause } );
     }
