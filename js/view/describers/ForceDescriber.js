@@ -398,7 +398,7 @@ define( require => {
 
         // if no position progress, then capitalize the next piece
         vectors: positionOrLandmark ? this.forceVectorsString : this.vectorsCapitalizedString,
-        positionOrLandmarkOrLandmarkClause: positionOrLandmark ? positionOrLandmark : '',
+        positionProgressOrLandmarkClause: positionOrLandmark ? positionOrLandmark : '',
         changeDirection: changeDirection
       } );
 
