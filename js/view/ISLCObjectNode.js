@@ -349,9 +349,6 @@ define( function( require ) {
       accessibleSliderOptions
     );
 
-    // a11y - keep value text in sync as the model changes
-    model.forceProperty.lazyLink( () => this.updateOnFocusAriaValueText() );
-
     // TODO: move to MassNode since ChargeNodes don't have a changing radiusProperty.
     this.objectModel.radiusProperty.link( function() {
 
