@@ -331,13 +331,16 @@ define( function( require ) {
 
         // TODO: these alerts should occur on mouse as well
         if ( positionChanged ) {
-          alertManager.alertPositionChanged( object);
+          alertManager.alertPositionChanged( object );
         }
         else {
           alertManager.alertPositionUnchanged();
         }
       },
-      a11yCreateValueChangeAriaValueText: positionDescriber.getOnChangeAriaValueTextCreator( this.enum )
+      a11yCreateValueChangeAriaValueText: positionDescriber.getOnChangeAriaValueTextCreator( this.enum ),
+
+      // This object's PDOM description also depends on the position of the other object, so include it here.
+      a11yDependencies: object === model.object1 ? [ model.object2.positionProperty ] : [ model.object1.positionProperty ]
     };
 
     // a11y - initialize the accessible slider
