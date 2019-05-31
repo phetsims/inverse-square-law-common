@@ -11,6 +11,7 @@ define( function( require ) {
   // modules
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var DerivedPropertyIO = require( 'AXON/DerivedPropertyIO' );
+  var Emitter = require( 'AXON/Emitter' );
   var inherit = require( 'PHET_CORE/inherit' );
   var inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
   var ISLCConstants = require( 'INVERSE_SQUARE_LAW_COMMON/ISLCConstants' );
@@ -75,6 +76,9 @@ define( function( require ) {
       tandem: tandem.createTandem( 'enabledRangeProperty' ),
       phetioType: PropertyIO( RangeIO )
     } );
+
+    // @publiv (read-only) - Emitter that fires whenever the position changes as a result of an object's value changing
+    this.valueChangedPositionEmitter = new Emitter();
 
     // @public - flag to check if the object is being dragged by the user
     //           set in the drag handler

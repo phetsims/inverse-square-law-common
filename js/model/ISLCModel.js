@@ -198,24 +198,44 @@ define( function( require ) {
         if ( this.object1.radiusLastChanged ) {
           if ( this.object2.positionProperty.get() < maxX ) {
 
-            // object2 is not at the edge update its position
-            this.object2.positionProperty.set( locationObject2 );
+            // only set if it is different
+            if ( locationObject2 !== this.object2.positionProperty.get() ) {
+
+              // object2 is not at the edge update its position
+              this.object2.positionProperty.set( locationObject2 );
+              this.object2.valueChangedPositionEmitter.emit();
+            }
           }
           else {
 
-            // object2 is at the edge update object1 position
-            this.object1.positionProperty.set( locationObject1 );
+            // only set if it is different
+            if ( locationObject1 !== this.object1.positionProperty.get() ) {
+
+              // object2 is at the edge update object1 position
+              this.object1.positionProperty.set( locationObject1 );
+              this.object1.valueChangedPositionEmitter.emit();
+            }
           }
         }
         else if ( this.object2.radiusLastChanged ) {
           if ( this.object1.positionProperty.get() > minX ) {
 
-            // object1 is not at boundary, update position
-            this.object1.positionProperty.set( locationObject1 );
+            // only set if it is different
+            if ( locationObject1 !== this.object1.positionProperty.get() ) {
+
+              // object1 is not at boundary, update position
+              this.object1.positionProperty.set( locationObject1 );
+              this.object1.valueChangedPositionEmitter.emit();
+            }
           }
           else {
 
-            this.object2.positionProperty.set( locationObject2 );
+            // only set if it is different
+            if ( locationObject2 !== this.object2.positionProperty.get() ) {
+
+              this.object2.positionProperty.set( locationObject2 );
+              this.object2.valueChangedPositionEmitter.emit();
+            }
           }
         }
       }
