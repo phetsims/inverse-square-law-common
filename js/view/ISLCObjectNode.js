@@ -125,7 +125,10 @@ define( function( require ) {
       arrowTailWidth: 3,
       arrowStroke: null,
 
-      tandem: Tandem.required
+      tandem: Tandem.required,
+
+      // {Property[]} - Properties that need to be monitored to successfully update this Node's PDOM descriptions
+      additionalA11yDependencies: []
     }, options );
 
     var tandem = options.tandem;
@@ -340,7 +343,8 @@ define( function( require ) {
       a11yCreateValueChangeAriaValueText: positionDescriber.getOnChangeAriaValueTextCreator( this.enum ),
 
       // This object's PDOM description also depends on the position of the other object, so include it here.
-      a11yDependencies: object === model.object1 ? [ model.object2.positionProperty ] : [ model.object1.positionProperty ]
+      a11yDependencies: options.additionalA11yDependencies.concat( object === model.object1 ?
+        [ model.object2.positionProperty ] : [ model.object1.positionProperty ] )
     };
 
     // a11y - initialize the accessible slider
