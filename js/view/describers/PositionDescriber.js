@@ -15,6 +15,7 @@ define( require => {
   const ISLCA11yStrings = require( 'INVERSE_SQUARE_LAW_COMMON/ISLCA11yStrings' );
   const ISLCDescriber = require( 'INVERSE_SQUARE_LAW_COMMON/view/describers/ISLCDescriber' );
   const Property = require( 'AXON/Property' );
+  const StringProperty = require( 'AXON/StringProperty' );
   const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
 
   // strings
@@ -129,6 +130,10 @@ define( require => {
       // "simplified" from quantitative to qualitative forms in the BASICS version.
       // see https://github.com/phetsims/gravity-force-lab-basics/issues/88
       this.useQuantitativeDistance = true;
+
+      // {StringProperty[]} - keep track of each Property created in the "aria-valuetext creator" creator function so
+      // that they can be reset
+      this._previousPositionRegionProperties = [];
 
       Property.multilink(
         [ this.object1.positionProperty, this.object2.positionProperty ],
@@ -304,7 +309,10 @@ define( require => {
      * @returns {Function}
      */
     getOnChangeAriaValueTextCreator( objectEnum ) {
-      let previousPositionRegion = null;
+
+      // By initializing to the current value, regions will only be displayed when on region change, and not on startup.
+      const previousPositionRegionProperty = new StringProperty( this.getCurrentPositionRegion( objectEnum ) );
+      this._previousPositionRegionProperties.push( previousPositionRegionProperty );
 
       // NOTE: AccessibleValueHandler supports parameters to this function, but recognize that subtypes override this
       // method before adding these, see https://github.com/phetsims/gravity-force-lab-basics/issues/113
@@ -314,8 +322,8 @@ define( require => {
         const newPositionRegion = this.getCurrentPositionRegion( objectEnum );
 
         // Only include the region if it is different from the previous. The key
-        if ( previousPositionRegion !== newPositionRegion ) {
-          previousPositionRegion = newPositionRegion;
+        if ( previousPositionRegionProperty.value !== newPositionRegion ) {
+          previousPositionRegionProperty.value = newPositionRegion;
 
           return StringUtils.fillIn( positionDistanceFromOtherObjectPatternString, {
             positionRegion: newPositionRegion,
@@ -328,6 +336,13 @@ define( require => {
           } );
         }
       };
+    }
+
+    /**
+     * @public
+     */
+    reset() {
+      this._previousPositionRegionProperties.forEach( property => property.reset() );
     }
 
     /**

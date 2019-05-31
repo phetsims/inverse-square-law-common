@@ -452,6 +452,13 @@ define( function( require ) {
 
       // update puller node visibility
       this.pullerNode.setPull( this.model.forceProperty.get(), this.objectCircle.width / 2 );
+    },
+
+    /**
+     * @public
+     */
+    reset: function() {
+      this.resetAccessibleSlider();
     }
   } );
 
