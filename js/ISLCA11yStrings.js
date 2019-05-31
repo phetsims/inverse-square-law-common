@@ -134,7 +134,7 @@ define( require => {
       value: '{{region}}, {{forceClause}}.'
     },
     vectorForceClausePattern: {
-      value: '{{vectorClause}}, {{forceClause}}'
+      value: '{{vectorClause}}, {{forceValuesClause}}'
     },
     /*
      * from the doc, here are the possible alert text options:
@@ -254,31 +254,31 @@ define( require => {
       value: 'closest to'
     },
     farthest: {
-      value: 'farthest'
+      value: 'Farthest'
     },
     extremelyFar: {
-      value: 'extremely far'
+      value: 'Extremely far'
     },
     veryFar: {
-      value: 'very far'
+      value: 'Very far'
     },
     far: {
-      value: 'far'
+      value: 'Far'
     },
     notSoClose: {
-      value: 'not so close'
+      value: 'Not so close'
     },
     close: {
-      value: 'close'
+      value: 'Close'
     },
     veryClose: {
-      value: 'very close'
+      value: 'Very close'
     },
     extremelyClose: {
-      value: 'extremely close'
+      value: 'Extremely close'
     },
     closest: {
-      value: 'closest'
+      value: 'Closest'
     },
     closerTo: {
       value: 'closer to'

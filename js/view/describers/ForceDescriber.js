@@ -325,26 +325,6 @@ define( require => {
     }
 
     /**
-     * Returns the filled in string 'vectors {{size}}, forces {{value}} {{units}}'. Will display in scientific notation
-     * if it's selected.
-     *
-     * @returns {string}
-     */
-    getVectorsAndForcesClause() {
-      const vectorClause = this.getVectorSizeClause();
-      if ( !this.model.forceValuesProperty.get() ) {
-        return vectorClause;
-      }
-      else {
-        const forceClause = this.getForcesClause();
-        return StringUtils.fillIn( vectorForceClausePatternString, {
-          vectorClause: vectorClause,
-          forceClause: forceClause
-        } );
-      }
-    }
-
-    /**
      * Returns the string 'vectors {{size}}' for use in larger pattern strings.
      *
      * @returns {string}
@@ -506,10 +486,16 @@ define( require => {
      */
     getPositionUnchangedAlertText() {
 
-      // TODO: do we need this intermediary funciton? Or can we inline `getVectorsAndForcesClause`
-      const forceClause = this.getVectorsAndForcesClause();
+      // if not showing force values, this is the force clause
+      let forceClause = this.getVectorSizeClause();
+      if ( this.model.forceValuesProperty.get() ) {
+        const forceValuesClause = this.getForcesClause();
+        forceClause = StringUtils.fillIn( vectorForceClausePatternString, {
+          vectorClause: forceClause, // in GFLB this has nothing to do with "vectors" but instead "force arrows"
+          forceValuesClause: forceValuesClause
+        } );
+      }
 
-      // TODO: here we want to have the region capitalized, since it is at the beginning of the sentence, see https://github.com/phetsims/gravity-force-lab-basics/issues/124
       const region = this.positionDescriber.qualitativeDistance;
       return StringUtils.fillIn( regionForceClausePatternString, { region: region, forceClause: forceClause } );
     }
