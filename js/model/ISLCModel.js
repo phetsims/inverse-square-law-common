@@ -203,7 +203,7 @@ define( function( require ) {
 
               // object2 is not at the edge update its position
               this.object2.positionProperty.set( locationObject2 );
-              this.object2.valueChangedPositionEmitter.emit();
+              this.object2.valueChangedPositionEmitter.emit( OBJECT_ONE );
             }
           }
           else {
@@ -213,7 +213,7 @@ define( function( require ) {
 
               // object2 is at the edge update object1 position
               this.object1.positionProperty.set( locationObject1 );
-              this.object1.valueChangedPositionEmitter.emit();
+              this.object1.valueChangedPositionEmitter.emit( OBJECT_ONE );
             }
           }
         }
@@ -225,7 +225,7 @@ define( function( require ) {
 
               // object1 is not at boundary, update position
               this.object1.positionProperty.set( locationObject1 );
-              this.object1.valueChangedPositionEmitter.emit();
+              this.object1.valueChangedPositionEmitter.emit( OBJECT_TWO );
             }
           }
           else {
@@ -234,7 +234,7 @@ define( function( require ) {
             if ( locationObject2 !== this.object2.positionProperty.get() ) {
 
               this.object2.positionProperty.set( locationObject2 );
-              this.object2.valueChangedPositionEmitter.emit();
+              this.object2.valueChangedPositionEmitter.emit( OBJECT_TWO );
             }
           }
         }
