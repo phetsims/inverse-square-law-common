@@ -21,6 +21,10 @@ define( function( require ) {
   var Range = require( 'DOT/Range' );
   var Util = require( 'DOT/Util' );
 
+  // constants
+  const OBJECT_ONE = ISLCObjectEnum.OBJECT_ONE;
+  const OBJECT_TWO = ISLCObjectEnum.OBJECT_TWO;
+
   /**
    * @param {number} forceConstant the appropriate force constant (e.g. G or k)
    * @param {ISLCObject} object1 - the first Mass or Charge object
