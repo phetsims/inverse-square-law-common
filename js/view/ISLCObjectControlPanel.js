@@ -10,7 +10,6 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var Dimension2 = require( 'DOT/Dimension2' );
   var FocusHighlightPath = require( 'SCENERY/accessibility/FocusHighlightPath' );
   var GroupFocusHighlightFromNode = require( 'SCENERY/accessibility/GroupFocusHighlightFromNode' );
   var inherit = require( 'PHET_CORE/inherit' );
