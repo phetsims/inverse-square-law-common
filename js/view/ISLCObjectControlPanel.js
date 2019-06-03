@@ -101,7 +101,6 @@ define( function( require ) {
 
     numberControlOptions.sliderOptions = _.extend( {
       trackFillEnabled: 'black',
-      thumbSize: THUMB_SIZE,
 
       // tick options
       minorTickSpacing: 2,
