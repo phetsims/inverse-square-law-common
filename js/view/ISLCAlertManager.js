@@ -1,4 +1,4 @@
-// Copyright 2017-2019, University of Colorado Boulder
+// Copyright 2018-2019, University of Colorado Boulder
 
 /**
  * Base type for all AlertManager instances. In general AlertManagers are responsible for sending alerts through the
