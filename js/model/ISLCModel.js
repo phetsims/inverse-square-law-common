@@ -5,21 +5,21 @@
  *
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var BooleanProperty = require( 'AXON/BooleanProperty' );
-  var DerivedProperty = require( 'AXON/DerivedProperty' );
-  var DerivedPropertyIO = require( 'AXON/DerivedPropertyIO' );
-  var Emitter = require( 'AXON/Emitter' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
-  var ISLCObjectEnum = require( 'INVERSE_SQUARE_LAW_COMMON/view/ISLCObjectEnum' );
-  var NumberIO = require( 'TANDEM/types/NumberIO' );
-  var Property = require( 'AXON/Property' );
-  var Range = require( 'DOT/Range' );
-  var Util = require( 'DOT/Util' );
+  const BooleanProperty = require( 'AXON/BooleanProperty' );
+  const DerivedProperty = require( 'AXON/DerivedProperty' );
+  const DerivedPropertyIO = require( 'AXON/DerivedPropertyIO' );
+  const Emitter = require( 'AXON/Emitter' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
+  const ISLCObjectEnum = require( 'INVERSE_SQUARE_LAW_COMMON/view/ISLCObjectEnum' );
+  const NumberIO = require( 'TANDEM/types/NumberIO' );
+  const Property = require( 'AXON/Property' );
+  const Range = require( 'DOT/Range' );
+  const Util = require( 'DOT/Util' );
 
   // constants
   const OBJECT_ONE = ISLCObjectEnum.OBJECT_ONE;
@@ -36,8 +36,6 @@ define( function( require ) {
    * @constructor
    */
   function ISLCModel( forceConstant, object1, object2, locationRange, tandem, options ) {
-
-    var self = this;
 
     options = _.extend( {
       snapObjectsToNearest: null, // {number|null} if defined, objects will snap to nearest value in model coordinates
@@ -63,11 +61,7 @@ define( function( require ) {
 
     // @private
     this.snapObjectsToNearest = options.snapObjectsToNearest;
-
-    // @private
     this.minSeparationBetweenObjects = options.minSeparationBetweenObjects;
-
-    // @private
     this.forceConstant = forceConstant;
 
     // @public - emits an event when the model is updated by step
@@ -80,44 +74,41 @@ define( function( require ) {
       this.object2.valueProperty,
       this.object1.positionProperty,
       this.object2.positionProperty
-    ], function( v1, v2, x1, x2 ) {
-      var distance = Math.abs( x2 - x1 );
-      return self.calculateForce( v1, v2, distance );
-    }, {
+    ], ( v1, v2, x1, x2 ) => this.calculateForce( v1, v2, Math.abs( x2 - x1 ) ), {
       phetioType: DerivedPropertyIO( NumberIO ),
       tandem: tandem.createTandem( 'forceProperty' ),
       units: 'newtons',
       phetioDocumentation: 'The force of one object on the other (in Newtons)'
     } );
 
-    var updateRange = function( object ) {
-      var maxPosition = self.getObjectMaxPosition( object );
-      var minPosition = self.getObjectMinPosition( object );
+    const updateRange = object => {
+      const maxPosition = this.getObjectMaxPosition( object );
+      const minPosition = this.getObjectMinPosition( object );
 
       object.enabledRangeProperty.set( new Range( minPosition, maxPosition ) );
     };
 
     // a11y - necessary to reset the enabledRangeProperty to prevent object overlap, disposal not necessary
     // We need to update the available range for each object when the either's radius or position changes.
-    Property.multilink( [ object1.positionProperty, object2.positionProperty ], function() {
+    Property.multilink( [ object1.positionProperty, object2.positionProperty ], () => {
       updateRange( object1 );
       updateRange( object2 );
     } );
 
     // when sim is reset, we only reset the position properties of each object to their initial values
     // thus, there is no need to dispose of the listeners below
-    this.object1.radiusProperty.link( function() {
-      self.object1.radiusLastChanged = true;
-      self.object2.radiusLastChanged = false;
+    this.object1.radiusProperty.link( () => {
+      this.object1.radiusLastChanged = true;
+      this.object2.radiusLastChanged = false;
 
       // update range if radius changed with "constant radius" setting (which didn't trigger other model updates)
       updateRange( object1 );
       updateRange( object2 );
     } );
 
-    this.object2.radiusProperty.link( function() {
-      self.object2.radiusLastChanged = true;
-      self.object1.radiusLastChanged = false;
+    this.object2.radiusProperty.link( () => {
+      this.object2.radiusLastChanged = true;
+      this.object1.radiusLastChanged = false;
 
       // update range if radius changed with "constant radius" setting (which didn't trigger other model updates)
       updateRange( object2 );
@@ -134,7 +125,7 @@ define( function( require ) {
 
           // This conditional should only be hit if the mass has changed in addition to the position. Since the object's
           // valueProperty would be set in the previous frame, and then this frame's step function would update the
-          // position. This was understood to be the truth by @zepumph while working on https://github.com/phetsims/gravity-force-lab-basics/issues/132
+          // position.
           this.pushedObjectEnumProperty.value = objectEnum;
         }
       };
@@ -164,19 +155,19 @@ define( function( require ) {
      * @public
      */
     step: function() {
-      var minX = this.leftObjectBoundary;
-      var maxX = this.rightObjectBoundary;
+      const minX = this.leftObjectBoundary;
+      const maxX = this.rightObjectBoundary;
 
-      var locationObject1 = this.object1.positionProperty.get();
-      var locationObject2 = this.object2.positionProperty.get();
+      let locationObject1 = this.object1.positionProperty.get();
+      let locationObject2 = this.object2.positionProperty.get();
 
       // bounds for the left object are the left boundary and the right edge of object 2 minus half the min separation
-      var minPositionObject1 = minX;
-      var maxPositionObject1 = this.getObjectMaxPosition( this.object1 );
+      const minPositionObject1 = minX;
+      const maxPositionObject1 = this.getObjectMaxPosition( this.object1 );
 
       // bounds for the right object are the right edge of object 1 plus half the separation distance and the right edge
-      var minPositionObject2 = this.getObjectMinPosition( this.object2 );
-      var maxPositionObject2 = maxX;
+      const minPositionObject2 = this.getObjectMinPosition( this.object2 );
+      const maxPositionObject2 = maxX;
 
       // make sure that the objects don't go beyond the boundaries
       locationObject1 = Math.max( minPositionObject1, locationObject1 );
@@ -251,17 +242,16 @@ define( function( require ) {
     /**
      * Helper function to for accessing and mapping force ranges in the inheriting sims' views
      *
-     * Note: this function assumes that the ranges of both objects' values are the same
-     *
      * @public
      * @returns {number} the smallest possible force magnitude
      */
     getMinForce: function() {
-      var maxDistance = Math.abs( this.rightObjectBoundary - this.leftObjectBoundary );
+      this.assertObjectsHaveSameRange();
+      const maxDistance = Math.abs( this.rightObjectBoundary - this.leftObjectBoundary );
 
       // Since we're checking for magnitude, negative values for charges will need
       // to be set to zero.
-      var minValue = this.object1.valueRange.min < 0 ? 0 : this.object1.valueRange.min;
+      const minValue = this.object1.valueRange.min < 0 ? 0 : this.object1.valueRange.min;
 
       // ensure we always return a positive force value or zero
       return Math.abs( this.calculateForce( minValue, minValue, maxDistance ) );
@@ -270,14 +260,23 @@ define( function( require ) {
     /**
      * Helper function to for accessing and mapping force ranges in the inheriting sims' views
      *
-     * Note: this function assumes that the ranges of both objects' values are the same
-     *
      * @public
      * @returns {number} the largest possible force magnitude
      */
     getMaxForce: function() {
-      var maxValue = this.object1.valueRange.max;
+      this.assertObjectsHaveSameRange();
+
+      const maxValue = this.object1.valueRange.max;
       return Math.abs( this.calculateForce( maxValue, maxValue, this.getMinDistance( maxValue ) ) );
+    },
+
+    /**
+     * Multiple functions in the model need to assume this, so these assertions are factored out.
+     * @private
+     */
+    assertObjectsHaveSameRange: function() {
+      assert && assert( this.object1.valueProperty.range.min === this.object2.valueProperty.range.min, 'range min should be the same' );
+      assert && assert( this.object1.valueProperty.range.max === this.object2.valueProperty.range.max, 'range max should be the same' );
     },
 
     /**
@@ -291,7 +290,7 @@ define( function( require ) {
     getMinDistance: function( value ) {
 
       // calculate radius for masses and charges at maximum mass/charge
-      var minRadius = this.object1.calculateRadius( value );
+      const minRadius = this.object1.calculateRadius( value );
       return ( 2 * minRadius ) + this.minSeparationBetweenObjects;
     },
 
@@ -317,9 +316,10 @@ define( function( require ) {
      * @returns {number}
      */
     getSumRadiusWithSeparation: function() {
-      return this.snapToGrid(
-        this.object1.radiusProperty.get() + this.object2.radiusProperty.get() + this.minSeparationBetweenObjects
-      );
+      const distanceSum = this.object1.radiusProperty.get() +
+                          this.object2.radiusProperty.get() +
+                          this.minSeparationBetweenObjects;
+      return this.snapToGrid( distanceSum );
     },
 
     /**
@@ -331,8 +331,8 @@ define( function( require ) {
      */
     getObjectMaxPosition: function( object ) {
 
-      var sumRadius = this.getSumRadiusWithSeparation();
-      var maxX;
+      const sumRadius = this.getSumRadiusWithSeparation();
+      let maxX;
       if ( object === this.object1 ) {
 
         // the max value for the left object is the position of the right object minius the sum of radii
@@ -356,8 +356,8 @@ define( function( require ) {
      */
     getObjectMinPosition: function( object ) {
 
-      var sumRadius = this.getSumRadiusWithSeparation();
-      var minX;
+      const sumRadius = this.getSumRadiusWithSeparation();
+      let minX;
       if ( object === this.object1 ) {
 
         // the min value for the left object is the left edge plus the puller width and the radius of the object
@@ -389,8 +389,8 @@ define( function( require ) {
      * @returns {number}
      */
     snapToGrid: function( position ) {
-      var snappedPosition = position;
-      var numDecimalPlaces = Util.numberOfDecimalPlaces( this.snapObjectsToNearest );
+      let snappedPosition = position;
+      const numDecimalPlaces = Util.numberOfDecimalPlaces( this.snapObjectsToNearest );
       if ( this.snapObjectsToNearest ) {
         snappedPosition = Util.roundSymmetric( position / this.snapObjectsToNearest ) * this.snapObjectsToNearest;
         snappedPosition = Util.toFixedNumber( snappedPosition, numDecimalPlaces );

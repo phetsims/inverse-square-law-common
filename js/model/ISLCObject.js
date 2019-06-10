@@ -5,22 +5,22 @@
  *
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var DerivedProperty = require( 'AXON/DerivedProperty' );
-  var DerivedPropertyIO = require( 'AXON/DerivedPropertyIO' );
-  var Emitter = require( 'AXON/Emitter' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
-  var ISLCConstants = require( 'INVERSE_SQUARE_LAW_COMMON/ISLCConstants' );
-  var NumberIO = require( 'TANDEM/types/NumberIO' );
-  var NumberProperty = require( 'AXON/NumberProperty' );
-  var Property = require( 'AXON/Property' );
-  var PropertyIO = require( 'AXON/PropertyIO' );
-  var Range = require( 'DOT/Range' );
-  var RangeIO = require( 'DOT/RangeIO' );
+  const DerivedProperty = require( 'AXON/DerivedProperty' );
+  const DerivedPropertyIO = require( 'AXON/DerivedPropertyIO' );
+  const Emitter = require( 'AXON/Emitter' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
+  const ISLCConstants = require( 'INVERSE_SQUARE_LAW_COMMON/ISLCConstants' );
+  const NumberIO = require( 'TANDEM/types/NumberIO' );
+  const NumberProperty = require( 'AXON/NumberProperty' );
+  const Property = require( 'AXON/Property' );
+  const PropertyIO = require( 'AXON/PropertyIO' );
+  const Range = require( 'DOT/Range' );
+  const RangeIO = require( 'DOT/RangeIO' );
 
   /**
    * @param {number} initialMass
@@ -32,8 +32,6 @@ define( function( require ) {
    * @constructor
    */
   function ISLCObject( initialMass, initialPosition, valueRange, constantRadiusProperty, tandem, options ) {
-
-    var self = this;
 
     options = _.extend( {
 
@@ -60,8 +58,8 @@ define( function( require ) {
     // @public {Property.<number>} - the radius of the mass or charge in meters
     // since ISLCObjects are never destroyed, no need to dispose
     this.radiusProperty = new DerivedProperty( [ this.valueProperty, constantRadiusProperty ],
-      function( valueProperty, constantRadius ) {
-        return constantRadius ? options.constantRadius : self.calculateRadius( valueProperty );
+      ( valueProperty, constantRadius ) => {
+        return constantRadius ? options.constantRadius : this.calculateRadius( valueProperty );
       }, {
         tandem: tandem.createTandem( 'radiusProperty' ),
         units: 'meters',
@@ -69,7 +67,7 @@ define( function( require ) {
       }
     );
 
-    var enabledRange = new Range( options.leftObjectBoundary, options.rightObjectBoundary );
+    const enabledRange = new Range( options.leftObjectBoundary, options.rightObjectBoundary );
 
     // @public {Property.<Range>}- set by ISLCModel when the force changes
     this.enabledRangeProperty = new Property( enabledRange, {

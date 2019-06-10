@@ -10,36 +10,34 @@
  * @author Michael Barlow (PhET Interactive Simulations)
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var AccessibleSlider = require( 'SUN/accessibility/AccessibleSlider' );
-  var Color = require( 'SCENERY/util/Color' );
-  var Circle = require( 'SCENERY/nodes/Circle' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
-  var ISLCAlertManager = require( 'INVERSE_SQUARE_LAW_COMMON/view/ISLCAlertManager' );
-  var ISLCForceArrowNode = require( 'INVERSE_SQUARE_LAW_COMMON/view/ISLCForceArrowNode' );
-  var ISLCObjectEnum = require( 'INVERSE_SQUARE_LAW_COMMON/view/ISLCObjectEnum' );
-  var ISLCPullerNode = require( 'INVERSE_SQUARE_LAW_COMMON/view/ISLCPullerNode' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var Path = require( 'SCENERY/nodes/Path' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var PositionDescriber = require( 'INVERSE_SQUARE_LAW_COMMON/view/describers/PositionDescriber' );
-  var Range = require( 'DOT/Range' );
-  var RichText = require( 'SCENERY/nodes/RichText' );
-  var Shape = require( 'KITE/Shape' );
-  var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
-  var Tandem = require( 'TANDEM/Tandem' );
-  var Util = require( 'DOT/Util' );
-
-  // phetio
-  var BooleanProperty = require( 'AXON/BooleanProperty' );
+  const AccessibleSlider = require( 'SUN/accessibility/AccessibleSlider' );
+  const BooleanProperty = require( 'AXON/BooleanProperty' );
+  const Color = require( 'SCENERY/util/Color' );
+  const Circle = require( 'SCENERY/nodes/Circle' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
+  const ISLCAlertManager = require( 'INVERSE_SQUARE_LAW_COMMON/view/ISLCAlertManager' );
+  const ISLCForceArrowNode = require( 'INVERSE_SQUARE_LAW_COMMON/view/ISLCForceArrowNode' );
+  const ISLCObjectEnum = require( 'INVERSE_SQUARE_LAW_COMMON/view/ISLCObjectEnum' );
+  const ISLCPullerNode = require( 'INVERSE_SQUARE_LAW_COMMON/view/ISLCPullerNode' );
+  const Node = require( 'SCENERY/nodes/Node' );
+  const Path = require( 'SCENERY/nodes/Path' );
+  const PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  const PositionDescriber = require( 'INVERSE_SQUARE_LAW_COMMON/view/describers/PositionDescriber' );
+  const Range = require( 'DOT/Range' );
+  const RichText = require( 'SCENERY/nodes/RichText' );
+  const Shape = require( 'KITE/Shape' );
+  const SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
+  const Tandem = require( 'TANDEM/Tandem' );
+  const Util = require( 'DOT/Util' );
 
   // constants
-  var LABEL_MAX_WIDTH = 20; // empirically determined through testing with long strings
-  var ARROW_OPTION_KEYS = [
+  const LABEL_MAX_WIDTH = 20; // empirically determined through testing with long strings
+  const ARROW_OPTION_KEYS = [
     'defaultDirection',
     'attractNegative', // if true, arrows will point towards each other if forces is negative
     'arrowNodeLineWidth',
@@ -63,7 +61,7 @@ define( function( require ) {
     'arrowStroke',
     'arrowFill'
   ];
-  var PULLER_OPTION_KEYS = [
+  const PULLER_OPTION_KEYS = [
     'ropeLength',
     'shadowMinWidth',
     'shadowMaxWidth',
@@ -72,9 +70,9 @@ define( function( require ) {
     'atomicScale'
   ];
 
-  var NEGATIVE_FILL = new Color( '#66f' );
-  var POSITIVE_FILL = new Color( '#f66' );
-  var ZERO_FILL = new Color( 'gray' );
+  const NEGATIVE_FILL = new Color( '#66f' );
+  const POSITIVE_FILL = new Color( '#f66' );
+  const ZERO_FILL = new Color( 'gray' );
 
   /**
    * @param {ISLCModel} model - the simulation model
@@ -88,8 +86,6 @@ define( function( require ) {
    * @constructor
    */
   function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertManager, positionDescriber, options ) {
-
-    var self = this;
 
     options = _.extend( {
       label: 'This Object',
@@ -131,7 +127,7 @@ define( function( require ) {
       additionalA11yDependencies: []
     }, options );
 
-    var tandem = options.tandem;
+    const tandem = options.tandem;
 
     // use snapToNearest if stepSize is not provided
     if ( options.stepSize === null ) {
@@ -162,7 +158,7 @@ define( function( require ) {
     this.enum = object === model.object1 ? ISLCObjectEnum.OBJECT_ONE : ISLCObjectEnum.OBJECT_TWO;
 
     // the full range of force for the arrow node (note: this is distinct)
-    var arrowForceRange = new Range( model.getMinForce(), model.getMaxForce() );
+    const arrowForceRange = new Range( model.getMinForce(), model.getMaxForce() );
 
     // @protected - arrow node
     this.arrowNode = new ISLCForceArrowNode(
@@ -176,7 +172,6 @@ define( function( require ) {
     // set y position for the arrow
     this.arrowNode.y = options.y - options.forceArrowHeight;
 
-
     // @private - the puller node
     this.pullerNode = new ISLCPullerNode(
       pullForceRange,
@@ -189,13 +184,13 @@ define( function( require ) {
     }
 
     // a parent node that applies the drag handler
-    var dragNode = new Node( {
+    const dragNode = new Node( {
       cursor: 'pointer',
       tandem: tandem.createTandem( 'dragNode' )
     } );
 
     // the 'object' - a shaded circle
-    var radius = modelViewTransform.modelToViewDeltaX( object.radiusProperty.get() );
+    const radius = modelViewTransform.modelToViewDeltaX( object.radiusProperty.get() );
 
     // @protected - the object
     this.objectCircle = new Circle( radius );
@@ -206,8 +201,8 @@ define( function( require ) {
     // Small black dot where vertical arrow line connects to the object
     dragNode.addChild( new Circle( 2, { fill: '#000' } ) );
 
-    var labelCenterX = 0;
-    var labelTop = 4;
+    const labelCenterX = 0;
+    const labelTop = 4;
 
     // add the label shadow, added first so that the 'shadow' appears under the label text
     dragNode.addChild( new RichText( options.label, {
@@ -238,7 +233,7 @@ define( function( require ) {
 
     // the marker line, connecting the arrow to the object, the first one is for the shadow so that
     // it is visible on top of the object
-    var markerLineShape = new Shape();
+    const markerLineShape = new Shape();
     markerLineShape.moveTo( 0, -4 );
     markerLineShape.lineTo( 0, -options.forceArrowHeight );
     this.addChild( new Path( markerLineShape, {
@@ -249,7 +244,7 @@ define( function( require ) {
       y: 0.5,
       tandem: tandem.createTandem( 'markerLineShadow' )
     } ) );
-    var markerLineShapeTop = new Path( markerLineShape, {
+    const markerLineShapeTop = new Path( markerLineShape, {
       stroke: options.arrowColor,
       lineDash: [ 4, 4 ],
       lineWidth: 2,
@@ -257,23 +252,23 @@ define( function( require ) {
     } );
     this.addChild( markerLineShapeTop );
 
-    var clickOffset;
+    let clickOffset;
 
     dragNode.addInputListener( new SimpleDragHandler( {
       allowTouchSnag: true,
-      start: function( event ) {
+      start: event => {
         clickOffset = dragNode.globalToParentPoint( event.pointer.point ).x - event.currentTarget.x;
         object.isDragging = true;
       },
-      drag: function( event ) {
+      drag: event => {
 
         // drag position relative to the pointer pointer start position and convert to model coordinates
-        var x = modelViewTransform.viewToModelX( self.globalToParentPoint( event.pointer.point ).x - clickOffset );
+        let x = modelViewTransform.viewToModelX( this.globalToParentPoint( event.pointer.point ).x - clickOffset );
 
         // absolute drag bounds based on model
         // see method descriptions for details
-        var xMax = model.getObjectMaxPosition( object );
-        var xMin = model.getObjectMinPosition( object );
+        const xMax = model.getObjectMaxPosition( object );
+        const xMin = model.getObjectMinPosition( object );
 
         // apply limitations and update position
         x = Math.max( Math.min( x, xMax ), xMin ); // limited value of x (by boundary) in model coordinates
@@ -281,21 +276,18 @@ define( function( require ) {
         // snapToGrid method dynamically checks whether to snap or not
         object.positionProperty.set( model.snapToGrid( x ) );
       },
-      end: function( event ) {
-        object.isDragging = false;
-        // position change alert
-        // TODO: Do we activate alerts for mouse interactions?
-      },
+      end: () => { object.isDragging = false },
       tandem: tandem.createTandem( 'dragHandler' )
     } ) );
 
-    model.forceValuesProperty.lazyLink( this.redrawForce.bind( this ) );
-    object.radiusProperty.lazyLink( this.redrawForce.bind( this ) );
-    object.valueProperty.lazyLink( this.redrawForce.bind( this ) );
-    model.forceProperty.lazyLink( this.redrawForce.bind( this ) );
+    const boundRedrawForce = this.redrawForce.bind( this );
+    model.forceValuesProperty.lazyLink( boundRedrawForce );
+    object.radiusProperty.lazyLink( boundRedrawForce );
+    object.valueProperty.lazyLink( boundRedrawForce );
+    model.forceProperty.lazyLink( boundRedrawForce );
 
-    object.baseColorProperty.link( function( baseColor ) {
-      self.updateGradient( baseColor );
+    object.baseColorProperty.link( baseColor => {
+      this.updateGradient( baseColor );
       if ( options.attractNegative ) {
         markerLineShapeTop.stroke = getUpdatedFill( object.valueProperty.get() );
       }
@@ -303,42 +295,36 @@ define( function( require ) {
 
     // on reset, no objects are destroyed and properties are set to initial values
     // no need to dispose of any of the below listeners
-    object.positionProperty.link( function( property ) {
+    object.positionProperty.link( property => {
 
       // position this node and its force arrow with label
-      var transformedValue = modelViewTransform.modelToViewX( property );
-      self.x = transformedValue;
-      self.arrowNode.x = transformedValue;
-      self.redrawForce();
+      const transformedValue = modelViewTransform.modelToViewX( property );
+      this.x = transformedValue;
+      this.arrowNode.x = transformedValue;
+      this.redrawForce();
     } );
 
-    var oldPosition = object.positionProperty.get();
-    var accessibleSliderOptions = {
+    let oldPosition = object.positionProperty.get();
+    const accessibleSliderOptions = {
       keyboardStep: options.stepSize,
       shiftKeyboardStep: options.snapToNearest,
       pageKeyboardStep: options.stepSize * 2,
       a11yDecimalPlaces: 1,
-      constrainValue: function( value ) {
-        var numberOfDecimalPlaces = Util.numberOfDecimalPlaces( options.snapToNearest );
+      constrainValue: value => {
+        const numberOfDecimalPlaces = Util.numberOfDecimalPlaces( options.snapToNearest );
         return Util.toFixedNumber( value, numberOfDecimalPlaces );
       },
-      startDrag: function() {
+      startDrag: () => {
         object.isDragging = true;
         oldPosition = object.positionProperty.get();
       },
-      endDrag: function() {
-        var newPosition = object.positionProperty.get();
-        var positionChanged = newPosition !== oldPosition;
+      endDrag: () => {
+        const newPosition = object.positionProperty.get();
+        const positionChanged = newPosition !== oldPosition;
         object.isDragging = false;
-        self.redrawForce();
+        this.redrawForce();
 
-        // TODO: these alerts should occur on mouse as well
-        if ( positionChanged ) {
-          alertManager.alertPositionChanged( object );
-        }
-        else {
-          alertManager.alertPositionUnchanged();
-        }
+        positionChanged ? alertManager.alertPositionChanged( object ) : alertManager.alertPositionUnchanged();
       },
       a11yCreateValueChangeAriaValueText: positionDescriber.getOnChangeAriaValueTextCreator( this.enum ),
 
@@ -357,22 +343,22 @@ define( function( require ) {
     );
 
     // TODO: move to MassNode since ChargeNodes don't have a changing radiusProperty.
-    this.objectModel.radiusProperty.link( function() {
+    this.objectModel.radiusProperty.link( () => {
 
       // a11y - update the focusHighlight with the radius (Accessibility.js setter)
-      self.focusHighlight = Shape.bounds( dragNode.bounds.dilated( 5 ) );
+      this.focusHighlight = Shape.bounds( dragNode.bounds.dilated( 5 ) );
 
       // set the pointer and touch areas
-      var pullerBounds = self.pullerNode.localToParentBounds( self.pullerNode.touchAreaBounds );
-      self.mouseArea = Shape.xor( [ Shape.bounds( pullerBounds ), self.objectCircle.createCircleShape() ] );
-      self.touchArea = self.mouseArea;
+      const pullerBounds = this.pullerNode.localToParentBounds( this.pullerNode.touchAreaBounds );
+      this.mouseArea = Shape.xor( [ Shape.bounds( pullerBounds ), this.objectCircle.createCircleShape() ] );
+      this.touchArea = this.mouseArea;
     } );
 
     // for layering purposes, we assume that the ScreenView will add the arrow node and label - by the
     // time the sim is stepped, make sure that the arrows are added to the view
     if ( assert ) {
-      var checkForArrowAdded = function() {
-        if ( self.arrowNode.parents.length === 0 ) {
+      const checkForArrowAdded = () => {
+        if ( this.arrowNode.parents.length === 0 ) {
           throw new Error( 'ArrowNode should be added to the view in inverse-square-law-common sim screen view' );
         }
 
@@ -391,7 +377,7 @@ define( function( require ) {
    */
   function getUpdatedFill( forceValue ) {
 
-    var fill;
+    let fill;
     if ( forceValue < 0 ) {
       fill = NEGATIVE_FILL;
     }
