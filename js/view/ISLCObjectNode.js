@@ -276,7 +276,7 @@ define( require => {
         // snapToGrid method dynamically checks whether to snap or not
         object.positionProperty.set( model.snapToGrid( x ) );
       },
-      end: () => { object.isDragging = false },
+      end: () => { object.isDragging = false; },
       tandem: tandem.createTandem( 'dragHandler' )
     } ) );
 
