@@ -14,6 +14,7 @@ define( require => {
   const inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
   const ISLCA11yStrings = require( 'INVERSE_SQUARE_LAW_COMMON/ISLCA11yStrings' );
   const ISLCDescriber = require( 'INVERSE_SQUARE_LAW_COMMON/view/describers/ISLCDescriber' );
+  const ISLCObjectEnum = require( 'INVERSE_SQUARE_LAW_COMMON/view/ISLCObjectEnum' );
   const Property = require( 'AXON/Property' );
   const StringProperty = require( 'AXON/StringProperty' );
   const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
@@ -277,10 +278,11 @@ define( require => {
 
     /**
      * Get the position change clause, like closer/farther strings.
+     * @param {ISLCObject} object
      * @returns {string|null} - null if there isn't a position progress or landmark clause
      */
     getPositionProgressOrLandmarkClause( object ) {
-      const objectEnum = this.getEnumFromObject( object );
+      const objectEnum = object.enum;
 
       let positionString = this.movedCloser ? closerString : fartherAwayString;
 
@@ -297,7 +299,7 @@ define( require => {
 
       // objects touching each other
       else if ( this.objectTouchingBoundary( objectEnum ) ) {
-        positionString = this.isObject1( objectEnum ) ? lastStopRightString : lastStopLeftString;
+        positionString = ISLCObjectEnum.isObject1( objectEnum ) ? lastStopRightString : lastStopLeftString;
       }
 
       // No change, so if not covered by above edge cases, there shouldn't be a progress clause
@@ -362,7 +364,7 @@ define( require => {
      * @returns {boolean}
      */
     object1AtMin( objectEnum ) {
-      return this.isObject1( objectEnum ) && this.objectAtTouchingMin( objectEnum );
+      return ISLCObjectEnum.isObject1( objectEnum ) && this.objectAtTouchingMin( objectEnum );
     }
 
     /**
@@ -370,7 +372,7 @@ define( require => {
      * @returns {boolean}
      */
     object2AtMax( objectEnum ) {
-      return this.isObject2( objectEnum ) && this.objectAtTouchingMax( objectEnum );
+      return ISLCObjectEnum.isObject2( objectEnum ) && this.objectAtTouchingMax( objectEnum );
     }
 
 
@@ -438,10 +440,10 @@ define( require => {
      * @returns {string}
      */
     getEdgeFromObjectEnum( objectEnum ) {
-      if ( this.objectAtTouchingMin( objectEnum ) && this.isObject1( objectEnum ) ) {
+      if ( this.objectAtTouchingMin( objectEnum ) && ISLCObjectEnum.isObject1( objectEnum ) ) {
         return leftString;
       }
-      else if ( this.objectAtTouchingMax( objectEnum ) && this.isObject2( objectEnum ) ) {
+      else if ( this.objectAtTouchingMax( objectEnum ) && ISLCObjectEnum.isObject2( objectEnum ) ) {
         return rightString;
       }
       else {

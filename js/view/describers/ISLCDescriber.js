@@ -12,15 +12,10 @@ define( require => {
 
   // modules
   const inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
-  const ISLCA11yStrings = require( 'INVERSE_SQUARE_LAW_COMMON/ISLCA11yStrings' );
   const ISLCObjectEnum = require( 'INVERSE_SQUARE_LAW_COMMON/view/ISLCObjectEnum' );
-  const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
-
-  // strings
-  const summaryInteractionHintPatternString = ISLCA11yStrings.summaryInteractionHintPattern.value;
 
   // constants
-  const { OBJECT_ONE, OBJECT_TWO } = ISLCObjectEnum;
+  const { OBJECT_ONE } = ISLCObjectEnum;
 
   class ISLCDescriber {
 
@@ -40,28 +35,11 @@ define( require => {
     }
 
     /**
-     * @public
-     * @param {ISLCObjectEnum} objectEnum
-     * @returns {boolean}
-     */
-    isObject1( objectEnum ) {
-      return objectEnum === OBJECT_ONE;
-    }
-
-    /**
-     * @public
-     * @param {ISLCObjectEnum} objectEnum
-     * @returns {boolean}
-     */
-    isObject2( objectEnum ) {
-      return objectEnum === OBJECT_TWO;
-    }
-
-    /**
      * @param {ISLCObjectEnum} objectEnum
      * @returns {Mass}
      */
     getObjectFromEnum( objectEnum ) {
+      assert && assert( ISLCObjectEnum.includes( objectEnum ) );
       return objectEnum === OBJECT_ONE ? this.object1 : this.object2;
     }
 
@@ -70,6 +48,7 @@ define( require => {
      * @returns {Mass}
      */
     getOtherObjectFromEnum( objectEnum ) {
+      assert && assert( ISLCObjectEnum.includes( objectEnum ) );
       return objectEnum === OBJECT_ONE ? this.object2 : this.object1;
     }
 
@@ -78,6 +57,7 @@ define( require => {
      * @returns {string}
      */
     getObjectLabelFromEnum( objectEnum ) {
+      assert && assert( ISLCObjectEnum.includes( objectEnum ) );
       return objectEnum === OBJECT_ONE ? this.object1Label : this.object2Label;
     }
 
@@ -86,39 +66,8 @@ define( require => {
      * @returns {string}
      */
     getOtherObjectLabelFromEnum( objectEnum ) {
+      assert && assert( ISLCObjectEnum.includes( objectEnum ) );
       return objectEnum === OBJECT_ONE ? this.object2Label : this.object1Label;
-    }
-
-    /**
-     * @param {ISLCObjectEnum} objectEnum
-     * @returns {ISLCObjectEnum}
-     */
-    getOtherObjectEnum( objectEnum ) {
-      return objectEnum === OBJECT_ONE ? OBJECT_TWO : OBJECT_ONE;
-    }
-
-    /**
-     * @public
-     * @param {ISLCObject} object
-     * @returns {boolean}
-     */
-    getEnumFromObject( object ) {
-      return object === this.object1 ? OBJECT_ONE :
-             object === this.object2 ? OBJECT_TWO :
-             assert && assert( false, 'unrecognized ISLCObject' );
-    }
-
-    /**
-     * TODO: as of writing this is only used by GFL, should it be moved out of here?
-     * Static function to get interaction hint
-     * @param massOrCharge
-     * @returns {*|string}
-     */
-    static getSummaryInteractionHint( massOrCharge ) {
-      return StringUtils.fillIn(
-        summaryInteractionHintPatternString,
-        { massOrCharge: massOrCharge }
-      );
     }
   }
 

@@ -9,14 +9,38 @@ define( require => {
   'use strict';
 
   // modules
+  const Enumeration = require( 'PHET_CORE/Enumeration' );
   const inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
 
-  const ISLCObjectEnum = {
-    OBJECT_ONE: 'object1',
-    OBJECT_TWO: 'object2'
-  };
+  return inverseSquareLawCommon.register( 'ISLCObjectEnum', new Enumeration( [
+    'OBJECT_ONE',
+    'OBJECT_TWO'
+  ], ISLCObjectEnum => {
 
-  if ( assert ) { Object.freeze( ISLCObjectEnum ); }
+    /**
+     * @param {ISLCObjectEnum} objectEnum
+     * @returns {ISLCObjectEnum}
+     */
+    ISLCObjectEnum.getOtherObjectEnum = objectEnum => {
+      assert && assert( ISLCObjectEnum.includes( objectEnum ) );
+      return objectEnum === ISLCObjectEnum.OBJECT_ONE ? ISLCObjectEnum.OBJECT_TWO : ISLCObjectEnum.OBJECT_ONE;
+    };
 
-  return inverseSquareLawCommon.register( 'ISLCObjectEnum', ISLCObjectEnum );
+    /**
+     * @public
+     * @param {ISLCObjectEnum} objectEnum
+     * @returns {boolean}
+     */
+    ISLCObjectEnum.isObject1 = objectEnum => {
+      return objectEnum === ISLCObjectEnum.OBJECT_ONE;
+    };
+
+    /**
+     * @param {ISLCObjectEnum} objectEnum
+     * @returns {boolean}
+     */
+    ISLCObjectEnum.isObject2 = objectEnum => {
+      return objectEnum === ISLCObjectEnum.OBJECT_TWO;
+    };
+  } ) );
 } );

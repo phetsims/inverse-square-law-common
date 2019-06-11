@@ -55,6 +55,10 @@ define( require => {
     this.object1 = object1;
     this.object2 = object2;
 
+    // set the appropriate enum reference to each object.
+    object1.enum = ISLCObjectEnum.OBJECT_ONE;
+    object2.enum = ISLCObjectEnum.OBJECT_TWO;
+
     // @public
     // {Property.<ISLCObjectEnum|null>} - needed for adjusting alerts when an object moves as a result of a radius increase
     this.pushedObjectEnumProperty = new Property( null );

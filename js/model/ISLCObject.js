@@ -15,6 +15,7 @@ define( require => {
   const inherit = require( 'PHET_CORE/inherit' );
   const inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
   const ISLCConstants = require( 'INVERSE_SQUARE_LAW_COMMON/ISLCConstants' );
+  const ISLCObjectEnum = require( 'INVERSE_SQUARE_LAW_COMMON/view/ISLCObjectEnum' );
   const NumberIO = require( 'TANDEM/types/NumberIO' );
   const NumberProperty = require( 'AXON/NumberProperty' );
   const Property = require( 'AXON/Property' );
@@ -77,7 +78,7 @@ define( require => {
 
     // @publiv (read-only) - Emitter that fires whenever the position changes as a result of an object's value changing.
     // Emits with the objectEnum that caused the position change.
-    this.valueChangedPositionEmitter = new Emitter( { validators: [ { valueType: 'string' } ] } );
+    this.valueChangedPositionEmitter = new Emitter( { validators: [ { valueType: ISLCObjectEnum } ] } );
 
     // @public - flag to check if the object is being dragged by the user
     //           set in the drag handler
@@ -88,6 +89,9 @@ define( require => {
 
     // @public
     this.valueRange = valueRange;
+
+    // @public {ISLCObjectEnum} - filled in by the model
+    this.enum = null;
   }
 
   inverseSquareLawCommon.register( 'ISLCObject', ISLCObject );
