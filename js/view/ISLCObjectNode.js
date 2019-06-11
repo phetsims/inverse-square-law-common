@@ -326,7 +326,7 @@ define( require => {
 
         positionChanged ? alertManager.alertPositionChanged( object ) : alertManager.alertPositionUnchanged();
       },
-      a11yCreateValueChangeAriaValueText: positionDescriber.getOnChangeAriaValueTextCreator( this.enum ),
+      a11yCreateValueChangeAriaValueText: positionDescriber.getPositionAriaValueTextCreator( this.enum ),
 
       // This object's PDOM description also depends on the position of the other object, so include it here.
       a11yDependencies: options.additionalA11yDependencies.concat( object === model.object1 ?

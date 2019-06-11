@@ -143,10 +143,6 @@ define( require => {
       // see https://github.com/phetsims/gravity-force-lab-basics/issues/88
       this.useQuantitativeDistance = true;
 
-      // {Property.<string>[]} - keep track of each Property created in the "aria-valuetext creator" creator function so
-      // that they can be reset
-      this._previousPositionRegionProperties = [];
-
       Property.multilink(
         [ this.object1.positionProperty, this.object2.positionProperty ],
         ( x1, x2 ) => {
@@ -321,15 +317,14 @@ define( require => {
      * @returns {Function}
      * @public
      */
-    getOnChangeAriaValueTextCreator( objectEnum ) {
+    getPositionAriaValueTextCreator( objectEnum ) {
 
       // By initializing to the current value, regions will only be displayed when on region change, and not on startup.
       const previousPositionRegionProperty = new StringProperty( this.getCurrentPositionRegion( objectEnum ) );
-      this._previousPositionRegionProperties.push( previousPositionRegionProperty );
 
       // NOTE: AccessibleValueHandler supports parameters to this function, but recognize that subtypes override this
       // method before adding these, see https://github.com/phetsims/gravity-force-lab-basics/issues/113
-      return () => {
+      const valueTextCreator = () => {
         const distanceClause = this.getDistanceClause( objectEnum );
 
         const newPositionRegion = this.getCurrentPositionRegion( objectEnum );
@@ -349,13 +344,14 @@ define( require => {
           } );
         }
       };
-    }
 
-    /**
-     * @public
-     */
-    reset() {
-      this._previousPositionRegionProperties.forEach( property => property.reset() );
+      /**
+       * {function} - reset the valueTextCreator
+       */
+      valueTextCreator.reset = () => {
+        previousPositionRegionProperty.reset();
+      };
+      return valueTextCreator;
     }
 
     /**
