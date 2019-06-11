@@ -112,15 +112,15 @@ define( require => {
         units: unitsMetersString,
         centerOffset: 0, // {number} the point considered the "center" of the track space
 
-        // {number} => {number}
-        convertDistanceMetric: distance => distance
+        // {function(number):number} - convert to display distance for PDOM descriptions
+        convertDistanceMetric: _.identity
       }, options );
 
       // @public
       this.unit = options.unit;
 
       // @private
-      this.units = options.units;
+      this.units = options.units; // {string}
       this.centerOffset = options.centerOffset;
       this.convertDistanceMetric = options.convertDistanceMetric;
 
@@ -143,7 +143,7 @@ define( require => {
       // see https://github.com/phetsims/gravity-force-lab-basics/issues/88
       this.useQuantitativeDistance = true;
 
-      // {StringProperty[]} - keep track of each Property created in the "aria-valuetext creator" creator function so
+      // {Property.<string>[]} - keep track of each Property created in the "aria-valuetext creator" creator function so
       // that they can be reset
       this._previousPositionRegionProperties = [];
 
@@ -189,19 +189,18 @@ define( require => {
      */
     getObjectDistanceSummary() {
       const distance = this.convertedDistance;
-      const { object1Label, object2Label, units } = this;
 
       const qualitativeDistanceClause = StringUtils.fillIn(
         distanceAndValueSummaryPatternString,
         {
-          object1Label: object1Label,
-          object2Label: object2Label,
+          object1Label: this.object1Label,
+          object2Label: this.object2Label,
           qualitativeDistanceFromEachOther: this.getQualitativeDistanceFromEachOther()
         }
       );
       const quantitativeDistanceClause = StringUtils.fillIn(
         centersExactlyPatternString,
-        { distance: distance, units: units }
+        { distance: distance, units: this.units }
       );
 
       let summary = StringUtils.fillIn( quantitativeAndQualitativePatternString, {
@@ -491,11 +490,10 @@ define( require => {
     }
 
     /**
-     * TODO: rename to `qualitativeDistanceString`
      * Returns the qualitative distance (e.g. 'close')
      * @returns {string}
      */
-    get qualitativeDistance() {
+    getQualitativeDistanceRegion() {
       return DISTANCE_STRINGS[ this.getDistanceIndex( this.distanceBetween ) ];
     }
 

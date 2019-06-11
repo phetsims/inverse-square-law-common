@@ -496,7 +496,7 @@ define( require => {
         } );
       }
 
-      const region = this.positionDescriber.qualitativeDistance;
+      const region = this.positionDescriber.getQualitativeDistanceRegion();
       return StringUtils.fillIn( regionForceClausePatternString, { region: region, forceClause: forceClause } );
     }
   }
