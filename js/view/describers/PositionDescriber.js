@@ -22,7 +22,8 @@ define( require => {
   const unitsMetersString = require( 'string!INVERSE_SQUARE_LAW_COMMON/units.meters' );
   const unitsMeterString = require( 'string!INVERSE_SQUARE_LAW_COMMON/units.meter' );
 
-  const objectLabelPositionPatternString = ISLCA11yStrings.objectLabelPositionPattern.value; // [object] position
+  // a11y strings
+  const objectLabelPositionPatternString = ISLCA11yStrings.objectLabelPositionPattern.value;
   const distanceAndValueSummaryPatternString = ISLCA11yStrings.distanceAndValueSummaryPattern.value;
   const qualitativeDistanceEachOtherPatternString = ISLCA11yStrings.qualitativeDistanceEachOtherPattern.value;
   const centersExactlyPatternString = ISLCA11yStrings.centersExactlyPattern.value;
@@ -37,14 +38,6 @@ define( require => {
   const distanceFromOtherObjectPatternString = ISLCA11yStrings.distanceFromOtherObjectPattern.value;
   const distanceFromOtherObjectSentencePatternString = ISLCA11yStrings.distanceFromOtherObjectSentencePattern.value;
   const lastStopString = ISLCA11yStrings.lastStop.value;
-
-  // track landmarks
-  const leftSideOfTrackString = ISLCA11yStrings.leftSideOfTrack.value;
-  const rightSideOfTrackString = ISLCA11yStrings.rightSideOfTrack.value;
-  const lastStopRightString = ISLCA11yStrings.lastStopRight.value;
-  const lastStopLeftString = ISLCA11yStrings.lastStopLeft.value;
-  const trackEndLeftString = ISLCA11yStrings.trackEndLeft.value;
-  const trackEndRightString = ISLCA11yStrings.trackEndRight.value;
 
   const leftString = ISLCA11yStrings.left.value;
   const rightString = ISLCA11yStrings.right.value;
@@ -69,6 +62,14 @@ define( require => {
   const closestString = ISLCA11yStrings.closest.value;
   const closerString = ISLCA11yStrings.closer.value;
   const fartherAwayString = ISLCA11yStrings.fartherAway.value;
+
+  // track landmarks
+  const leftSideOfTrackString = ISLCA11yStrings.leftSideOfTrack.value;
+  const rightSideOfTrackString = ISLCA11yStrings.rightSideOfTrack.value;
+  const lastStopRightString = ISLCA11yStrings.lastStopRight.value;
+  const lastStopLeftString = ISLCA11yStrings.lastStopLeft.value;
+  const trackEndLeftString = ISLCA11yStrings.trackEndLeft.value;
+  const trackEndRightString = ISLCA11yStrings.trackEndRight.value;
 
   const RELATIVE_DISTANCE_STRINGS = [
     farthestFromString,
@@ -95,6 +96,13 @@ define( require => {
   ];
 
   class PositionDescriber extends ISLCDescriber {
+
+    /**
+     * @param {ISLCModel} model
+     * @param {string} object1Label
+     * @param {string} object2Label
+     * @param {Object} options
+     */
     constructor( model, object1Label, object2Label, options ) {
       super( model, object1Label, object2Label );
 
@@ -107,7 +115,10 @@ define( require => {
         convertDistanceMetric: distance => distance
       }, options );
 
+      // @public
       this.unit = options.unit;
+
+      // @private
       this.units = options.units;
       this.centerOffset = options.centerOffset;
       this.convertDistanceMetric = options.convertDistanceMetric;
@@ -115,7 +126,7 @@ define( require => {
       // @private {number} - in meters, already converted with optional formatting function
       this.distanceBetween = 0;
 
-      // @private - in converted distance
+      // @private {number} - in converted distance
       this.oldDistanceBetween = 0;
 
       // @public {boolean|null} - previous value of this.movedCloser
@@ -127,7 +138,7 @@ define( require => {
 
       // @protected - Many descriptions use a quantitative form when distance values are showing, and use qualitative
       // descriptions when distance values are hidden. Furthermore some descriptions in the REGULAR version are
-      // "simplified" from quantitative to qualitative forms in the BASICS version.
+      // "simplified" from quantitative to qualitative forms in the BASICS version. False means qualitative.
       // see https://github.com/phetsims/gravity-force-lab-basics/issues/88
       this.useQuantitativeDistance = true;
 
@@ -307,6 +318,7 @@ define( require => {
      *
      * @param  {ISLCObjectEnum} objectEnum
      * @returns {Function}
+     * @public
      */
     getOnChangeAriaValueTextCreator( objectEnum ) {
 

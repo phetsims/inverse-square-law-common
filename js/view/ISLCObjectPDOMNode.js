@@ -3,6 +3,8 @@
 /**
  * Node that creates the PDOM description for the ISLCObject. This Node has no visual output.
  *
+ * NOTE: this node should have its labelContent filled in.
+ *
  * @author Michael Kauzmann (PhET Interactive Simulations)
  * @author Michael Barlow (PhET Interactive Simulations)
  */
@@ -29,18 +31,15 @@ define( require => {
 
         // a11y
         labelTagName: 'h3',
-        labelContent: null, // @required
         tagName: 'ul'
       }, config );
 
       assert && assert( config.object2Label && config.object1Label, 'required params must be specified' );
-      assert && assert( config.labelContent, 'Required param "labelContent" must be specified.' );
 
       super( config );
 
       // @private
       this.model = model;
-      this.objectModel = objectEnum === ISLCObjectEnum.OBJECT_ONE ? model.object1 : model.object2;
       this.thisObjectLabel = objectEnum === ISLCObjectEnum.OBJECT_ONE ? config.object1Label : config.object2Label;
       this.otherObjectLabel = objectEnum === ISLCObjectEnum.OBJECT_ONE ? config.object2Label : config.object1Label;
 
