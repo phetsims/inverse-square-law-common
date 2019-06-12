@@ -144,8 +144,6 @@ define( require => {
 
     assert && assert( alertManager instanceof ISLCAlertManager );
 
-    // A11Y DRAFT
-    // assert && assert( options.a11yCreateValueChangeAriaValueText, 'ISLCObjectNode subtypes must define an aria-valuetext creation function' );
     this.accessibleName = PositionDescriber.getObjectLabelPositionText( options.label );
 
     // @protected

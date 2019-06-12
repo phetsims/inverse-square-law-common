@@ -33,15 +33,11 @@ define( require => {
 
   const positionDistanceFromOtherObjectPatternString = ISLCA11yStrings.positionDistanceFromOtherObjectPattern.value;
   const positionProgressOrLandmarkClauseString = ISLCA11yStrings.positionProgressOrLandmarkClause.value;
-  const sidePatternString = ISLCA11yStrings.sidePattern.value;
   const distanceAndUnitsPatternString = ISLCA11yStrings.distanceAndUnitsPattern.value;
   const quantitativeDistancePatternString = ISLCA11yStrings.quantitativeDistancePattern.value;
   const distanceFromOtherObjectPatternString = ISLCA11yStrings.distanceFromOtherObjectPattern.value;
   const distanceFromOtherObjectSentencePatternString = ISLCA11yStrings.distanceFromOtherObjectSentencePattern.value;
-  const lastStopString = ISLCA11yStrings.lastStop.value;
 
-  const leftString = ISLCA11yStrings.left.value;
-  const rightString = ISLCA11yStrings.right.value;
   const farthestFromString = ISLCA11yStrings.farthestFrom.value;
   const extremelyFarFromString = ISLCA11yStrings.extremelyFarFrom.value;
   const veryFarFromString = ISLCA11yStrings.veryFarFrom.value;
@@ -102,7 +98,7 @@ define( require => {
      * @param {ISLCModel} model
      * @param {string} object1Label
      * @param {string} object2Label
-     * @param {Object} options
+     * @param {Object} [options]
      */
     constructor( model, object1Label, object2Label, options ) {
       super( model, object1Label, object2Label );
@@ -183,7 +179,7 @@ define( require => {
      * @public
      */
     getObjectDistanceSummary() {
-      const distance = this.convertedDistance;
+      const distance = this.distanceBetween;
 
       const qualitativeDistanceClause = StringUtils.fillIn(
         distanceAndValueSummaryPatternString,
@@ -218,7 +214,7 @@ define( require => {
      * @returns {string}
      */
     getDistanceAndUnits() {
-      const distance = this.convertedDistance;
+      const distance = this.distanceBetween;
       const units = this.units;
 
       return StringUtils.fillIn( distanceAndUnitsPatternString, {
@@ -242,6 +238,7 @@ define( require => {
      * Depending on whether or not quantitative distance is set, get the appropriate distance string.
      * @param {ISLCObjectEnum} thisObjectEnum
      * @returns {string}
+     * @public
      */
     getDistanceClause( thisObjectEnum ) {
       const otherObjectLabel = this.getOtherObjectLabelFromEnum( thisObjectEnum );
@@ -260,6 +257,7 @@ define( require => {
      * There are only two positional regions, left/right side of track.
      * @param {ISLCObjectEnum} objectEnum
      * @returns {string}
+     * @private
      */
     getCurrentPositionRegion( objectEnum ) {
 
@@ -273,6 +271,7 @@ define( require => {
      * Get the position change clause, like closer/farther strings.
      * @param {ISLCObject} object
      * @returns {string|null} - null if there isn't a position progress or landmark clause
+     * @public
      */
     getPositionProgressOrLandmarkClause( object ) {
       const objectEnum = object.enum;
@@ -354,7 +353,8 @@ define( require => {
 
     /**
      * @param {ISLCObjectEnum} objectEnum
-     * @returns {boolean}
+     * @returns {boolean} - returns false if provided enum is not object1
+     * @private
      */
     object1AtMin( objectEnum ) {
       return ISLCObjectEnum.isObject1( objectEnum ) && this.objectAtTouchingMin( objectEnum );
@@ -362,23 +362,11 @@ define( require => {
 
     /**
      * @param {ISLCObjectEnum} objectEnum
-     * @returns {boolean}
+     * @returns {boolean} - returns false if provided enum is not object2
+     * @public
      */
     object2AtMax( objectEnum ) {
       return ISLCObjectEnum.isObject2( objectEnum ) && this.objectAtTouchingMax( objectEnum );
-    }
-
-
-    /**
-     * Since ISLCObject.enabledRangeProperty is affected by the other object, this method determines if the object is
-     * actually at the edge of the sliding area, not just if you are stuck next to the other mass
-     * ( for that see this.objectAtEdge())
-     * @param {ISLCObjectEnum} objectEnum
-     * @returns {boolean}
-     */
-    objectAtEdgeIgnoreOtherObject( objectEnum ) {
-      return this.object1AtMin( objectEnum ) || this.object2AtMax( objectEnum );
-
     }
 
     /**
@@ -389,6 +377,7 @@ define( require => {
      *
      * @param  {ISLCObjectEnum} objectEnum
      * @returns {boolean}
+     * @private
      */
     objectTouchingBoundary( objectEnum ) {
       return this.objectAtTouchingMin( objectEnum ) || this.objectAtTouchingMax( objectEnum );
@@ -399,6 +388,7 @@ define( require => {
      * enabled range. Note that when the objects are touching, their enabledRanges will be limited by the other object.
      * @param  {ISLCObjectEnum} objectEnum
      * @returns {boolean}
+     * @private
      */
     objectAtTouchingMin( objectEnum ) {
       const object = this.getObjectFromEnum( objectEnum );
@@ -410,6 +400,7 @@ define( require => {
      * enabled range. Note that when the objects are touching, their enabledRanges will be limited by the other object.
      * @param  {ISLCObjectEnum} objectEnum
      * @returns {boolean}
+     * @private
      */
     objectAtTouchingMax( objectEnum ) {
       const object = this.getObjectFromEnum( objectEnum );
@@ -417,87 +408,45 @@ define( require => {
     }
 
     /**
-     * returns something like "left edge" or "right edge"
-     * @param {ISLCObjectEnum} objectEnum
-     * @returns {string}
+     * Get the distance instance, implemented in sub types, and assert that it is a valid value based on the regions
+     * located in this file.
+     * @private
+     * @returns {number} - an integer index
      */
-    getSideAndEdge( objectEnum ) {
-      return StringUtils.fillIn( sidePatternString, {
-        side: this.getEdgeFromObjectEnum( objectEnum )
-      } );
-    }
-
-    /**
-     * Return 'left' or 'right' depending on what edge the object is at. Will assert out if object is not at a side.
-     * @param {ISLCObjectEnum} objectEnum
-     * @returns {string}
-     */
-    getEdgeFromObjectEnum( objectEnum ) {
-      if ( this.objectAtTouchingMin( objectEnum ) && ISLCObjectEnum.isObject1( objectEnum ) ) {
-        return leftString;
-      }
-      else if ( this.objectAtTouchingMax( objectEnum ) && ISLCObjectEnum.isObject2( objectEnum ) ) {
-        return rightString;
-      }
-      else {
-        assert && assert( false, 'objectEnum not at edge' );
-      }
-    }
-
-    /**
-     * @param {ISLCObjectEnum} objectEnum
-     * @returns {string}
-     */
-    getEdgePhrase( objectEnum ) {
-      let edgeClause = null;
-
-      if ( this.objectAtEdgeIgnoreOtherObject( objectEnum ) ) {
-        edgeClause = this.getSideAndEdge( objectEnum );
-      }
-      else if ( this.objectsClosest() ) {
-        edgeClause = lastStopString;
-      }
-
-      assert && assert( edgeClause, 'why is this called if not at a border' );
-      return edgeClause;
-    }
-
-    /**
-     * Returns true only if the objects are the minimum possible width apart given their current radii.
-     *
-     * @returns {boolean}
-     */
-    objectsClosest() {
-      return this.distanceBetween === this.convertDistanceMetric( this.model.getSumRadiusWithSeparation() );
-    }
-
-    /***********************
-     * Getters and setters *
-     ***********************/
-
-    /**
-     * Returns the distance between the objects with the user-defined conversion applied.
-     * @returns {string}
-     */
-    get convertedDistance() {
-      return this.distanceBetween;
+    getDistanceIndexAndAssert() {
+      const index = this.getDistanceIndex( this.distanceBetween );
+      assert && assert( index >= 0 && index < DISTANCE_STRINGS.length, 'index out of range' );
+      return index;
     }
 
     /**
      * Returns the qualitative distance (e.g. 'close')
      * @returns {string}
+     * @public
      */
     getQualitativeDistanceRegion() {
-      return DISTANCE_STRINGS[ this.getDistanceIndex( this.distanceBetween ) ];
+      return DISTANCE_STRINGS[ this.getDistanceIndexAndAssert() ];
     }
 
     /**
      * The qualitative distance relative to another object (e.g. 'very far from')
-     *
+     * @private
      * @returns {string}
      */
     getQualitativeRelativeDistanceRegion() {
-      return RELATIVE_DISTANCE_STRINGS[ this.getDistanceIndex( this.distanceBetween ) ];
+      return RELATIVE_DISTANCE_STRINGS[ this.getDistanceIndexAndAssert() ];
+    }
+
+    /**
+     * Returns the mapped integer corresponding to the appropriate qualitative distance value. Since distances range from
+     * km to pm, subtypes must implement this method.
+     *
+     * @abstract
+     * @param  {number} distance
+     * @returns {number} - integer
+     */
+    getDistanceIndex( distance ) {
+      throw new Error( 'getDistanceIndex MUST be implemented in subtypes.' );
     }
 
     /**
@@ -508,20 +457,6 @@ define( require => {
      */
     static getObjectLabelPositionText( label ) {
       return StringUtils.fillIn( objectLabelPositionPatternString, { label: label } );
-    }
-
-    /**
-     * Returns the mapped integer corresponding to the appropriate qualitative distance value. Since distances range from
-     * km to pm, subtypes must implement this method.
-     *
-     * @abstract
-     * @param  {Number} distance
-     * @returns {Integer}
-     */
-    getDistanceIndex( distance ) {
-      // TODO: uncomment and implement in Coulomb's Law
-      // NOTE: as of 1/10/19, this only hits when using keyboard to move a ChargeNode when it's at its left/right boundary
-      // throw new Error( 'getDistanceIndex MUST be implemented in subtypes.' );
     }
   }
 

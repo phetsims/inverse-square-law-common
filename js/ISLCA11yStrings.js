@@ -118,14 +118,6 @@ define( require => {
     positionProgressOrLandmarkClause: {
       value: '{{progressOrLandmark}}, '
     },
-    sidePattern: {
-      value: '{{side}} edge'
-    },
-
-    lastStop: {
-      value: 'last stop'
-    },
-
 
     /************************
      * Force vector strings *
