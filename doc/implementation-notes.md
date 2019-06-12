@@ -7,11 +7,13 @@ between the different requirements.
 ## Model
 First, see the model overview at https://github.com/phetsims/inverse-square-law-common/blob/master/doc/model.md
 
-The most fundamental interaction is between the two `ISLCObjects` within the `ISLCModel` space. The objects can only move 
+The most fundamental interaction is between the two `ISLCObject`s within the `ISLCModel` space. The objects can only move 
 in 1D and are constrained by the bounds of the sim as well as the nearest edge of the other object. The model's step 
 function handles these constraints as well as force calculation and triggering the necessary events for visual updates.
 
 While the objects have defined radii, the force calculation is based on their center-to-center distance.
+
+In model coordinates, 0 is the the center between the two `ISLCObject`s
 
 ## View
 

@@ -40,8 +40,10 @@ define( require => {
 
       // @private
       this.model = model;
-      this.thisObjectLabel = objectEnum === ISLCObjectEnum.OBJECT_ONE ? config.object1Label : config.object2Label;
-      this.otherObjectLabel = objectEnum === ISLCObjectEnum.OBJECT_ONE ? config.object2Label : config.object1Label;
+
+      // TODO: there must be a cleaner way to handle these label assignments, https://github.com/phetsims/gravity-force-lab-basics/issues/134
+      this.thisObjectLabel = ISLCObjectEnum.isObject1( objectEnum ) ? config.object1Label : config.object2Label;
+      this.otherObjectLabel = ISLCObjectEnum.isObject1( objectEnum ) ? config.object2Label : config.object1Label;
 
       // @protected
       this.forceVectorMagnitudeItemNode = new Node( { tagName: 'li' } );

@@ -14,9 +14,6 @@ define( require => {
   const inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
   const ISLCObjectEnum = require( 'INVERSE_SQUARE_LAW_COMMON/view/ISLCObjectEnum' );
 
-  // constants
-  const { OBJECT_ONE } = ISLCObjectEnum;
-
   class ISLCDescriber {
 
     /**
@@ -40,7 +37,7 @@ define( require => {
      */
     getObjectFromEnum( objectEnum ) {
       assert && assert( ISLCObjectEnum.includes( objectEnum ) );
-      return objectEnum === OBJECT_ONE ? this.object1 : this.object2;
+      return ISLCObjectEnum.isObject1( objectEnum ) ? this.object1 : this.object2;
     }
 
     /**
@@ -49,7 +46,7 @@ define( require => {
      */
     getOtherObjectFromEnum( objectEnum ) {
       assert && assert( ISLCObjectEnum.includes( objectEnum ) );
-      return objectEnum === OBJECT_ONE ? this.object2 : this.object1;
+      return ISLCObjectEnum.isObject1( objectEnum ) ? this.object2 : this.object1;
     }
 
     /**
@@ -58,7 +55,7 @@ define( require => {
      */
     getObjectLabelFromEnum( objectEnum ) {
       assert && assert( ISLCObjectEnum.includes( objectEnum ) );
-      return objectEnum === OBJECT_ONE ? this.object1Label : this.object2Label;
+      return ISLCObjectEnum.isObject1( objectEnum ) ? this.object1Label : this.object2Label;
     }
 
     /**
@@ -67,7 +64,7 @@ define( require => {
      */
     getOtherObjectLabelFromEnum( objectEnum ) {
       assert && assert( ISLCObjectEnum.includes( objectEnum ) );
-      return objectEnum === OBJECT_ONE ? this.object2Label : this.object1Label;
+      return ISLCObjectEnum.isObject1( objectEnum ) ? this.object2Label : this.object1Label;
     }
   }
 

@@ -110,7 +110,6 @@ define( require => {
       options = _.extend( {
         unit: unitsMeterString,
         units: unitsMetersString,
-        centerOffset: 0, // {number} the point considered the "center" of the track space
 
         // {function(number):number} - convert to display distance for PDOM descriptions
         convertDistanceMetric: _.identity
@@ -121,7 +120,6 @@ define( require => {
 
       // @private
       this.units = options.units; // {string}
-      this.centerOffset = options.centerOffset;
       this.convertDistanceMetric = options.convertDistanceMetric;
 
       // @private {number} - in meters, already converted with optional formatting function
@@ -133,11 +131,11 @@ define( require => {
       // @public {boolean|null} - previous value of this.movedCloser
       this.lastMoveCloser = false;
 
-      // @private - Whether or not the masses moved closer last position change. only set when an object is dragging.
-      // {boolean|null} - null if the user isn't interacting specifically with the objects
+      // @private {boolean|null} - Whether or not the masses moved closer last position change. only set when an object
+      // is dragging. `null` if the user isn't interacting specifically with the objects
       this.movedCloser = false;
 
-      // @protected - Many descriptions use a quantitative form when distance values are showing, and use qualitative
+      // @protected {boolean}  - Many descriptions use a quantitative form when distance values are showing, and use qualitative
       // descriptions when distance values are hidden. Furthermore some descriptions in the REGULAR version are
       // "simplified" from quantitative to qualitative forms in the BASICS version. False means qualitative.
       // see https://github.com/phetsims/gravity-force-lab-basics/issues/88
@@ -172,7 +170,7 @@ define( require => {
      */
     getQualitativeDistanceFromEachOther() {
       return StringUtils.fillIn( qualitativeDistanceEachOtherPatternString, {
-        qualitativeDistance: this.qualitativeRelativeDistance()
+        qualitativeDistance: this.getQualitativeRelativeDistanceRegion()
       } );
     }
 
@@ -182,6 +180,7 @@ define( require => {
      * GFLB can toggle if distance is showing, and so additional logic is added here to support removing the quantitative
      * "centers exactly" suffix.
      * @returns {string}
+     * @public
      */
     getObjectDistanceSummary() {
       const distance = this.convertedDistance;
@@ -249,7 +248,7 @@ define( require => {
 
       const distanceClause = this.useQuantitativeDistance ?
                              this.getQuantitativeDistanceClause() :
-                             this.qualitativeRelativeDistance();
+                             this.getQualitativeRelativeDistanceRegion();
 
       return StringUtils.fillIn( distanceFromOtherObjectPatternString, {
         distance: distanceClause,
@@ -267,7 +266,6 @@ define( require => {
       // objects not touching any boundary, based on the side relative to the center
       const object = this.getObjectFromEnum( objectEnum );
 
-      // TODO: why does centerOffset not work as expected here?
       return object.positionProperty.get() < 0 ? leftSideOfTrackString : rightSideOfTrackString;
     }
 
@@ -494,25 +492,12 @@ define( require => {
     }
 
     /**
-     * TODO: rename to `qualitativeRelativeDistanceString` and make a getter
      * The qualitative distance relative to another object (e.g. 'very far from')
      *
      * @returns {string}
      */
-    qualitativeRelativeDistance() {
+    getQualitativeRelativeDistanceRegion() {
       return RELATIVE_DISTANCE_STRINGS[ this.getDistanceIndex( this.distanceBetween ) ];
-    }
-
-    /**
-     * Returns the adjusted position of the passed object. Conversion function and offset are determined by PositionDescriber
-     * constructor options.
-     *
-     * @param  {ISLCObjectEnum} objectEnum
-     * @returns {number}
-     */
-    getConvertedPositionFromEnum( objectEnum ) {
-      const object = this.getObjectFromEnum( objectEnum );
-      return this.convertDistanceMetric( object.positionProperty.get() + this.centerOffset );
     }
 
     /**
