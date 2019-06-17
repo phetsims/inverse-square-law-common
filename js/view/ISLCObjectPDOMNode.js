@@ -26,8 +26,8 @@ define( require => {
     constructor( model, objectEnum, config ) {
 
       config = _.extend( {
-        object1Label: null, // @required
-        object2Label: null, // @required
+        object1Label: null, // {string} @required
+        object2Label: null, // {string} @required
 
         // a11y
         labelTagName: 'h3',
@@ -38,10 +38,9 @@ define( require => {
 
       super( config );
 
+      // @protected
       this.thisObjectLabel = ISLCObjectEnum.isObject1( objectEnum ) ? config.object1Label : config.object2Label;
       this.otherObjectLabel = ISLCObjectEnum.isObject1( objectEnum ) ? config.object2Label : config.object1Label;
-
-      // @protected
       this.forceVectorMagnitudeItemNode = new Node( { tagName: 'li' } );
       this.forceBetweenAndVectorNode = new Node( { tagName: 'li' } );
 
