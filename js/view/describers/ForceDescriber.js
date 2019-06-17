@@ -146,6 +146,7 @@ define( require => {
       // @private
       this.positionDescriber = positionDescriber;
       this.forceProperty = model.forceProperty;
+      this.forceValuesProperty = model.forceValuesProperty;
       this.units = options.units;
       this.forceValueToString = options.forceValueToString;
       this.convertForce = options.convertForce;
@@ -155,6 +156,9 @@ define( require => {
       this.forceVectorMagnitudeUnitsPatternString = options.forceVectorMagnitudeUnitsPatternString;
       this.forceVectorsString = options.forceVectorsString;
       this.vectorsCapitalizedString = options.vectorsCapitalizedString;
+
+      // @protected
+      this.scientificNotationProperty = model.scientificNotationProperty;
 
       // @private - these string patterns can vary based on options
       this.summaryVectorSizePatternString = StringUtils.fillIn( summaryVectorSizePatternString, {
@@ -191,7 +195,7 @@ define( require => {
     }
 
     get force() {
-      return this.model.forceProperty.get();
+      return this.forceProperty.get();
     }
 
     get formattedForce() {
@@ -199,7 +203,7 @@ define( require => {
     }
 
     get showForces() {
-      return this.model.forceValuesProperty.get();
+      return this.forceValuesProperty.get();
     }
 
     getForceVectorsSummaryText() {
@@ -252,7 +256,7 @@ define( require => {
     }
 
     getRobotEffortSummaryText() {
-      const pattern = this.model.forceProperty.get() < 0 ?
+      const pattern = this.forceProperty.get() < 0 ?
                       robotPushSummaryPatternString :
                       robotPullSummaryPatternString;
       const effort = this.robotEffort;
@@ -269,7 +273,7 @@ define( require => {
      */
     getScientificNotationAlertText() {
 
-      if ( this.model.scientificNotationProperty.get() ) {
+      if ( this.scientificNotationProperty.get() ) {
         return forcesInScientificNotationString;
       }
 
@@ -383,7 +387,7 @@ define( require => {
       } );
 
       // Add info like "forces now" only if force values checkbox is enabled
-      if ( this.model.forceValuesProperty.get() ) {
+      if ( this.forceValuesProperty.get() ) {
         const forceValue = this.formattedForce;
         const units = this.units;
         return StringUtils.fillIn( vectorChangeForcesNowValuePatternString, {
@@ -490,7 +494,7 @@ define( require => {
       // if not showing force values, this is the force clause
       let forceClause = this.getVectorSizeClause();
 
-      if ( this.model.forceValuesProperty.get() ) {
+      if ( this.forceValuesProperty.get() ) {
         const forceValuesClause = this.getForcesClause();
         forceClause = StringUtils.fillIn( vectorForceClausePatternString, {
           vectorClause: forceClause, // in GFLB this has nothing to do with "vectors" but instead "force arrows"

@@ -24,7 +24,6 @@ define( require => {
     constructor( model, object1Label, object2Label ) {
 
       // @private
-      this.model = model;
       this.object1 = model.object1;
       this.object2 = model.object2;
       this.object1Label = object1Label;
