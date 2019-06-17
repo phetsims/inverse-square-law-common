@@ -40,7 +40,7 @@ define( require => {
       leftObjectBoundary: ISLCConstants.LEFT_OBJECT_BOUNDARY,
       rightObjectBoundary: ISLCConstants.RIGHT_OBJECT_BOUNDARY,
 
-      tandemUnits: 'kilograms' // TODO: this is not used
+      valueUnits: 'kilograms'
     }, options );
 
     // @public
@@ -53,7 +53,8 @@ define( require => {
     // @public {Property.<number>} - the mass or charge of the object in kilograms or coulombs
     this.valueProperty = new NumberProperty( initialMass, {
       tandem: tandem.createTandem( 'valueProperty' ),
-      range: valueRange
+      range: valueRange,
+      units: options.valueUnits
     } );
 
     // @public {Property.<number>} - the radius of the mass or charge in meters

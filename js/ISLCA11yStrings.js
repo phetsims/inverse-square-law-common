@@ -12,7 +12,6 @@ define( require => {
   const inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
 
   const ISLCA11yStrings = {
-    // TODO: replace instances of {{objectValueUnits}} or {{valueAndUnits}} to {{value}} {{units}}
 
     /***************************
      * Summary Pattern Strings *
