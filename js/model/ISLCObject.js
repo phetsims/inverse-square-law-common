@@ -93,6 +93,12 @@ define( require => {
 
     // @public {ISLCObjectEnum} - filled in by the model
     this.enum = null;
+
+    // @public {Property.<Color>} - filled in by subtypes
+    // - object node color is will change with value (linked in ISLCObjectNode.js)
+    //   - color Property will be updated based on a boolean value (negative vs positive)
+    //   - brightness will be set according to the Mass/Charge magnitude
+    this.baseColorProperty = null;
   }
 
   inverseSquareLawCommon.register( 'ISLCObject', ISLCObject );

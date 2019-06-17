@@ -149,7 +149,7 @@ define( require => {
     // @protected
     this.layoutBounds = layoutBounds;
     this.objectModel = object;
-    this.model = model;
+    this.model = model; // used in abstract method implementations by children.
     this.modelViewTransform = modelViewTransform;
 
     // @public - which object this instance is (one or two)
@@ -181,8 +181,8 @@ define( require => {
       this.pullerNode.scale( -1, 1 );
     }
 
-    // a parent node that applies the drag handler
-    const dragNode = new Node( {
+    // @protected - a parent node that applies the drag handler
+    this.dragNode = new Node( {
       cursor: 'pointer',
       tandem: tandem.createTandem( 'dragNode' )
     } );
@@ -193,17 +193,17 @@ define( require => {
     // @protected - the object
     this.objectCircle = new Circle( radius );
 
-    dragNode.addChild( this.pullerNode );
-    dragNode.addChild( this.objectCircle );
+    this.dragNode.addChild( this.pullerNode );
+    this.dragNode.addChild( this.objectCircle );
 
     // Small black dot where vertical arrow line connects to the object
-    dragNode.addChild( new Circle( 2, { fill: '#000' } ) );
+    this.dragNode.addChild( new Circle( 2, { fill: '#000' } ) );
 
     const labelCenterX = 0;
     const labelTop = 4;
 
     // add the label shadow, added first so that the 'shadow' appears under the label text
-    dragNode.addChild( new RichText( options.label, {
+    this.dragNode.addChild( new RichText( options.label, {
       font: options.labelFont,
       fill: options.labelShadowFill,
       pickable: false,
@@ -214,7 +214,7 @@ define( require => {
     } ) );
 
     // add the label
-    dragNode.addChild( new RichText( options.label, {
+    this.dragNode.addChild( new RichText( options.label, {
       font: options.labelFont,
       fill: options.labelFill,
       pickable: false,
@@ -224,7 +224,7 @@ define( require => {
       tandem: tandem.createTandem( 'labelNode' )
     } ) );
 
-    this.addChild( dragNode );
+    this.addChild( this.dragNode );
 
     // @private
     this.y = options.y;
@@ -252,10 +252,10 @@ define( require => {
 
     let clickOffset;
 
-    dragNode.addInputListener( new SimpleDragHandler( {
+    this.dragNode.addInputListener( new SimpleDragHandler( {
       allowTouchSnag: true,
       start: event => {
-        clickOffset = dragNode.globalToParentPoint( event.pointer.point ).x - event.currentTarget.x;
+        clickOffset = this.dragNode.globalToParentPoint( event.pointer.point ).x - event.currentTarget.x;
         object.isDragging = true;
       },
       drag: event => {
@@ -339,18 +339,6 @@ define( require => {
       new BooleanProperty( true ), // always enabled
       accessibleSliderOptions
     );
-
-    // TODO: move to MassNode since ChargeNodes don't have a changing radiusProperty.
-    this.objectModel.radiusProperty.link( () => {
-
-      // a11y - update the focusHighlight with the radius (Accessibility.js setter)
-      this.focusHighlight = Shape.bounds( dragNode.bounds.dilated( 5 ) );
-
-      // set the pointer and touch areas
-      const pullerBounds = this.pullerNode.localToParentBounds( this.pullerNode.touchAreaBounds );
-      this.mouseArea = Shape.xor( [ Shape.bounds( pullerBounds ), this.objectCircle.createCircleShape() ] );
-      this.touchArea = this.mouseArea;
-    } );
 
     // for layering purposes, we assume that the ScreenView will add the arrow node and label - by the
     // time the sim is stepped, make sure that the arrows are added to the view
