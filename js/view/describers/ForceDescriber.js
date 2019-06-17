@@ -479,8 +479,7 @@ define( require => {
      * @returns {number} - integer index to get value from SIZE_STRINGS
      */
     getForceVectorIndex( force ) {
-      // TODO: uncomment and implement in coulombs law, commented so asserts will pass, see https://github.com/phetsims/inverse-square-law-common/issues/58
-      // throw new Error( 'getForceVectorIndex MUST be implemented in subtypes.' );
+      throw new Error( 'getForceVectorIndex MUST be implemented in subtypes.' );
     }
 
     /**
