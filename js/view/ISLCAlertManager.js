@@ -66,17 +66,18 @@ define( require => {
      * @public
      * @param {ISLCObject} object - the ISLCObject that changed position
      */
-    alertPositionChanged( object) {
+    alertPositionChanged( object ) {
       this.positionUtterance.alert = this.forceDescriber.getVectorChangeText( object );
       utteranceQueue.addToBack( this.positionUtterance );
     }
 
     /**
      * Alert for when the attempted movement of an ISLCObject's position results in no positional movement.
+     * @param {ISLCObject} object - the ISLCObject that was interacted with but didn't change position
      * @public
      */
-    alertPositionUnchanged() {
-      this.positionUtterance.alert = this.forceDescriber.getPositionUnchangedAlertText();
+    alertPositionUnchanged( object ) {
+      this.positionUtterance.alert = this.forceDescriber.getPositionUnchangedAlertText( object );
       utteranceQueue.addToBack( this.positionUtterance );
     }
   }

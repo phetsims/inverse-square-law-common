@@ -322,7 +322,7 @@ define( require => {
         object.isDragging = false;
         this.redrawForce();
 
-        positionChanged ? alertManager.alertPositionChanged( object ) : alertManager.alertPositionUnchanged();
+        positionChanged ? alertManager.alertPositionChanged( object ) : alertManager.alertPositionUnchanged( object );
       },
       a11yCreateValueChangeAriaValueText: positionDescriber.getPositionAriaValueTextCreator( this.enum ),
 

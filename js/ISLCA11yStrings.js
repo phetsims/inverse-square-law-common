@@ -123,7 +123,7 @@ define( require => {
      * Force vector strings *
      ************************/
     regionForceClausePattern: {
-      value: '{{region}}, {{forceClause}}.'
+      value: '{{relativeDistance}} {{otherObjectLabel}}, {{forceClause}}.'
     },
     vectorForceClausePattern: {
       value: '{{vectorClause}}, {{forceValuesClause}}'
@@ -245,38 +245,32 @@ define( require => {
     closestTo: {
       value: 'closest to'
     },
-    farthest: {
-      value: 'Farthest'
+    farthestFromCapitalized: {
+      value: 'Farthest from'
     },
-    extremelyFar: {
-      value: 'Extremely far'
+    extremelyFarFromCapitalized: {
+      value: 'Extremely far from'
     },
-    veryFar: {
-      value: 'Very far'
+    veryFarFromCapitalized: {
+      value: 'Very far from'
     },
-    far: {
-      value: 'Far'
+    farFromCapitalized: {
+      value: 'Far from'
     },
-    notSoClose: {
-      value: 'Not so close'
+    notSoCloseToCapitalized: {
+      value: 'Not so close to'
     },
-    close: {
-      value: 'Close'
+    closeToCapitalized: {
+      value: 'Close to'
     },
-    veryClose: {
-      value: 'Very close'
+    veryCloseToCapitalized: {
+      value: 'Very close to'
     },
-    extremelyClose: {
-      value: 'Extremely close'
+    extremelyCloseToCapitalized: {
+      value: 'Extremely close to'
     },
-    closest: {
-      value: 'Closest'
-    },
-    closerTo: {
-      value: 'closer to'
-    },
-    fartherFrom: {
-      value: 'farther from'
+    closestToCapitalized: {
+      value: 'Closest to'
     },
     closer: {
       value: 'Closer'

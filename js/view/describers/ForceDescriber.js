@@ -481,13 +481,15 @@ define( require => {
 
     /**
      * Alert text for when ISLCObject position does not change even though there was a drag.
+     * @param {ISLCObject} object - the ISLCObject that was interacted with but didn't change position
      * @public
      * @returns {string}
      */
-    getPositionUnchangedAlertText() {
+    getPositionUnchangedAlertText( object ) {
 
       // if not showing force values, this is the force clause
       let forceClause = this.getVectorSizeClause();
+
       if ( this.model.forceValuesProperty.get() ) {
         const forceValuesClause = this.getForcesClause();
         forceClause = StringUtils.fillIn( vectorForceClausePatternString, {
@@ -496,8 +498,11 @@ define( require => {
         } );
       }
 
-      const region = this.positionDescriber.getQualitativeDistanceRegion();
-      return StringUtils.fillIn( regionForceClausePatternString, { region: region, forceClause: forceClause } );
+      return StringUtils.fillIn( regionForceClausePatternString, {
+        otherObjectLabel: this.getOtherObjectLabelFromEnum( object.enum ),
+        relativeDistance: this.positionDescriber.getCapitalizedQualitativeRelativeDistanceRegion(),
+        forceClause: forceClause
+      } );
     }
   }
 

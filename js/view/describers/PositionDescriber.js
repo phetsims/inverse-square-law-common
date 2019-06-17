@@ -48,15 +48,17 @@ define( require => {
   const extremelyCloseToString = ISLCA11yStrings.extremelyCloseTo.value;
   const closestToString = ISLCA11yStrings.closestTo.value;
 
-  const farthestString = ISLCA11yStrings.farthest.value;
-  const extremelyFarString = ISLCA11yStrings.extremelyFar.value;
-  const veryFarString = ISLCA11yStrings.veryFar.value;
-  const farString = ISLCA11yStrings.far.value;
-  const notSoCloseString = ISLCA11yStrings.notSoClose.value;
-  const closeString = ISLCA11yStrings.close.value;
-  const veryCloseString = ISLCA11yStrings.veryClose.value;
-  const extremelyCloseString = ISLCA11yStrings.extremelyClose.value;
-  const closestString = ISLCA11yStrings.closest.value;
+  const farthestFromCapitalizedString = ISLCA11yStrings.farthestFromCapitalized.value;
+  const extremelyFarFromCapitalizedString = ISLCA11yStrings.extremelyFarFromCapitalized.value;
+  const veryFarFromCapitalizedString = ISLCA11yStrings.veryFarFromCapitalized.value;
+  const farFromCapitalizedString = ISLCA11yStrings.farFromCapitalized.value;
+  const notSoCloseToCapitalizedString = ISLCA11yStrings.notSoCloseToCapitalized.value;
+  const closeToCapitalizedString = ISLCA11yStrings.closeToCapitalized.value;
+  const veryCloseToCapitalizedString = ISLCA11yStrings.veryCloseToCapitalized.value;
+  const extremelyCloseToCapitalizedString = ISLCA11yStrings.extremelyCloseToCapitalized.value;
+  const closestToCapitalizedString = ISLCA11yStrings.closestToCapitalized.value;
+
+
   const closerString = ISLCA11yStrings.closer.value;
   const fartherAwayString = ISLCA11yStrings.fartherAway.value;
 
@@ -80,16 +82,16 @@ define( require => {
     closestToString
   ];
 
-  const DISTANCE_STRINGS = [
-    farthestString,
-    extremelyFarString,
-    veryFarString,
-    farString,
-    notSoCloseString,
-    closeString,
-    veryCloseString,
-    extremelyCloseString,
-    closestString
+  const RELATIVE_DISTANCE_STRINGS_CAPITALIZED = [
+    farthestFromCapitalizedString,
+    extremelyFarFromCapitalizedString,
+    veryFarFromCapitalizedString,
+    farFromCapitalizedString,
+    notSoCloseToCapitalizedString,
+    closeToCapitalizedString,
+    veryCloseToCapitalizedString,
+    extremelyCloseToCapitalizedString,
+    closestToCapitalizedString
   ];
 
   class PositionDescriber extends ISLCDescriber {
@@ -408,24 +410,14 @@ define( require => {
     }
 
     /**
-     * Get the distance instance, implemented in sub types, and assert that it is a valid value based on the regions
-     * located in this file.
-     * @private
-     * @returns {number} - an integer index
-     */
-    getDistanceIndexAndAssert() {
-      const index = this.getDistanceIndex( this.distanceBetween );
-      assert && assert( index >= 0 && index < DISTANCE_STRINGS.length, 'index out of range' );
-      return index;
-    }
-
-    /**
-     * Returns the qualitative distance (e.g. 'close')
+     * Same as getQualitativeRelativeDistanceRegion but for the start of the sentence (e.g. 'Very far from')
      * @returns {string}
      * @public
      */
-    getQualitativeDistanceRegion() {
-      return DISTANCE_STRINGS[ this.getDistanceIndexAndAssert() ];
+    getCapitalizedQualitativeRelativeDistanceRegion() {
+      const index = this.getDistanceIndex( this.distanceBetween );
+      assert && assert( index >= 0 && index < RELATIVE_DISTANCE_STRINGS_CAPITALIZED.length, 'index out of range' );
+      return RELATIVE_DISTANCE_STRINGS_CAPITALIZED[ index ];
     }
 
     /**
@@ -434,7 +426,9 @@ define( require => {
      * @returns {string}
      */
     getQualitativeRelativeDistanceRegion() {
-      return RELATIVE_DISTANCE_STRINGS[ this.getDistanceIndexAndAssert() ];
+      const index = this.getDistanceIndex( this.distanceBetween );
+      assert && assert( index >= 0 && index < RELATIVE_DISTANCE_STRINGS.length, 'index out of range' );
+      return RELATIVE_DISTANCE_STRINGS[ index ];
     }
 
     /**
