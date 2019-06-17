@@ -28,7 +28,6 @@ define( require => {
   const summaryVectorSizeValueUnitsPatternString = ISLCA11yStrings.summaryVectorSizeValueUnitsPattern.value;
   const forceVectorMagnitudeUnitsPatternString = ISLCA11yStrings.forceVectorMagnitudeUnitsPattern.value;
   const forceAndVectorPatternString = ISLCA11yStrings.forceAndVectorPattern.value;
-  const forceValueUnitsPatternString = ISLCA11yStrings.forceValueUnitsPattern.value;
   const robotPullSummaryPatternString = ISLCA11yStrings.robotPullSummaryPattern.value;
   const robotPushSummaryPatternString = ISLCA11yStrings.robotPushSummaryPattern.value;
   const vectorsString = ISLCA11yStrings.vectors.value;
@@ -36,7 +35,6 @@ define( require => {
   const vectorSizeForcesValuePatternString = ISLCA11yStrings.vectorSizeForcesValuePattern.value;
   const vectorsSizeClausePatternString = ISLCA11yStrings.vectorsSizeClausePattern.value;
   const forcesValueUnitsClausePatternString = ISLCA11yStrings.forcesValueUnitsClausePattern.value;
-  const forcesNowValueUnitsClausePatternString = ISLCA11yStrings.forcesNowValueUnitsClausePattern.value;
 
   const valuesInUnitsPatternString = ISLCA11yStrings.valuesInUnitsPattern.value;
   const forcesInScientificNotationString = ISLCA11yStrings.forcesInScientificNotation.value;
@@ -94,16 +92,6 @@ define( require => {
   const scientificNotationPatternNoHtmlString = ISLCA11yStrings.scientificNotationPatternNoHtml.value;
   const negativeValuePatternString = ISLCA11yStrings.negativeValuePattern.value;
   const valuePatternString = ISLCA11yStrings.valuePattern.value;
-
-  // helper functions
-  const getScientificNotationTextFromPattern = ( forceValue, mantissaDecimalPlaces, pattern ) => {
-    const { mantissa, exponent } = ScientificNotationNode.toScientificNotation( forceValue, { mantissaDecimalPlaces: mantissaDecimalPlaces } );
-    const mantissaPattern = mantissa < 0 ? negativeValuePatternString : valuePatternString; // negative values are possible in Coulomb's Law
-    const mantissaString = StringUtils.fillIn( mantissaPattern, { value: Math.abs( mantissa ) } );
-    const exponentPattern = exponent < 0 ? negativeValuePatternString : valuePatternString;
-    const exponentString = StringUtils.fillIn( exponentPattern, { value: Math.abs( exponent ) } );
-    return StringUtils.fillIn( pattern, { mantissa: mantissaString, exponent: exponentString } );
-  };
 
   class ForceDescriber extends ISLCDescriber {
 
@@ -194,27 +182,27 @@ define( require => {
       } );
     }
 
-    get force() {
-      return this.forceProperty.get();
+    /**
+     * @private
+     * @returns {number}
+     */
+    getFormattedForce() {
+      return this.forceValueToString( this.convertForce( this.forceProperty.get() ) );
     }
 
-    get formattedForce() {
-      return this.forceValueToString( this.convertForce( this.force ) );
-    }
-
-    get showForces() {
-      return this.forceValuesProperty.get();
-    }
-
+    /**
+     * @public
+     * @returns {string}
+     */
     getForceVectorsSummaryText() {
       const fillObject = {};
       let pattern = this.summaryVectorSizePatternString;
 
-      fillObject.size = this.vectorSize;
+      fillObject.size = this.getVectorSize();
 
-      if ( this.showForces ) {
+      if ( this.forceValuesProperty.get() ) {
         pattern = this.summaryVectorSizeValueUnitsPatternString;
-        fillObject.forceValue = this.formattedForce;
+        fillObject.forceValue = this.getFormattedForce();
         fillObject.units = this.units;
       }
 
@@ -225,10 +213,11 @@ define( require => {
      * @param {string} thisObjectLabel
      * @param {string} otherObjectLabel
      * @returns {string}
+     * @public
      */
     getForceVectorMagnitudeText( thisObjectLabel, otherObjectLabel ) {
       const pattern = this.forceVectorMagnitudeUnitsPatternString;
-      const forceValue = this.formattedForce;
+      const forceValue = this.getFormattedForce();
       const units = this.units;
 
       // In BASICS the object labels are used, in regular the fillin is a no-op because those keys aren't present.
@@ -244,22 +233,27 @@ define( require => {
      * @param {string} thisObjectLabel
      * @param {string} otherObjectLabel
      * @returns {string}
+     * @public
      */
     getForceBetweenAndVectorText( thisObjectLabel, otherObjectLabel ) {
       const pattern = this.forceAndVectorPatternString;
       const fillObject = {
         thisObjectLabel: thisObjectLabel,
         otherObjectLabel: otherObjectLabel,
-        size: this.vectorSize
+        size: this.getVectorSize()
       };
       return StringUtils.fillIn( pattern, fillObject );
     }
 
+    /**
+     * @public
+     * @returns {string}
+     */
     getRobotEffortSummaryText() {
       const pattern = this.forceProperty.get() < 0 ?
                       robotPushSummaryPatternString :
                       robotPullSummaryPatternString;
-      const effort = this.robotEffort;
+      const effort = this.getRobotEffort();
       return StringUtils.fillIn( pattern, { effort: effort } );
     }
 
@@ -270,6 +264,7 @@ define( require => {
      *    'Values in newtons with scientific notation.'
      *
      * @returns {string}
+     * @public
      */
     getScientificNotationAlertText() {
 
@@ -281,100 +276,23 @@ define( require => {
     }
 
     /**
-     * Returns the filled in string '{{forceValue}} {{units}}' where forceValue is a formatted string. See the JSDoc for
-     * the formattedForce getter for details.
-     *
-     * @returns {string}
-     */
-
-    getForceValueAndUnits() {
-      const force = this.formattedForce;
-      const units = this.units;
-      return StringUtils.fillIn( forceValueUnitsPatternString, { force: force, units: units } );
-    }
-
-    /**
      * Returns the filled-in string 'Values in {{units}}'.
      *
      * @returns {string}
+     * @public
      */
     getValuesInUnitsText() {
       return StringUtils.fillIn( valuesInUnitsPatternString, { units: this.units } );
     }
 
     /**
-     * Returns the string 'Vectors {{size}}.'
-     *
-     * @returns {string}
-     */
-    getVectorSizeText() {
-      const size = this.vectorSize;
-      return StringUtils.fillIn( this.vectorSizePatternString, { size: size } );
-    }
-
-    /**
-     * Returns the string 'Vectors {{size}}, forces now {{forceValue}} {{units}}.'
-     *
-     * @returns {string}
-     */
-    getVectorSizeForceValueText() {
-      const size = this.vectorSize;
-      const forceValue = this.formattedForce;
-      const units = this.units;
-      return StringUtils.fillIn( this.vectorSizeForcesValuePatternString, {
-        size: size,
-        forceValue: forceValue,
-        units: units
-      } );
-    }
-
-    /**
-     * Returns the string 'vectors {{size}}' for use in larger pattern strings.
-     *
-     * @returns {string}
-     */
-    getVectorSizeClause() {
-      const size = this.vectorSize;
-      return StringUtils.fillIn( this.vectorsSizeClausePatternString, { size: size } );
-    }
-
-    /**
-     * Returns the string 'forces {{forceValue}} {{units}}' for use in larger pattern strings.
-     *
-     * @returns {string}
-     */
-    getForcesClause() {
-      return this.fillForceClausePattern( forcesValueUnitsClausePatternString );
-    }
-
-    /**
-     * Returns the string 'forces now {{forceValue}} {{units}}' for use in larger pattern strings.
-     *
-     * @returns {string}
-     */
-    getForcesNowClause() {
-      return this.fillForceClausePattern( forcesNowValueUnitsClausePatternString );
-    }
-
-    /**
-     * Fills in the passed in pattern with {{forceValue}} and {{units}}.
-     *
-     * @param {string} pattern
-     * @returns {string}
-     */
-    fillForceClausePattern( pattern ) {
-      const forceValue = this.formattedForce;
-      const units = this.units;
-      return StringUtils.fillIn( pattern, { forceValue: forceValue, units: units } );
-    }
-
-    /**
      * Get text when an object has changed position, and the force value has as a result.
      * @param {ISLCObject} object - the object that changed position
      * @returns {string}
+     * @public
      */
     getVectorChangeText( object ) {
-      const changeDirection = this.changeDirection;
+      const changeDirection = this.getChangeDirection();
       const positionOrLandmark = this.positionDescriber.getPositionProgressOrLandmarkClause( object );
 
       // Fill in the base clause of the vector changing.
@@ -388,7 +306,7 @@ define( require => {
 
       // Add info like "forces now" only if force values checkbox is enabled
       if ( this.forceValuesProperty.get() ) {
-        const forceValue = this.formattedForce;
+        const forceValue = this.getFormattedForce();
         const units = this.units;
         return StringUtils.fillIn( vectorChangeForcesNowValuePatternString, {
           vectorChangeClause: vectorChangeClause,
@@ -409,10 +327,12 @@ define( require => {
      * Returns the filled-in string 'vectors {{changeDirection}}' for use in larger pattern strings.
      *
      * @returns {string}
+     * @public
      */
     getVectorChangeClause() {
-      const vectorChange = this.changeDirection;
-      return StringUtils.fillIn( this.vectorChangeClausePatternString, { changeDirection: vectorChange } );
+      return StringUtils.fillIn( this.vectorChangeClausePatternString, {
+        changeDirection: this.getChangeDirection()
+      } );
     }
 
     /**
@@ -420,10 +340,11 @@ define( require => {
      * pattern strings.
      *
      * @returns {string}
+     * @public
      */
     getVectorChangeForcesNowClause() {
       const { changeDirection, units } = this;
-      const forceValue = this.formattedForce;
+      const forceValue = this.getFormattedForce();
       return StringUtils.fillIn( this.vectorChangeForcesNowClausePatternString, {
         changeDirection: changeDirection,
         forceValue: forceValue,
@@ -435,8 +356,9 @@ define( require => {
      * Returns the qualitiative amount of pull/push the robots are currently exerting.
      *
      * @returns {string}
+     * @private
      */
-    get robotEffort() {
+    getRobotEffort() {
       const effortIndex = Util.roundSymmetric( this.forceToPullIndex( this.forceProperty.get() ) );
       return PULL_EFFORT_STINGS[ effortIndex ];
     }
@@ -445,41 +367,20 @@ define( require => {
      * Returns the qualitative size of force vectors.
      *
      * @returns {string}
+     * @private
      */
-    get vectorSize() {
-      return SIZE_STRINGS[ this.getForceVectorIndex( this.forceProperty.get() ) ];
+    getVectorSize() {
+      return SIZE_STRINGS[ this.getForceVectorIndex( this.forceProperty.get(), SIZE_STRINGS.length ) ];
     }
 
     /**
      * Returns the appropriate changed direction for the vectors ('get bigger/smaller'), if no change, null is returned.
      *
      * @returns {string|null}
+     * @private
      */
-    get changeDirection() {
+    getChangeDirection() {
       return CHANGE_DIRECTIONS[ this.vectorChangeDirection + 1 ];
-    }
-
-
-    static getForceInScientificNotation( forceValue, mantissaDecimalPlaces ) {
-      const pattern = scientificNotationPatternString;
-      return getScientificNotationTextFromPattern( forceValue, mantissaDecimalPlaces, pattern );
-    }
-
-    static getForceInScientificNotationNoHtml( forceValue, mantissaDecimalPlaces ) {
-      const pattern = scientificNotationPatternNoHtmlString;
-      return getScientificNotationTextFromPattern( forceValue, mantissaDecimalPlaces, pattern );
-    }
-
-    /**
-     * Returns the mapped index based on the given force value. Force values in ISLC sims range from piconewtons to
-     * newtons, so it's necessary for sim-specific subtypes to specify this logic.
-     *
-     * @abstract
-     * @param  {number} force
-     * @returns {number} - integer index to get value from SIZE_STRINGS
-     */
-    getForceVectorIndex( force ) {
-      throw new Error( 'getForceVectorIndex MUST be implemented in subtypes.' );
     }
 
     /**
@@ -491,10 +392,13 @@ define( require => {
     getPositionUnchangedAlertText( object ) {
 
       // if not showing force values, this is the force clause
-      let forceClause = this.getVectorSizeClause();
+      let forceClause = StringUtils.fillIn( this.vectorsSizeClausePatternString, { size: this.getVectorSize() } );
 
       if ( this.forceValuesProperty.get() ) {
-        const forceValuesClause = this.getForcesClause();
+        const forceValuesClause = StringUtils.fillIn( forcesValueUnitsClausePatternString, {
+          forceValue: this.getFormattedForce(),
+          units: this.units
+        } );
         forceClause = StringUtils.fillIn( vectorForceClausePatternString, {
           vectorClause: forceClause, // in GFLB this has nothing to do with "vectors" but instead "force arrows"
           forceValuesClause: forceValuesClause
@@ -507,7 +411,59 @@ define( require => {
         forceClause: forceClause
       } );
     }
+
+    /**
+     *
+     * @param {number} forceValue
+     * @param {number} mantissaDecimalPlaces
+     * @returns {number}
+     * @public
+     */
+    static getForceInScientificNotation( forceValue, mantissaDecimalPlaces ) {
+      return getScientificNotationTextFromPattern( forceValue, mantissaDecimalPlaces, scientificNotationPatternString );
+    }
+
+    /**
+     * @param {number} forceValue
+     * @param {number} mantissaDecimalPlaces
+     * @returns {number}
+     * @public
+     */
+    static getForceInScientificNotationNoHtml( forceValue, mantissaDecimalPlaces ) {
+      return getScientificNotationTextFromPattern( forceValue, mantissaDecimalPlaces, scientificNotationPatternNoHtmlString );
+    }
+
+    /**
+     * Returns the mapped index based on the given force value. Force values in ISLC sims range from piconewtons to
+     * newtons, so it's necessary for sim-specific subtypes to specify this logic.
+     *
+     * @abstract
+     * @param  {number} force
+     * @param {number} numberOfRegions - for crosscheck
+     * @returns {number} - integer index to get value from SIZE_STRINGS
+     * @protected
+     */
+    getForceVectorIndex( force, numberOfRegions ) {
+      throw new Error( 'getForceVectorIndex MUST be implemented in subtypes.' );
+    }
+
   }
+
+  /**
+   * Convert a number into scientific notation. The pattern expects a {{mantissa}} and {{exponent}} variables
+   * @param {number} forceValue
+   * @param {number} mantissaDecimalPlaces
+   * @param {string} pattern
+   * @returns {string}
+   */
+  const getScientificNotationTextFromPattern = ( forceValue, mantissaDecimalPlaces, pattern ) => {
+    const { mantissa, exponent } = ScientificNotationNode.toScientificNotation( forceValue, { mantissaDecimalPlaces: mantissaDecimalPlaces } );
+    const mantissaPattern = mantissa < 0 ? negativeValuePatternString : valuePatternString; // negative values are possible in Coulomb's Law
+    const mantissaString = StringUtils.fillIn( mantissaPattern, { value: Math.abs( mantissa ) } );
+    const exponentPattern = exponent < 0 ? negativeValuePatternString : valuePatternString;
+    const exponentString = StringUtils.fillIn( exponentPattern, { value: Math.abs( exponent ) } );
+    return StringUtils.fillIn( pattern, { mantissa: mantissaString, exponent: exponentString } );
+  };
 
   return inverseSquareLawCommon.register( 'ForceDescriber', ForceDescriber );
 } );

@@ -415,7 +415,7 @@ define( require => {
      * @public
      */
     getCapitalizedQualitativeRelativeDistanceRegion() {
-      const index = this.getDistanceIndex( this.distanceBetween );
+      const index = this.getDistanceIndex( this.distanceBetween, RELATIVE_DISTANCE_STRINGS_CAPITALIZED.length );
       assert && assert( index >= 0 && index < RELATIVE_DISTANCE_STRINGS_CAPITALIZED.length, 'index out of range' );
       return RELATIVE_DISTANCE_STRINGS_CAPITALIZED[ index ];
     }
@@ -426,7 +426,7 @@ define( require => {
      * @returns {string}
      */
     getQualitativeRelativeDistanceRegion() {
-      const index = this.getDistanceIndex( this.distanceBetween );
+      const index = this.getDistanceIndex( this.distanceBetween, RELATIVE_DISTANCE_STRINGS.length );
       assert && assert( index >= 0 && index < RELATIVE_DISTANCE_STRINGS.length, 'index out of range' );
       return RELATIVE_DISTANCE_STRINGS[ index ];
     }
@@ -437,9 +437,10 @@ define( require => {
      *
      * @abstract
      * @param  {number} distance
+     * @param {number} numberOfRegions - for crosscheck
      * @returns {number} - integer
      */
-    getDistanceIndex( distance ) {
+    getDistanceIndex( distance, numberOfRegions ) {
       throw new Error( 'getDistanceIndex MUST be implemented in subtypes.' );
     }
 

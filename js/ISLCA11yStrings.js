@@ -66,9 +66,6 @@ define( require => {
     forceAndVectorPattern: {
       value: 'Force on {{thisObjectLabel}} by {{otherObjectLabel}} is {{size}}, and vector points directly at {{otherObjectLabel}}.'
     },
-    valueKilogramsPattern: {
-      value: '{{value}} kilograms'
-    },
     objectLabelPositionPattern: {
       value: 'Move {{label}}'
     },
@@ -127,17 +124,8 @@ define( require => {
     vectorForceClausePattern: {
       value: '{{vectorClause}}, {{forceValuesClause}}'
     },
-    /*
-     * from the doc, here are the possible alert text options:
-     * - Force vectors {{size}}. // on focus
-     * - Vectors {{size}}. // if an object reaches the end of its range and force values is unchecked
-     * - Vectors {{size}}, forces {{force}} {{units}}. // object reaches end of range, force values checked
-     * - {{proximity}}, vectors {{size}}.
-     * - {{proximity}}, vectors {{size}}, forces {{force}} {{units}}.
-     * - Vectors {{changeDirection}}.
-     * - vectors {{changedirection}}
-     * - vectors {{changeDirection}}, forces now {{force}} {{units}}
-     */
+
+    // Alert text strings
     vectorChangePattern: {
       value: '{{positionProgressOrLandmarkClause}}{{vectors}} {{changeDirection}}'
     },
@@ -170,19 +158,6 @@ define( require => {
     },
     forcesValueUnitsClausePattern: {
       value: 'forces {{forceValue}} {{units}}'
-    },
-    forcesNowValueUnitsClausePattern: {
-      value: 'forces now {{forceValue}} {{units}}'
-    },
-    // to be used in the alert manager
-    proximityForceClausePattern: {
-      value: '{{proximity}}, {{forceClause}}.'
-    },
-    // proximityVectorSizeForcesValuePattern: {
-    //   value: '{{proximity}}, vectors {{size}}, forces {{forceValue}} {{units}}.'
-    // },
-    forceValueUnitsPattern: {
-      value: '{{forceValue}} {{units}}'
     },
 
     /**********************
