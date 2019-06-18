@@ -31,8 +31,6 @@ define( require => {
   const robotPullSummaryPatternString = ISLCA11yStrings.robotPullSummaryPattern.value;
   const robotPushSummaryPatternString = ISLCA11yStrings.robotPushSummaryPattern.value;
   const vectorsString = ISLCA11yStrings.vectors.value;
-  const vectorSizePatternString = ISLCA11yStrings.vectorSizePattern.value;
-  const vectorSizeForcesValuePatternString = ISLCA11yStrings.vectorSizeForcesValuePattern.value;
   const vectorsSizeClausePatternString = ISLCA11yStrings.vectorsSizeClausePattern.value;
   const forcesValueUnitsClausePatternString = ISLCA11yStrings.forcesValueUnitsClausePattern.value;
 
@@ -139,7 +137,9 @@ define( require => {
       this.forceValueToString = options.forceValueToString;
       this.convertForce = options.convertForce;
       this.forceToPullIndex = new LinearFunction( model.getMinForce(), model.getMaxForce(), 0, 6, true );
-      this.vectorChangeDirection = 0; // 1 -> growing, 0 -> no change, -1 -> shrinking
+
+      // @private {number} - // 1 -> growing, 0 -> no change, -1 -> shrinking
+      this.vectorChangeDirection = 0;
       this.forceAndVectorPatternString = options.forceAndVectorPatternString;
       this.forceVectorMagnitudeUnitsPatternString = options.forceVectorMagnitudeUnitsPatternString;
       this.forceVectorsString = options.forceVectorsString;
@@ -155,12 +155,6 @@ define( require => {
       this.summaryVectorSizeValueUnitsPatternString = StringUtils.fillIn( summaryVectorSizeValueUnitsPatternString, {
         forceVectorArrows: options.forceVectorsCapitalizedString
       } );
-      this.vectorSizePatternString = StringUtils.fillIn( vectorSizePatternString, {
-        vectorsCapitalized: options.vectorsCapitalizedString
-      } );
-      this.vectorSizeForcesValuePatternString = StringUtils.fillIn( vectorSizeForcesValuePatternString, {
-        vectorsCapitalized: options.vectorsCapitalizedString
-      } );
       this.vectorsSizeClausePatternString = StringUtils.fillIn( vectorsSizeClausePatternString, {
         vectors: options.forceVectorsString
       } );
@@ -174,7 +168,7 @@ define( require => {
       model.forceProperty.link( ( force, oldForce ) => {
         const forceDelta = force - oldForce;
         if ( forceDelta !== 0 ) {
-          this.vectorChangeDirection = forceDelta / Math.abs( forceDelta );
+          this.vectorChangeDirection = forceDelta / Math.abs( forceDelta ); // +1 or -1
         }
         else {
           this.vectorChangeDirection = 0;
@@ -324,29 +318,25 @@ define( require => {
     }
 
     /**
-     * Returns the filled-in string 'vectors {{changeDirection}}' for use in larger pattern strings.
-     *
-     * @returns {string}
-     * @public
-     */
-    getVectorChangeClause() {
-      return StringUtils.fillIn( this.vectorChangeClausePatternString, {
-        changeDirection: this.getChangeDirection()
-      } );
-    }
-
-    /**
      * Returns the filled-in string 'vectors {{changeDirection}}, forces now {{forceValue}} {{units}}' for use in larger
      * pattern strings.
      *
+     * @param {boolean} forceBiggerOverride - manually specify that we want to "forces bigger" alert, see
+     *                                        GravityForceLabAlertManager.alertMassValueChanged()
      * @returns {string}
      * @public
      */
-    getVectorChangeForcesNowClause() {
-      const forceValue = this.getFormattedForce();
+    getVectorChangeClause( forceBiggerOverride ) {
+      const directionChange = this.getChangeDirection( forceBiggerOverride );
+
+      if ( !this.forceValuesProperty.value ) {
+        return StringUtils.fillIn( this.vectorChangeClausePatternString, {
+          changeDirection: directionChange
+        } );
+      }
       return StringUtils.fillIn( this.vectorChangeForcesNowClausePatternString, {
-        changeDirection: this.getChangeDirection(),
-        forceValue: forceValue,
+        changeDirection: directionChange,
+        forceValue: this.getFormattedForce(),
         units: this.units
       } );
     }
@@ -375,11 +365,13 @@ define( require => {
     /**
      * Returns the appropriate changed direction for the vectors ('get bigger/smaller'), if no change, null is returned.
      *
-     * @returns {string|null}
+     * @param {boolean} forceBiggerOverride - when true, just return the "get bigger" string.
+     * @returns {string|null} - TODO: this should never return null
      * @private
      */
-    getChangeDirection() {
-      return CHANGE_DIRECTIONS[ this.vectorChangeDirection + 1 ];
+    getChangeDirection( forceBiggerOverride ) {
+      const index = forceBiggerOverride ? 2 : this.vectorChangeDirection + 1;
+      return CHANGE_DIRECTIONS[ index ];
     }
 
     /**
