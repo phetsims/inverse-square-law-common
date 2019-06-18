@@ -261,7 +261,6 @@ define( require => {
      * @public
      */
     getScientificNotationAlertText() {
-
       if ( this.scientificNotationProperty.get() ) {
         return forcesInScientificNotationString;
       }
