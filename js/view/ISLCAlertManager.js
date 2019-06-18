@@ -65,10 +65,13 @@ define( require => {
      * Alert for when the attempted movement of an ISLCObject's position results in a positional movement.
      * @public
      * @param {ISLCObject} object - the ISLCObject that changed position
+     * TODO: refactor this better if we decide to do it, alertPositionUnchanged too, https://github.com/phetsims/gravity-force-lab-basics/issues/146
+     * TODO: this will likely involve passing forceDescriber through to all ISLCObjectNodes
      */
     alertPositionChanged( object ) {
-      this.positionUtterance.alert = this.forceDescriber.getVectorChangeText( object );
-      utteranceQueue.addToBack( this.positionUtterance );
+      return this.forceDescriber.getVectorChangeText( object );
+      // this.positionUtterance.alert = this.forceDescriber.getVectorChangeText( object );
+      // utteranceQueue.addToBack( this.positionUtterance );
     }
 
     /**
@@ -77,8 +80,9 @@ define( require => {
      * @public
      */
     alertPositionUnchanged( object ) {
-      this.positionUtterance.alert = this.forceDescriber.getPositionUnchangedAlertText( object );
-      utteranceQueue.addToBack( this.positionUtterance );
+      return this.forceDescriber.getPositionUnchangedAlertText( object );
+      // this.positionUtterance.alert = this.forceDescriber.getPositionUnchangedAlertText( object );
+      // utteranceQueue.addToBack( this.positionUtterance );
     }
   }
 

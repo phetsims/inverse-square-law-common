@@ -317,12 +317,14 @@ define( require => {
         oldPosition = object.positionProperty.get();
       },
       endDrag: () => {
-        const newPosition = object.positionProperty.get();
-        const positionChanged = newPosition !== oldPosition;
         object.isDragging = false;
         this.redrawForce();
 
-        positionChanged ? alertManager.alertPositionChanged( object ) : alertManager.alertPositionUnchanged( object );
+      },
+      a11yCreateValueChangeAlert: () => {
+        const newPosition = object.positionProperty.get();
+        const positionChanged = newPosition !== oldPosition;
+        return positionChanged ? alertManager.alertPositionChanged( object ) : alertManager.alertPositionUnchanged( object );
       },
       a11yCreateValueChangeAriaValueText: positionDescriber.getPositionAriaValueTextCreator( this.enum ),
 
