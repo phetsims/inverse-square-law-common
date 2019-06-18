@@ -343,12 +343,11 @@ define( require => {
      * @public
      */
     getVectorChangeForcesNowClause() {
-      const { changeDirection, units } = this;
       const forceValue = this.getFormattedForce();
       return StringUtils.fillIn( this.vectorChangeForcesNowClausePatternString, {
-        changeDirection: changeDirection,
+        changeDirection: this.getChangeDirection(),
         forceValue: forceValue,
-        units: units
+        units: this.units
       } );
     }
 
