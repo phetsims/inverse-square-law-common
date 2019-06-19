@@ -74,8 +74,10 @@ define( function( require ) {
       sliderOptions: null,
 
       // title and value text options
-      titleFont: new PhetFont( 12 ),
-      titleMaxWidth: TITLE_MAX_WIDTH,
+      titleNodeOptions: {
+        titleFont: new PhetFont( 12 ),
+        titleMaxWidth: TITLE_MAX_WIDTH
+      },
 
       // phet-io
       tandem: tandem.createTandem( 'numberControl' )
