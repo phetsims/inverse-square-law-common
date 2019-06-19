@@ -365,11 +365,12 @@ define( require => {
      * Returns the appropriate changed direction for the vectors ('get bigger/smaller'), if no change, null is returned.
      *
      * @param {boolean} forceBiggerOverride - when true, just return the "get bigger" string.
-     * @returns {string|null} - TODO: this should never return null
+     * @returns {string}
      * @private
      */
     getChangeDirection( forceBiggerOverride ) {
       const index = forceBiggerOverride ? 2 : this.vectorChangeDirection + 1;
+      assert && assert( CHANGE_DIRECTIONS[ index ] !== null, 'Alert should not be called if no change in direction' );
       return CHANGE_DIRECTIONS[ index ];
     }
 
