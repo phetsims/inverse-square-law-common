@@ -81,15 +81,15 @@ define( require => {
    * @param {ModelViewTransform2} modelViewTransform
    * @param {ISLCAlertManager} alertManager
    * @param {PositionDescriber} positionDescriber
-   * @param {Object} options
+   * @param {Object} config
    * @mixes AccessibleSlider
    * @constructor
    */
-  function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertManager, positionDescriber, options ) {
+  function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertManager, positionDescriber, config ) {
 
-    options = _.extend( {
-      label: 'This Object',
-      otherObjectLabel: 'Other Object',
+    config = _.extend( {
+      label: null, // {string} @required
+      otherObjectLabel: null, // {string} @required
       defaultDirection: 'left',
 
       attractNegative: false,
@@ -125,15 +125,19 @@ define( require => {
 
       // {Property[]} - Properties that need to be monitored to successfully update this Node's PDOM descriptions
       additionalA11yDependencies: []
-    }, options );
+    }, config );
 
-    const tandem = options.tandem;
+    const tandem = config.tandem;
 
     // use snapToNearest if stepSize is not provided
-    if ( options.stepSize === null ) {
-      assert && assert( options.snapToNearest );
-      options.stepSize = options.snapToNearest * 2;
+    if ( config.stepSize === null ) {
+      assert && assert( config.snapToNearest );
+      config.stepSize = config.snapToNearest * 2;
     }
+
+    assert && assert( config.label, 'required param' );
+    assert && assert( config.otherObjectLabel, 'required param' );
+    assert && assert( alertManager instanceof ISLCAlertManager );
 
     Node.call( this, {
       containerTagName: 'div',
@@ -142,9 +146,7 @@ define( require => {
 
     const pullForceRange = new Range( model.getMinForce(), model.getMaxForce() );
 
-    assert && assert( alertManager instanceof ISLCAlertManager );
-
-    this.accessibleName = PositionDescriber.getObjectLabelPositionText( options.label );
+    this.accessibleName = PositionDescriber.getObjectLabelPositionText( config.label );
 
     // @protected
     this.layoutBounds = layoutBounds;
@@ -164,20 +166,20 @@ define( require => {
       layoutBounds,
       _.extend( {
         tandem: tandem.createTandem( 'forceArrowNode' )
-      }, _.pick( options, ARROW_OPTION_KEYS ) )
+      }, _.pick( config, ARROW_OPTION_KEYS ) )
     );
 
     // set y position for the arrow
-    this.arrowNode.y = options.y - options.forceArrowHeight;
+    this.arrowNode.y = config.y - config.forceArrowHeight;
 
     // @private - the puller node
     this.pullerNode = new ISLCPullerNode(
       pullForceRange,
       tandem.createTandem( 'pullerNode' ),
-      _.pick( options, PULLER_OPTION_KEYS )
+      _.pick( config, PULLER_OPTION_KEYS )
     );
 
-    if ( options.defaultDirection === 'right' ) {
+    if ( config.defaultDirection === 'right' ) {
       this.pullerNode.scale( -1, 1 );
     }
 
@@ -203,22 +205,22 @@ define( require => {
     const labelTop = 4;
 
     // add the label shadow, added first so that the 'shadow' appears under the label text
-    this.dragNode.addChild( new RichText( options.label, {
-      font: options.labelFont,
-      fill: options.labelShadowFill,
+    this.dragNode.addChild( new RichText( config.label, {
+      font: config.labelFont,
+      fill: config.labelShadowFill,
       pickable: false,
-      maxWidth: options.labelMaxWidth,
-      centerX: labelCenterX + options.labelShadowOffsetX,
-      top: labelTop + options.labelShadowOffsetY,
+      maxWidth: config.labelMaxWidth,
+      centerX: labelCenterX + config.labelShadowOffsetX,
+      top: labelTop + config.labelShadowOffsetY,
       tandem: tandem.createTandem( 'labelShadowNode' )
     } ) );
 
     // add the label
-    this.dragNode.addChild( new RichText( options.label, {
-      font: options.labelFont,
-      fill: options.labelFill,
+    this.dragNode.addChild( new RichText( config.label, {
+      font: config.labelFont,
+      fill: config.labelFill,
       pickable: false,
-      maxWidth: options.labelMaxWidth,
+      maxWidth: config.labelMaxWidth,
       centerX: labelCenterX,
       top: labelTop,
       tandem: tandem.createTandem( 'labelNode' )
@@ -227,13 +229,13 @@ define( require => {
     this.addChild( this.dragNode );
 
     // @private
-    this.y = options.y;
+    this.y = config.y;
 
     // the marker line, connecting the arrow to the object, the first one is for the shadow so that
     // it is visible on top of the object
     const markerLineShape = new Shape();
     markerLineShape.moveTo( 0, -4 );
-    markerLineShape.lineTo( 0, -options.forceArrowHeight );
+    markerLineShape.lineTo( 0, -config.forceArrowHeight );
     this.addChild( new Path( markerLineShape, {
       stroke: '#FFF',
       lineDash: [ 4, 4 ],
@@ -243,7 +245,7 @@ define( require => {
       tandem: tandem.createTandem( 'markerLineShadow' )
     } ) );
     const markerLineShapeTop = new Path( markerLineShape, {
-      stroke: options.arrowColor,
+      stroke: config.arrowColor,
       lineDash: [ 4, 4 ],
       lineWidth: 2,
       tandem: tandem.createTandem( 'markerLine' )
@@ -286,7 +288,7 @@ define( require => {
 
     object.baseColorProperty.link( baseColor => {
       this.updateGradient( baseColor );
-      if ( options.attractNegative ) {
+      if ( config.attractNegative ) {
         markerLineShapeTop.stroke = getUpdatedFill( object.valueProperty.get() );
       }
     } );
@@ -304,12 +306,12 @@ define( require => {
 
     let oldPosition = object.positionProperty.get();
     const accessibleSliderOptions = {
-      keyboardStep: options.stepSize,
-      shiftKeyboardStep: options.snapToNearest,
-      pageKeyboardStep: options.stepSize * 2,
+      keyboardStep: config.stepSize,
+      shiftKeyboardStep: config.snapToNearest,
+      pageKeyboardStep: config.stepSize * 2,
       a11yDecimalPlaces: 1,
       constrainValue: value => {
-        const numberOfDecimalPlaces = Util.numberOfDecimalPlaces( options.snapToNearest );
+        const numberOfDecimalPlaces = Util.numberOfDecimalPlaces( config.snapToNearest );
         return Util.toFixedNumber( value, numberOfDecimalPlaces );
       },
       startDrag: () => {
@@ -329,7 +331,7 @@ define( require => {
       a11yCreateValueChangeAriaValueText: positionDescriber.getPositionAriaValueTextCreator( this.enum ),
 
       // This object's PDOM description also depends on the position of the other object, so include it here.
-      a11yDependencies: options.additionalA11yDependencies.concat( object === model.object1 ?
+      a11yDependencies: config.additionalA11yDependencies.concat( object === model.object1 ?
         [ model.object2.positionProperty ] : [ model.object1.positionProperty ] )
     };
 

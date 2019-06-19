@@ -47,13 +47,14 @@ define( function( require ) {
       resize: false,
       align: 'right',
 
-      // a11y
-      tagName: 'li',
-
       numberControlOptions: null,
       tickLabelOptions: null,
       additionalTicks: [],
 
+      // a11y
+      tagName: 'li',
+
+      // phet-io
       tandem: Tandem.required
     }, options );
 
