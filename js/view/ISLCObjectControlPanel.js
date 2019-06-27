@@ -47,8 +47,8 @@ define( function( require ) {
       resize: false,
       align: 'right',
 
-      numberControlOptions: null,
-      tickLabelOptions: null,
+      numberControlOptions: null, // filled in below
+      tickLabelOptions: null, // filled in below
       additionalTicks: [],
 
       // a11y
@@ -70,8 +70,9 @@ define( function( require ) {
 
       // layout options
       layoutFunction: NumberControl.createLayoutFunction3( { xSpacing: 10 } ),
-      numberDisplayOptions: null,
-      sliderOptions: null,
+      numberDisplayOptions: null, // filled in below
+      sliderOptions: null, // filled in below
+      arrowButtonOptions: null, // filled in below
 
       // title and value text options
       titleNodeOptions: {
