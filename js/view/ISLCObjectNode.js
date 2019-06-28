@@ -85,7 +85,7 @@ define( require => {
    * @mixes AccessibleSlider
    * @constructor
    */
-  function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertManager, positionDescriber, config ) {
+  function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertManager, forceDescriber, positionDescriber, config ) {
 
     config = _.extend( {
       label: null, // {string} @required
@@ -326,7 +326,7 @@ define( require => {
       a11yCreateValueChangeAlert: () => {
         const newPosition = object.positionProperty.get();
         const positionChanged = newPosition !== oldPosition;
-        return positionChanged ? alertManager.alertPositionChanged( object ) : alertManager.alertPositionUnchanged( object );
+        return positionChanged ? forceDescriber.getVectorChangeText( object ) : forceDescriber.getPositionUnchangedAlertText( object );
       },
       a11yCreateValueChangeAriaValueText: positionDescriber.getPositionAriaValueTextCreator( this.enum ),
 
