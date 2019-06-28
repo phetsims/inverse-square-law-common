@@ -71,13 +71,14 @@ define( require => {
 
     const enabledRange = new Range( options.leftObjectBoundary, options.rightObjectBoundary );
 
-    // @public {Property.<Range>}- set by ISLCModel when the force changes
+    // @public {Property.<Range>}- set by ISLCModel when the force changes, the range for position of the objects
+    // based on their radius and location
     this.enabledRangeProperty = new Property( enabledRange, {
       tandem: tandem.createTandem( 'enabledRangeProperty' ),
       phetioType: PropertyIO( RangeIO )
     } );
 
-    // @publiv (read-only) - Emitter that fires whenever the position changes as a result of an object's value changing.
+    // @public (read-only) - Emitter that fires whenever the position changes as a result of an object's value changing.
     // Emits with the objectEnum that caused the position change.
     this.valueChangedPositionEmitter = new Emitter( { validators: [ { valueType: ISLCObjectEnum } ] } );
 

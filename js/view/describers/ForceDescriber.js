@@ -178,7 +178,7 @@ define( require => {
 
     /**
      * @private
-     * @returns {number}
+     * @returns {string}
      */
     getFormattedForce() {
       return this.forceValueToString( this.convertForce( this.forceProperty.get() ) );
