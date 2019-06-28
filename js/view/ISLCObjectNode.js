@@ -335,8 +335,7 @@ define( require => {
         [ model.object2.positionProperty ] : [ model.object1.positionProperty ] )
     };
 
-    // a11y - initialize the accessible slider
-    // these features make this Node act like an accessible range input
+    // a11y - initialize the accessible slider, which makes this Node act like an accessible range input
     this.initializeAccessibleSlider(
       object.positionProperty,
       object.enabledRangeProperty,

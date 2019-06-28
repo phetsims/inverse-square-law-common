@@ -58,7 +58,6 @@ define( require => {
   const extremelyCloseToCapitalizedString = ISLCA11yStrings.extremelyCloseToCapitalized.value;
   const closestToCapitalizedString = ISLCA11yStrings.closestToCapitalized.value;
 
-
   const closerString = ISLCA11yStrings.closer.value;
   const fartherAwayString = ISLCA11yStrings.fartherAway.value;
 
