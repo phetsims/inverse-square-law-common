@@ -10,6 +10,7 @@ define( function( require ) {
   'use strict';
 
   // modules
+  const Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
   var inherit = require( 'PHET_CORE/inherit' );
   var inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
@@ -98,6 +99,11 @@ define( function( require ) {
     this.arrow = new ArrowNode( 0, -options.forceArrowHeight, 200, -options.forceArrowHeight, arrowOptions );
 
     Node.call( this, {} );
+
+    // @private
+    this.arrowTextBackground = new Rectangle( 0, 0, 1000, 1000, { fill: 'black', opacity: .3 } );
+    this.addChild( this.arrowTextBackground );
+
     this.addChild( this.arrowText );
     this.addChild( this.arrow );
 
@@ -154,6 +160,12 @@ define( function( require ) {
       else {
         this.arrowText.center = arrowTextCenter;
       }
+
+      // set the background layout too
+      this.arrowTextBackground.rectWidth = this.arrowText.width;
+      this.arrowTextBackground.rectHeight = this.arrowText.height;
+      this.arrowTextBackground.center = this.arrowText.center;
+
     },
 
     /**
@@ -192,14 +204,21 @@ define( function( require ) {
             }
           }
 
-          this.arrowText.text = StringUtils.fillIn( forceOnObjectByOtherObjectWithUnitsPatternString, { thisObject: this.label, otherObject: this.otherObjectLabel, value: formattedString } );
+          this.arrowText.text = StringUtils.fillIn( forceOnObjectByOtherObjectWithUnitsPatternString, {
+            thisObject: this.label,
+            otherObject: this.otherObjectLabel,
+            value: formattedString
+          } );
         }
         else {
           throw new Error( 'ISLCForceArrowNode.updateLabel() requires a decimal value' );
         }
       }
       else {
-        this.arrowText.text = StringUtils.fillIn( forceOnObjectByOtherObjectPatternString, { thisObject: this.label, otherObject: this.otherObjectLabel } );
+        this.arrowText.text = StringUtils.fillIn( forceOnObjectByOtherObjectPatternString, {
+          thisObject: this.label,
+          otherObject: this.otherObjectLabel
+        } );
       }
     }
   } );

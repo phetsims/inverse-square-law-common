@@ -47,7 +47,7 @@ define( require => {
       this.addChild( this.forceBetweenAndVectorNode );
       this.addChild( this.forceVectorMagnitudeItemNode );
 
-      model.forceValuesProperty.link( showValues => {
+      model.showForceValuesProperty.link( showValues => {
         this.forceVectorMagnitudeItemNode.visible = showValues;
       } );
     }

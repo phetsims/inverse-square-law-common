@@ -132,7 +132,7 @@ define( require => {
       // @private
       this.positionDescriber = positionDescriber;
       this.forceProperty = model.forceProperty;
-      this.forceValuesProperty = model.forceValuesProperty;
+      this.showForceValuesProperty = model.showForceValuesProperty;
       this.units = options.units;
       this.forceValueToString = options.forceValueToString;
       this.convertForce = options.convertForce;
@@ -194,7 +194,7 @@ define( require => {
 
       fillObject.size = this.getVectorSize();
 
-      if ( this.forceValuesProperty.get() ) {
+      if ( this.showForceValuesProperty.get() ) {
         pattern = this.summaryVectorSizeValueUnitsPatternString;
         fillObject.forceValue = this.getFormattedForce();
         fillObject.units = this.units;
@@ -298,7 +298,7 @@ define( require => {
       } );
 
       // Add info like "forces now" only if force values checkbox is enabled
-      if ( this.forceValuesProperty.get() ) {
+      if ( this.showForceValuesProperty.get() ) {
         const forceValue = this.getFormattedForce();
         const units = this.units;
         return StringUtils.fillIn( vectorChangeForcesNowValuePatternString, {
@@ -328,7 +328,7 @@ define( require => {
     getVectorChangeClause( forceBiggerOverride ) {
       const directionChange = this.getChangeDirection( forceBiggerOverride );
 
-      if ( !this.forceValuesProperty.value ) {
+      if ( !this.showForceValuesProperty.value ) {
         return StringUtils.fillIn( this.vectorChangeClausePatternString, {
           changeDirection: directionChange
         } );
@@ -385,7 +385,7 @@ define( require => {
       // if not showing force values, this is the force clause
       let forceClause = StringUtils.fillIn( this.vectorsSizeClausePatternString, { size: this.getVectorSize() } );
 
-      if ( this.forceValuesProperty.get() ) {
+      if ( this.showForceValuesProperty.get() ) {
         const forceValuesClause = StringUtils.fillIn( forcesValueUnitsClausePatternString, {
           forceValue: this.getFormattedForce(),
           units: this.units
