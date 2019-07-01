@@ -32,6 +32,7 @@ define( require => {
      * @returns {boolean}
      */
     ISLCObjectEnum.isObject1 = objectEnum => {
+      assert && assert( ISLCObjectEnum.includes( objectEnum ) );
       return objectEnum === ISLCObjectEnum.OBJECT_ONE;
     };
 
@@ -40,6 +41,7 @@ define( require => {
      * @returns {boolean}
      */
     ISLCObjectEnum.isObject2 = objectEnum => {
+      assert && assert( ISLCObjectEnum.includes( objectEnum ) );
       return objectEnum === ISLCObjectEnum.OBJECT_TWO;
     };
   } ) );
