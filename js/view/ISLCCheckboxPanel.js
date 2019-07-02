@@ -52,7 +52,7 @@ define( require => {
       checkboxItems = checkboxItems.map( item => {
         assert && assert( item.tandem );
         item.node = new Text( item.label, {
-          tandem: item.tandem.createTandem( 'label' ),
+          tandem: item.tandem.createTandem( 'labelNode' ),
           font: new PhetFont( 14 ),
           maxWidth: 125
         } );
