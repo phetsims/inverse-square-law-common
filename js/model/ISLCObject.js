@@ -39,6 +39,7 @@ define( require => {
       // in meters
       leftObjectBoundary: ISLCConstants.LEFT_OBJECT_BOUNDARY,
       rightObjectBoundary: ISLCConstants.RIGHT_OBJECT_BOUNDARY,
+      constantRadius: ISLCConstants.CONSTANT_RADIUS, // radius when constant
 
       valueUnits: 'kilograms'
     }, options );

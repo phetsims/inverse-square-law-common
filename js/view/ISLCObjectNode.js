@@ -126,8 +126,6 @@ define( require => {
       tandem: config.tandem
     } );
 
-    const pullForceRange = new Range( model.getMinForce(), model.getMaxForce() );
-
     this.accessibleName = PositionDescriber.getObjectLabelPositionText( config.label );
 
     // @protected
@@ -140,7 +138,7 @@ define( require => {
     this.enum = object === model.object1 ? ISLCObjectEnum.OBJECT_ONE : ISLCObjectEnum.OBJECT_TWO;
 
     // the full range of force for the arrow node (note: this is distinct)
-    const arrowForceRange = new Range( model.getMinForce(), model.getMaxForce() );
+    const arrowForceRange = new Range( model.getMinForceMagnitude(), model.getMaxForce() );
 
     // @protected - arrow node
     this.arrowNode = new ISLCForceArrowNode(
@@ -157,7 +155,7 @@ define( require => {
 
     // @private - the puller node
     this.pullerNode = new ISLCPullerNode(
-      pullForceRange,
+      new Range( model.getMinForce(), model.getMaxForce() ),
       config.tandem.createTandem( 'pullerNode' ),
       config.pullerNodeOptions
     );

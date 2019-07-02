@@ -27,10 +27,10 @@ define( require => {
 
   /**
    * @param {number} forceConstant the appropriate force constant (e.g. G or k)
-   * @param {ISLCObject} object1 - the first Mass or Charge object
-   * @param {ISLCObject} object2 - the second Mass or Charge object
-   * @param {Range} locationRange- in meters, location range for the objects, min is the left bouncary for left object,
-   *                              and the same for max/right
+   * @param {ISLCObject} object1 -  the first Mass or Charge object
+   * @param {ISLCObject} object2 -  the second Mass or Charge object
+   * @param {Range} locationRange - in meters, location range for the objects, min is the left boundary for left object,
+   *                                and the same for max/right
    * @param {Tandem} tandem
    * @param {Object} [options]
    * @constructor
@@ -246,7 +246,22 @@ define( require => {
 
     /**
      * Helper function to for accessing and mapping force ranges in the inheriting sims' views
-     *
+     * @returns {number} - positive number, representing the magnitude of the force vector
+     */
+    getMinForceMagnitude: function() {
+      this.assertObjectsHaveSameRange();
+      const maxDistance = Math.abs( this.rightObjectBoundary - this.leftObjectBoundary );
+
+      // Since we're checking for magnitude, negative values for charges will need
+      // to be set to zero.
+      const minValue = this.object1.valueRange.min < 0 ? 0 : this.object1.valueRange.min;
+
+      // ensure we always return a positive force value or zero
+      return Math.abs( this.calculateForce( minValue, minValue, maxDistance ) );
+    },
+
+    /**
+     * Get the minimum possible force. Unlike getMinForceMagnitude, this function can return a negative value.
      * @public
      * @returns {number} the smallest possible force magnitude
      */
@@ -254,9 +269,7 @@ define( require => {
       this.assertObjectsHaveSameRange();
       const maxDistance = Math.abs( this.rightObjectBoundary - this.leftObjectBoundary );
 
-      // Since we're checking for magnitude, negative values for charges will need
-      // to be set to zero.
-      const minValue = this.object1.valueRange.min < 0 ? 0 : this.object1.valueRange.min;
+      const minValue = this.object1.valueRange.min;
 
       // ensure we always return a positive force value or zero
       return Math.abs( this.calculateForce( minValue, minValue, maxDistance ) );
