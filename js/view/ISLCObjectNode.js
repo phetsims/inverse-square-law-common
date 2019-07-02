@@ -116,9 +116,6 @@ define( require => {
       y: 250,
       forceArrowHeight: 150, // height of arrow in view coordinates
 
-      arrowHeadHeight: 8,
-      arrowHeadWidth: 8,
-      arrowTailWidth: 3,
       arrowStroke: null,
 
       tandem: Tandem.required,
