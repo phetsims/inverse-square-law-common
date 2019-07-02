@@ -127,8 +127,6 @@ define( require => {
       additionalA11yDependencies: []
     }, config );
 
-    const tandem = config.tandem;
-
     // use snapToNearest if stepSize is not provided
     if ( config.stepSize === null ) {
       assert && assert( config.snapToNearest );
@@ -141,7 +139,7 @@ define( require => {
 
     Node.call( this, {
       containerTagName: 'div',
-      tandem: tandem
+      tandem: config.tandem
     } );
 
     const pullForceRange = new Range( model.getMinForce(), model.getMaxForce() );
@@ -165,7 +163,7 @@ define( require => {
       arrowForceRange,
       layoutBounds,
       _.extend( {
-        tandem: tandem.createTandem( 'forceArrowNode' )
+        tandem: config.tandem.createTandem( 'forceArrowNode' )
       }, _.pick( config, ARROW_OPTION_KEYS ) )
     );
 
@@ -175,7 +173,7 @@ define( require => {
     // @private - the puller node
     this.pullerNode = new ISLCPullerNode(
       pullForceRange,
-      tandem.createTandem( 'pullerNode' ),
+      config.tandem.createTandem( 'pullerNode' ),
       _.pick( config, PULLER_OPTION_KEYS )
     );
 
@@ -186,7 +184,7 @@ define( require => {
     // @protected - a parent node that applies the drag handler
     this.dragNode = new Node( {
       cursor: 'pointer',
-      tandem: tandem.createTandem( 'dragNode' )
+      tandem: config.tandem.createTandem( 'dragNode' )
     } );
 
     // the 'object' - a shaded circle
@@ -212,7 +210,7 @@ define( require => {
       maxWidth: config.labelMaxWidth,
       centerX: labelCenterX + config.labelShadowOffsetX,
       top: labelTop + config.labelShadowOffsetY,
-      tandem: tandem.createTandem( 'labelShadowNode' )
+      tandem: config.tandem.createTandem( 'labelShadowNode' )
     } ) );
 
     // add the label
@@ -223,7 +221,7 @@ define( require => {
       maxWidth: config.labelMaxWidth,
       centerX: labelCenterX,
       top: labelTop,
-      tandem: tandem.createTandem( 'labelNode' )
+      tandem: config.tandem.createTandem( 'labelNode' )
     } ) );
 
     this.addChild( this.dragNode );
@@ -242,13 +240,13 @@ define( require => {
       lineWidth: 2,
       x: 0.5,
       y: 0.5,
-      tandem: tandem.createTandem( 'markerLineShadow' )
+      tandem: config.tandem.createTandem( 'markerLineShadow' )
     } ) );
     const markerLineShapeTop = new Path( markerLineShape, {
       stroke: config.arrowColor,
       lineDash: [ 4, 4 ],
       lineWidth: 2,
-      tandem: tandem.createTandem( 'markerLine' )
+      tandem: config.tandem.createTandem( 'markerLine' )
     } );
     this.addChild( markerLineShapeTop );
 
@@ -277,7 +275,7 @@ define( require => {
         object.positionProperty.set( model.snapToGrid( x ) );
       },
       end: () => { object.isDragging = false; },
-      tandem: tandem.createTandem( 'dragHandler' )
+      tandem: config.tandem.createTandem( 'dragHandler' )
     } ) );
 
     const boundRedrawForce = this.redrawForce.bind( this );
