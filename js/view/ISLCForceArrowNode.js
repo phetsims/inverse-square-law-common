@@ -62,7 +62,8 @@ define( function( require ) {
       headWidth: 8,
       tailWidth: 3,
       arrowStroke: null,
-      arrowFill: '#fff'
+      arrowFill: '#fff',
+      backgroundFill: 'black'
     }, options );
 
     options.tandem = tandem;
@@ -102,7 +103,7 @@ define( function( require ) {
     Node.call( this, {} );
 
     // @private
-    this.arrowTextBackground = new Rectangle( 0, 0, 1000, 1000, { fill: 'black', opacity: .3 } );
+    this.arrowTextBackground = new Rectangle( 0, 0, 1000, 1000, { fill: options.backgroundFill, opacity: .3 } );
     this.addChild( this.arrowTextBackground );
 
     this.addChild( this.arrowText );
@@ -163,8 +164,8 @@ define( function( require ) {
       }
 
       // set the background layout too
-      this.arrowTextBackground.rectWidth = this.arrowText.width;
-      this.arrowTextBackground.rectHeight = this.arrowText.height;
+      this.arrowTextBackground.rectWidth = this.arrowText.width + 4;
+      this.arrowTextBackground.rectHeight = this.arrowText.height + 2;
       this.arrowTextBackground.center = this.arrowText.center;
 
     },
