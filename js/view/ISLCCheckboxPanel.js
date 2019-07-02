@@ -1,4 +1,4 @@
-// Copyright 2017-2018, University of Colorado Boulder
+// Copyright 2019, University of Colorado Boulder
 
 /**
  * Panel with a vertical checkbox group, for display options.
@@ -6,62 +6,62 @@
  * @author Michael Barlow (PhET Interactive Simulations)
  * @author Jesse Greenberg (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)
+ * @author Michael Kauzmann (PhET Interactive Simulations)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var inherit = require( 'PHET_CORE/inherit' );
-  var inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
-  var Panel = require( 'SUN/Panel' );
-  var Tandem = require( 'TANDEM/Tandem' );
-  var VBox = require( 'SCENERY/nodes/VBox' );
+  const inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
+  const merge = require( 'PHET_CORE/merge' );
+  const Panel = require( 'SUN/Panel' );
+  const PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  const Tandem = require( 'TANDEM/Tandem' );
+  const Text = require( 'SCENERY/nodes/Text' );
+  const VerticalCheckboxGroup = require( 'SUN/VerticalCheckboxGroup' );
 
-  /**
-   * @param {ISLCCheckboxItem[]} checkboxItems
-   * @param {Object} [options]
-   * @constructor
-   */
-  function ISLCCheckboxPanel( checkboxItems, options ) {
+  class ISLCCheckboxPanel extends Panel {
 
-    options = _.extend( {
+    /**
+     * @param {Object} checkboxItems - see VerticalCheckboxGroup for doc, note that this Type sets the `node`, and
+     *    expects a `label` {string} property that is used to create the Node
+     * @param {Object} [options]
+     */
+    constructor( checkboxItems, options ) {
 
-      // dilation of pointer areas, y dimension is computed
-      touchAreaXDilation: 5,
-      mouseAreaXDilation: 5,
+      options = merge( {
 
-      // styling
-      fill: '#FDF498',
-      xMargin: 10,
-      yMargin: 10,
-      minWidth: 170,
-      align: 'left',
-      spacing: 10,
+        checkboxGroupOptions: {
+          checkboxOptions: {
+            spacing: 10,
+            padding: 8,
+            boxWidth: 16,
+            appendLabel: false
+          }
+        },
+        fill: '#FDF498',
+        xMargin: 10,
+        yMargin: 10,
+        minWidth: 170,
 
-      // phet-io
-      tandem: Tandem.required
-    }, options );
+        // phet-io
+        tandem: Tandem.required
+      }, options );
 
-    var vBoxOptions = _.pick( options, [ 'spacing', 'align' ] );
+      // Given a string as a label, convert it to a Text Node.
+      checkboxItems = checkboxItems.map( item => {
+        assert && assert( item.tandem );
+        item.node = new Text( item.label, {
+          tandem: item.tandem.createTandem( 'label' ),
+          font: new PhetFont( 14 ),
+          maxWidth: 125
+        } );
+        return item;
+      } );
 
-    var checkboxGroup = new VBox( vBoxOptions );
-
-    for ( var i = 0; i < checkboxItems.length; i++ ) {
-
-      var item = checkboxItems[ i ];
-
-      // set pointer areas, y dimensions are computed
-      var yDilation = options.spacing / 2;
-      item.mouseArea = item.localBounds.dilatedXY( options.mouseAreaXDilation, yDilation );
-      item.touchArea = item.localBounds.dilatedXY( options.touchAreaXDilation, yDilation );
-
-      checkboxGroup.addChild( item );
+      super( new VerticalCheckboxGroup( checkboxItems, options.checkboxGroupOptions ), options );
     }
-
-    Panel.call( this, checkboxGroup, options );
   }
 
-  inverseSquareLawCommon.register( 'ISLCCheckboxPanel', ISLCCheckboxPanel );
-
-  return inherit( Panel, ISLCCheckboxPanel );
+  return inverseSquareLawCommon.register( 'ISLCCheckboxPanel', ISLCCheckboxPanel );
 } );
