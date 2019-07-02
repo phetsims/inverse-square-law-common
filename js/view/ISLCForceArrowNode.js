@@ -10,14 +10,15 @@ define( function( require ) {
   'use strict';
 
   // modules
-  const Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
+  var DefaultDirection = require( 'INVERSE_SQUARE_LAW_COMMON/view/DefaultDirection' );
   var inherit = require( 'PHET_CORE/inherit' );
   var inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
   var LinearFunction = require( 'DOT/LinearFunction' );
   var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var RichText = require( 'SCENERY/nodes/RichText' );
   var ScientificNotationNode = require( 'SCENERY_PHET/ScientificNotationNode' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
@@ -43,7 +44,7 @@ define( function( require ) {
   function ISLCForceArrowNode( arrowForceRange, layoutBounds, label, otherObjectLabel, tandem, options ) {
 
     options = _.extend( {
-      defaultDirection: 'left',
+      defaultDirection: DefaultDirection.LEFT,
       attractNegative: true, // if true, arrows will point towards each other if force is negative
       arrowNodeLineWidth: 0.25,
 
@@ -136,7 +137,7 @@ define( function( require ) {
       // map force value to width in view
       arrowLengthMultiplier = this.forceToArrowWidthFunction( absValue );
 
-      if ( this.defaultDirection === 'right' ) {
+      if ( this.defaultDirection === DefaultDirection.RIGHT ) {
         arrowLengthMultiplier *= -1;
       }
 

@@ -18,6 +18,7 @@ define( require => {
   const BooleanProperty = require( 'AXON/BooleanProperty' );
   const Circle = require( 'SCENERY/nodes/Circle' );
   const Color = require( 'SCENERY/util/Color' );
+  const DefaultDirection = require( 'INVERSE_SQUARE_LAW_COMMON/view/DefaultDirection' );
   const inherit = require( 'PHET_CORE/inherit' );
   const inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
   const ISLCAlertManager = require( 'INVERSE_SQUARE_LAW_COMMON/view/ISLCAlertManager' );
@@ -59,7 +60,7 @@ define( require => {
     config = _.extend( {
       label: null, // {string} @required
       otherObjectLabel: null, // {string} @required
-      defaultDirection: 'left',
+      defaultDirection: DefaultDirection.LEFT,
 
       // {boolean} - if true, arrows will point towards each other if forces is negative. Used by the puller and arrow nodes
       attractNegative: false,
@@ -161,7 +162,7 @@ define( require => {
       config.pullerNodeOptions
     );
 
-    if ( config.defaultDirection === 'right' ) {
+    if ( config.defaultDirection === DefaultDirection.RIGHT ) {
       this.pullerNode.scale( -1, 1 );
     }
 
