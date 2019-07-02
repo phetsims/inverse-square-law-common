@@ -46,9 +46,9 @@ define( require => {
     this.leftObjectBoundary = locationRange.min;
     this.rightObjectBoundary = locationRange.max;
 
-    // @public {Property.<boolean>}- whether to display the force values
-    this.forceValuesProperty = new BooleanProperty( true, {
-      tandem: tandem.createTandem( 'forceValuesProperty' )
+    // @public {Property.<boolean>} - whether to display the force values
+    this.showForceValuesProperty = new BooleanProperty( true, {
+      tandem: tandem.createTandem( 'showForceValuesProperty' )
     } );
 
     // @public
@@ -408,7 +408,7 @@ define( require => {
 
     // @public
     reset: function() {
-      this.forceValuesProperty.reset();
+      this.showForceValuesProperty.reset();
 
       // if the position of object2 is equal to object1's initial position, an error will result when we
       // reset object1's position. Thus, we need to check for that one edge case prior to reset

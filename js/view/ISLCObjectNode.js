@@ -281,7 +281,7 @@ define( require => {
     } ) );
 
     const boundRedrawForce = this.redrawForce.bind( this );
-    model.forceValuesProperty.lazyLink( boundRedrawForce );
+    model.showForceValuesProperty.lazyLink( boundRedrawForce );
     object.radiusProperty.lazyLink( boundRedrawForce );
     object.valueProperty.lazyLink( boundRedrawForce );
     model.forceProperty.lazyLink( boundRedrawForce );
@@ -420,7 +420,7 @@ define( require => {
       this.arrowNode.redrawArrow( this.model.forceProperty.get() );
 
       // update the arrow label - always display the force as a positive magnitude
-      this.arrowNode.updateLabel( Math.abs( this.model.forceProperty.get() ), this.model.forceValuesProperty.get() );
+      this.arrowNode.updateLabel( Math.abs( this.model.forceProperty.get() ), this.model.showForceValuesProperty.get() );
 
       // set the text position, positioning the center relative to the parent coordinate frame
       this.arrowNode.setArrowTextPosition( this.parentToLocalBounds( this.layoutBounds ) );
