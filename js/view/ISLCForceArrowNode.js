@@ -21,7 +21,6 @@ define( function( require ) {
   var RichText = require( 'SCENERY/nodes/RichText' );
   var ScientificNotationNode = require( 'SCENERY_PHET/ScientificNotationNode' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
-  var Tandem = require( 'TANDEM/Tandem' );
   var Util = require( 'DOT/Util' );
 
   // strings
