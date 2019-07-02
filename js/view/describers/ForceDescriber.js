@@ -136,7 +136,8 @@ define( require => {
       this.units = options.units;
       this.forceValueToString = options.forceValueToString;
       this.convertForce = options.convertForce;
-      this.forceToPullIndex = new LinearFunction( model.getMinForce(), model.getMaxForce(), 0, 6, true );
+      this.forceToPullIndex = new LinearFunction( model.getMinForce(), model.getMaxForce(),
+        0, PULL_EFFORT_STINGS.length - 1, true );
 
       // @private {number} - // 1 -> growing, 0 -> no change, -1 -> shrinking
       this.vectorChangeDirection = 0;
