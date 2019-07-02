@@ -109,7 +109,7 @@ define( require => {
         units: unitsMetersString,
 
         // {function(number):number} - convert to display distance for PDOM descriptions
-        convertDistanceMetric: _.identity
+        formatDisplayDistance: _.identity
       }, options );
 
       // @public
@@ -117,7 +117,7 @@ define( require => {
 
       // @private
       this.units = options.units; // {string}
-      this.convertDistanceMetric = options.convertDistanceMetric;
+      this.formatDisplayDistance = options.formatDisplayDistance;
 
       // @private {number} - in meters, already converted with optional formatting function
       this.distanceBetween = 0;
@@ -147,7 +147,7 @@ define( require => {
           this.lastMoveCloser = this.movedCloser;
 
           // update current values
-          this.distanceBetween = this.convertDistanceMetric( Math.abs( x1 - x2 ) );
+          this.distanceBetween = this.formatDisplayDistance( Math.abs( x1 - x2 ) );
 
           // only set movedCloser if the user is manipulating the value, null otherwise for comparison on focus
           if ( this.object1.isDragging || this.object2.isDragging ) {
