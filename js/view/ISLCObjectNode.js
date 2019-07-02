@@ -16,14 +16,15 @@ define( require => {
   // modules
   const AccessibleSlider = require( 'SUN/accessibility/AccessibleSlider' );
   const BooleanProperty = require( 'AXON/BooleanProperty' );
-  const Color = require( 'SCENERY/util/Color' );
   const Circle = require( 'SCENERY/nodes/Circle' );
+  const Color = require( 'SCENERY/util/Color' );
   const inherit = require( 'PHET_CORE/inherit' );
   const inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
   const ISLCAlertManager = require( 'INVERSE_SQUARE_LAW_COMMON/view/ISLCAlertManager' );
   const ISLCForceArrowNode = require( 'INVERSE_SQUARE_LAW_COMMON/view/ISLCForceArrowNode' );
   const ISLCObjectEnum = require( 'INVERSE_SQUARE_LAW_COMMON/view/ISLCObjectEnum' );
   const ISLCPullerNode = require( 'INVERSE_SQUARE_LAW_COMMON/view/ISLCPullerNode' );
+  const merge = require( 'PHET_CORE/merge' );
   const Node = require( 'SCENERY/nodes/Node' );
   const Path = require( 'SCENERY/nodes/Path' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
@@ -60,14 +61,6 @@ define( require => {
     'tailWidth',
     'arrowStroke',
     'arrowFill'
-  ];
-  const PULLER_OPTION_KEYS = [
-    'ropeLength',
-    'shadowMinWidth',
-    'shadowMaxWidth',
-    'attractNegative',
-    'displayShadow',
-    'atomicScale'
   ];
 
   const NEGATIVE_FILL = new Color( '#66f' );
@@ -118,10 +111,21 @@ define( require => {
 
       arrowStroke: null,
 
+      // options passed to the PullerNode, filled in below
+      pullerNodeOptions: null,
+
+      // phet-io
       tandem: Tandem.required,
 
       // {Property[]} - Properties that need to be monitored to successfully update this Node's PDOM descriptions
       additionalA11yDependencies: []
+    }, config );
+
+    // separate call because of the use of a config value from the above defaults
+    config = merge( {
+      pullerNodeOptions: {
+        attractNegative: config.attractNegative
+      }
     }, config );
 
     // use snapToNearest if stepSize is not provided
@@ -171,7 +175,7 @@ define( require => {
     this.pullerNode = new ISLCPullerNode(
       pullForceRange,
       config.tandem.createTandem( 'pullerNode' ),
-      _.pick( config, PULLER_OPTION_KEYS )
+      config.pullerNodeOptions
     );
 
     if ( config.defaultDirection === 'right' ) {
