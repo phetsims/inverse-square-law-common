@@ -35,10 +35,13 @@ define( function( require ) {
   /**
    * @param {Range} arrowForceRange - the range in force magnitude
    * @param {Bounds2} layoutBounds
+   * @param {string} label
+   * @param {string} otherObjectLabel
+   * @param {Tandem} tandem
    * @param {Object} [options]
    * @constructor
    */
-  function ISLCForceArrowNode( arrowForceRange, layoutBounds, options ) {
+  function ISLCForceArrowNode( arrowForceRange, layoutBounds, label, otherObjectLabel, tandem, options ) {
 
     options = _.extend( {
       defaultDirection: 'left',
@@ -46,8 +49,6 @@ define( function( require ) {
       arrowNodeLineWidth: 0.25,
 
       // label options
-      otherObjectLabel: '', // label for the other object exerting a force on this object
-      label: '', // label for this object
       arrowLabelFont: new PhetFont( 16 ),
       arrowLabelFill: '#fff',
       arrowLabelStroke: null,
@@ -62,16 +63,17 @@ define( function( require ) {
       headWidth: 8,
       tailWidth: 3,
       arrowStroke: null,
-      arrowFill: '#fff',
-      tandem: Tandem.required
+      arrowFill: '#fff'
     }, options );
+
+    options.tandem = tandem;
 
     // @private
     this.layoutBounds = layoutBounds;
     this.defaultDirection = options.defaultDirection;
     this.forceReadoutDecimalPlaces = options.forceReadoutDecimalPlaces;
-    this.label = options.label;
-    this.otherObjectLabel = options.otherObjectLabel;
+    this.label = label;
+    this.otherObjectLabel = otherObjectLabel;
     this.scientificNotationMode = false;
     this.attractNegative = options.attractNegative;
 

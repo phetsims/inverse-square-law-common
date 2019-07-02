@@ -38,30 +38,6 @@ define( require => {
 
   // constants
   const LABEL_MAX_WIDTH = 20; // empirically determined through testing with long strings
-  const ARROW_OPTION_KEYS = [
-    'defaultDirection',
-    'attractNegative', // if true, arrows will point towards each other if forces is negative
-    'arrowNodeLineWidth',
-
-    // label options
-    'otherObjectLabel', // label for the other object exerting a force on this object
-    'label', // label for this object
-    'arrowLabelFont',
-    'arrowLabelFill',
-    'arrowLabelStroke',
-    'forceReadoutDecimalPlaces', // number of decimal places in force readout
-
-    // arrow node arguments
-    'forceArrowHeight',
-
-    // arrow node options
-    'maxArrowWidth', // max width of the arrow when when redrawn, in view coordinates - used in mapping function
-    'headHeight',
-    'headWidth',
-    'tailWidth',
-    'arrowStroke',
-    'arrowFill'
-  ];
 
   const NEGATIVE_FILL = new Color( '#66f' );
   const POSITIVE_FILL = new Color( '#f66' );
@@ -85,8 +61,8 @@ define( require => {
       otherObjectLabel: null, // {string} @required
       defaultDirection: 'left',
 
+      // {boolean} - if true, arrows will point towards each other if forces is negative. Used by the puller and arrow nodes
       attractNegative: false,
-      forceReadoutDecimalPlaces: 12, // number of decimal places in force readout
       snapToNearest: null, // {number} if present, object node will snap to the nearest snapToNearest value on drag
       stepSize: null, // {number} step size when moving the object keyboard. By default based on snapToNearest, see below.
 
@@ -101,18 +77,11 @@ define( require => {
       labelShadowOffsetX: 0.5,
       labelShadowOffsetY: 0.5,
 
-      // options for the arrow node, passed to the ISLCForceArrowNode
-      arrowLabelFill: '#fff',
-
       arrowColor: '#66f', // color of vertical line
-      arrowFill: 'white',
       y: 250,
+
       forceArrowHeight: 150, // height of arrow in view coordinates
 
-      arrowStroke: null,
-
-      // options passed to the PullerNode, filled in below
-      pullerNodeOptions: null,
 
       // phet-io
       tandem: Tandem.required,
@@ -123,6 +92,19 @@ define( require => {
 
     // separate call because of the use of a config value from the above defaults
     config = merge( {
+
+      // options passed to ISLCForceArrowNode, filled in below
+      arrowNodeOptions: {
+        attractNegative: config.attractNegative,
+        defaultDirection: config.defaultDirection,
+        forceArrowHeight: config.forceArrowHeight,
+        forceReadoutDecimalPlaces: 12, // number of decimal places in force readout
+
+        arrowFill: 'white',
+        arrowLabelFill: '#fff'
+      },
+
+      // options passed to the PullerNode, filled in below
       pullerNodeOptions: {
         attractNegative: config.attractNegative
       }
@@ -163,9 +145,10 @@ define( require => {
     this.arrowNode = new ISLCForceArrowNode(
       arrowForceRange,
       layoutBounds,
-      _.extend( {
-        tandem: config.tandem.createTandem( 'forceArrowNode' )
-      }, _.pick( config, ARROW_OPTION_KEYS ) )
+      config.label,
+      config.otherObjectLabel,
+      config.tandem.createTandem( 'forceArrowNode' ),
+      config.arrowNodeOptions
     );
 
     // set y position for the arrow
