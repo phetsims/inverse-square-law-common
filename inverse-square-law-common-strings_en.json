@@ -8,9 +8,6 @@
   "forceValues": {
     "value": "Force Values"
   },
-  "mass": {
-    "value": "mass"
-  },
   "pattern_0value_1units": {
     "value": "{{value}} {{units}}"
   },
