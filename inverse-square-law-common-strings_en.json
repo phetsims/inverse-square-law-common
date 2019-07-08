@@ -1,7 +1,4 @@
 {
-  "constantSize": {
-    "value": "Constant Size"
-  },
   "forceOnObjectByOtherObjectPattern": {
     "value": "Force on {{thisObject}} by {{otherObject}}"
   },
