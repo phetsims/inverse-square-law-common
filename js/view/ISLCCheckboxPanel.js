@@ -35,8 +35,7 @@ define( require => {
           checkboxOptions: {
             spacing: 10,
             padding: 8,
-            boxWidth: 16,
-            appendLabel: false
+            boxWidth: 16
           }
         },
         fill: '#FDF498',
