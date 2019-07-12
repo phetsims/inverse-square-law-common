@@ -136,7 +136,7 @@ define( require => {
       value: '{{vectorChangeClause}}, forces now {{forceValue}} {{units}}.'
     },
     vectorsCapitalized: {
-      value: 'Vectors'
+      value: 'Force vectors'
     },
     vectorChangeClausePattern: {
       value: '{{vectors}} {{changeDirection}}'
@@ -145,7 +145,7 @@ define( require => {
       value: '{{vectors}} {{changeDirection}}, forces now {{forceValue}} {{units}}'
     },
     vectors: {
-      value: 'vectors'
+      value: 'force vectors'
     },
     vectorsSizeClausePattern: {
       value: '{{vectors}} {{size}}'
