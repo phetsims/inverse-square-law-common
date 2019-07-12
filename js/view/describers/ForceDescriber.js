@@ -87,7 +87,6 @@ define( require => {
 
   // scientific notation
   const scientificNotationPatternString = ISLCA11yStrings.scientificNotationPattern.value;
-  const scientificNotationPatternNoHtmlString = ISLCA11yStrings.scientificNotationPatternNoHtml.value;
   const negativeValuePatternString = ISLCA11yStrings.negativeValuePattern.value;
   const valuePatternString = ISLCA11yStrings.valuePattern.value;
 
@@ -413,16 +412,6 @@ define( require => {
      */
     static getForceInScientificNotation( forceValue, mantissaDecimalPlaces ) {
       return getScientificNotationTextFromPattern( forceValue, mantissaDecimalPlaces, scientificNotationPatternString );
-    }
-
-    /**
-     * @param {number} forceValue
-     * @param {number} mantissaDecimalPlaces
-     * @returns {number}
-     * @public
-     */
-    static getForceInScientificNotationNoHtml( forceValue, mantissaDecimalPlaces ) {
-      return getScientificNotationTextFromPattern( forceValue, mantissaDecimalPlaces, scientificNotationPatternNoHtmlString );
     }
 
     /**
