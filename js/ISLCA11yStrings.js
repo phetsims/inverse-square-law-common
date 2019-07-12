@@ -307,7 +307,7 @@ define( require => {
 
     // misc
     scientificNotationPattern: {
-      value: '{{mantissa}} &times; 10 to the {{exponent}}'
+      value: '{{mantissa}} times 10 to the {{exponent}}'
     },
     scientificNotationPatternNoHtml: {
       value: '{{mantissa}} times 10 to the {{exponent}}'
