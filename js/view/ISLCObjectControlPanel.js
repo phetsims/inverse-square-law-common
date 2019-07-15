@@ -14,6 +14,7 @@ define( function( require ) {
   var GroupFocusHighlightFromNode = require( 'SCENERY/accessibility/GroupFocusHighlightFromNode' );
   var inherit = require( 'PHET_CORE/inherit' );
   var inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
+  var merge = require( 'PHET_CORE/merge' );
   var NumberControl = require( 'SCENERY_PHET/NumberControl' );
   var Panel = require( 'SUN/Panel' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
@@ -38,7 +39,7 @@ define( function( require ) {
    */
   function ISLCObjectControlPanel( titleString, unitString, objectProperty, valueRange, options ) {
 
-    options = _.extend( {
+    options = merge( {
 
       // panel options
       fill: '#EDEDED',
@@ -48,7 +49,11 @@ define( function( require ) {
       align: 'right',
 
       numberControlOptions: null, // filled in below
-      tickLabelOptions: null, // filled in below
+
+      // filled in here because they are used by numberControlOptions below
+      tickLabelOptions: {
+        pickable: false
+      },
       additionalTicks: [],
 
       // a11y
@@ -60,19 +65,48 @@ define( function( require ) {
 
     var tandem = options.tandem;
 
-    // define first because they are used by numberControlOptions
-    options.tickLabelOptions = _.extend( {
-      pickable: false
-    }, options.tickLabelOptions );
-
     // options that are passed along to the number control
-    var numberControlOptions = _.extend( {
+    var numberControlOptions = merge( {
 
       // layout options
       layoutFunction: NumberControl.createLayoutFunction3( { xSpacing: 10 } ),
-      numberDisplayOptions: null, // filled in below
-      sliderOptions: null, // filled in below
-      arrowButtonOptions: null, // filled in below
+      numberDisplayOptions: {
+        valuePattern: StringUtils.fillIn( pattern0Value1UnitsString, { units: unitString } ),
+        align: 'right',
+        xMargin: 10,
+        yMargin: 4,
+        backgroundStroke: 'black',
+        cornerRadius: 3,
+        font: new PhetFont( 12 ),
+        maxWidth: VALUE_MAX_WIDTH
+      },
+      sliderOptions: {
+        trackFillEnabled: 'black',
+
+        // tick options
+        minorTickSpacing: 2,
+        minorTickLength: 6,
+        majorTicks: [ {
+          value: valueRange.min,
+          label: new Text(
+            valueRange.min,
+            _.extend( { tandem: options.tandem.createTandem( 'majorTickMinLabel' ) }, options.tickLabelOptions )
+          )
+        }, {
+          value: valueRange.max,
+          label: new Text(
+            valueRange.max,
+            _.extend( { tandem: options.tandem.createTandem( 'majorTickMaxLabel' ) }, options.tickLabelOptions )
+          )
+        } ],
+        majorTickLength: 8,
+        tickLabelSpacing: 1
+      },
+      arrowButtonOptions: {
+        touchAreaXDilation: 15,
+        touchAreaYDilation: 15,
+        scale: 1
+      },
 
       // title and value text options
       titleNodeOptions: {
@@ -83,46 +117,6 @@ define( function( require ) {
       // phet-io
       tandem: tandem.createTandem( 'numberControl' )
     }, options.numberControlOptions );
-
-    numberControlOptions.numberDisplayOptions = _.extend( {
-      valuePattern: StringUtils.fillIn( pattern0Value1UnitsString, { units: unitString } ),
-      align: 'right',
-      xMargin: 10,
-      yMargin: 4,
-      backgroundStroke: 'black',
-      cornerRadius: 3,
-      font: new PhetFont( 12 ),
-      maxWidth: VALUE_MAX_WIDTH
-    }, options.numberControlOptions.numberDisplayOptions );
-
-    numberControlOptions.arrowButtonOptions = _.extend( {
-      touchAreaXDilation: 15,
-      touchAreaYDilation: 15,
-      scale: 1
-    }, numberControlOptions.arrowButtonOptions );
-
-    numberControlOptions.sliderOptions = _.extend( {
-      trackFillEnabled: 'black',
-
-      // tick options
-      minorTickSpacing: 2,
-      minorTickLength: 6,
-      majorTicks: [ {
-        value: valueRange.min,
-        label: new Text(
-          valueRange.min,
-          _.extend( { tandem: options.tandem.createTandem( 'majorTickMinLabel' ) }, options.tickLabelOptions )
-        )
-      }, {
-        value: valueRange.max,
-        label: new Text(
-          valueRange.max,
-          _.extend( { tandem: options.tandem.createTandem( 'majorTickMaxLabel' ) }, options.tickLabelOptions )
-        )
-      } ],
-      majorTickLength: 8,
-      tickLabelSpacing: 1
-    }, options.numberControlOptions.sliderOptions );
 
     for ( var i = 0; i < options.additionalTicks.length; i++ ) {
       var tick = {
