@@ -110,8 +110,8 @@ define( function( require ) {
 
       // title and value text options
       titleNodeOptions: {
-        titleFont: new PhetFont( 12 ),
-        titleMaxWidth: TITLE_MAX_WIDTH
+        font: new PhetFont( 12 ),
+        maxWidth: TITLE_MAX_WIDTH
       },
 
       // phet-io
