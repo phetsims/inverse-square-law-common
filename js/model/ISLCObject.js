@@ -60,9 +60,9 @@ define( require => {
 
     // @public {Property.<number>} - the radius of the mass or charge in meters
     // since ISLCObjects are never destroyed, no need to dispose
-    this.radiusProperty = new DerivedProperty( [ this.valueProperty, constantRadiusProperty ],
-      ( valueProperty, constantRadius ) => {
-        return constantRadius ? options.constantRadius : this.calculateRadius( valueProperty );
+    this.radiusProperty = new DerivedProperty( [this.valueProperty, constantRadiusProperty],
+      ( objectValue, constantRadius ) => {
+        return constantRadius ? options.constantRadius : this.calculateRadius( objectValue );
       }, {
         tandem: tandem.createTandem( 'radiusProperty' ),
         units: 'meters',
@@ -81,7 +81,7 @@ define( require => {
 
     // @public (read-only) - Emitter that fires whenever the position changes as a result of an object's value changing.
     // Emits with the objectEnum that caused the position change.
-    this.valueChangedPositionEmitter = new Emitter( { validators: [ { valueType: ISLCObjectEnum } ] } );
+    this.valueChangedPositionEmitter = new Emitter( { validators: [{ valueType: ISLCObjectEnum }] } );
 
     // @public - flag to check if the object is being dragged by the user
     //           set in the drag handler
@@ -101,6 +101,9 @@ define( require => {
     //   - color Property will be updated based on a boolean value (negative vs positive)
     //   - brightness will be set according to the Mass/Charge magnitude
     this.baseColorProperty = null;
+
+    // @public (read-only) {number} - the radius of the object when radius is constant.
+    this.constantRadius = options.constantRadius;
   }
 
   inverseSquareLawCommon.register( 'ISLCObject', ISLCObject );
@@ -112,8 +115,9 @@ define( require => {
      *
      * @public
      * @abstract
+     * @param {number} value
      */
-    calculateRadius: function() {
+    calculateRadius: function( value ) {
       assert && assert( false, 'calculateRadius must be implemented in descendent types' );
     },
 

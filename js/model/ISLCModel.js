@@ -95,7 +95,7 @@ define( require => {
 
     // a11y - necessary to reset the enabledRangeProperty to prevent object overlap, disposal not necessary
     // We need to update the available range for each object when the either's radius or position changes.
-    Property.multilink( [ object1.positionProperty, object2.positionProperty ], () => {
+    Property.multilink( [object1.positionProperty, object2.positionProperty], () => {
       updateRange( object1 );
       updateRange( object2 );
     } );
@@ -283,9 +283,8 @@ define( require => {
      */
     getMaxForce: function() {
       this.assertObjectsHaveSameRange();
-
-      const maxValue = this.object1.valueRange.max;
-      return Math.abs( this.calculateForce( maxValue, maxValue, this.getMinDistance( maxValue ) ) );
+      return Math.abs( this.calculateForce( this.object1.valueRange.max, this.object2.valueRange.max,
+        this.object1.constantRadius * 2 + this.minSeparationBetweenObjects ) );
     },
 
     /**

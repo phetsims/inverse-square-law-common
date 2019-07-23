@@ -30,6 +30,7 @@ define( function( require ) {
 
   // constants
   var ARROW_LENGTH = 8; // empirically determined
+  var ARROW_WIDTH_MIN = 1; // empirically determined
   var TEXT_OFFSET = 10; // empirically determined to make sure text does not go out of bounds
 
   /**
@@ -79,7 +80,7 @@ define( function( require ) {
     this.attractNegative = options.attractNegative;
 
     // @private - maps the force value to the desired width of the arrow in view coordinates
-    this.forceToArrowWidthFunction = new LinearFunction( arrowForceRange.min, arrowForceRange.max, 0, options.maxArrowWidth, false );
+    this.forceToArrowWidthFunction = new LinearFunction( arrowForceRange.min, arrowForceRange.max, ARROW_WIDTH_MIN, options.maxArrowWidth, false );
 
     // @public (read-only) - for layout, the label for the arrow
     this.arrowText = new RichText( '', {

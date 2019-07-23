@@ -83,7 +83,7 @@ define( require => {
     hardString,
     veryHardString
   ];
-  const CHANGE_DIRECTIONS = [ getSmallerString, null, getBiggerString ];
+  const CHANGE_DIRECTIONS = [getSmallerString, null, getBiggerString];
 
   // scientific notation
   const scientificNotationPatternString = ISLCA11yStrings.scientificNotationPattern.value;
@@ -135,7 +135,9 @@ define( require => {
       this.units = options.units;
       this.forceValueToString = options.forceValueToString;
       this.convertForce = options.convertForce;
-      this.forceToPullIndex = new LinearFunction( model.getMinForce(), model.getMaxForce(),
+
+      // @private - empirically divide by 2 to give a good range to the pull force regions
+      this.forceToPullIndex = new LinearFunction( model.getMinForce(), model.getMaxForce() / 2,
         0, PULL_EFFORT_STINGS.length - 1, true );
 
       // @private {number} - // 1 -> growing, 0 -> no change, -1 -> shrinking
