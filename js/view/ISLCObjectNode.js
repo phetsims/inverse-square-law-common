@@ -137,8 +137,11 @@ define( require => {
     // @public - which object this instance is (one or two)
     this.enum = object === model.object1 ? ISLCObjectEnum.OBJECT_ONE : ISLCObjectEnum.OBJECT_TWO;
 
+    // Used by arrows and puller
+    const modelMaxForce = model.getMaxForce();
+
     // the full range of force for the arrow node (note: this is distinct)
-    const arrowForceRange = new Range( model.getMinForceMagnitude(), model.getMaxForce() );
+    const arrowForceRange = new Range( model.getMinForceMagnitude(), modelMaxForce );
 
     // @protected - arrow node
     this.arrowNode = new ISLCForceArrowNode(
@@ -155,7 +158,7 @@ define( require => {
 
     // @private - the puller node
     this.pullerNode = new ISLCPullerNode(
-      new Range( model.getMinForce(), model.getMaxForce() ),
+      new Range( model.getMinForce(), modelMaxForce ),
       config.tandem.createTandem( 'pullerNode' ),
       config.pullerNodeOptions
     );
