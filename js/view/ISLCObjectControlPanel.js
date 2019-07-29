@@ -57,7 +57,7 @@ define( function( require ) {
       additionalTicks: [],
 
       // a11y
-      tagName: 'li',
+      tagName: 'div', // this optional structure is added for nicer formatting of value-text in the a11y view
 
       // phet-io
       tandem: Tandem.required
