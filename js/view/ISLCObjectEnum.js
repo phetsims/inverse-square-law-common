@@ -15,34 +15,36 @@ define( require => {
   return inverseSquareLawCommon.register( 'ISLCObjectEnum', new Enumeration( [
     'OBJECT_ONE',
     'OBJECT_TWO'
-  ], ISLCObjectEnum => {
+  ], {
+    beforeFreeze: ISLCObjectEnum => {
 
-    /**
-     * @param {ISLCObjectEnum} objectEnum
-     * @returns {ISLCObjectEnum}
-     */
-    ISLCObjectEnum.getOtherObjectEnum = objectEnum => {
-      assert && assert( ISLCObjectEnum.includes( objectEnum ) );
-      return objectEnum === ISLCObjectEnum.OBJECT_ONE ? ISLCObjectEnum.OBJECT_TWO : ISLCObjectEnum.OBJECT_ONE;
-    };
+      /**
+       * @param {ISLCObjectEnum} objectEnum
+       * @returns {ISLCObjectEnum}
+       */
+      ISLCObjectEnum.getOtherObjectEnum = objectEnum => {
+        assert && assert( ISLCObjectEnum.includes( objectEnum ) );
+        return objectEnum === ISLCObjectEnum.OBJECT_ONE ? ISLCObjectEnum.OBJECT_TWO : ISLCObjectEnum.OBJECT_ONE;
+      };
 
-    /**
-     * @public
-     * @param {ISLCObjectEnum} objectEnum
-     * @returns {boolean}
-     */
-    ISLCObjectEnum.isObject1 = objectEnum => {
-      assert && assert( ISLCObjectEnum.includes( objectEnum ) );
-      return objectEnum === ISLCObjectEnum.OBJECT_ONE;
-    };
+      /**
+       * @public
+       * @param {ISLCObjectEnum} objectEnum
+       * @returns {boolean}
+       */
+      ISLCObjectEnum.isObject1 = objectEnum => {
+        assert && assert( ISLCObjectEnum.includes( objectEnum ) );
+        return objectEnum === ISLCObjectEnum.OBJECT_ONE;
+      };
 
-    /**
-     * @param {ISLCObjectEnum} objectEnum
-     * @returns {boolean}
-     */
-    ISLCObjectEnum.isObject2 = objectEnum => {
-      assert && assert( ISLCObjectEnum.includes( objectEnum ) );
-      return objectEnum === ISLCObjectEnum.OBJECT_TWO;
-    };
+      /**
+       * @param {ISLCObjectEnum} objectEnum
+       * @returns {boolean}
+       */
+      ISLCObjectEnum.isObject2 = objectEnum => {
+        assert && assert( ISLCObjectEnum.includes( objectEnum ) );
+        return objectEnum === ISLCObjectEnum.OBJECT_TWO;
+      };
+    }
   } ) );
 } );
