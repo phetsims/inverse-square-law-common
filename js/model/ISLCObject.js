@@ -81,7 +81,7 @@ define( require => {
 
     // @public (read-only) - Emitter that fires whenever the position changes as a result of an object's value changing.
     // Emits with the objectEnum that caused the position change.
-    this.valueChangedPositionEmitter = new Emitter( { validators: [{ valueType: ISLCObjectEnum }] } );
+    this.valueChangedPositionEmitter = new Emitter( { parameters: [{ valueType: ISLCObjectEnum }] } );
 
     // @public - flag to check if the object is being dragged by the user
     //           set in the drag handler
