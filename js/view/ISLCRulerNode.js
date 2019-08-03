@@ -68,7 +68,6 @@ define( function( require ) {
     Node.call( this, {
       cursor: 'pointer',
       cssTransform: true,
-      tandem: tandem,
       tagName: 'div',
       focusable: true,
       focusHighlightLayerable: true
@@ -88,7 +87,7 @@ define( function( require ) {
         snapToNearest: options.snapToNearest ? options.snapToNearest : 0,
         unitsFont: new PhetFont( 10 ),
         unitsSpacing: 3,
-        tandem: tandem.createTandem( 'ruler' )
+        tandem: tandem
       }
     );
     this.addChild( ruler );

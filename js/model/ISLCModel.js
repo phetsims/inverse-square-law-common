@@ -49,7 +49,7 @@ define( require => {
     // @public {Property.<boolean>} - whether to display the force values
     this.showForceValuesProperty = new BooleanProperty( true, {
       tandem: tandem.createTandem( 'showForceValuesProperty' ),
-      phetioFeatured: true
+      phetioDocumentation: 'Whether or not the force values should be displayed'
     } );
 
     // @public

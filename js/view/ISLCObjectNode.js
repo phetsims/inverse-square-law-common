@@ -159,7 +159,6 @@ define( require => {
     // @private - the puller node
     this.pullerNode = new ISLCPullerNode(
       new Range( model.getMinForce(), modelMaxForce ),
-      config.tandem.createTandem( 'pullerNode' ),
       config.pullerNodeOptions
     );
 
@@ -169,8 +168,7 @@ define( require => {
 
     // @protected - a parent node that applies the drag handler
     this.dragNode = new Node( {
-      cursor: 'pointer',
-      tandem: config.tandem.createTandem( 'dragNode' )
+      cursor: 'pointer'
     } );
 
     // the 'object' - a shaded circle
@@ -225,14 +223,12 @@ define( require => {
       lineDash: [ 4, 4 ],
       lineWidth: 2,
       x: 0.5,
-      y: 0.5,
-      tandem: config.tandem.createTandem( 'markerLineShadow' )
+      y: 0.5
     } ) );
     const markerLineShapeTop = new Path( markerLineShape, {
       stroke: config.arrowColor,
       lineDash: [ 4, 4 ],
-      lineWidth: 2,
-      tandem: config.tandem.createTandem( 'markerLine' )
+      lineWidth: 2
     } );
     this.addChild( markerLineShapeTop );
 

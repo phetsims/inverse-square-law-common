@@ -90,19 +90,18 @@ define( function( require ) {
       lineWidth: options.arrowNodeLineWidth,
       maxWidth: 300, // empirically determined through testing with long strings
       y: -20,
-      tandem: options.tandem.createTandem( 'arrowText' )
+      tandem: tandem.createTandem( 'arrowText' )
     } );
 
     var arrowOptions = _.pick( options, [ 'headHeight', 'headWidth', 'tailWidth' ] );
     arrowOptions.lineWidth = options.arrowNodeLineWidth;
     arrowOptions.stroke = options.arrowStroke;
     arrowOptions.fill = options.arrowFill;
-    arrowOptions.tandem = options.tandem.createTandem( 'arrow' );
 
     // @private - tip and tail set in redrawArrow
     this.arrow = new ArrowNode( 0, -options.forceArrowHeight, 200, -options.forceArrowHeight, arrowOptions );
 
-    Node.call( this, {} );
+    Node.call( this, options );
 
     // @private
     this.arrowTextBackground = new Rectangle( 0, 0, 1000, 1000, { fill: options.backgroundFill, opacity: .3 } );

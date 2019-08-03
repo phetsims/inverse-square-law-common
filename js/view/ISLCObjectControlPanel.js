@@ -88,16 +88,10 @@ define( function( require ) {
         minorTickLength: 6,
         majorTicks: [ {
           value: valueRange.min,
-          label: new Text(
-            valueRange.min,
-            _.extend( { tandem: options.tandem.createTandem( 'majorTickMinLabel' ) }, options.tickLabelOptions )
-          )
+          label: new Text( valueRange.min, options.tickLabelOptions )
         }, {
           value: valueRange.max,
-          label: new Text(
-            valueRange.max,
-            _.extend( { tandem: options.tandem.createTandem( 'majorTickMaxLabel' ) }, options.tickLabelOptions )
-          )
+          label: new Text( valueRange.max, options.tickLabelOptions )
         } ],
         majorTickLength: 8,
         tickLabelSpacing: 1
@@ -121,9 +115,7 @@ define( function( require ) {
     for ( var i = 0; i < options.additionalTicks.length; i++ ) {
       var tick = {
         value: options.additionalTicks[ i ].value,
-        label: new Text( options.additionalTicks[ i ].value, _.extend( {
-          tandem: options.tandem.createTandem( options.additionalTicks[ i ].tandemLabel )
-        }, options.tickLabelOptions ) )
+        label: new Text( options.additionalTicks[ i ].value, options.tickLabelOptions )
       };
       numberControlOptions.sliderOptions.majorTicks.push( tick );
     }

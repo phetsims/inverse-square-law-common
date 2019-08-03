@@ -29,11 +29,10 @@ define( function( require ) {
 
   /**
    * @param {RangeWithValue} forceRange - range of forces, used for determining the visible pullImage
-   * @param {Tandem} tandem
    * @param {Object} [options]
    * @constructor
    */
-  function ISLCPullerNode( forceRange, tandem, options ) {
+  function ISLCPullerNode( forceRange, options ) {
 
     options = _.extend( {
       ropeLength: 50,
@@ -44,7 +43,7 @@ define( function( require ) {
       atomicScale: false
     }, options );
 
-    Node.call( this, { tandem: tandem } );
+    Node.call( this );
 
     var pullImages = ISLCPullerImages.pullImages;
     var pushImages = ISLCPullerImages.pushImages;
@@ -61,7 +60,7 @@ define( function( require ) {
     this.pullerPusherImages = pullImages;
 
     // @public
-    this.touchAreaBounds = new Bounds2( 0,0,0,0 );
+    this.touchAreaBounds = new Bounds2( 0, 0, 0, 0 );
 
     // used to ensure that small non-zero forces do not map to the zero force puller (see lines 130-132)
     var zeroForceIndex = null;

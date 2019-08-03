@@ -48,23 +48,26 @@ define( require => {
     this.positionProperty = new NumberProperty( initialPosition, {
       tandem: tandem.createTandem( 'positionProperty' ),
       units: 'meters',
-      range: new Range( options.leftObjectBoundary, options.rightObjectBoundary )
+      range: new Range( options.leftObjectBoundary, options.rightObjectBoundary ),
+      phetioDocumentation: 'The position of the object along the track, in meters.'
     } );
 
     // @public {Property.<number>} - the mass or charge of the object in kilograms or coulombs
     this.valueProperty = new NumberProperty( initialMass, {
       tandem: tandem.createTandem( 'valueProperty' ),
       range: valueRange,
-      units: options.valueUnits
+      units: options.valueUnits,
+      phetioDocumentation: 'The value of the object'
     } );
 
     // @public {Property.<number>} - the radius of the mass or charge in meters
     // since ISLCObjects are never destroyed, no need to dispose
-    this.radiusProperty = new DerivedProperty( [this.valueProperty, constantRadiusProperty],
+    this.radiusProperty = new DerivedProperty( [ this.valueProperty, constantRadiusProperty ],
       ( objectValue, constantRadius ) => {
         return constantRadius ? options.constantRadius : this.calculateRadius( objectValue );
       }, {
         tandem: tandem.createTandem( 'radiusProperty' ),
+        phetioDocumentation: 'The radius of the object',
         units: 'meters',
         phetioType: DerivedPropertyIO( NumberIO )
       }
@@ -76,12 +79,13 @@ define( require => {
     // based on their radius and location
     this.enabledRangeProperty = new Property( enabledRange, {
       tandem: tandem.createTandem( 'enabledRangeProperty' ),
+      phetioDocumentation: 'The range for position of this object based on the radius and location of both objects',
       phetioType: PropertyIO( RangeIO )
     } );
 
     // @public (read-only) - Emitter that fires whenever the position changes as a result of an object's value changing.
     // Emits with the objectEnum that caused the position change.
-    this.valueChangedPositionEmitter = new Emitter( { parameters: [{ valueType: ISLCObjectEnum }] } );
+    this.valueChangedPositionEmitter = new Emitter( { parameters: [ { valueType: ISLCObjectEnum } ] } );
 
     // @public - flag to check if the object is being dragged by the user
     //           set in the drag handler
