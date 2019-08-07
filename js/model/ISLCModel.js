@@ -95,7 +95,7 @@ define( require => {
 
     // a11y - necessary to reset the enabledRangeProperty to prevent object overlap, disposal not necessary
     // We need to update the available range for each object when the either's radius or position changes.
-    Property.multilink( [object1.positionProperty, object2.positionProperty], () => {
+    Property.multilink( [ object1.positionProperty, object2.positionProperty ], () => {
       updateRange( object1 );
       updateRange( object2 );
     } );
@@ -148,6 +148,17 @@ define( require => {
     };
     object1.valueProperty.link( massChangedListener );
     object2.valueProperty.link( massChangedListener );
+
+    // mark flags when the valueProperty is changed
+    object1.valueProperty.link( () => object1.valueChangedSinceLastStep = true );
+    object2.valueProperty.link( () => object2.valueChangedSinceLastStep = true );
+
+    // reset after step is complete. This flag is only needed to mark valueChange until position is changed in step.
+    this.stepEmitter.addListener(()=>{
+      this.object1.valueChangedSinceLastStep = false;
+      this.object2.valueChangedSinceLastStep = false;
+
+    })
   }
 
   inverseSquareLawCommon.register( 'ISLCModel', ISLCModel );
@@ -203,7 +214,7 @@ define( require => {
 
               // object2 is not at the edge update its position
               this.object2.positionProperty.set( locationObject2 );
-              this.object2.valueChangedPositionEmitter.emit( OBJECT_ONE );
+              this.object2.valueChangedSinceLastStep && this.object2.valueChangedPositionEmitter.emit( OBJECT_ONE );
             }
           }
           else {
@@ -213,7 +224,7 @@ define( require => {
 
               // object2 is at the edge update object1 position
               this.object1.positionProperty.set( locationObject1 );
-              this.object1.valueChangedPositionEmitter.emit( OBJECT_ONE );
+              this.object1.valueChangedSinceLastStep && this.object1.valueChangedPositionEmitter.emit( OBJECT_ONE );
             }
           }
         }
@@ -225,7 +236,7 @@ define( require => {
 
               // object1 is not at boundary, update position
               this.object1.positionProperty.set( locationObject1 );
-              this.object1.valueChangedPositionEmitter.emit( OBJECT_TWO );
+              this.object1.valueChangedSinceLastStep && this.object1.valueChangedPositionEmitter.emit( OBJECT_TWO );
             }
           }
           else {
@@ -234,7 +245,7 @@ define( require => {
             if ( locationObject2 !== this.object2.positionProperty.get() ) {
 
               this.object2.positionProperty.set( locationObject2 );
-              this.object2.valueChangedPositionEmitter.emit( OBJECT_TWO );
+              this.object2.valueChangedSinceLastStep && this.object2.valueChangedPositionEmitter.emit( OBJECT_TWO );
             }
           }
         }

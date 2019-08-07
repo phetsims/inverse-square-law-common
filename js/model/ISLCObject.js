@@ -94,6 +94,10 @@ define( require => {
     // @public - flag to check whether object's radius was updated, used to determine positioning
     this.radiusLastChanged = false;
 
+    // @public - flag flipped when the value change is updated. This is used to check if a position change is caused
+    // from a value change. // See https://github.com/phetsims/gravity-force-lab-basics/issues/168
+    this.valueChangedSinceLastStep = false;
+
     // @public
     this.valueRange = valueRange;
 
