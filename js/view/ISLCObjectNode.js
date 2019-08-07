@@ -19,6 +19,7 @@ define( require => {
   const Circle = require( 'SCENERY/nodes/Circle' );
   const Color = require( 'SCENERY/util/Color' );
   const DefaultDirection = require( 'INVERSE_SQUARE_LAW_COMMON/view/DefaultDirection' );
+  const DragListener = require( 'SCENERY/listeners/DragListener' );
   const inherit = require( 'PHET_CORE/inherit' );
   const inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
   const ISLCAlertManager = require( 'INVERSE_SQUARE_LAW_COMMON/view/ISLCAlertManager' );
@@ -33,7 +34,6 @@ define( require => {
   const Range = require( 'DOT/Range' );
   const RichText = require( 'SCENERY/nodes/RichText' );
   const Shape = require( 'KITE/Shape' );
-  const SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
   const Tandem = require( 'TANDEM/Tandem' );
   const Util = require( 'DOT/Util' );
 
@@ -234,7 +234,7 @@ define( require => {
 
     let clickOffset;
 
-    this.dragNode.addInputListener( new SimpleDragHandler( {
+    this.dragNode.addInputListener( new DragListener( {
       allowTouchSnag: true,
       start: event => {
         clickOffset = this.dragNode.globalToParentPoint( event.pointer.point ).x - event.currentTarget.x;
@@ -257,7 +257,7 @@ define( require => {
         object.positionProperty.set( model.snapToGrid( x ) );
       },
       end: () => { object.isDragging = false; },
-      tandem: config.tandem.createTandem( 'dragHandler' )
+      tandem: config.tandem.createTandem( 'dragListener' )
     } ) );
 
     const boundRedrawForce = this.redrawForce.bind( this );
