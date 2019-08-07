@@ -150,15 +150,14 @@ define( require => {
     object2.valueProperty.link( massChangedListener );
 
     // mark flags when the valueProperty is changed
-    object1.valueProperty.link( () => object1.valueChangedSinceLastStep = true );
-    object2.valueProperty.link( () => object2.valueChangedSinceLastStep = true );
+    object1.valueProperty.link( () => { object1.valueChangedSinceLastStep = true; } );
+    object2.valueProperty.link( () => { object2.valueChangedSinceLastStep = true; } );
 
     // reset after step is complete. This flag is only needed to mark valueChange until position is changed in step.
-    this.stepEmitter.addListener(()=>{
+    this.stepEmitter.addListener( () => {
       this.object1.valueChangedSinceLastStep = false;
       this.object2.valueChangedSinceLastStep = false;
-
-    })
+    } );
   }
 
   inverseSquareLawCommon.register( 'ISLCModel', ISLCModel );
