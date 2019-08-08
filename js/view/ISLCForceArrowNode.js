@@ -30,7 +30,6 @@ define( function( require ) {
 
   // constants
   var ARROW_LENGTH = 8; // empirically determined
-  var ARROW_WIDTH_MIN = 0; // Some ISLC sims support an object value of zero, this must be zero to support this case.
   var TEXT_OFFSET = 10; // empirically determined to make sure text does not go out of bounds
 
   /**
@@ -60,6 +59,7 @@ define( function( require ) {
 
       // arrow node options
       maxArrowWidth: 15, // max width of the arrow when when redrawn, in view coordinates - used in mapping function
+      minArrowWidth: 0, // Some ISLC sims support an object value of zero, setting this to zero supports this case.
       headHeight: 8,
       headWidth: 8,
       tailWidth: 3,
@@ -80,7 +80,8 @@ define( function( require ) {
     this.attractNegative = options.attractNegative;
 
     // @private - maps the force value to the desired width of the arrow in view coordinates
-    this.forceToArrowWidthFunction = new LinearFunction( arrowForceRange.min, arrowForceRange.max, ARROW_WIDTH_MIN, options.maxArrowWidth, false );
+    this.forceToArrowWidthFunction = new LinearFunction( arrowForceRange.min, arrowForceRange.max,
+      options.minArrowWidth, options.maxArrowWidth, false );
 
     // @public (read-only) - for layout, the label for the arrow
     this.arrowText = new RichText( '', {
