@@ -122,8 +122,7 @@ define( require => {
     assert && assert( alertManager instanceof ISLCAlertManager );
 
     Node.call( this, {
-      containerTagName: 'div',
-      tandem: config.tandem
+      containerTagName: 'div'
     } );
 
     this.accessibleName = PositionDescriber.getObjectLabelPositionText( config.label );
@@ -149,7 +148,7 @@ define( require => {
       layoutBounds,
       config.label,
       config.otherObjectLabel,
-      config.tandem.createTandem( 'forceArrowNode' ),
+      config.tandem.createTandem( 'forceDisplayNode' ),
       config.arrowNodeOptions
     );
 

@@ -80,7 +80,8 @@ define( require => {
     this.enabledRangeProperty = new Property( enabledRange, {
       tandem: tandem.createTandem( 'enabledRangeProperty' ),
       phetioDocumentation: 'The range for position of this object based on the radius and location of both objects',
-      phetioType: PropertyIO( RangeIO )
+      phetioType: PropertyIO( RangeIO ),
+      phetioReadOnly: true
     } );
 
     // @public (read-only) - Emitter that fires whenever the position changes as a result of an object's value changing.

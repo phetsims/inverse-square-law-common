@@ -91,16 +91,21 @@ define( function( require ) {
       lineWidth: options.arrowNodeLineWidth,
       maxWidth: 300, // empirically determined through testing with long strings
       y: -20,
-      tandem: tandem.createTandem( 'arrowText' )
+      tandem: tandem.createTandem( 'forceText' ),
+      phetioComponentOptions: {
+        textProperty: {
+          phetioReadOnly: true
+        }
+      }
     } );
 
-    var arrowOptions = _.pick( options, [ 'headHeight', 'headWidth', 'tailWidth' ] );
-    arrowOptions.lineWidth = options.arrowNodeLineWidth;
-    arrowOptions.stroke = options.arrowStroke;
-    arrowOptions.fill = options.arrowFill;
-
     // @private - tip and tail set in redrawArrow
-    this.arrow = new ArrowNode( 0, -options.forceArrowHeight, 200, -options.forceArrowHeight, arrowOptions );
+    this.arrow = new ArrowNode( 0, -options.forceArrowHeight, 200, -options.forceArrowHeight, _.extend( {
+      lineWidth: options.arrowNodeLineWidth,
+      stroke: options.arrowStroke,
+      fill: options.arrowFill,
+      tandem: tandem.createTandem( 'arrowNode' )
+    }, _.pick( options, [ 'headHeight', 'headWidth', 'tailWidth' ] ) ) );
 
     Node.call( this, options );
 
