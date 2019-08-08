@@ -92,10 +92,9 @@ define( function( require ) {
       maxWidth: 300, // empirically determined through testing with long strings
       y: -20,
       tandem: tandem.createTandem( 'forceText' ),
+      phetioDocumentation: 'This text updates from the model as the force changes, and cannot be edited.',
       phetioComponentOptions: {
-        textProperty: {
-          phetioReadOnly: true
-        }
+        textProperty: { phetioReadOnly: true }
       }
     } );
 

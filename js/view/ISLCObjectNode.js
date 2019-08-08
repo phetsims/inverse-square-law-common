@@ -29,17 +29,14 @@ define( require => {
   const merge = require( 'PHET_CORE/merge' );
   const Node = require( 'SCENERY/nodes/Node' );
   const Path = require( 'SCENERY/nodes/Path' );
-  const PhetFont = require( 'SCENERY_PHET/PhetFont' );
   const PositionDescriber = require( 'INVERSE_SQUARE_LAW_COMMON/view/describers/PositionDescriber' );
   const Range = require( 'DOT/Range' );
-  const RichText = require( 'SCENERY/nodes/RichText' );
   const Shape = require( 'KITE/Shape' );
   const Tandem = require( 'TANDEM/Tandem' );
+  const TextWithShadow = require( 'INVERSE_SQUARE_LAW_COMMON/view/TextWithShadow' );
   const Util = require( 'DOT/Util' );
 
   // constants
-  const LABEL_MAX_WIDTH = 20; // empirically determined through testing with long strings
-
   const NEGATIVE_FILL = new Color( '#66f' );
   const POSITIVE_FILL = new Color( '#f66' );
   const ZERO_FILL = new Color( 'gray' );
@@ -66,17 +63,6 @@ define( require => {
       attractNegative: false,
       snapToNearest: null, // {number} if present, object node will snap to the nearest snapToNearest value on drag
       stepSize: null, // {number} step size when moving the object keyboard. By default based on snapToNearest, see below.
-
-      // options for the label, in the lower center of the sphere
-      labelFill: '#fff',
-      labelFont: new PhetFont( 12 ),
-      labelMaxWidth: LABEL_MAX_WIDTH,
-
-      // options for the label 'shadow' that helps the label show up when the object is roughly the same color
-      // as the label
-      labelShadowFill: '#000',
-      labelShadowOffsetX: 0.5,
-      labelShadowOffsetY: 0.5,
 
       arrowColor: '#66f', // color of vertical line
       y: 250,
@@ -182,29 +168,8 @@ define( require => {
     // Small black dot where vertical arrow line connects to the object
     this.dragNode.addChild( new Circle( 2, { fill: '#000' } ) );
 
-    const labelCenterX = 0;
-    const labelTop = 4;
-
-    // add the label shadow, added first so that the 'shadow' appears under the label text
-    this.dragNode.addChild( new RichText( config.label, {
-      font: config.labelFont,
-      fill: config.labelShadowFill,
-      pickable: false,
-      maxWidth: config.labelMaxWidth,
-      centerX: labelCenterX + config.labelShadowOffsetX,
-      top: labelTop + config.labelShadowOffsetY,
-      tandem: config.tandem.createTandem( 'labelShadowNode' )
-    } ) );
-
-    // add the label
-    this.dragNode.addChild( new RichText( config.label, {
-      font: config.labelFont,
-      fill: config.labelFill,
-      pickable: false,
-      maxWidth: config.labelMaxWidth,
-      centerX: labelCenterX,
-      top: labelTop,
-      tandem: config.tandem.createTandem( 'labelNode' )
+    this.dragNode.addChild( new TextWithShadow( config.label, config.tandem, {
+      textPhetioDocumentation: 'The text located on the puller object'
     } ) );
 
     this.addChild( this.dragNode );
