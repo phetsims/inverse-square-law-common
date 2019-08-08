@@ -138,7 +138,7 @@ define( require => {
     this.enum = object === model.object1 ? ISLCObjectEnum.OBJECT_ONE : ISLCObjectEnum.OBJECT_TWO;
 
     // Used by arrows and puller
-    const modelMaxForce = model.getMaxForce();
+    const modelMaxForce = model.getMaxForce() / 2;
 
     // the full range of force for the arrow node (note: this is distinct)
     const arrowForceRange = new Range( model.getMinForceMagnitude(), modelMaxForce );
