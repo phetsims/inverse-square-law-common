@@ -86,7 +86,7 @@ define( require => {
 
     // @public (read-only) - Emitter that fires whenever the position changes as a result of an object's value changing.
     // Emits with the objectEnum that caused the position change.
-    this.valueChangedPositionEmitter = new Emitter( { parameters: [ { valueType: ISLCObjectEnum } ] } );
+    this.positionChangedFromSecondarySourceEmitter = new Emitter( { parameters: [ { valueType: ISLCObjectEnum } ] } );
 
     // @public - flag to check if the object is being dragged by the user
     //           set in the drag handler
@@ -95,14 +95,18 @@ define( require => {
     // @public - flag to check whether object's radius was updated, used to determine positioning
     this.radiusLastChanged = false;
 
-    // @public - flag flipped when the value change is updated. This is used to check if a position change is caused
-    // from a value change. // See https://github.com/phetsims/gravity-force-lab-basics/issues/168
+    // @private - flag flipped when the value change is updated. This is used to check if a position change is caused
+    // from a value change. See https://github.com/phetsims/gravity-force-lab-basics/issues/168
     this.valueChangedSinceLastStep = false;
+
+    // @public (read-only) - flag flipped when the constant radius boolean is toggled. This is used to check if a position change is
+    // caused from the constant radius toggling. See https://github.com/phetsims/gravity-force-lab-basics/issues/168
+    this.constantRadiusChangedSinceLastStep = false;
 
     // @public
     this.valueRange = valueRange;
 
-    // @public {ISLCObjectEnum} - filled in by the model
+    // @public {ISLCObjectEnum|null} - filled in by ISLCModel
     this.enum = null;
 
     // @public {Property.<Color>} - filled in by subtypes
@@ -113,11 +117,24 @@ define( require => {
 
     // @public (read-only) {number} - the radius of the object when radius is constant.
     this.constantRadius = options.constantRadius;
+
+    // Link these flags to their associatedProperties
+    this.valueProperty.link( () => { this.valueChangedSinceLastStep = true; } );
+    constantRadiusProperty.link( () => { this.constantRadiusChangedSinceLastStep = true; } );
   }
 
   inverseSquareLawCommon.register( 'ISLCObject', ISLCObject );
 
   return inherit( Object, ISLCObject, {
+
+    /**
+     * Clear flags that keep track of data that needs to be kept track of until the next step function is called.
+     * @public
+     */
+    onStepEnd: function() {
+      this.valueChangedSinceLastStep = false;
+      this.constantRadiusChangedSinceLastStep = false;
+    },
 
     /**
      * Calculate radius for the object - must be implemented in subtypes.

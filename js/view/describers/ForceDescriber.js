@@ -83,7 +83,7 @@ define( require => {
     hardString,
     veryHardString
   ];
-  const CHANGE_DIRECTIONS = [getSmallerString, null, getBiggerString];
+  const CHANGE_DIRECTIONS = [ getSmallerString, null, getBiggerString ];
 
   // scientific notation
   const scientificNotationPatternString = ISLCA11yStrings.scientificNotationPattern.value;
@@ -163,8 +163,14 @@ define( require => {
       this.vectorChangeClausePatternString = StringUtils.fillIn( vectorChangeClausePatternString, {
         vectors: options.forceVectorsString
       } );
+      this.vectorChangeCapitalizedClausePatternString = StringUtils.fillIn( vectorChangeClausePatternString, {
+        vectors: options.forceVectorsCapitalizedString
+      } );
       this.vectorChangeForcesNowClausePatternString = StringUtils.fillIn( vectorChangeForcesNowClausePatternString, {
         vectors: options.forceVectorsString
+      } );
+      this.vectorChangeCapitalizedForcesNowClausePatternString = StringUtils.fillIn( vectorChangeForcesNowClausePatternString, {
+        vectors: options.forceVectorsCapitalizedString
       } );
 
       model.forceProperty.link( ( force, oldForce ) => {
@@ -324,18 +330,23 @@ define( require => {
      *
      * @param {boolean} forceBiggerOverride - manually specify that we want to "forces bigger" alert, see
      *                                        GravityForceLabAlertManager.alertMassValueChanged()
+     * @param {boolean} capitalize - capitalize the clause
      * @returns {string}
      * @public
      */
-    getVectorChangeClause( forceBiggerOverride ) {
+    getVectorChangeClause( forceBiggerOverride, capitalize ) {
       const directionChange = this.getChangeDirection( forceBiggerOverride );
 
       if ( !this.showForceValuesProperty.value ) {
-        return StringUtils.fillIn( this.vectorChangeClausePatternString, {
+        return StringUtils.fillIn( capitalize ?
+                                   this.vectorChangeCapitalizedClausePatternString :
+                                   this.vectorChangeClausePatternString, {
           changeDirection: directionChange
         } );
       }
-      return StringUtils.fillIn( this.vectorChangeForcesNowClausePatternString, {
+      return StringUtils.fillIn( capitalize ?
+                                 this.vectorChangeCapitalizedForcesNowClausePatternString :
+                                 this.vectorChangeForcesNowClausePatternString, {
         changeDirection: directionChange,
         forceValue: this.getFormattedForce(),
         units: this.units
