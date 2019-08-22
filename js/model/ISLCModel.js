@@ -89,12 +89,12 @@ define( require => {
     } );
 
     // @private {Property.<number>} - The distance between the two objects. Added for PhET-iO.
-    this.distanceProperty = new DerivedProperty( [
+    this.separationProperty = new DerivedProperty( [
       this.object1.positionProperty,
       this.object2.positionProperty
     ], ( p1, p2 ) => Math.abs( p2 - p1 ), {
       phetioType: DerivedPropertyIO( NumberIO ),
-      tandem: tandem.createTandem( 'distanceProperty' ),
+      tandem: tandem.createTandem( 'separationProperty' ),
       units: object1.positionProperty.units,
       phetioDocumentation: 'The distance between the two objects\' centers'
     } );
