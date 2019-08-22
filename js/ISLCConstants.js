@@ -10,11 +10,8 @@ define( function( require ) {
 
   // modules
   var inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
-  var Range = require( 'DOT/Range' );
 
   // constants
-  var MIN_MASS = 1; // kg
-  var MAX_MASS = 1000; // kg
   var MAX_DISTANCE_FROM_CENTER = 5; // meters, empirically determined boundary for objects
 
   var ISLCConstants = {
@@ -29,8 +26,7 @@ define( function( require ) {
 
     // mass constants
     CONSTANT_RADIUS: 0.5, // meters
-    MASS_DENSITY: 150, // kg/m^3
-    MASS_RANGE: new Range( MIN_MASS, MAX_MASS )
+    MASS_DENSITY: 150 // kg/m^3
   };
 
   inverseSquareLawCommon.register( 'ISLCConstants', ISLCConstants );
