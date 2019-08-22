@@ -174,12 +174,16 @@ define( require => {
     // @private
     this.y = config.y;
 
-    // the marker line, connecting the arrow to the object, the first one is for the shadow so that
+    // Added for PhET-iO as a way to hide the dashed lines.
+    const centerOfMassLineNode = new Node( { tandem: config.tandem.createTandem( 'centerOfMassLineNode' ) } );
+    this.addChild( centerOfMassLineNode );
+
+    // The marker line, connecting the arrow to the object. The first one is for the shadow so that
     // it is visible on top of the object
     const markerLineShape = new Shape();
     markerLineShape.moveTo( 0, -4 );
     markerLineShape.lineTo( 0, -config.forceArrowHeight );
-    this.addChild( new Path( markerLineShape, {
+    centerOfMassLineNode.addChild( new Path( markerLineShape, {
       stroke: '#FFF',
       lineDash: [ 4, 4 ],
       lineWidth: 2,
@@ -191,7 +195,7 @@ define( require => {
       lineDash: [ 4, 4 ],
       lineWidth: 2
     } );
-    this.addChild( markerLineShapeTop );
+    centerOfMassLineNode.addChild( markerLineShapeTop );
 
     let clickOffset;
 
