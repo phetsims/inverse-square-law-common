@@ -42,6 +42,8 @@ define( require => {
       minSeparationBetweenObjects: 0.1 // in meters
     }, options );
 
+    assert && assert( object1.positionProperty.units === object2.positionProperty.units, 'units should be the same' );
+
     // @public (read-only)
     this.leftObjectBoundary = locationRange.min;
     this.rightObjectBoundary = locationRange.max;
@@ -84,6 +86,17 @@ define( require => {
       tandem: tandem.createTandem( 'forceProperty' ),
       units: 'newtons',
       phetioDocumentation: 'The force of one object on the other (in Newtons)'
+    } );
+
+    // @private {Property.<number>} - The distance between the two objects. Added for PhET-iO.
+    this.distanceProperty = new DerivedProperty( [
+      this.object1.positionProperty,
+      this.object2.positionProperty
+    ], ( p1, p2 ) => Math.abs( p2 - p1 ), {
+      phetioType: DerivedPropertyIO( NumberIO ),
+      tandem: tandem.createTandem( 'distanceProperty' ),
+      units: object1.positionProperty.units,
+      phetioDocumentation: 'The distance between the two objects\' centers'
     } );
 
     const updateRange = object => {
