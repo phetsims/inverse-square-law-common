@@ -65,7 +65,16 @@ define( function( require ) {
       tailWidth: 3,
       arrowStroke: null,
       arrowFill: '#fff',
-      backgroundFill: 'black'
+      backgroundFill: 'black',
+
+      // arrow mapping function options
+      // By default, only use a single mapping function to go from force to arrow width, but with this option and
+      // those below use two.
+      mapArrowWidthWithTwoFunctions: false,
+
+      // only if mapArrowWidthWithTwoFunctions is true
+      forceThresholdPercent: 0, // the percent to switch mappings from the min to the main linear function.
+      thresholdArrowWidth: 1 // This default is used by GFL(B) as a good in between the min/max arrow widths.
     }, options );
 
     options.tandem = tandem;
@@ -79,9 +88,32 @@ define( function( require ) {
     this.scientificNotationMode = false;
     this.attractNegative = options.attractNegative;
 
-    // @private - maps the force value to the desired width of the arrow in view coordinates
-    this.forceToArrowWidthFunction = new LinearFunction( arrowForceRange.min, arrowForceRange.max,
-      options.minArrowWidth, options.maxArrowWidth, false );
+    assert && options.mapArrowWidthWithTwoFunctions && assert( options.forceThresholdPercent !== 0,
+      'set forceThresholdPercent to map arrow width with two functions' );
+
+    const forceThreshold = arrowForceRange.min + ( arrowForceRange.getLength() * options.forceThresholdPercent );
+
+    // Maps the force value to the desired width of the arrow in view coordinates. This mapping can be done
+    // two ways. The first is with a single function (when `options.mapArrowWidthWithTwoFunctions` is set to false).
+    // If that is the case, this is the only mapping function. This is to support single mapping in CL and multi mapping
+    // in GFL(B). See https://github.com/phetsims/inverse-square-law-common/issues/76 for details on the design.
+    const mainForceToArrowWidthFunction = new LinearFunction( forceThreshold, arrowForceRange.max,
+      options.mapArrowWidthWithTwoFunctions ? options.thresholdArrowWidth : options.minArrowWidth, options.maxArrowWidth, false );
+
+    // When `options.mapArrowWidthWithTwoFunctions` is true, this function will be used to map the arrow width
+    // from the minimum to a specified percentage of the force range, see options.forceThresholdPercent.
+    const minTwoForceToArrowWidthFunction = new LinearFunction( arrowForceRange.min, forceThreshold,
+      options.minArrowWidth, options.thresholdArrowWidth, false );
+
+    /**
+     * Map a force value to an arrow width
+     * @param {number} forceValue
+     * @private
+     */
+    this.getLinearMappingToArrowWidth = forceValue => {
+      const linearFunction = forceValue < forceThreshold ? minTwoForceToArrowWidthFunction : mainForceToArrowWidthFunction;
+      return linearFunction( forceValue );
+    };
 
     // @public (read-only) - for layout, the label for the arrow
     this.arrowText = new RichText( '', {
@@ -140,7 +172,7 @@ define( function( require ) {
       var absValue = Math.abs( value );
 
       // map force value to width in view
-      arrowLengthMultiplier = this.forceToArrowWidthFunction( absValue );
+      arrowLengthMultiplier = this.getLinearMappingToArrowWidth( absValue );
 
       if ( this.defaultDirection === DefaultDirection.RIGHT ) {
         arrowLengthMultiplier *= -1;
