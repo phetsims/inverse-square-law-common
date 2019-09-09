@@ -124,7 +124,8 @@ define( require => {
     assert && assert( alertManager instanceof ISLCAlertManager );
 
     Node.call( this, {
-      containerTagName: 'div'
+      containerTagName: 'div',
+      tandem: config.tandem
     } );
 
     this.accessibleName = PositionDescriber.getObjectLabelPositionText( config.label );
