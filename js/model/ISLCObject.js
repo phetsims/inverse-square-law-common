@@ -41,7 +41,8 @@ define( require => {
       rightObjectBoundary: ISLCConstants.RIGHT_OBJECT_BOUNDARY,
       constantRadius: ISLCConstants.CONSTANT_RADIUS, // radius when constant
 
-      valueUnits: 'kilograms'
+      valueUnits: 'kilograms',
+      valueStep: null
     }, options );
 
     // @public
@@ -58,7 +59,8 @@ define( require => {
       tandem: tandem.createTandem( 'valueProperty' ),
       range: valueRange,
       units: options.valueUnits,
-      phetioDocumentation: 'The value of the object'
+      phetioDocumentation: 'The value of the object',
+      step: options.valueStep
     } );
 
     // @public {Property.<number>} - the radius of the mass or charge in meters
