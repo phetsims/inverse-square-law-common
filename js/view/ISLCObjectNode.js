@@ -29,11 +29,12 @@ define( require => {
   const merge = require( 'PHET_CORE/merge' );
   const Node = require( 'SCENERY/nodes/Node' );
   const Path = require( 'SCENERY/nodes/Path' );
+  const PhetFont = require( 'SCENERY_PHET/PhetFont' );
   const PositionDescriber = require( 'INVERSE_SQUARE_LAW_COMMON/view/describers/PositionDescriber' );
   const Range = require( 'DOT/Range' );
+  const RichText = require( 'SCENERY/nodes/RichText' );
   const Shape = require( 'KITE/Shape' );
   const Tandem = require( 'TANDEM/Tandem' );
-  const TextWithShadow = require( 'INVERSE_SQUARE_LAW_COMMON/view/TextWithShadow' );
   const Util = require( 'DOT/Util' );
 
   // constants
@@ -41,12 +42,17 @@ define( require => {
   const POSITIVE_FILL = new Color( '#f66' );
   const ZERO_FILL = new Color( 'gray' );
 
+  const LABEL_MAX_WIDTH = 50; // empirically determined through testing with long strings
+  const LABEL_CENTER_X = 0;
+  const LABEL_TOP = 4;
+
   /**
    * @param {ISLCModel} model - the simulation model
    * @param {ISLCObject} object - the associated object's model within the sim
    * @param {Bounds2} layoutBounds - bounds of the screen view containing the object
    * @param {ModelViewTransform2} modelViewTransform
    * @param {ISLCAlertManager} alertManager
+   * @param {ForceDescriber} forceDescriber
    * @param {PositionDescriber} positionDescriber
    * @param {Object} config
    * @mixes AccessibleSlider
@@ -69,7 +75,6 @@ define( require => {
 
       forceArrowHeight: 150, // height of arrow in view coordinates
 
-
       // phet-io
       tandem: Tandem.required,
 
@@ -85,10 +90,21 @@ define( require => {
         attractNegative: config.attractNegative,
         defaultDirection: config.defaultDirection,
         forceArrowHeight: config.forceArrowHeight,
-        forceReadoutDecimalPlaces: 12, // number of decimal places in force readout
+        forceReadoutDecimalPlaces: 12 // number of decimal places in force readout
+      },
 
-        arrowFill: 'white',
-        arrowLabelFill: '#fff'
+      // options for the RichText label on the object circle
+      labelOptions: {
+        fill: '#fff',
+        font: new PhetFont( 12 ),
+        stroke: '#000000',
+        lineWidth: .2,
+
+        pickable: false,
+        maxWidth: LABEL_MAX_WIDTH,
+        centerX: LABEL_CENTER_X,
+        top: LABEL_TOP,
+        tandem: config.tandem.createTandem( 'labelText' )
       },
 
       // options passed to the PullerNode, filled in below
@@ -99,7 +115,7 @@ define( require => {
 
     // use snapToNearest if stepSize is not provided
     if ( config.stepSize === null ) {
-      assert && assert( config.snapToNearest );
+      assert && assert( config.snapToNearest, 'snapToNearest is required if stepSize is not provided.' );
       config.stepSize = config.snapToNearest * 2;
     }
 
@@ -165,9 +181,13 @@ define( require => {
     // Small black dot where vertical arrow line connects to the object
     this.dragNode.addChild( new Circle( 2, { fill: '#000' } ) );
 
-    this.dragNode.addChild( new TextWithShadow( config.label, config.tandem, {
-      textPhetioDocumentation: 'The text located on the puller object'
-    } ) );
+    const labelText = new RichText( config.label, config.labelOptions );
+    this.dragNode.addChild( labelText );
+
+    labelText.on( 'bounds', () => {
+      labelText.centerX = this.objectCircle.centerX;
+    } );
+
 
     this.addChild( this.dragNode );
 
