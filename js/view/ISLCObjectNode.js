@@ -32,6 +32,7 @@ define( require => {
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
   const PositionDescriber = require( 'INVERSE_SQUARE_LAW_COMMON/view/describers/PositionDescriber' );
   const Range = require( 'DOT/Range' );
+  const Rectangle = require( 'SCENERY/nodes/Rectangle' );
   const RichText = require( 'SCENERY/nodes/RichText' );
   const Shape = require( 'KITE/Shape' );
   const Tandem = require( 'TANDEM/Tandem' );
@@ -95,15 +96,13 @@ define( require => {
 
       // options for the RichText label on the object circle
       labelOptions: {
-        fill: '#fff',
-        font: new PhetFont( 12 ),
-        stroke: '#000000',
-        lineWidth: .2,
+        fill: 'black',
+        font: new PhetFont( { size: 12, weight: 'bold' } ),
 
         pickable: false,
         maxWidth: LABEL_MAX_WIDTH,
         centerX: LABEL_CENTER_X,
-        top: LABEL_TOP,
+
         tandem: config.tandem.createTandem( 'labelText' )
       },
 
@@ -183,10 +182,34 @@ define( require => {
     this.dragNode.addChild( new Circle( 2, { fill: '#000' } ) );
 
     const labelText = new RichText( config.label, config.labelOptions );
-    this.dragNode.addChild( labelText );
 
-    labelText.on( 'bounds', () => {
-      labelText.centerX = this.objectCircle.centerX;
+    // TODO: factor this out to a common code type, https://github.com/phetsims/inverse-square-law-common/issues/79
+    const labelAndBackground = new Node( {
+      xMargin: 2,
+      yMargin: 2,
+    } );
+
+    // translucent rectangle
+    const rectangle = new Rectangle( 0, 0, 1, 1, {
+      fill: 'white',
+      opacity: .5,
+      cornerRadius: 3
+    } );
+
+    const yMargin = .1;
+    const xMargin = 1;
+    // size the rectangle to fit the node
+    labelText.on( 'bounds', function() {
+      rectangle.setRect( 0, 0, labelText.width + 2 * xMargin, labelText.height + 2 * yMargin );
+      labelText.center = rectangle.center;
+    } );
+
+    labelAndBackground.children = [ rectangle, labelText ];
+    labelAndBackground.top = LABEL_TOP;
+    this.dragNode.addChild( labelAndBackground );
+
+    labelAndBackground.on( 'bounds', () => {
+      labelAndBackground.centerX = this.objectCircle.centerX;
     } );
 
 
