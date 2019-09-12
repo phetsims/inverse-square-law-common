@@ -186,7 +186,7 @@ define( require => {
     // TODO: factor this out to a common code type, https://github.com/phetsims/inverse-square-law-common/issues/79
     const labelAndBackground = new Node( {
       xMargin: 2,
-      yMargin: 2,
+      yMargin: 2
     } );
 
     // translucent rectangle
