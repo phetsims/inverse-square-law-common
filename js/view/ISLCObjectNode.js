@@ -15,6 +15,7 @@ define( require => {
 
   // modules
   const AccessibleSlider = require( 'SUN/accessibility/AccessibleSlider' );
+  const BackgroundNode = require( 'SCENERY_PHET/BackgroundNode' );
   const BooleanProperty = require( 'AXON/BooleanProperty' );
   const Circle = require( 'SCENERY/nodes/Circle' );
   const Color = require( 'SCENERY/util/Color' );
@@ -32,7 +33,6 @@ define( require => {
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
   const PositionDescriber = require( 'INVERSE_SQUARE_LAW_COMMON/view/describers/PositionDescriber' );
   const Range = require( 'DOT/Range' );
-  const Rectangle = require( 'SCENERY/nodes/Rectangle' );
   const RichText = require( 'SCENERY/nodes/RichText' );
   const Shape = require( 'KITE/Shape' );
   const Tandem = require( 'TANDEM/Tandem' );
@@ -45,7 +45,6 @@ define( require => {
 
   const LABEL_MAX_WIDTH = 50; // empirically determined through testing with long strings
   const LABEL_CENTER_X = 0;
-  const LABEL_TOP = 4;
 
   /**
    * @param {ISLCModel} model - the simulation model
@@ -105,6 +104,7 @@ define( require => {
 
         tandem: config.tandem.createTandem( 'labelText' )
       },
+      labelTop: 4, // This is separate from `labelOptions` because this is applied to the BackgroundNode.
 
       // options passed to the PullerNode, filled in below
       pullerNodeOptions: {
@@ -183,35 +183,18 @@ define( require => {
 
     const labelText = new RichText( config.label, config.labelOptions );
 
-    // TODO: factor this out to a common code type, https://github.com/phetsims/inverse-square-law-common/issues/79
-    const labelAndBackground = new Node( {
-      xMargin: 2,
-      yMargin: 2
+    const labelAndBackgroundNode = new BackgroundNode( labelText, {
+      top: config.labelTop,
+      backgroundOptions: {
+        opacity: .6,
+        cornerRadius: 3
+      }
     } );
+    this.dragNode.addChild( labelAndBackgroundNode );
 
-    // translucent rectangle
-    const rectangle = new Rectangle( 0, 0, 1, 1, {
-      fill: 'white',
-      opacity: .5,
-      cornerRadius: 3
+    labelAndBackgroundNode.on( 'bounds', () => {
+      labelAndBackgroundNode.centerX = this.objectCircle.centerX;
     } );
-
-    const yMargin = .1;
-    const xMargin = 1;
-    // size the rectangle to fit the node
-    labelText.on( 'bounds', function() {
-      rectangle.setRect( 0, 0, labelText.width + 2 * xMargin, labelText.height + 2 * yMargin );
-      labelText.center = rectangle.center;
-    } );
-
-    labelAndBackground.children = [ rectangle, labelText ];
-    labelAndBackground.top = LABEL_TOP;
-    this.dragNode.addChild( labelAndBackground );
-
-    labelAndBackground.on( 'bounds', () => {
-      labelAndBackground.centerX = this.objectCircle.centerX;
-    } );
-
 
     this.addChild( this.dragNode );
 
