@@ -96,7 +96,7 @@ define( require => {
       // options for the RichText label on the object circle
       labelOptions: {
         fill: 'black',
-        font: new PhetFont( { size: 12, weight: 'bold' } ),
+        font: new PhetFont( { size: 12 } ),
 
         pickable: false,
         maxWidth: LABEL_MAX_WIDTH,
@@ -186,10 +186,7 @@ define( require => {
 
     if ( config.addLabelBackground ) {
       labelText = new BackgroundNode( labelText, {
-        backgroundOptions: {
-          opacity: .6,
-          cornerRadius: 3
-        }
+        backgroundOptions: { cornerRadius: 3 }
       } );
     }
     this.dragNode.addChild( labelText );
