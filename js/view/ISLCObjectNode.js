@@ -105,7 +105,6 @@ define( require => {
         tandem: config.tandem.createTandem( 'labelText' )
       },
       labelTop: 4, // This is separate from `labelOptions` because this is applied to the BackgroundNode.
-      labelAlign: 'center', // {'center'|'left'|'right'} to support the small charges on CL Atomic Scale screen
 
       // options passed to the PullerNode, filled in below
       pullerNodeOptions: {
@@ -194,15 +193,7 @@ define( require => {
     this.dragNode.addChild( labelAndBackgroundNode );
 
     labelAndBackgroundNode.on( 'bounds', () => {
-      if ( config.labelAlign === 'center' ) {
-        labelAndBackgroundNode.centerX = this.objectCircle.centerX;
-      }
-      else if ( config.labelAlign === 'left' ) {
-        labelAndBackgroundNode.left = this.objectCircle.left;
-      }
-      else if ( config.labelAlign === 'right' ) {
-        labelAndBackgroundNode.right = this.objectCircle.right;
-      }
+      labelAndBackgroundNode.centerX = this.objectCircle.centerX;
     } );
 
     this.addChild( this.dragNode );
