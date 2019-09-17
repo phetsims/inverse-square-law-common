@@ -104,7 +104,8 @@ define( require => {
 
         tandem: config.tandem.createTandem( 'labelText' )
       },
-      labelTop: 4, // This is separate from `labelOptions` because this is applied to the BackgroundNode.
+      labelTop: 4, // if false, opt out of the transparent background behind the label for the object.
+      addLabelBackground: true, // This is separate from `labelOptions` because this is applied to the BackgroundNode.
 
       // options passed to the PullerNode, filled in below
       pullerNodeOptions: {
@@ -181,19 +182,20 @@ define( require => {
     // Small black dot where vertical arrow line connects to the object
     this.dragNode.addChild( new Circle( 2, { fill: '#000' } ) );
 
-    const labelText = new RichText( config.label, config.labelOptions );
+    let labelText = new RichText( config.label, config.labelOptions );
 
-    const labelAndBackgroundNode = new BackgroundNode( labelText, {
-      top: config.labelTop,
-      backgroundOptions: {
-        opacity: .6,
-        cornerRadius: 3
-      }
-    } );
-    this.dragNode.addChild( labelAndBackgroundNode );
-
-    labelAndBackgroundNode.on( 'bounds', () => {
-      labelAndBackgroundNode.centerX = this.objectCircle.centerX;
+    if ( config.addLabelBackground ) {
+      labelText = new BackgroundNode( labelText, {
+        backgroundOptions: {
+          opacity: .6,
+          cornerRadius: 3
+        }
+      } );
+    }
+    this.dragNode.addChild( labelText );
+    labelText.top = config.labelTop;
+    labelText.on( 'bounds', () => {
+      labelText.centerX = this.objectCircle.centerX;
     } );
 
     this.addChild( this.dragNode );
