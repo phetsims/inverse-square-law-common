@@ -29,15 +29,15 @@ define( require => {
       stroke: 'rgba( 0, 0, 0, 0.6 )'
     }, options );
 
-    var gridShape = new Shape();
+    const gridShape = new Shape();
 
     // subtract 1 so grid aligns with model, see https://github.com/phetsims/inverse-square-law-common/issues/49
-    var gridPosition = modelViewTransform.viewToModelX( layoutBounds.minX - 1 );
-    var rightBoundary = modelViewTransform.viewToModelX( layoutBounds.maxX );
+    let gridPosition = modelViewTransform.viewToModelX( layoutBounds.minX - 1 );
+    const rightBoundary = modelViewTransform.viewToModelX( layoutBounds.maxX );
     while ( gridPosition <= rightBoundary ) {
 
       // grid position in view coords
-      var viewPosition = modelViewTransform.modelToViewX( gridPosition );
+      const viewPosition = modelViewTransform.modelToViewX( gridPosition );
 
       // draw the grid line
       gridShape.moveTo( viewPosition, layoutBounds.top );

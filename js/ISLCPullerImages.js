@@ -147,12 +147,12 @@ define( require => {
 
   // for all images, the appended number corresponds to their 'level of effort', e.g. pullImage1 shows less pull than pullImage22
   // this is important for mapping force values to the index of the corresponding pull effort
-  var pullImages = [ pullImage1, pullImage2, pullImage3, pullImage4, pullImage5, pullImage6, pullImage7,
+  const pullImages = [ pullImage1, pullImage2, pullImage3, pullImage4, pullImage5, pullImage6, pullImage7,
     pullImage8, pullImage9, pullImage10, pullImage11, pullImage12, pullImage13, pullImage14, pullImage15, pullImage16,
     pullImage17, pullImage18, pullImage19, pullImage20, pullImage21, pullImage22, pullImage23, pullImage24, pullImage25,
     pullImage26, pullImage27, pullImage28, pullImage29, pullImage30, pullImage31 ];
 
-  var pushImages = [ pushImage1, pushImage2, pushImage3, pushImage4, pushImage5, pushImage6, pushImage7,
+  const pushImages = [ pushImage1, pushImage2, pushImage3, pushImage4, pushImage5, pushImage6, pushImage7,
     pushImage8, pushImage9, pushImage10, pushImage11, pushImage12, pushImage13, pushImage14, pushImage15, pushImage16,
     pushImage17, pushImage18, pushImage19, pushImage20, pushImage21, pushImage22, pushImage23, pushImage24, pushImage25,
     pushImage26, pushImage27, pushImage28, pushImage29, pushImage30, pushImage31 ];
@@ -160,14 +160,14 @@ define( require => {
   // ensure push images are ordered from large push to small push
   pushImages.reverse();
 
-  var atomicPullImages = [ atomicPullImage1, atomicPullImage2, atomicPullImage3, atomicPullImage4, atomicPullImage5,
+  const atomicPullImages = [ atomicPullImage1, atomicPullImage2, atomicPullImage3, atomicPullImage4, atomicPullImage5,
     atomicPullImage6, atomicPullImage7, atomicPullImage8, atomicPullImage9, atomicPullImage10, atomicPullImage11,
     atomicPullImage12, atomicPullImage13, atomicPullImage14, atomicPullImage15, atomicPullImage16, atomicPullImage17,
     atomicPullImage18, atomicPullImage19, atomicPullImage20, atomicPullImage21, atomicPullImage22, atomicPullImage23,
     atomicPullImage24, atomicPullImage25, atomicPullImage26, atomicPullImage27, atomicPullImage28, atomicPullImage29,
     atomicPullImage30, atomicPullImage31 ];
 
-  var atomicPushImages = [ atomicPushImage1, atomicPushImage2, atomicPushImage3, atomicPushImage4, atomicPushImage5,
+  const atomicPushImages = [ atomicPushImage1, atomicPushImage2, atomicPushImage3, atomicPushImage4, atomicPushImage5,
     atomicPushImage6, atomicPushImage7, atomicPushImage8, atomicPushImage9, atomicPushImage10, atomicPushImage11,
     atomicPushImage12, atomicPushImage13, atomicPushImage14, atomicPushImage15, atomicPushImage16, atomicPushImage17,
     atomicPushImage18, atomicPushImage19, atomicPushImage20, atomicPushImage21, atomicPushImage22, atomicPushImage23,
@@ -176,7 +176,7 @@ define( require => {
 
   atomicPushImages.reverse();
 
-  var ISLCPullerImages = {
+  const ISLCPullerImages = {
     pullImages: pullImages,
     pushImages: pushImages,
     atomicPullImages: atomicPullImages,

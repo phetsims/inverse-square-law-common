@@ -26,8 +26,8 @@ define( require => {
   const pattern0Value1UnitsString = require( 'string!INVERSE_SQUARE_LAW_COMMON/pattern_0value_1units' );
 
   // constants
-  var TITLE_MAX_WIDTH = 120; // max widths are set empirically to handle long strings
-  var VALUE_MAX_WIDTH = 110;
+  const TITLE_MAX_WIDTH = 120; // max widths are set empirically to handle long strings
+  const VALUE_MAX_WIDTH = 110;
 
   /**
    * @param {string} titleString
@@ -63,10 +63,10 @@ define( require => {
       tandem: Tandem.required
     }, options );
 
-    var tandem = options.tandem;
+    const tandem = options.tandem;
 
     // options that are passed along to the number control
-    var numberControlOptions = merge( {
+    const numberControlOptions = merge( {
 
       // layout options
       layoutFunction: NumberControl.createLayoutFunction3( { xSpacing: 10 } ),
@@ -112,8 +112,8 @@ define( require => {
       tandem: tandem.createTandem( 'numberControl' )
     }, options.numberControlOptions );
 
-    for ( var i = 0; i < options.additionalTicks.length; i++ ) {
-      var tick = {
+    for ( let i = 0; i < options.additionalTicks.length; i++ ) {
+      const tick = {
         value: options.additionalTicks[ i ].value,
         label: new Text( options.additionalTicks[ i ].value, options.tickLabelOptions )
       };

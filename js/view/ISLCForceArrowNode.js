@@ -29,8 +29,8 @@ define( require => {
   const forceOnObjectByOtherObjectWithUnitsPatternString = require( 'string!INVERSE_SQUARE_LAW_COMMON/forceOnObjectByOtherObjectWithUnitsPattern' );
 
   // constants
-  var ARROW_LENGTH = 8; // empirically determined
-  var TEXT_OFFSET = 10; // empirically determined to make sure text does not go out of bounds
+  const ARROW_LENGTH = 8; // empirically determined
+  const TEXT_OFFSET = 10; // empirically determined to make sure text does not go out of bounds
 
   /**
    * @param {Range} arrowForceRange - the range in force magnitude
@@ -161,15 +161,15 @@ define( require => {
      * @param {number} value
      */
     redrawArrow: function( value ) {
-      var arrowLengthMultiplier;
+      let arrowLengthMultiplier;
 
-      var valueSign = value >= 0 ? 1 : -1;
+      let valueSign = value >= 0 ? 1 : -1;
 
       // if the arrows are meant to attract
       if ( this.attractNegative ) {
         valueSign *= -1;
       }
-      var absValue = Math.abs( value );
+      const absValue = Math.abs( value );
 
       // map force value to width in view
       arrowLengthMultiplier = this.getLinearMappingToArrowWidth( absValue );
@@ -188,9 +188,9 @@ define( require => {
      * @param {Bounds2} parentToLocalBounds
      */
     setArrowTextPosition: function( parentToLocalBounds ) {
-      var arrowTextCenter = this.arrowText.center.copy();
+      const arrowTextCenter = this.arrowText.center.copy();
       arrowTextCenter.x = 0;
-      var localToParentPoint = this.localToParentPoint( arrowTextCenter );
+      const localToParentPoint = this.localToParentPoint( arrowTextCenter );
       if ( Math.floor( localToParentPoint.x - this.arrowText.width / 2 ) <= this.layoutBounds.left + TEXT_OFFSET ) {
         this.arrowText.left = parentToLocalBounds.left + TEXT_OFFSET;
       }
@@ -218,24 +218,24 @@ define( require => {
     updateLabel: function( forceValue, forceValues ) {
 
       if ( forceValues ) {
-        var forceStr = Util.toFixed( forceValue, this.scientificNotationMode ? 2 : this.forceReadoutDecimalPlaces );
+        const forceStr = Util.toFixed( forceValue, this.scientificNotationMode ? 2 : this.forceReadoutDecimalPlaces );
 
         // group values together so that they are easy to read
-        var pointLocation = forceStr.indexOf( '.' );
+        const pointLocation = forceStr.indexOf( '.' );
         if ( pointLocation !== -1 ) {
 
           // the first group includes the values to the left of the decimal, and first three decimals
-          var formattedString = forceStr.substr( 0, pointLocation + 4 );
+          let formattedString = forceStr.substr( 0, pointLocation + 4 );
 
           // remaining groups of three, separated by spaces
-          for ( var i = pointLocation + 4; i < forceStr.length; i += 3 ) {
+          for ( let i = pointLocation + 4; i < forceStr.length; i += 3 ) {
             formattedString += ' ';
             formattedString += forceStr.substr( i, 3 );
           }
 
           if ( this.scientificNotationMode && forceValue !== 0 ) {
-            var precision = 2;
-            var notationObject = ScientificNotationNode.toScientificNotation( forceValue, { mantissaDecimalPlaces: precision } );
+            const precision = 2;
+            const notationObject = ScientificNotationNode.toScientificNotation( forceValue, { mantissaDecimalPlaces: precision } );
             formattedString = notationObject.mantissa;
 
             if ( notationObject.exponent !== '0' ) {

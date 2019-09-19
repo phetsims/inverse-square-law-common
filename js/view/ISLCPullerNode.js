@@ -25,7 +25,7 @@ define( require => {
   const Vector2 = require( 'DOT/Vector2' );
 
   // constants
-  var IMAGE_SCALE = 0.45;
+  const IMAGE_SCALE = 0.45;
 
   /**
    * @param {RangeWithValue} forceRange - range of forces, used for determining the visible pullImage
@@ -45,9 +45,9 @@ define( require => {
 
     Node.call( this );
 
-    var pullImages = ISLCPullerImages.pullImages;
-    var pushImages = ISLCPullerImages.pushImages;
-    var zeroForceImage = ISLCPullerImages.zeroForceImage;
+    let pullImages = ISLCPullerImages.pullImages;
+    let pushImages = ISLCPullerImages.pushImages;
+    let zeroForceImage = ISLCPullerImages.zeroForceImage;
 
     // set atomic pullers if on the atomic screen
     if ( options.atomicScale ) {
@@ -63,7 +63,7 @@ define( require => {
     this.touchAreaBounds = new Bounds2( 0, 0, 0, 0 );
 
     // used to ensure that small non-zero forces do not map to the zero force puller (see lines 130-132)
-    var zeroForceIndex = null;
+    let zeroForceIndex = null;
 
     // if in coulomb's law, add pusher and zero force images in proper order
     if ( options.attractNegative ) {
@@ -72,28 +72,28 @@ define( require => {
     }
 
     // function that maps the visible image to the model force value
-    var forceToImage = new LinearFunction( forceRange.min, forceRange.max, 0, this.pullerPusherImages.length - 1, true );
+    const forceToImage = new LinearFunction( forceRange.min, forceRange.max, 0, this.pullerPusherImages.length - 1, true );
 
     // function to dynamically move the position of the shadow under the puller
-    var indexToShadowOffset = new LinearFunction( 0, this.pullerPusherImages.length - 1, -4, 6 );
+    const indexToShadowOffset = new LinearFunction( 0, this.pullerPusherImages.length - 1, -4, 6 );
 
     // function that maps the size of the shadow to the force value
-    var forceToShadowWidth = new LinearFunction( forceRange.min, forceRange.max, options.shadowMinWidth, options.shadowMaxWidth, true );
+    const forceToShadowWidth = new LinearFunction( forceRange.min, forceRange.max, options.shadowMinWidth, options.shadowMaxWidth, true );
 
     // parent node for all puller images and the rope
-    var pullerGroupNode = new Node();
+    const pullerGroupNode = new Node();
 
     // the optional shadow node under the pullers - a circle scaled down vertically to look elliptical
-    var shadowNode = new Circle( 10, {
+    const shadowNode = new Circle( 10, {
       fill: '#777',
       scale: new Vector2( 1, 0.20 )
     } );
 
     // create each of the puller/pusher image nodes
-    var images = [];
-    var i;
+    const images = [];
+    let i;
     for ( i = 0; i < this.pullerPusherImages.length; i++ ) {
-      var pullerImage = new Image( this.pullerPusherImages[ i ] );
+      const pullerImage = new Image( this.pullerPusherImages[ i ] );
 
       // puller images are much larger than pushers, so we need to scale it down
       pullerImage.scale( IMAGE_SCALE, IMAGE_SCALE );
@@ -121,7 +121,7 @@ define( require => {
     // shadow first so it is behind the pullers
     options.displayShadow && this.addChild( shadowNode );
     this.addChild( pullerGroupNode );
-    var self = this;
+    const self = this;
     // @public - set the visibility of the image corresponding to the current force value
     this.setPull = function( force, offsetX ) {
 
@@ -130,13 +130,13 @@ define( require => {
       }
 
       // from the force value, get an index for the visible image
-      var index = Util.roundSymmetric( forceToImage( force ) );
+      let index = Util.roundSymmetric( forceToImage( force ) );
 
       if ( force !== 0 && index === zeroForceIndex ) {
         index += ( force > 0 ) ? 1 : -1;
       }
 
-      for ( var i = 0; i < this.pullerPusherImages.length; i++ ) {
+      for ( let i = 0; i < this.pullerPusherImages.length; i++ ) {
         images[ i ].setVisible( i === index );
       }
       pullerGroupNode.x = -offsetX;

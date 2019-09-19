@@ -48,20 +48,20 @@ define( require => {
     this.addChild( this.legendArrowLine );
 
     // create left and right end lines
-    var endLinesBottom = this.legendArrowLine.bottom + 2.5;
-    var endLinesTop = endLinesBottom - 10;
-    var endLinesOptions = {
+    const endLinesBottom = this.legendArrowLine.bottom + 2.5;
+    const endLinesTop = endLinesBottom - 10;
+    const endLinesOptions = {
       stroke: options.fill,
       lineWidth: 1.25
     };
 
-    var leftEndLine = new Line( this.legendArrowLine.left, endLinesBottom, this.legendArrowLine.left, endLinesTop, endLinesOptions );
-    var rightEndLine = new Line( this.legendArrowLine.right, endLinesBottom, this.legendArrowLine.right, endLinesTop, endLinesOptions );
+    const leftEndLine = new Line( this.legendArrowLine.left, endLinesBottom, this.legendArrowLine.left, endLinesTop, endLinesOptions );
+    const rightEndLine = new Line( this.legendArrowLine.right, endLinesBottom, this.legendArrowLine.right, endLinesTop, endLinesOptions );
 
     this.legendArrowLine.addChild( leftEndLine );
     this.legendArrowLine.addChild( rightEndLine );
 
-    var legendLabel = new Text( labelString, {
+    const legendLabel = new Text( labelString, {
       fill: options.fill,
       fontSize: 14,
       maxWidth: 65

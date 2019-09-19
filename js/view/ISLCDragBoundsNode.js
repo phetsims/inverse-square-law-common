@@ -34,24 +34,24 @@ define( require => {
     Node.call( this, options );
 
     // Show the min/max locations for dragging the objects
-    var verticalMin = layoutBounds.minY;
-    var verticalMax = layoutBounds.height;
-    var object1LineOptions = { stroke: options.object1Stroke, lineWidth: options.lineWidth };
-    var object2LineOptions = { stroke: options.object1Stroke, lineWidth: options.lineWidth };
+    const verticalMin = layoutBounds.minY;
+    const verticalMax = layoutBounds.height;
+    const object1LineOptions = { stroke: options.object1Stroke, lineWidth: options.lineWidth };
+    const object2LineOptions = { stroke: options.object1Stroke, lineWidth: options.lineWidth };
 
     // vertical lines (drawn from yMin to yMax) that will be positioned according to the draggable limits of each object
-    var object1MinLine = new Line( 0, verticalMin, 0, verticalMax, object1LineOptions );
-    var object1MaxLine = new Line( 0, verticalMin, 0, verticalMax, object1LineOptions );
-    var object2MinLine = new Line( 0, verticalMin, 0, verticalMax, object2LineOptions );
-    var object2MaxLine = new Line( 0, verticalMin, 0, verticalMax, object2LineOptions );
+    const object1MinLine = new Line( 0, verticalMin, 0, verticalMax, object1LineOptions );
+    const object1MaxLine = new Line( 0, verticalMin, 0, verticalMax, object1LineOptions );
+    const object2MinLine = new Line( 0, verticalMin, 0, verticalMax, object2LineOptions );
+    const object2MaxLine = new Line( 0, verticalMin, 0, verticalMax, object2LineOptions );
 
     this.children = [ object1MinLine, object2MinLine, object1MaxLine, object2MaxLine ];
 
-    var object1MinX;
-    var object1MaxX;
-    var object2MinX;
-    var object2MaxX;
-    var objectProperties = [
+    let object1MinX;
+    let object1MaxX;
+    let object2MinX;
+    let object2MaxX;
+    const objectProperties = [
       model.object1.positionProperty,
       model.object1.radiusProperty,
       model.object2.positionProperty,

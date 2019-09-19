@@ -30,14 +30,14 @@ define( require => {
   const unitsCentimetersString = require( 'string!INVERSE_SQUARE_LAW_COMMON/units.centimeters' );
 
   // a11y strings
-  var rulerHelpTextString = ISLCA11yStrings.rulerHelpText.value;
-  var rulerLabelString = ISLCA11yStrings.rulerLabel.value;
-  var moveInFourDirectionsString = ISLCA11yStrings.moveInFourDirections.value;
+  const rulerHelpTextString = ISLCA11yStrings.rulerHelpText.value;
+  const rulerLabelString = ISLCA11yStrings.rulerLabel.value;
+  const moveInFourDirectionsString = ISLCA11yStrings.moveInFourDirections.value;
 
   // constants
-  var RULER_WIDTH = 500;
-  var RULER_HEIGHT = 35;
-  var RULER_INSET = 10;
+  const RULER_WIDTH = 500;
+  const RULER_HEIGHT = 35;
+  const RULER_INSET = 10;
 
   /**
    * @param {ISLCModel} model
@@ -62,8 +62,8 @@ define( require => {
 
     assert && assert( options.tagName === undefined, 'RulerNode sets its own tagName, see GrabDragInteraction usage below.' );
 
-    var majorTickLabels = options.majorTickLabels;
-    var rulerUnitString = options.unitString;
+    const majorTickLabels = options.majorTickLabels;
+    const rulerUnitString = options.unitString;
 
     Node.call( this, {
       cursor: 'pointer',
@@ -73,7 +73,7 @@ define( require => {
       focusHighlightLayerable: true
     } );
 
-    var ruler = new RulerNode(
+    const ruler = new RulerNode(
       RULER_WIDTH,
       RULER_HEIGHT,
       50,
@@ -96,14 +96,14 @@ define( require => {
     ruler.touchArea = ruler.mouseArea;
 
     // ruler drag bounds (in model coordinate frame) - assumes a single point scale inverted Y mapping
-    var modelHeight = modelViewTransform.viewToModelDeltaY( screenHeight );
-    var modelRulerHeight = modelViewTransform.viewToModelDeltaY( this.height );
+    const modelHeight = modelViewTransform.viewToModelDeltaY( screenHeight );
+    const modelRulerHeight = modelViewTransform.viewToModelDeltaY( this.height );
 
-    var minX = model.leftObjectBoundary;
-    var minY = modelHeight / 2 - modelRulerHeight; // bottom bound because Y is inverted
-    var maxX = model.rightObjectBoundary;
-    var maxY = -modelHeight / 2 + modelRulerHeight; // top bound because Y is inverted
-    var bounds = new Bounds2( minX, minY, maxX, maxY );
+    const minX = model.leftObjectBoundary;
+    const minY = modelHeight / 2 - modelRulerHeight; // bottom bound because Y is inverted
+    const maxX = model.rightObjectBoundary;
+    const maxY = -modelHeight / 2 + modelRulerHeight; // top bound because Y is inverted
+    const bounds = new Bounds2( minX, minY, maxX, maxY );
 
     this.addInputListener( new MovableDragHandler( model.rulerPositionProperty, {
       dragBounds: bounds,
@@ -116,9 +116,9 @@ define( require => {
         if ( options.snapToNearest ) {
 
           // x in model coordinates
-          var xModel = model.rulerPositionProperty.get().x;
+          const xModel = model.rulerPositionProperty.get().x;
 
-          var snappedX = Util.roundSymmetric( xModel / options.snapToNearest ) * options.snapToNearest;
+          const snappedX = Util.roundSymmetric( xModel / options.snapToNearest ) * options.snapToNearest;
 
           model.rulerPositionProperty.set( new Vector2( snappedX, model.rulerPositionProperty.get().y ) );
         }
@@ -126,14 +126,14 @@ define( require => {
     } ) );
 
     // a11y - custom, layerable focus highlight
-    var focusHighlight = new FocusHighlightFromNode( ruler, { useLocalBounds: true } );
+    const focusHighlight = new FocusHighlightFromNode( ruler, { useLocalBounds: true } );
     this.setFocusHighlight( focusHighlight );
 
     ruler.addChild( focusHighlight );
 
     // @private (a11y) - supports keyboard interaction, private so it can be stepped
-    var keyboardDragDelta = modelViewTransform.modelToViewDeltaX( options.snapToNearest );
-    var keyboardDragListener = new KeyboardDragListener( {
+    const keyboardDragDelta = modelViewTransform.modelToViewDeltaX( options.snapToNearest );
+    const keyboardDragListener = new KeyboardDragListener( {
       dragBounds: bounds,
       locationProperty: model.rulerPositionProperty,
       transform: modelViewTransform,
@@ -147,8 +147,8 @@ define( require => {
       // as key is held down
       drag: function() {
         if ( options.snapToNearest ) {
-          var xModel = model.rulerPositionProperty.get().x;
-          var snappedX = Util.roundSymmetric( xModel / options.snapToNearest ) * options.snapToNearest;
+          const xModel = model.rulerPositionProperty.get().x;
+          const snappedX = Util.roundSymmetric( xModel / options.snapToNearest ) * options.snapToNearest;
           model.rulerPositionProperty.set( new Vector2( snappedX, model.rulerPositionProperty.get().y ) );
         }
       }

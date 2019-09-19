@@ -11,7 +11,7 @@ define( require => {
   // modules
   const inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
 
-  var ISLCQueryParameters = QueryStringMachine.getAll( {
+  const ISLCQueryParameters = QueryStringMachine.getAll( {
 
     // when flagged, shows a grid in the ScreenView that visualizes the possible locations
     // for the objects (kept after code review for future development debugging)

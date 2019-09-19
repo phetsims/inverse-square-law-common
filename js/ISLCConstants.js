@@ -12,9 +12,9 @@ define( require => {
   const inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
 
   // constants
-  var MAX_DISTANCE_FROM_CENTER = 5; // meters, empirically determined boundary for objects
+  const MAX_DISTANCE_FROM_CENTER = 5; // meters, empirically determined boundary for objects
 
-  var ISLCConstants = {
+  const ISLCConstants = {
     k: 8.987551E9, // Coulomb's constant
 
     coulombsPerAtomicUnit: 1.6021766208E-19, // atomic unit in C
