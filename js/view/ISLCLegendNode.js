@@ -6,16 +6,16 @@
  *
  * @author Michael Barlow (PhET Interactive Simulations)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
-  var Line = require( 'SCENERY/nodes/Line' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var Text = require( 'SCENERY/nodes/Text' );
+  const ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
+  const Line = require( 'SCENERY/nodes/Line' );
+  const Node = require( 'SCENERY/nodes/Node' );
+  const Text = require( 'SCENERY/nodes/Text' );
 
   /**
    * @param {number} width (in view coordinates)

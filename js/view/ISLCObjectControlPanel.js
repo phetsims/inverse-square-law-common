@@ -6,24 +6,24 @@
  * @author Jesse Greenberg (PhET Interactive Simulations)
  * @author Michael Barlow (PhET Interactive Simulations
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var FocusHighlightPath = require( 'SCENERY/accessibility/FocusHighlightPath' );
-  var GroupFocusHighlightFromNode = require( 'SCENERY/accessibility/GroupFocusHighlightFromNode' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
-  var merge = require( 'PHET_CORE/merge' );
-  var NumberControl = require( 'SCENERY_PHET/NumberControl' );
-  var Panel = require( 'SUN/Panel' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
-  var Tandem = require( 'TANDEM/Tandem' );
-  var Text = require( 'SCENERY/nodes/Text' );
+  const FocusHighlightPath = require( 'SCENERY/accessibility/FocusHighlightPath' );
+  const GroupFocusHighlightFromNode = require( 'SCENERY/accessibility/GroupFocusHighlightFromNode' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
+  const merge = require( 'PHET_CORE/merge' );
+  const NumberControl = require( 'SCENERY_PHET/NumberControl' );
+  const Panel = require( 'SUN/Panel' );
+  const PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
+  const Tandem = require( 'TANDEM/Tandem' );
+  const Text = require( 'SCENERY/nodes/Text' );
 
   // strings
-  var pattern0Value1UnitsString = require( 'string!INVERSE_SQUARE_LAW_COMMON/pattern_0value_1units' );
+  const pattern0Value1UnitsString = require( 'string!INVERSE_SQUARE_LAW_COMMON/pattern_0value_1units' );
 
   // constants
   var TITLE_MAX_WIDTH = 120; // max widths are set empirically to handle long strings

@@ -6,28 +6,28 @@
  * @author Michael Barlow (PhET Interactive Simulations)
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var AccessiblePeer = require( 'SCENERY/accessibility/AccessiblePeer' );
-  var Bounds2 = require( 'DOT/Bounds2' );
-  var FocusHighlightFromNode = require( 'SCENERY/accessibility/FocusHighlightFromNode' );
-  var GrabDragInteraction = require( 'SCENERY_PHET/accessibility/GrabDragInteraction' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
-  var ISLCA11yStrings = require( 'INVERSE_SQUARE_LAW_COMMON/ISLCA11yStrings' );
-  var KeyboardDragListener = require( 'SCENERY/listeners/KeyboardDragListener' );
-  var MovableDragHandler = require( 'SCENERY_PHET/input/MovableDragHandler' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var RulerNode = require( 'SCENERY_PHET/RulerNode' );
-  var Shape = require( 'KITE/Shape' );
-  var Util = require( 'DOT/Util' );
-  var Vector2 = require( 'DOT/Vector2' );
+  const AccessiblePeer = require( 'SCENERY/accessibility/AccessiblePeer' );
+  const Bounds2 = require( 'DOT/Bounds2' );
+  const FocusHighlightFromNode = require( 'SCENERY/accessibility/FocusHighlightFromNode' );
+  const GrabDragInteraction = require( 'SCENERY_PHET/accessibility/GrabDragInteraction' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
+  const ISLCA11yStrings = require( 'INVERSE_SQUARE_LAW_COMMON/ISLCA11yStrings' );
+  const KeyboardDragListener = require( 'SCENERY/listeners/KeyboardDragListener' );
+  const MovableDragHandler = require( 'SCENERY_PHET/input/MovableDragHandler' );
+  const Node = require( 'SCENERY/nodes/Node' );
+  const PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  const RulerNode = require( 'SCENERY_PHET/RulerNode' );
+  const Shape = require( 'KITE/Shape' );
+  const Util = require( 'DOT/Util' );
+  const Vector2 = require( 'DOT/Vector2' );
 
   // strings
-  var unitsCentimetersString = require( 'string!INVERSE_SQUARE_LAW_COMMON/units.centimeters' );
+  const unitsCentimetersString = require( 'string!INVERSE_SQUARE_LAW_COMMON/units.centimeters' );
 
   // a11y strings
   var rulerHelpTextString = ISLCA11yStrings.rulerHelpText.value;

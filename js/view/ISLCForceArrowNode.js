@@ -6,27 +6,27 @@
  *
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
-  var DefaultDirection = require( 'INVERSE_SQUARE_LAW_COMMON/view/DefaultDirection' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
-  var LinearFunction = require( 'DOT/LinearFunction' );
-  var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
-  var RichText = require( 'SCENERY/nodes/RichText' );
-  var ScientificNotationNode = require( 'SCENERY_PHET/ScientificNotationNode' );
-  var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
-  var Util = require( 'DOT/Util' );
+  const ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
+  const DefaultDirection = require( 'INVERSE_SQUARE_LAW_COMMON/view/DefaultDirection' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
+  const LinearFunction = require( 'DOT/LinearFunction' );
+  const MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
+  const Node = require( 'SCENERY/nodes/Node' );
+  const PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  const Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  const RichText = require( 'SCENERY/nodes/RichText' );
+  const ScientificNotationNode = require( 'SCENERY_PHET/ScientificNotationNode' );
+  const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
+  const Util = require( 'DOT/Util' );
 
   // strings
-  var forceOnObjectByOtherObjectPatternString = require( 'string!INVERSE_SQUARE_LAW_COMMON/forceOnObjectByOtherObjectPattern' );
-  var forceOnObjectByOtherObjectWithUnitsPatternString = require( 'string!INVERSE_SQUARE_LAW_COMMON/forceOnObjectByOtherObjectWithUnitsPattern' );
+  const forceOnObjectByOtherObjectPatternString = require( 'string!INVERSE_SQUARE_LAW_COMMON/forceOnObjectByOtherObjectPattern' );
+  const forceOnObjectByOtherObjectWithUnitsPatternString = require( 'string!INVERSE_SQUARE_LAW_COMMON/forceOnObjectByOtherObjectWithUnitsPattern' );
 
   // constants
   var ARROW_LENGTH = 8; // empirically determined
