@@ -158,7 +158,7 @@ define( require => {
     this.a11yGrabDragInteraction = new GrabDragInteraction( this, {
       objectToGrabString: rulerLabelString,
 
-      // Empirically determined values to place the cue above the book.
+      // Empirically determined values to place the cue above the ruler.
       grabCueOptions: {
         x: 150,
         y: -40
