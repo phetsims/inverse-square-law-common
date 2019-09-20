@@ -15,7 +15,6 @@ define( require => {
 
   // modules
   const AccessibleSlider = require( 'SUN/accessibility/AccessibleSlider' );
-  const BackgroundNode = require( 'SCENERY_PHET/BackgroundNode' );
   const BooleanProperty = require( 'AXON/BooleanProperty' );
   const Circle = require( 'SCENERY/nodes/Circle' );
   const Color = require( 'SCENERY/util/Color' );
@@ -104,8 +103,6 @@ define( require => {
 
         tandem: config.tandem.createTandem( 'labelText' )
       },
-      labelTop: 4, // if false, opt out of the transparent background behind the label for the object.
-      addLabelBackground: true, // This is separate from `labelOptions` because this is applied to the BackgroundNode.
 
       // options passed to the PullerNode, filled in below
       pullerNodeOptions: {
@@ -182,17 +179,11 @@ define( require => {
     // Small black dot where vertical arrow line connects to the object
     this.dragNode.addChild( new Circle( 2, { fill: '#000' } ) );
 
-    let labelText = new RichText( config.label, config.labelOptions );
+    this.labelText = new RichText( config.label, config.labelOptions );
 
-    if ( config.addLabelBackground ) {
-      labelText = new BackgroundNode( labelText, {
-        backgroundOptions: { cornerRadius: 3 }
-      } );
-    }
-    this.dragNode.addChild( labelText );
-    labelText.top = config.labelTop;
-    labelText.on( 'bounds', () => {
-      labelText.centerX = this.objectCircle.centerX;
+    this.dragNode.addChild( this.labelText );
+    this.labelText.on( 'bounds', () => {
+      this.labelText.centerX = this.objectCircle.centerX;
     } );
 
     this.addChild( this.dragNode );
@@ -386,6 +377,9 @@ define( require => {
     redrawForce: function() {
       this.objectCircle.setRadius( this.modelViewTransform.modelToViewDeltaX( this.objectModel.radiusProperty.get() ) );
       this.updateGradient( this.objectModel.baseColorProperty.get() );
+
+      // set the labelText to be right below the circle
+      this.labelText.top = this.objectCircle.bottom + +1;
 
       // set the scale of the arrow based on the model value
       this.arrowNode.redrawArrow( this.model.forceProperty.get() );
