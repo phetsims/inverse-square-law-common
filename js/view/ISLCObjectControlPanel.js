@@ -26,7 +26,7 @@ define( require => {
   const pattern0Value1UnitsString = require( 'string!INVERSE_SQUARE_LAW_COMMON/pattern_0value_1units' );
 
   // constants
-  const TITLE_MAX_WIDTH = 120; // max widths are set empirically to handle long strings
+  const TITLE_MAX_WIDTH = 150; // max widths are set empirically to handle long strings
   const VALUE_MAX_WIDTH = 110;
 
   /**
