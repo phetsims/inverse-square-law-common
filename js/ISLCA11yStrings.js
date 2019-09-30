@@ -61,10 +61,16 @@ define( require => {
       value: 'Move spheres, closer or farther from each other.'
     },
     forceVectorMagnitudeUnitsPattern: {
-      value: 'Force vector magnitude is {{forceValue}} {{units}}.'
+      value: '{{forceMagnitude}} on {{otherObjectLabel}} by {{thisObjectLabel}} is {{forceValue}} {{units}}.'
+    },
+    forceMagnitude: {
+      value: 'Force magnitude'
     },
     forceAndVectorPattern: {
-      value: 'Force on {{thisObjectLabel}} by {{otherObjectLabel}} is {{size}}, and vector points directly at {{otherObjectLabel}}.'
+      value: '{{forceVector}} is {{size}}, and points directly at {{otherObjectLabel}}.'
+    },
+    forceVector: {
+      value: 'Force vector'
     },
     objectLabelPositionPattern: {
       value: 'Move {{label}}'

@@ -33,6 +33,8 @@ define( require => {
   const vectorsString = ISLCA11yStrings.vectors.value;
   const vectorsSizeClausePatternString = ISLCA11yStrings.vectorsSizeClausePattern.value;
   const forcesValueUnitsClausePatternString = ISLCA11yStrings.forcesValueUnitsClausePattern.value;
+  const forceMagnitudeString = ISLCA11yStrings.forceMagnitude.value;
+  const forceVectorString = ISLCA11yStrings.forceVector.value;
 
   const valuesInUnitsPatternString = ISLCA11yStrings.valuesInUnitsPattern.value;
   const forcesInScientificNotationString = ISLCA11yStrings.forcesInScientificNotation.value;
@@ -113,19 +115,15 @@ define( require => {
         // for adding natural language to the force (e.g. '3 billion' instead of 3000000000)
         forceValueToString: value => StringUtils.fillIn( valuePatternString, { value: value } ),
 
-        // {string} - see getForceBetweenAndVectorText() for usage. Be careful that template vars are named correctly.
-        forceAndVectorPatternString: forceAndVectorPatternString,
-
-        // {string} - see getForceVectorMagnitudeText() for usage. Be careful that template vars are named correctly.
-        forceVectorMagnitudeUnitsPatternString: forceVectorMagnitudeUnitsPatternString,
-
         // {string} - all options below used for simplification in GFLB
         forceVectorsCapitalizedString: forceVectorArrowsString,
 
-        // different usage for GFLB than "vectorsString" see usages below as well as GFLBForceDescriber
+        // In GFL, we like "vector" but in GFLB prefer "arrow", see usages below as well as GFLBForceDescriber
         forceVectorsString: vectorsString,
         vectorsString: vectorsString,
-        vectorsCapitalizedString: vectorsCapitalizedString
+        vectorsCapitalizedString: vectorsCapitalizedString,
+        forceVectorString: forceVectorString,
+        forceMagnitudeString: forceMagnitudeString
       }, options );
 
       // @private
@@ -142,8 +140,6 @@ define( require => {
 
       // @private {number} - // 1 -> growing, 0 -> no change, -1 -> shrinking
       this.vectorChangeDirection = 0;
-      this.forceAndVectorPatternString = options.forceAndVectorPatternString;
-      this.forceVectorMagnitudeUnitsPatternString = options.forceVectorMagnitudeUnitsPatternString;
       this.forceVectorsString = options.forceVectorsString;
       this.vectorsCapitalizedString = options.vectorsCapitalizedString;
 
@@ -171,6 +167,12 @@ define( require => {
       } );
       this.vectorChangeCapitalizedForcesNowClausePatternString = StringUtils.fillIn( vectorChangeForcesNowClausePatternString, {
         vectors: options.forceVectorsCapitalizedString
+      } );
+      this.forceVectorMagnitudeUnitsPatternString = StringUtils.fillIn( forceVectorMagnitudeUnitsPatternString, {
+        forceMagnitude: options.forceMagnitudeString
+      } );
+      this.forceAndVectorPatternString = StringUtils.fillIn( forceAndVectorPatternString, {
+        forceVector: options.forceVectorString
       } );
 
       model.forceProperty.link( ( force, oldForce ) => {
