@@ -290,7 +290,7 @@ define( require => {
         const positionChanged = newPosition !== oldPosition;
         return positionChanged ? forceDescriber.getVectorChangeText( object ) : forceDescriber.getPositionUnchangedAlertText( object );
       },
-      a11yCreateValueChangeAriaValueText: positionDescriber.getPositionAriaValueTextCreator( this.enum ),
+      a11yCreateAriaValueText: positionDescriber.getPositionAriaValueTextCreator( this.enum ),
 
       // This object's PDOM description also depends on the position of the other object, so include it here.
       a11yDependencies: config.additionalA11yDependencies.concat( object === model.object1 ?
