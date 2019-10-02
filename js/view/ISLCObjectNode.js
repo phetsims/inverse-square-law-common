@@ -271,7 +271,7 @@ define( require => {
       keyboardStep: config.stepSize,
       shiftKeyboardStep: config.snapToNearest,
       pageKeyboardStep: config.stepSize * 2,
-      a11yDecimalPlaces: 1,
+      a11yMapValue: value => Util.toFixedNumber( value, 1 ),
       constrainValue: value => {
         const numberOfDecimalPlaces = Util.numberOfDecimalPlaces( config.snapToNearest );
         return Util.toFixedNumber( value, numberOfDecimalPlaces );
