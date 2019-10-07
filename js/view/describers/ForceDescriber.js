@@ -14,10 +14,8 @@ define( require => {
   const inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
   const ISLCA11yStrings = require( 'INVERSE_SQUARE_LAW_COMMON/ISLCA11yStrings' );
   const ISLCDescriber = require( 'INVERSE_SQUARE_LAW_COMMON/view/describers/ISLCDescriber' );
-  const LinearFunction = require( 'DOT/LinearFunction' );
   const ScientificNotationNode = require( 'SCENERY_PHET/ScientificNotationNode' );
   const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
-  const Util = require( 'DOT/Util' );
 
   // strings
   const unitsNewtonsString = require( 'string!INVERSE_SQUARE_LAW_COMMON/units.newtons' );
@@ -133,10 +131,6 @@ define( require => {
       this.units = options.units;
       this.forceValueToString = options.forceValueToString;
       this.convertForce = options.convertForce;
-
-      // @private - empirically divide by 2 to give a good range to the pull force regions
-      this.forceToPullIndex = new LinearFunction( model.getMinForce(), model.getMaxForce() / 2,
-        0, PULL_EFFORT_STINGS.length - 1, true );
 
       // @private {number} - // 1 -> growing, 0 -> no change, -1 -> shrinking
       this.vectorChangeDirection = 0;
@@ -356,14 +350,14 @@ define( require => {
     }
 
     /**
-     * Returns the qualitiative amount of pull/push the robots are currently exerting.
+     * Returns the qualitiative amount of pull/push the robots are currently exerting. This uses the same range as
+     * the force vector (or "arrow" in GFLB) size regions.
      *
      * @returns {string}
      * @private
      */
     getRobotEffort() {
-      const effortIndex = Util.roundSymmetric( this.forceToPullIndex( this.forceProperty.get() ) );
-      return PULL_EFFORT_STINGS[ effortIndex ];
+      return PULL_EFFORT_STINGS[ this.getForceVectorIndex( this.forceProperty.get(), PULL_EFFORT_STINGS.length ) ];
     }
 
     /**
