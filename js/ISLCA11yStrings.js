@@ -118,7 +118,7 @@ define( require => {
 
     // closer/further away
     positionProgressOrLandmarkClause: {
-      value: '{{progressOrLandmark}}, '
+      value: '{{progressOrLandmark}},'
     },
 
     /************************
@@ -133,7 +133,7 @@ define( require => {
 
     // Alert text strings
     vectorChangePattern: {
-      value: '{{positionProgressOrLandmarkClause}}{{vectors}} {{changeDirection}}'
+      value: '{{positionProgressOrLandmarkClause}} {{vectors}} {{changeDirection}}'
     },
     vectorChangeSentencePattern: {
       value: '{{vectorChange}}.'
