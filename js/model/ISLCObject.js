@@ -28,11 +28,12 @@ define( require => {
    * @param {Vector2} initialPosition
    * @param {Range} valueRange
    * @param {Property.<boolean>} constantRadiusProperty
+   * @param {function(mass:number):number} calculateRadius - function to get the radius based on the mass
    * @param {Tandem} tandem
    * @param {Object} [options]
    * @constructor
    */
-  function ISLCObject( initialMass, initialPosition, valueRange, constantRadiusProperty, tandem, options ) {
+  function ISLCObject( initialMass, initialPosition, valueRange, constantRadiusProperty, calculateRadius, tandem, options ) {
 
     options = _.extend( {
 
@@ -63,11 +64,14 @@ define( require => {
       step: options.valueStep
     } );
 
+    // @public (read-only) {function(mass:number):number}
+    this.calculateRadius = calculateRadius;
+
     // @public {Property.<number>} - the radius of the mass or charge in meters
     // since ISLCObjects are never destroyed, no need to dispose
     this.radiusProperty = new DerivedProperty( [ this.valueProperty, constantRadiusProperty ],
       ( objectValue, constantRadius ) => {
-        return constantRadius ? options.constantRadius : this.calculateRadius( objectValue );
+        return constantRadius ? options.constantRadius : calculateRadius( objectValue );
       }, {
         tandem: tandem.createTandem( 'radiusProperty' ),
         phetioDocumentation: 'The radius of the object',
@@ -137,17 +141,6 @@ define( require => {
     onStepEnd: function() {
       this.valueChangedSinceLastStep = false;
       this.constantRadiusChangedSinceLastStep = false;
-    },
-
-    /**
-     * Calculate radius for the object - must be implemented in subtypes.
-     *
-     * @public
-     * @abstract
-     * @param {number} value
-     */
-    calculateRadius: function( value ) {
-      assert && assert( false, 'calculateRadius must be implemented in descendent types' );
     },
 
     /**
