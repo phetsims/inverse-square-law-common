@@ -302,8 +302,8 @@ define( require => {
      */
     getMaxForce: function() {
       this.assertObjectsHaveSameRange();
-      return Math.abs( this.calculateForce( this.object1.valueRange.max, this.object2.valueRange.max,
-        this.object1.constantRadius * 2 + this.minSeparationBetweenObjects ) );
+      return this.snapToGrid( Math.abs( this.calculateForce( this.object1.valueRange.max, this.object2.valueRange.max,
+        this.object1.constantRadius * 2 + this.minSeparationBetweenObjects ) ) );
     },
 
     /**
