@@ -14,6 +14,7 @@ define( require => {
   // modules
   const inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
   const ISLCObjectEnum = require( 'INVERSE_SQUARE_LAW_COMMON/view/ISLCObjectEnum' );
+  const merge = require( 'PHET_CORE/merge' );
   const Node = require( 'SCENERY/nodes/Node' );
 
   class ISLCObjectPDOMNode extends Node {
@@ -25,7 +26,7 @@ define( require => {
      */
     constructor( model, objectEnum, config ) {
 
-      config = _.extend( {
+      config = merge( {
         object1Label: null, // {string} @required
         object2Label: null, // {string} @required
 

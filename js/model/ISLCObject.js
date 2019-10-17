@@ -16,6 +16,7 @@ define( require => {
   const inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
   const ISLCConstants = require( 'INVERSE_SQUARE_LAW_COMMON/ISLCConstants' );
   const ISLCObjectEnum = require( 'INVERSE_SQUARE_LAW_COMMON/view/ISLCObjectEnum' );
+  const merge = require( 'PHET_CORE/merge' );
   const NumberIO = require( 'TANDEM/types/NumberIO' );
   const NumberProperty = require( 'AXON/NumberProperty' );
   const Property = require( 'AXON/Property' );
@@ -35,7 +36,7 @@ define( require => {
    */
   function ISLCObject( initialMass, initialPosition, valueRange, constantRadiusProperty, calculateRadius, tandem, options ) {
 
-    options = _.extend( {
+    options = merge( {
 
       // in meters
       leftObjectBoundary: ISLCConstants.LEFT_OBJECT_BOUNDARY,

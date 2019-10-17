@@ -15,6 +15,7 @@ define( require => {
   const ISLCA11yStrings = require( 'INVERSE_SQUARE_LAW_COMMON/ISLCA11yStrings' );
   const ISLCDescriber = require( 'INVERSE_SQUARE_LAW_COMMON/view/describers/ISLCDescriber' );
   const ISLCObjectEnum = require( 'INVERSE_SQUARE_LAW_COMMON/view/ISLCObjectEnum' );
+  const merge = require( 'PHET_CORE/merge' );
   const Property = require( 'AXON/Property' );
   const StringProperty = require( 'AXON/StringProperty' );
   const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
@@ -104,7 +105,7 @@ define( require => {
     constructor( model, object1Label, object2Label, options ) {
       super( model, object1Label, object2Label );
 
-      options = _.extend( {
+      options = merge( {
         unit: unitsMeterString,
         units: unitsMetersString,
 

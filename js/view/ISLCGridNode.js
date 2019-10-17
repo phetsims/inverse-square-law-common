@@ -13,6 +13,7 @@ define( require => {
   // modules
   const inherit = require( 'PHET_CORE/inherit' );
   const inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
+  const merge = require( 'PHET_CORE/merge' );
   const Path = require( 'SCENERY/nodes/Path' );
   const Shape = require( 'KITE/Shape' );
 
@@ -25,7 +26,7 @@ define( require => {
    */
   function ISLCGridNode( deltaX, layoutBounds, modelViewTransform, options ) {
 
-    options = _.extend( {
+    options = merge( {
       stroke: 'rgba( 0, 0, 0, 0.6 )'
     }, options );
 

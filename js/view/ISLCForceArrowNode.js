@@ -16,6 +16,7 @@ define( require => {
   const inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
   const LinearFunction = require( 'DOT/LinearFunction' );
   const MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
+  const merge = require( 'PHET_CORE/merge' );
   const Node = require( 'SCENERY/nodes/Node' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
   const Rectangle = require( 'SCENERY/nodes/Rectangle' );
@@ -43,7 +44,7 @@ define( require => {
    */
   function ISLCForceArrowNode( arrowForceRange, layoutBounds, label, otherObjectLabel, tandem, options ) {
 
-    options = _.extend( {
+    options = merge( {
       defaultDirection: DefaultDirection.LEFT,
       attractNegative: true, // if true, arrows will point towards each other if force is negative
       arrowNodeLineWidth: 0.25,
@@ -131,7 +132,7 @@ define( require => {
     } );
 
     // @private - tip and tail set in redrawArrow
-    this.arrow = new ArrowNode( 0, -options.forceArrowHeight, 200, -options.forceArrowHeight, _.extend( {
+    this.arrow = new ArrowNode( 0, -options.forceArrowHeight, 200, -options.forceArrowHeight, merge( {
       lineWidth: options.arrowNodeLineWidth,
       stroke: options.arrowStroke,
       fill: options.arrowFill,

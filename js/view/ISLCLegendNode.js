@@ -14,6 +14,7 @@ define( require => {
   const inherit = require( 'PHET_CORE/inherit' );
   const inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
   const Line = require( 'SCENERY/nodes/Line' );
+  const merge = require( 'PHET_CORE/merge' );
   const Node = require( 'SCENERY/nodes/Node' );
   const Text = require( 'SCENERY/nodes/Text' );
 
@@ -25,7 +26,7 @@ define( require => {
    */
   function ISLCLegendNode( width, labelString, options ) {
 
-    options = _.extend( {
+    options = merge( {
       fill: 'rgb(0,255,0)',
       fontSize: 14,
       maxWidth: 85

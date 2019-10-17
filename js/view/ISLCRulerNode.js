@@ -18,6 +18,7 @@ define( require => {
   const inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
   const ISLCA11yStrings = require( 'INVERSE_SQUARE_LAW_COMMON/ISLCA11yStrings' );
   const KeyboardDragListener = require( 'SCENERY/listeners/KeyboardDragListener' );
+  const merge = require( 'PHET_CORE/merge' );
   const MovableDragHandler = require( 'SCENERY_PHET/input/MovableDragHandler' );
   const Node = require( 'SCENERY/nodes/Node' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
@@ -49,7 +50,7 @@ define( require => {
    */
   function ISLCRulerNode( model, screenHeight, modelViewTransform, tandem, options ) {
 
-    options = _.extend( {
+    options = merge( {
       snapToNearest: null,
       majorTickLabels: [ '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10' ],
       unitString: unitsCentimetersString,

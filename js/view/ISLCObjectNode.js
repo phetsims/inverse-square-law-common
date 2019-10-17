@@ -59,7 +59,7 @@ define( require => {
    */
   function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertManager, forceDescriber, positionDescriber, config ) {
 
-    config = _.extend( {
+    config = merge( {
       label: null, // {string} @required
       otherObjectLabel: null, // {string} @required
       defaultDirection: DefaultDirection.LEFT,

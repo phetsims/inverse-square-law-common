@@ -14,6 +14,7 @@ define( require => {
   const inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
   const ISLCA11yStrings = require( 'INVERSE_SQUARE_LAW_COMMON/ISLCA11yStrings' );
   const ISLCDescriber = require( 'INVERSE_SQUARE_LAW_COMMON/view/describers/ISLCDescriber' );
+  const merge = require( 'PHET_CORE/merge' );
   const ScientificNotationNode = require( 'SCENERY_PHET/ScientificNotationNode' );
   const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
 
@@ -102,7 +103,7 @@ define( require => {
     constructor( model, object1Label, object2Label, positionDescriber, options ) {
       super( model, object1Label, object2Label );
 
-      options = _.extend( {
+      options = merge( {
         units: unitsNewtonsString,
 
         // in some scenarios, the force units change. convertForce allows subtypes to define conversion behavior

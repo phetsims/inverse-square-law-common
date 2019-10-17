@@ -18,6 +18,7 @@ define( require => {
   const inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
   const ISLCPullerImages = require( 'INVERSE_SQUARE_LAW_COMMON/ISLCPullerImages' );
   const LinearFunction = require( 'DOT/LinearFunction' );
+  const merge = require( 'PHET_CORE/merge' );
   const Node = require( 'SCENERY/nodes/Node' );
   const Path = require( 'SCENERY/nodes/Path' );
   const Shape = require( 'KITE/Shape' );
@@ -34,7 +35,7 @@ define( require => {
    */
   function ISLCPullerNode( forceRange, options ) {
 
-    options = _.extend( {
+    options = merge( {
       ropeLength: 50,
       shadowMinWidth: 32,
       shadowMaxWidth: 50,

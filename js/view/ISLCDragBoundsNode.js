@@ -13,6 +13,7 @@ define( require => {
   const inherit = require( 'PHET_CORE/inherit' );
   const inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
   const Line = require( 'SCENERY/nodes/Line' );
+  const merge = require( 'PHET_CORE/merge' );
   const Node = require( 'SCENERY/nodes/Node' );
   const Property = require( 'AXON/Property' );
 
@@ -25,7 +26,7 @@ define( require => {
    */
   function ISLCDragBoundsNode( model, layoutBounds, modelViewTransform, options ) {
 
-    options = _.extend( {
+    options = merge( {
       lineWidth: 2,
       object1Stroke: 'blue',
       object2Stroke: 'red'

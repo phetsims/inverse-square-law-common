@@ -16,6 +16,7 @@ define( require => {
   const inherit = require( 'PHET_CORE/inherit' );
   const inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
   const ISLCObjectEnum = require( 'INVERSE_SQUARE_LAW_COMMON/view/ISLCObjectEnum' );
+  const merge = require( 'PHET_CORE/merge' );
   const NumberIO = require( 'TANDEM/types/NumberIO' );
   const Property = require( 'AXON/Property' );
   const Range = require( 'DOT/Range' );
@@ -37,7 +38,7 @@ define( require => {
    */
   function ISLCModel( forceConstant, object1, object2, locationRange, tandem, options ) {
 
-    options = _.extend( {
+    options = merge( {
       snapObjectsToNearest: null, // {number|null} if defined, objects will snap to nearest value in model coordinates
       minSeparationBetweenObjects: 0.1 // in meters
     }, options );
