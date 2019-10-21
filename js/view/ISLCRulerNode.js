@@ -161,8 +161,8 @@ define( require => {
 
       // Empirically determined values to place the cue above the ruler.
       grabCueOptions: {
-        x: 150,
-        y: -40
+        x: 135,
+        y: -45
       },
       grabbableOptions: {
         appendDescription: true,
