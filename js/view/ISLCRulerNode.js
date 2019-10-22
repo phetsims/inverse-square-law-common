@@ -182,9 +182,6 @@ define( require => {
 
       // whenever converting from draggable -> grabbable, this function is called
       onGrabbable: () => {
-        if ( this.hasAccessibleAttribute( 'aria-roledescription' ) ) {
-          this.removeAccessibleAttribute( 'aria-roledescription' );
-        }
         this.ariaDescribedbyAssociations = [];
       },
 
