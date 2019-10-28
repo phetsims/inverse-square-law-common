@@ -18,6 +18,7 @@ define( require => {
   const inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
   const ISLCA11yStrings = require( 'INVERSE_SQUARE_LAW_COMMON/ISLCA11yStrings' );
   const KeyboardDragListener = require( 'SCENERY/listeners/KeyboardDragListener' );
+  const KeyboardUtil = require( 'SCENERY/accessibility/KeyboardUtil' );
   const merge = require( 'PHET_CORE/merge' );
   const MovableDragHandler = require( 'SCENERY_PHET/input/MovableDragHandler' );
   const Node = require( 'SCENERY/nodes/Node' );
@@ -57,6 +58,9 @@ define( require => {
       backgroundFill: '#ddd',
       rulerInset: RULER_INSET,
 
+      // {number} If using with snapToNearest, then this number will be rounded by the that value.
+      modelYForCenterJump: .5,
+
       // a11y
       moveOnHoldDelay: 750
     }, options );
@@ -79,8 +83,7 @@ define( require => {
       RULER_HEIGHT,
       50,
       majorTickLabels,
-      rulerUnitString,
-      {
+      rulerUnitString, {
         backgroundFill: options.backgroundFill,
         insetsWidth: options.rulerInset,
         minorTicksPerMajorTick: 4,
@@ -89,8 +92,7 @@ define( require => {
         unitsFont: new PhetFont( 10 ),
         unitsSpacing: 3,
         tandem: tandem
-      }
-    );
+      } );
     this.addChild( ruler );
 
     ruler.mouseArea = Shape.rectangle( 0, 0, ruler.bounds.width, RULER_HEIGHT );
@@ -132,8 +134,9 @@ define( require => {
 
     ruler.addChild( focusHighlight );
 
-    // @private (a11y) - supports keyboard interaction, private so it can be stepped
     const keyboardDragDelta = modelViewTransform.modelToViewDeltaX( options.snapToNearest );
+
+    // supports keyboard interaction
     const keyboardDragListener = new KeyboardDragListener( {
       dragBounds: bounds,
       locationProperty: model.rulerPositionProperty,
@@ -154,6 +157,21 @@ define( require => {
         }
       }
     } );
+
+    // the ruler's orgin is the center, this offset get's the edge of it.
+    const rulerAlignWithObjectXOffset = modelViewTransform.viewToModelDeltaX( RULER_WIDTH ) / 2;
+
+    // register hot key shortcuts
+    keyboardDragListener.addHotkeyGroups( [ {
+      keys: [ KeyboardUtil.KEY_J, KeyboardUtil.KEY_C ], // jump to center of object 1
+      callback: () => {
+        const x = model.object1.positionProperty.value;
+        model.rulerPositionProperty.set( new Vector2( x + rulerAlignWithObjectXOffset, options.modelYForCenterJump ) );
+      }
+    }, {
+      keys: [ KeyboardUtil.KEY_J, KeyboardUtil.KEY_H ], // jump home
+      callback: () => model.rulerPositionProperty.set( model.rulerPositionProperty.initialValue )
+    } ] );
 
     // a11y - add the "grab button" interaction
     this.a11yGrabDragInteraction = new GrabDragInteraction( this, {
