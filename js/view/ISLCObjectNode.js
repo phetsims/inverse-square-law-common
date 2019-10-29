@@ -189,7 +189,7 @@ define( require => {
     this.addChild( this.dragNode );
 
     // @private
-    this.y = config.y;
+    this.y = config.y; // TODO: is this needed?
 
     // Added for PhET-iO as a way to hide the dashed lines.
     const centerOfMassLineNode = new Node( { tandem: config.tandem.createTandem( 'centerOfMassLineNode' ) } );

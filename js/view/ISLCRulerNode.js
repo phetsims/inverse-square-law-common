@@ -26,6 +26,8 @@ define( require => {
   const Shape = require( 'KITE/Shape' );
   const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   const Util = require( 'DOT/Util' );
+  const Utterance = require( 'UTTERANCE_QUEUE/Utterance' );
+  const utteranceQueue = require( 'UTTERANCE_QUEUE/utteranceQueue' );
   const Vector2 = require( 'DOT/Vector2' );
 
   // strings
@@ -51,10 +53,11 @@ define( require => {
      * @param {ISLCModel} model
      * @param {number} screenHeight
      * @param {ModelViewTransform2} modelViewTransform
+     * @param {ISLCRulerDescriber} rulerDescriber
      * @param {Tandem} tandem
      * @param {Object} [options]
      */
-    constructor( model, screenHeight, modelViewTransform, tandem, options ) {
+    constructor( model, screenHeight, modelViewTransform, rulerDescriber, tandem, options ) {
 
       options = merge( {
         snapToNearest: null,
@@ -139,6 +142,7 @@ define( require => {
 
       ruler.addChild( focusHighlight );
 
+      const grabbedUtterance = new Utterance();
       const keyboardDragDelta = modelViewTransform.modelToViewDeltaX( options.snapToNearest );
 
       // supports keyboard interaction
@@ -194,6 +198,11 @@ define( require => {
         // whenever converting from draggable -> grabbable, this function is called
         onGrabbable: () => {
           this.ariaDescribedbyAssociations = [];
+        },
+
+        onGrab: () => {
+          grabbedUtterance.alert = rulerDescriber.getRulerGrabbedAlertable();
+          utteranceQueue.addToBack( grabbedUtterance);
         },
 
         listenersForDrag: [ keyboardDragListener ]
