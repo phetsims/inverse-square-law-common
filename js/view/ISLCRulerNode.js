@@ -25,6 +25,7 @@ define( require => {
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
   const RulerNode = require( 'SCENERY_PHET/RulerNode' );
   const Shape = require( 'KITE/Shape' );
+  const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   const Util = require( 'DOT/Util' );
   const Vector2 = require( 'DOT/Vector2' );
 
@@ -33,8 +34,12 @@ define( require => {
 
   // a11y strings
   const rulerHelpTextString = ISLCA11yStrings.rulerHelpText.value;
+  const rulerKeyboardHintString = ISLCA11yStrings.rulerKeyboardHint.value;
+  const rulerTouchHintString = ISLCA11yStrings.rulerTouchHint.value;
   const rulerLabelString = ISLCA11yStrings.rulerLabel.value;
+
   const moveInFourDirectionsString = ISLCA11yStrings.moveInFourDirections.value;
+  const measureDistanceRulerString = ISLCA11yStrings.measureDistanceRuler.value;
 
   // constants
   const RULER_WIDTH = 500;
@@ -158,24 +163,10 @@ define( require => {
       }
     } );
 
-    // the ruler's orgin is the center, this offset get's the edge of it.
-    const rulerAlignWithObjectXOffset = modelViewTransform.viewToModelDeltaX( RULER_WIDTH ) / 2;
-
-    // register hot key shortcuts
-    keyboardDragListener.addHotkeyGroups( [ {
-      keys: [ KeyboardUtil.KEY_J, KeyboardUtil.KEY_C ], // jump to center of object 1
-      callback: () => {
-        const x = model.object1.positionProperty.value;
-        model.rulerPositionProperty.set( new Vector2( x + rulerAlignWithObjectXOffset, options.modelYForCenterJump ) );
-      }
-    }, {
-      keys: [ KeyboardUtil.KEY_J, KeyboardUtil.KEY_H ], // jump home
-      callback: () => model.rulerPositionProperty.set( model.rulerPositionProperty.initialValue )
-    } ] );
-
     // a11y - add the "grab button" interaction
     this.a11yGrabDragInteraction = new GrabDragInteraction( this, {
       objectToGrabString: rulerLabelString,
+      grabbableAccessibleName: measureDistanceRulerString,
 
       // Empirically determined values to place the cue above the ruler.
       grabCueOptions: {
@@ -184,7 +175,9 @@ define( require => {
       },
       grabbableOptions: {
         appendDescription: true,
-        helpText: rulerHelpTextString,
+        helpText: StringUtils.fillIn( rulerHelpTextString, {
+          deviceSpecificHint: phet.joist.sim.supportsTouchA11y ? rulerTouchHintString : rulerKeyboardHintString
+        } ),
         focusHighlight: focusHighlight
       },
 
@@ -205,6 +198,25 @@ define( require => {
 
       listenersForDrag: [ keyboardDragListener ]
     } );
+
+    // the ruler's orgin is the center, this offset get's the edge of it.
+    const rulerAlignWithObjectXOffset = modelViewTransform.viewToModelDeltaX( RULER_WIDTH ) / 2;
+
+    // register hot key shortcuts
+    keyboardDragListener.addHotkeyGroups( [ {
+      keys: [ KeyboardUtil.KEY_J, KeyboardUtil.KEY_C ], // jump to center of object 1
+      callback: () => {
+        const x = model.object1.positionProperty.value;
+        model.rulerPositionProperty.set( new Vector2( x + rulerAlignWithObjectXOffset, options.modelYForCenterJump ) );
+      }
+    }, {
+      keys: [ KeyboardUtil.KEY_J, KeyboardUtil.KEY_H ], // jump home
+      callback: () => {
+        model.rulerPositionProperty.set( model.rulerPositionProperty.initialValue );
+        this.a11yGrabDragInteraction.releaseDraggable();
+      }
+    } ] );
+
 
     // @public - ruler node is never destroyed, no listener disposal necessary
     // Called after the focusHighlight has been added as a child to the ruler

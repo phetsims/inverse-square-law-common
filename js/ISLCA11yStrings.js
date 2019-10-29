@@ -288,7 +288,16 @@ define( require => {
       value: 'Ruler'
     },
     rulerHelpText: {
-      value: 'Move ruler to measure distance between spheres in meters.'
+      value: 'If needed, grab ruler to measure distance between centers of spheres. {{deviceSpecificHint}}'
+    },
+    rulerKeyboardHint: {
+      value: 'Once grabbed, use keyboard shortcuts or letter keys W, A, S, or D to move ruler up, left, down, or right.'
+    },
+    rulerTouchHint: {
+      value: 'Double tap and hold to drag ruler. Lift finger to release.'
+    },
+    measureDistanceRuler: {
+      value: 'Measure Distance Ruler'
     },
     moveInFourDirections: {
       value: 'move in four directions'
