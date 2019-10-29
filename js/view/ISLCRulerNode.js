@@ -147,7 +147,7 @@ define( require => {
       locationProperty: model.rulerPositionProperty,
       transform: modelViewTransform,
       moveOnHoldDelay: options.moveOnHoldDelay,
-      downDelta: keyboardDragDelta,
+      downDelta: 2 * keyboardDragDelta,
       shiftDownDelta: keyboardDragDelta,
       dragVelocity: keyboardDragDelta * 60,
       shiftDragVelocity: keyboardDragDelta * 60,
