@@ -10,7 +10,6 @@ define( require => {
   'use strict';
 
   // modules
-  const AccessiblePeer = require( 'SCENERY/accessibility/AccessiblePeer' );
   const Bounds2 = require( 'DOT/Bounds2' );
   const FocusHighlightFromNode = require( 'SCENERY/accessibility/FocusHighlightFromNode' );
   const GrabDragInteraction = require( 'SCENERY_PHET/accessibility/GrabDragInteraction' );
