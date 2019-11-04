@@ -23,6 +23,7 @@ define( require => {
   const Node = require( 'SCENERY/nodes/Node' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
   const RulerNode = require( 'SCENERY_PHET/RulerNode' );
+  const SceneryPhetA11yStrings = require( 'SCENERY_PHET/SceneryPhetA11yStrings' );
   const Shape = require( 'KITE/Shape' );
   const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   const Util = require( 'DOT/Util' );
@@ -36,7 +37,7 @@ define( require => {
   // a11y strings
   const rulerHelpTextString = ISLCA11yStrings.rulerHelpText.value;
   const rulerKeyboardHintString = ISLCA11yStrings.rulerKeyboardHint.value;
-  const rulerTouchHintString = ISLCA11yStrings.rulerTouchHint.value;
+  const gestureHelpTextPatternString = SceneryPhetA11yStrings.gestureHelpTextPattern.value;
   const rulerLabelString = ISLCA11yStrings.rulerLabel.value;
 
   const moveInFourDirectionsString = ISLCA11yStrings.moveInFourDirections.value;
@@ -179,30 +180,29 @@ define( require => {
         },
         grabbableOptions: {
           appendDescription: true,
-          helpText: StringUtils.fillIn( rulerHelpTextString, {
-            deviceSpecificHint: phet.joist.sim.supportsTouchA11y ? rulerTouchHintString : rulerKeyboardHintString
-          } ),
           focusHighlight: focusHighlight
         },
+
+        keyboardHelpText: StringUtils.fillIn( rulerHelpTextString, {
+          deviceSpecificHint: rulerKeyboardHintString
+        } ),
+
+        // Overwrite the gesture help text to include ruler-specific logic. This isn't always needed.
+        gestureHelpText: StringUtils.fillIn( rulerHelpTextString, {
+          deviceSpecificHint: StringUtils.fillIn( gestureHelpTextPatternString, {
+            objectToGrab: rulerLabelString
+          } )
+        } ),
+
 
         // whenever converting from grabbable -> draggable, this function is called
         onDraggable: () => {
           this.setAccessibleAttribute( 'aria-roledescription', moveInFourDirectionsString );
-          this.addAriaDescribedbyAssociation( {
-            otherNode: this,
-            otherElementName: AccessiblePeer.DESCRIPTION_SIBLING,
-            thisElementName: AccessiblePeer.PRIMARY_SIBLING
-          } );
-        },
-
-        // whenever converting from draggable -> grabbable, this function is called
-        onGrabbable: () => {
-          this.ariaDescribedbyAssociations = [];
         },
 
         onGrab: () => {
           grabbedUtterance.alert = rulerDescriber.getRulerGrabbedAlertable();
-          utteranceQueue.addToBack( grabbedUtterance);
+          utteranceQueue.addToBack( grabbedUtterance );
         },
 
         listenersForDrag: [ keyboardDragListener ]

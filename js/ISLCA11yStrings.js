@@ -293,9 +293,6 @@ define( require => {
     rulerKeyboardHint: {
       value: 'Once grabbed, use keyboard shortcuts or letter keys W, A, S, or D to move ruler up, left, down, or right.'
     },
-    rulerTouchHint: {
-      value: 'Double tap and hold to drag ruler. Lift finger to release.'
-    },
     measureDistanceRuler: {
       value: 'Measure Distance Ruler'
     },
