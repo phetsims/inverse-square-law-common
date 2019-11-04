@@ -178,7 +178,6 @@ define( require => {
           y: -45
         },
         grabbableOptions: {
-          appendDescription: true,
           focusHighlight: focusHighlight
         },
 
