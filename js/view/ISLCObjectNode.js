@@ -176,8 +176,10 @@ define( require => {
     this.dragNode.addChild( this.pullerNode );
     this.dragNode.addChild( this.objectCircle );
 
+    // @public - for ruler regions
     // Small black dot where vertical arrow line connects to the object
-    this.dragNode.addChild( new Circle( 2, { fill: '#000' } ) );
+    this.centerPoint = new Circle( 2, { fill: '#000' } );
+    this.dragNode.addChild( this.centerPoint );
 
     this.labelText = new RichText( config.label, config.labelOptions );
 
