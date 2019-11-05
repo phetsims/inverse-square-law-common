@@ -66,8 +66,11 @@ define( require => {
     forceMagnitude: {
       value: 'Force magnitude'
     },
+    forceVectorSizePattern: {
+      value: '{{forceVector}} is {{size}}'
+    },
     forceAndVectorPattern: {
-      value: '{{forceVector}} is {{size}}, and points directly at {{otherObjectLabel}}.'
+      value: '{{forceVectorSize}}, and points directly at {{otherObjectLabel}}.'
     },
     forceVector: {
       value: 'Force vector'

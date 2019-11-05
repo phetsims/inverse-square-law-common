@@ -27,6 +27,7 @@ define( require => {
   const summaryVectorSizeValueUnitsPatternString = ISLCA11yStrings.summaryVectorSizeValueUnitsPattern.value;
   const forceVectorMagnitudeUnitsPatternString = ISLCA11yStrings.forceVectorMagnitudeUnitsPattern.value;
   const forceAndVectorPatternString = ISLCA11yStrings.forceAndVectorPattern.value;
+  const forceVectorSizePatternString = ISLCA11yStrings.forceVectorSizePattern.value;
   const robotPullSummaryPatternString = ISLCA11yStrings.robotPullSummaryPattern.value;
   const robotPushSummaryPatternString = ISLCA11yStrings.robotPushSummaryPattern.value;
   const vectorsString = ISLCA11yStrings.vectors.value;
@@ -166,7 +167,7 @@ define( require => {
       this.forceVectorMagnitudeUnitsPatternString = StringUtils.fillIn( forceVectorMagnitudeUnitsPatternString, {
         forceMagnitude: options.forceMagnitudeString
       } );
-      this.forceAndVectorPatternString = StringUtils.fillIn( forceAndVectorPatternString, {
+      this.forceVectorSizePatternString = StringUtils.fillIn( forceVectorSizePatternString, {
         forceVector: options.forceVectorString
       } );
 
@@ -229,19 +230,28 @@ define( require => {
     }
 
     /**
+     * Get the size of the vectors clause.
+     * @public
+     * @returns {string}
+     */
+    getForceVectorSize() {
+      return StringUtils.fillIn( this.forceVectorSizePatternString, {
+        size: this.getVectorSize()
+      } );
+    }
+
+    /**
      * @param {string} thisObjectLabel
      * @param {string} otherObjectLabel
      * @returns {string}
      * @public
      */
     getForceBetweenAndVectorText( thisObjectLabel, otherObjectLabel ) {
-      const pattern = this.forceAndVectorPatternString;
-      const fillObject = {
+      return StringUtils.fillIn( forceAndVectorPatternString, {
         thisObjectLabel: thisObjectLabel,
         otherObjectLabel: otherObjectLabel,
-        size: this.getVectorSize()
-      };
-      return StringUtils.fillIn( pattern, fillObject );
+        forceVectorSize: this.getForceVectorSize()
+      } );
     }
 
     /**
