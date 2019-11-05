@@ -19,7 +19,8 @@ define( require => {
       type: 'flag'
     },
 
-    // when flagged, shows the ruler region boundaries for interactive descriptions.
+    // Add horizontal lines at the ruler region boundaries, add crosshairs on the ruler so you can see the point that
+    // is being tested, and print the region names to the console, so you can see them in the developer tools.
     showRulerRegions: {
       type: 'flag'
     },
