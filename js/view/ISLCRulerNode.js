@@ -15,8 +15,10 @@ define( require => {
   const GrabDragInteraction = require( 'SCENERY_PHET/accessibility/GrabDragInteraction' );
   const inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
   const ISLCA11yStrings = require( 'INVERSE_SQUARE_LAW_COMMON/ISLCA11yStrings' );
+  const ISLCQueryParameters = require( 'INVERSE_SQUARE_LAW_COMMON/ISLCQueryParameters' );
   const KeyboardDragListener = require( 'SCENERY/listeners/KeyboardDragListener' );
   const KeyboardUtil = require( 'SCENERY/accessibility/KeyboardUtil' );
+  const Line = require( 'SCENERY/nodes/Line' );
   const merge = require( 'PHET_CORE/merge' );
   const MovableDragHandler = require( 'SCENERY_PHET/input/MovableDragHandler' );
   const Node = require( 'SCENERY/nodes/Node' );
@@ -46,6 +48,7 @@ define( require => {
   const RULER_WIDTH = 500;
   const RULER_HEIGHT = 35;
   const RULER_INSET = 10;
+  const SHOW_RULER_REGIONS = ISLCQueryParameters.showRulerRegions;
 
   class ISLCRulerNode extends Node {
 
@@ -237,6 +240,14 @@ define( require => {
         ruler.center = modelViewTransform.modelToViewPosition( value );
         ruler.addChild( focusHighlight );
       } );
+
+      if ( SHOW_RULER_REGIONS ) {
+        const lineOptions = { stroke: 'black', x: ruler.width / 2, y: RULER_HEIGHT / 2 };
+        const xLine = new Line( -10, 0, 10, 0, lineOptions );
+        const yLine = new Line( 0, -10, 0, 10, lineOptions );
+        ruler.addChild( xLine );
+        ruler.addChild( yLine );
+      }
     }
 
     /**

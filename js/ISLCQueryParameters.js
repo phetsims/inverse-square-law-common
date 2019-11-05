@@ -19,6 +19,11 @@ define( require => {
       type: 'flag'
     },
 
+    // when flagged, shows the ruler region boundaries for interactive descriptions.
+    showRulerRegions: {
+      type: 'flag'
+    },
+
     // Shows boundary positions of the two objects, as .  The boundary positions for each
     // object will change depending on the size and position of both objects.
     showDragBounds: { type: 'flag' }
