@@ -212,8 +212,8 @@ define( require => {
       // the ruler's orgin is the center, this offset get's the edge of it.
       const rulerAlignWithObjectXOffset = modelViewTransform.viewToModelDeltaX( RULER_WIDTH ) / 2;
 
-      // register hot key shortcuts
-      keyboardDragListener.addHotkeyGroups( [ {
+      // register hotkeys
+      keyboardDragListener.addHotkeys( [ {
         keys: [ KeyboardUtil.KEY_J, KeyboardUtil.KEY_C ], // jump to center of object 1
         callback: () => {
           const x = model.object1.positionProperty.value;
