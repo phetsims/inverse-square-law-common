@@ -29,8 +29,7 @@ define( require => {
   const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   const Util = require( 'DOT/Util' );
   const Utterance = require( 'UTTERANCE_QUEUE/Utterance' );
-  const utteranceQueue = require( 'UTTERANCE_QUEUE/utteranceQueue' );
-  const Vector2 = require( 'DOT/Vector2' );
+const Vector2 = require( 'DOT/Vector2' );
 
   // strings
   const unitsCentimetersString = require( 'string!INVERSE_SQUARE_LAW_COMMON/units.centimeters' );
@@ -203,7 +202,7 @@ define( require => {
 
         onGrab: () => {
           grabbedUtterance.alert = rulerDescriber.getRulerGrabbedAlertable();
-          utteranceQueue.addToBack( grabbedUtterance );
+          phet.joist.sim.display.utteranceQueue.addToBack( grabbedUtterance );
         },
 
         listenersForDrag: [ keyboardDragListener ]

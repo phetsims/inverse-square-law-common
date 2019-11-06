@@ -15,9 +15,7 @@ define( require => {
   const ActivationUtterance = require( 'UTTERANCE_QUEUE/ActivationUtterance' );
   const inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
   const ISLCA11yStrings = require( 'INVERSE_SQUARE_LAW_COMMON/ISLCA11yStrings' );
-  const utteranceQueue = require( 'UTTERANCE_QUEUE/utteranceQueue' );
-
-  // strings
+// strings
   const forceValuesHiddenString = ISLCA11yStrings.forceValuesHidden.value;
 
   class ISLCAlertManager {
@@ -52,7 +50,7 @@ define( require => {
       }
 
       this.showForceValuesUtterance.alert = alert;
-      utteranceQueue.addToBack( this.showForceValuesUtterance );
+      phet.joist.sim.display.utteranceQueue.addToBack( this.showForceValuesUtterance );
     }
   }
 
