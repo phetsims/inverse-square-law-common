@@ -29,7 +29,7 @@ define( require => {
   const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   const Util = require( 'DOT/Util' );
   const Utterance = require( 'UTTERANCE_QUEUE/Utterance' );
-const Vector2 = require( 'DOT/Vector2' );
+  const Vector2 = require( 'DOT/Vector2' );
 
   // strings
   const unitsCentimetersString = require( 'string!INVERSE_SQUARE_LAW_COMMON/units.centimeters' );
@@ -145,6 +145,7 @@ const Vector2 = require( 'DOT/Vector2' );
       ruler.addChild( focusHighlight );
 
       const grabbedUtterance = new Utterance();
+      const movedUtterance = new Utterance();
       const keyboardDragDelta = modelViewTransform.modelToViewDeltaX( options.snapToNearest );
 
       // supports keyboard interaction
@@ -217,12 +218,24 @@ const Vector2 = require( 'DOT/Vector2' );
         callback: () => {
           const x = model.object1.positionProperty.value;
           model.rulerPositionProperty.set( new Vector2( x + rulerAlignWithObjectXOffset, options.modelYForCenterJump ) );
+
+          // TODO: remove this conditional once CL ruler describer is supported
+          if ( rulerDescriber.getJumpCenterMassAlert ) {
+            movedUtterance.alert = rulerDescriber.getJumpCenterMassAlert();
+            phet.joist.sim.display.utteranceQueue.addToBack( grabbedUtterance );
+          }
         }
       }, {
         keys: [ KeyboardUtil.KEY_J, KeyboardUtil.KEY_H ], // jump home
         callback: () => {
           model.rulerPositionProperty.set( model.rulerPositionProperty.initialValue );
           this.a11yGrabDragInteraction.releaseDraggable();
+
+          // TODO: remove this conditional once CL ruler describer is supported
+          if ( rulerDescriber.getHomePositionString ) {
+            movedUtterance.alert = rulerDescriber.getHomePositionString();
+            phet.joist.sim.display.utteranceQueue.addToBack( grabbedUtterance );
+          }
         }
       } ] );
 
