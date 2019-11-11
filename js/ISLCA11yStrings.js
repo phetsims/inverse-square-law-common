@@ -302,9 +302,6 @@ define( require => {
     measureDistanceRuler: {
       value: 'Measure Distance Ruler'
     },
-    moveInFourDirections: {
-      value: 'move in four directions'
-    },
 
     // common checkbox strings
     forceValuesCheckboxHelpText: {

@@ -40,7 +40,6 @@ define( require => {
   const gestureHelpTextPatternString = SceneryPhetA11yStrings.gestureHelpTextPattern.value;
   const rulerLabelString = ISLCA11yStrings.rulerLabel.value;
 
-  const moveInFourDirectionsString = ISLCA11yStrings.moveInFourDirections.value;
   const measureDistanceRulerString = ISLCA11yStrings.measureDistanceRuler.value;
 
   // constants
@@ -194,12 +193,6 @@ define( require => {
             objectToGrab: rulerLabelString
           } )
         } ),
-
-
-        // whenever converting from grabbable -> draggable, this function is called
-        onDraggable: () => {
-          this.setAccessibleAttribute( 'aria-roledescription', moveInFourDirectionsString );
-        },
 
         onGrab: () => {
           grabbedUtterance.alert = rulerDescriber.getRulerGrabbedAlertable();
