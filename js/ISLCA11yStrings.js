@@ -73,6 +73,9 @@ define( require => {
       value: '{{forceVectorSize}}, and points directly at {{otherObjectLabel}}.'
     },
     forceVector: {
+      value: 'force vector'
+    },
+    forceVectorCapitalized: {
       value: 'Force vector'
     },
     objectLabelPositionPattern: {

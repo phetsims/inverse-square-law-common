@@ -35,6 +35,7 @@ define( require => {
   const forcesValueUnitsClausePatternString = ISLCA11yStrings.forcesValueUnitsClausePattern.value;
   const forceMagnitudeString = ISLCA11yStrings.forceMagnitude.value;
   const forceVectorString = ISLCA11yStrings.forceVector.value;
+  const forceVectorCapitalizedString = ISLCA11yStrings.forceVectorCapitalized.value;
 
   const valuesInUnitsPatternString = ISLCA11yStrings.valuesInUnitsPattern.value;
   const forcesInScientificNotationString = ISLCA11yStrings.forcesInScientificNotation.value;
@@ -123,6 +124,7 @@ define( require => {
         vectorsString: vectorsString,
         vectorsCapitalizedString: vectorsCapitalizedString,
         forceVectorString: forceVectorString,
+        forceVectorCapitalizedString: forceVectorCapitalizedString,
         forceMagnitudeString: forceMagnitudeString
       }, options );
 
@@ -134,10 +136,12 @@ define( require => {
       this.forceValueToString = options.forceValueToString;
       this.convertForce = options.convertForce;
 
-      // @private {number} - // 1 -> growing, 0 -> no change, -1 -> shrinking
-      this.vectorChangeDirection = 0;
-      this.forceVectorsString = options.forceVectorsString;
-      this.vectorsCapitalizedString = options.vectorsCapitalizedString;
+      // @private
+      this.vectorChangeDirection = 0; // {number} - // 1 -> growing, 0 -> no change, -1 -> shrinking
+      this.forceVectorsString = options.forceVectorsString; // {string}
+      this.vectorsCapitalizedString = options.vectorsCapitalizedString; // {string}
+      this.forceVectorString = options.forceVectorString; // {string}
+      this.forceVectorCapitalizedString = options.forceVectorCapitalizedString; // {string}
 
       // @protected
       this.scientificNotationProperty = model.scientificNotationProperty;
@@ -166,9 +170,6 @@ define( require => {
       } );
       this.forceVectorMagnitudeUnitsPatternString = StringUtils.fillIn( forceVectorMagnitudeUnitsPatternString, {
         forceMagnitude: options.forceMagnitudeString
-      } );
-      this.forceVectorSizePatternString = StringUtils.fillIn( forceVectorSizePatternString, {
-        forceVector: options.forceVectorString
       } );
 
       model.forceProperty.link( ( force, oldForce ) => {
@@ -234,9 +235,10 @@ define( require => {
      * @public
      * @returns {string}
      */
-    getForceVectorSize() {
-      return StringUtils.fillIn( this.forceVectorSizePatternString, {
-        size: this.getVectorSize()
+    getForceVectorSize( capitalized ) {
+      return StringUtils.fillIn( forceVectorSizePatternString, {
+        size: this.getVectorSize(),
+        forceVector: capitalized ? this.forceVectorCapitalizedString : this.forceVectorString
       } );
     }
 
@@ -250,7 +252,7 @@ define( require => {
       return StringUtils.fillIn( forceAndVectorPatternString, {
         thisObjectLabel: thisObjectLabel,
         otherObjectLabel: otherObjectLabel,
-        forceVectorSize: this.getForceVectorSize()
+        forceVectorSize: this.getForceVectorSize( true )
       } );
     }
 
