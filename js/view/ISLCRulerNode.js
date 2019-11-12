@@ -215,7 +215,7 @@ define( require => {
           // TODO: remove this conditional once CL ruler describer is supported
           if ( rulerDescriber.getJumpCenterMassAlert ) {
             movedUtterance.alert = rulerDescriber.getJumpCenterMassAlert();
-            phet.joist.sim.display.utteranceQueue.addToBack( grabbedUtterance );
+            phet.joist.sim.display.utteranceQueue.addToBack( movedUtterance );
           }
         }
       }, {
@@ -227,7 +227,7 @@ define( require => {
           // TODO: remove this conditional once CL ruler describer is supported
           if ( rulerDescriber.getHomePositionString ) {
             movedUtterance.alert = rulerDescriber.getHomePositionString();
-            phet.joist.sim.display.utteranceQueue.addToBack( grabbedUtterance );
+            phet.joist.sim.display.utteranceQueue.addToBack( movedUtterance );
           }
         }
       } ] );
