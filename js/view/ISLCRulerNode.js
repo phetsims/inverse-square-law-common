@@ -10,7 +10,6 @@ define( require => {
   'use strict';
 
   // modules
-  const Bounds2 = require( 'DOT/Bounds2' );
   const FocusHighlightFromNode = require( 'SCENERY/accessibility/FocusHighlightFromNode' );
   const GrabDragInteraction = require( 'SCENERY_PHET/accessibility/GrabDragInteraction' );
   const inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
@@ -51,14 +50,16 @@ define( require => {
   class ISLCRulerNode extends Node {
 
     /**
-     * @param {ISLCModel} model
-     * @param {number} screenHeight
+     * @param {Property.<number>} rulerPositionProperty
+     * @param {Bounds2} dragBounds - draggable bounds of the ruler. Note that this will be dilated by half the width
+     *                                of the ruler in the y dimensions.
      * @param {ModelViewTransform2} modelViewTransform
+     * @param {function():number} getObject1Position - get the position in model coords, of the first object
      * @param {ISLCRulerDescriber} rulerDescriber
      * @param {Tandem} tandem
      * @param {Object} [options]
      */
-    constructor( model, screenHeight, modelViewTransform, rulerDescriber, tandem, options ) {
+    constructor( rulerPositionProperty, dragBounds, modelViewTransform, getObject1Position, rulerDescriber, tandem, options ) {
 
       options = merge( {
         snapToNearest: null,
@@ -107,18 +108,11 @@ define( require => {
       ruler.mouseArea = Shape.rectangle( 0, 0, ruler.bounds.width, RULER_HEIGHT );
       ruler.touchArea = ruler.mouseArea;
 
-      // ruler drag bounds (in model coordinate frame) - assumes a single point scale inverted Y mapping
-      const modelHeight = modelViewTransform.viewToModelDeltaY( screenHeight );
-      const modelRulerHeight = modelViewTransform.viewToModelDeltaY( this.height );
+      // Add half of the ruler height so the whole ruler is bounded, not just the center.
+      const dragBoundsWithRulerHeight = dragBounds.dilatedY( modelViewTransform.viewToModelDeltaY( this.height / 2 ) );
 
-      const minX = model.leftObjectBoundary;
-      const minY = modelHeight / 2 - modelRulerHeight; // bottom bound because Y is inverted
-      const maxX = model.rightObjectBoundary;
-      const maxY = -modelHeight / 2 + modelRulerHeight; // top bound because Y is inverted
-      const bounds = new Bounds2( minX, minY, maxX, maxY );
-
-      this.addInputListener( new MovableDragHandler( model.rulerPositionProperty, {
-        dragBounds: bounds,
+      this.addInputListener( new MovableDragHandler( rulerPositionProperty, {
+        dragBounds: dragBoundsWithRulerHeight,
         tandem: tandem.createTandem( 'dragHandler' ),
         modelViewTransform: modelViewTransform,
 
@@ -128,11 +122,11 @@ define( require => {
           if ( options.snapToNearest ) {
 
             // x in model coordinates
-            const xModel = model.rulerPositionProperty.get().x;
+            const xModel = rulerPositionProperty.get().x;
 
             const snappedX = Util.roundSymmetric( xModel / options.snapToNearest ) * options.snapToNearest;
 
-            model.rulerPositionProperty.set( new Vector2( snappedX, model.rulerPositionProperty.get().y ) );
+            rulerPositionProperty.set( new Vector2( snappedX, rulerPositionProperty.get().y ) );
           }
         }
       } ) );
@@ -149,8 +143,8 @@ define( require => {
 
       // supports keyboard interaction
       const keyboardDragListener = new KeyboardDragListener( {
-        dragBounds: bounds,
-        locationProperty: model.rulerPositionProperty,
+        dragBounds: dragBoundsWithRulerHeight,
+        locationProperty: rulerPositionProperty,
         transform: modelViewTransform,
         moveOnHoldDelay: options.moveOnHoldDelay,
         downDelta: 2 * keyboardDragDelta,
@@ -162,14 +156,14 @@ define( require => {
         // as key is held down
         drag() {
           if ( options.snapToNearest ) {
-            const xModel = model.rulerPositionProperty.get().x;
+            const xModel = rulerPositionProperty.get().x;
             const snappedX = Util.roundSymmetric( xModel / options.snapToNearest ) * options.snapToNearest;
-            model.rulerPositionProperty.set( new Vector2( snappedX, model.rulerPositionProperty.get().y ) );
+            rulerPositionProperty.set( new Vector2( snappedX, rulerPositionProperty.get().y ) );
           }
         }
       } );
 
-      // a11y - add the "grab button" interaction
+      // @private - add the "grab button" interaction
       this.a11yGrabDragInteraction = new GrabDragInteraction( this, {
         objectToGrabString: rulerLabelString,
         grabbableAccessibleName: measureDistanceRulerString,
@@ -209,8 +203,8 @@ define( require => {
       keyboardDragListener.addHotkeys( [ {
         keys: [ KeyboardUtil.KEY_J, KeyboardUtil.KEY_C ], // jump to center of object 1
         callback: () => {
-          const x = model.object1.positionProperty.value;
-          model.rulerPositionProperty.set( new Vector2( x + rulerAlignWithObjectXOffset, options.modelYForCenterJump ) );
+          const x = getObject1Position();
+          rulerPositionProperty.set( new Vector2( x + rulerAlignWithObjectXOffset, options.modelYForCenterJump ) );
 
           // TODO: remove this conditional once CL ruler describer is supported
           if ( rulerDescriber.getJumpCenterMassAlert ) {
@@ -221,7 +215,7 @@ define( require => {
       }, {
         keys: [ KeyboardUtil.KEY_J, KeyboardUtil.KEY_H ], // jump home
         callback: () => {
-          model.rulerPositionProperty.set( model.rulerPositionProperty.initialValue );
+          rulerPositionProperty.set( rulerPositionProperty.initialValue );
           this.a11yGrabDragInteraction.releaseDraggable();
 
           // TODO: remove this conditional once CL ruler describer is supported
@@ -235,7 +229,7 @@ define( require => {
 
       // @public - ruler node is never destroyed, no listener disposal necessary
       // Called after the focusHighlight has been added as a child to the ruler
-      model.rulerPositionProperty.link( value => {
+      rulerPositionProperty.link( value => {
 
         // Because the focus highlight is `focusHighlightLayerable`, the highlight for `this`
         // is a child of the ruler. As a result the "center" includes the focusHighlight as well
@@ -256,7 +250,7 @@ define( require => {
     }
 
     /**
-     * @override
+     * @public
      */
     reset() {
       this.a11yGrabDragInteraction.reset();
