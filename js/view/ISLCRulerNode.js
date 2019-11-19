@@ -193,7 +193,9 @@ define( require => {
           phet.joist.sim.display.utteranceQueue.addToBack( grabbedUtterance );
         },
 
-        listenersForDrag: [ keyboardDragListener ]
+        listenersForDrag: [ keyboardDragListener ],
+
+        tandem: tandem.createTandem( 'a11yGrabDragInteraction' )
       } );
 
       // the ruler's orgin is the center, this offset get's the edge of it.
