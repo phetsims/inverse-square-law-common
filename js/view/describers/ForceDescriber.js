@@ -34,8 +34,8 @@ define( require => {
   const vectorsSizeClausePatternString = ISLCA11yStrings.vectorsSizeClausePattern.value;
   const forcesValueUnitsClausePatternString = ISLCA11yStrings.forcesValueUnitsClausePattern.value;
   const forceMagnitudeString = ISLCA11yStrings.forceMagnitude.value;
-  const forceVectorString = ISLCA11yStrings.forceVector.value;
   const forceVectorCapitalizedString = ISLCA11yStrings.forceVectorCapitalized.value;
+  const forceVectorsSizePatternString = ISLCA11yStrings.forceVectorsSizePattern.value;
 
   const valuesInUnitsPatternString = ISLCA11yStrings.valuesInUnitsPattern.value;
   const forcesInScientificNotationString = ISLCA11yStrings.forcesInScientificNotation.value;
@@ -123,7 +123,6 @@ define( require => {
         forceVectorsString: vectorsString,
         vectorsString: vectorsString,
         vectorsCapitalizedString: vectorsCapitalizedString,
-        forceVectorString: forceVectorString,
         forceVectorCapitalizedString: forceVectorCapitalizedString,
         forceMagnitudeString: forceMagnitudeString
       }, options );
@@ -140,7 +139,6 @@ define( require => {
       this.vectorChangeDirection = 0; // {number} - // 1 -> growing, 0 -> no change, -1 -> shrinking
       this.forceVectorsString = options.forceVectorsString; // {string}
       this.vectorsCapitalizedString = options.vectorsCapitalizedString; // {string}
-      this.forceVectorString = options.forceVectorString; // {string}
       this.forceVectorCapitalizedString = options.forceVectorCapitalizedString; // {string}
 
       // @protected
@@ -235,10 +233,10 @@ define( require => {
      * @public
      * @returns {string}
      */
-    getForceVectorSize( capitalized ) {
-      return StringUtils.fillIn( forceVectorSizePatternString, {
+    getForceVectorsSize() {
+      return StringUtils.fillIn( forceVectorsSizePatternString, {
         size: this.getVectorSize(),
-        forceVector: capitalized ? this.forceVectorCapitalizedString : this.forceVectorString
+        forceVectors: this.forceVectorsString
       } );
     }
 
@@ -252,7 +250,10 @@ define( require => {
       return StringUtils.fillIn( forceAndVectorPatternString, {
         thisObjectLabel: thisObjectLabel,
         otherObjectLabel: otherObjectLabel,
-        forceVectorSize: this.getForceVectorSize( true )
+        forceVectorSize: StringUtils.fillIn( forceVectorSizePatternString, {
+          size: this.getVectorSize(),
+          forceVector: this.forceVectorCapitalizedString
+        } )
       } );
     }
 
