@@ -164,7 +164,7 @@ define( require => {
       } );
 
       // @private - add the "grab button" interaction
-      this.a11yGrabDragInteraction = new GrabDragInteraction( this, {
+      this.grabDragInteraction = new GrabDragInteraction( this, {
         objectToGrabString: rulerLabelString,
         grabbableAccessibleName: measureDistanceRulerString,
 
@@ -195,7 +195,7 @@ define( require => {
 
         listenersForDrag: [ keyboardDragListener ],
 
-        tandem: tandem.createTandem( 'a11yGrabDragInteraction' )
+        tandem: tandem.createTandem( 'grabDragInteraction' )
       } );
 
       // the ruler's orgin is the center, this offset get's the edge of it.
@@ -218,7 +218,7 @@ define( require => {
         keys: [ KeyboardUtil.KEY_J, KeyboardUtil.KEY_H ], // jump home
         callback: () => {
           rulerPositionProperty.set( rulerPositionProperty.initialValue );
-          this.a11yGrabDragInteraction.releaseDraggable();
+          this.grabDragInteraction.releaseDraggable();
 
           // TODO: remove this conditional once CL ruler describer is supported
           if ( rulerDescriber.getHomePositionString ) {
@@ -255,7 +255,7 @@ define( require => {
      * @public
      */
     reset() {
-      this.a11yGrabDragInteraction.reset();
+      this.grabDragInteraction.reset();
     }
   }
 
