@@ -10,6 +10,7 @@ define( require => {
   'use strict';
 
   // modules
+  const DragListener = require( 'SCENERY/listeners/DragListener' );
   const FocusHighlightFromNode = require( 'SCENERY/accessibility/FocusHighlightFromNode' );
   const GrabDragInteraction = require( 'SCENERY_PHET/accessibility/GrabDragInteraction' );
   const inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
@@ -19,7 +20,6 @@ define( require => {
   const KeyboardUtil = require( 'SCENERY/accessibility/KeyboardUtil' );
   const Line = require( 'SCENERY/nodes/Line' );
   const merge = require( 'PHET_CORE/merge' );
-  const MovableDragHandler = require( 'SCENERY_PHET/input/MovableDragHandler' );
   const Node = require( 'SCENERY/nodes/Node' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
   const RulerNode = require( 'SCENERY_PHET/RulerNode' );
@@ -111,23 +111,23 @@ define( require => {
       // Add half of the ruler height so the whole ruler is bounded, not just the center.
       const dragBoundsWithRulerHeight = dragBounds.dilatedY( modelViewTransform.viewToModelDeltaY( this.height / 2 ) );
 
-      this.addInputListener( new MovableDragHandler( rulerPositionProperty, {
-        dragBounds: dragBoundsWithRulerHeight,
-        tandem: tandem.createTandem( 'dragHandler' ),
-        modelViewTransform: modelViewTransform,
-
-        onDrag() {
+      this.addInputListener( new DragListener( {
+        locationProperty: rulerPositionProperty,
+        tandem: tandem.createTandem( 'dragListener' ),
+        transform: modelViewTransform,
+        applyOffset: false, // TODO: we want to be able to apply offset here, but can't because of https://github.com/phetsims/scenery/issues/1014
+        mapLocation: location => {
 
           // snap to nearest snapToNearest if specified
           if ( options.snapToNearest ) {
 
             // x in model coordinates
-            const xModel = rulerPositionProperty.get().x;
-
-            const snappedX = Util.roundSymmetric( xModel / options.snapToNearest ) * options.snapToNearest;
-
-            rulerPositionProperty.set( new Vector2( snappedX, rulerPositionProperty.get().y ) );
+            const xModel = location.x;
+            location.x = Util.roundSymmetric( xModel / options.snapToNearest ) * options.snapToNearest;
           }
+
+          // map withing the drag bounds, this is the same as using "dragBoundsProperty'
+          return dragBoundsWithRulerHeight.closestPointTo( location );
         }
       } ) );
 
