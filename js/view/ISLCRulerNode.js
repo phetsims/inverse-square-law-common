@@ -198,6 +198,10 @@ define( require => {
         tandem: tandem.createTandem( 'grabDragInteraction' )
       } );
 
+      // a11y - the GrabDragInteraction is added to this Node but the drag handler and transform changes are applied
+      // to the child RulerNode - PDOM siblings need to reposition with the RulerNode
+      this.setPDOMTransformSourceNode( ruler );
+
       // the ruler's orgin is the center, this offset get's the edge of it.
       const rulerAlignWithObjectXOffset = modelViewTransform.viewToModelDeltaX( RULER_WIDTH ) / 2;
 
