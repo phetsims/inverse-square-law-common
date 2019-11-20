@@ -190,7 +190,7 @@ define( require => {
 
         onGrab: () => {
           grabbedUtterance.alert = rulerDescriber.getRulerGrabbedAlertable();
-          phet.joist.sim.display.utteranceQueue.addToBack( grabbedUtterance );
+          phet.joist.sim.utteranceQueue.addToBack( grabbedUtterance );
         },
 
         listenersForDrag: [ keyboardDragListener ],
@@ -211,7 +211,7 @@ define( require => {
           // TODO: remove this conditional once CL ruler describer is supported
           if ( rulerDescriber.getJumpCenterMassAlert ) {
             movedUtterance.alert = rulerDescriber.getJumpCenterMassAlert();
-            phet.joist.sim.display.utteranceQueue.addToBack( movedUtterance );
+            phet.joist.sim.utteranceQueue.addToBack( movedUtterance );
           }
         }
       }, {
@@ -223,7 +223,7 @@ define( require => {
           // TODO: remove this conditional once CL ruler describer is supported
           if ( rulerDescriber.getHomePositionString ) {
             movedUtterance.alert = rulerDescriber.getHomePositionString();
-            phet.joist.sim.display.utteranceQueue.addToBack( movedUtterance );
+            phet.joist.sim.utteranceQueue.addToBack( movedUtterance );
           }
         }
       } ] );

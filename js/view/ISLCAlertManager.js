@@ -50,7 +50,7 @@ define( require => {
       }
 
       this.showForceValuesUtterance.alert = alert;
-      phet.joist.sim.display.utteranceQueue.addToBack( this.showForceValuesUtterance );
+      phet.joist.sim.utteranceQueue.addToBack( this.showForceValuesUtterance );
     }
   }
 
