@@ -51,8 +51,10 @@ define( require => {
 
     /**
      * @param {Property.<number>} rulerPositionProperty
-     * @param {Bounds2} dragBounds - draggable bounds of the ruler. Note that this will be dilated by half the width
-     *                                of the ruler in the y dimensions.
+     * @param {Bounds2} dragBounds - draggable bounds of the ruler, in model coords. Note that this will be dilated by
+     *                                half the width of the ruler in the y dimensions. Also the right bound will not
+     *                                be based on the center of the ruler, but instead based on the "zero mark" of
+     *                                the ruler (located on the left side of the ruler)
      * @param {ModelViewTransform2} modelViewTransform
      * @param {function():number} getObject1Position - get the position in model coords, of the first object
      * @param {ISLCRulerDescriber} rulerDescriber
@@ -107,8 +109,12 @@ define( require => {
       ruler.mouseArea = Shape.rectangle( 0, 0, ruler.bounds.width, RULER_HEIGHT );
       ruler.touchArea = ruler.mouseArea;
 
-      // Add half of the ruler height so the whole ruler is bounded, not just the center.
-      const dragBoundsWithRulerHeight = dragBounds.dilatedY( modelViewTransform.viewToModelDeltaY( this.height / 2 ) );
+      // Use the constant instead of `this.width` because RulerNode adds inset on each side of the ruler.
+      dragBounds.maxX = dragBounds.maxX + modelViewTransform.viewToModelDeltaX( RULER_WIDTH / 2 );
+
+      // Add half of the ruler height so the whole ruler is bounded, not just the center. Use the constant instead of
+      // `this.height` because RulerNode adds line width around for drawing
+      const dragBoundsWithRulerHeight = dragBounds.dilatedY( modelViewTransform.viewToModelDeltaY( RULER_HEIGHT / 2 ) );
 
       this.addInputListener( new DragListener( {
         locationProperty: rulerPositionProperty,
