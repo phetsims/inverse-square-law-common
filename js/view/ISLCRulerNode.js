@@ -84,8 +84,7 @@ define( require => {
         cursor: 'pointer',
         cssTransform: true,
         tagName: 'div',
-        focusable: true,
-        focusHighlightLayerable: true
+        focusable: true
       } );
 
       const ruler = new RulerNode(
@@ -131,11 +130,9 @@ define( require => {
         }
       } ) );
 
-      // a11y - custom, layerable focus highlight
+      // a11y - custom focus highlight
       const focusHighlight = new FocusHighlightFromNode( ruler, { useLocalBounds: true } );
       this.setFocusHighlight( focusHighlight );
-
-      ruler.addChild( focusHighlight );
 
       const grabbedUtterance = new Utterance();
       const movedUtterance = new Utterance();
@@ -172,9 +169,6 @@ define( require => {
         grabCueOptions: {
           x: 135,
           y: -45
-        },
-        grabbableOptions: {
-          focusHighlight: focusHighlight
         },
 
         keyboardHelpText: StringUtils.fillIn( rulerHelpTextString, {
@@ -234,16 +228,8 @@ define( require => {
 
 
       // @public - ruler node is never destroyed, no listener disposal necessary
-      // Called after the focusHighlight has been added as a child to the ruler
       rulerPositionProperty.link( value => {
-
-        // Because the focus highlight is `focusHighlightLayerable`, the highlight for `this`
-        // is a child of the ruler. As a result the "center" includes the focusHighlight as well
-        // as some child added to it in GrabDragInteraction, and so it is easiest to set the center
-        // disregarding the focusHighlight. See https://github.com/phetsims/gravity-force-lab/issues/140
-        ruler.removeChild( focusHighlight );
         ruler.center = modelViewTransform.modelToViewPosition( value );
-        ruler.addChild( focusHighlight );
       } );
 
       if ( SHOW_RULER_REGIONS ) {
