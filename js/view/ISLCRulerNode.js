@@ -13,6 +13,7 @@ define( require => {
   const DragListener = require( 'SCENERY/listeners/DragListener' );
   const FocusHighlightFromNode = require( 'SCENERY/accessibility/FocusHighlightFromNode' );
   const GrabDragInteraction = require( 'SCENERY_PHET/accessibility/GrabDragInteraction' );
+  const grabSoundPlayer = require( 'TAMBO/shared-sound-players/grabSoundPlayer' );
   const inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
   const ISLCA11yStrings = require( 'INVERSE_SQUARE_LAW_COMMON/ISLCA11yStrings' );
   const ISLCQueryParameters = require( 'INVERSE_SQUARE_LAW_COMMON/ISLCQueryParameters' );
@@ -22,9 +23,11 @@ define( require => {
   const merge = require( 'PHET_CORE/merge' );
   const Node = require( 'SCENERY/nodes/Node' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  const releaseSoundPlayer = require( 'TAMBO/shared-sound-players/releaseSoundPlayer' );
   const RulerNode = require( 'SCENERY_PHET/RulerNode' );
   const SceneryPhetA11yStrings = require( 'SCENERY_PHET/SceneryPhetA11yStrings' );
   const Shape = require( 'KITE/Shape' );
+  const softClickSoundPlayer = require( 'TAMBO/shared-sound-players/softClickSoundPlayer' );
   const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   const Util = require( 'DOT/Util' );
   const Utterance = require( 'UTTERANCE_QUEUE/Utterance' );
@@ -73,6 +76,17 @@ define( require => {
         // {number} If using with snapToNearest, then this number will be rounded by the that value.
         modelYForCenterJump: .5,
 
+        // sound generation
+
+        // {Playable|null} - sound players, null indicates default should be used, use Playable.NO_SOUND to disable
+        grabRulerSoundPlayer: null,
+        releaseRulerSoundPlayer: null,
+        movementSoundPlayer: null,
+
+        // {number} - amount of distance that the ruler should travel before playing another sound, same units as the
+        // rulerPositionProperty.
+        movementSoundDistance: 0.5,
+
         // a11y
         moveOnHoldDelay: 750
       }, options );
@@ -116,6 +130,13 @@ define( require => {
       // `this.height` because RulerNode adds line width around for drawing
       const dragBoundsWithRulerHeight = dragBounds.dilatedY( modelViewTransform.viewToModelDeltaY( RULER_HEIGHT / 2 ) );
 
+      // get default sound generators if needed
+      const grabRulerSoundPlayer = options.grabRulerSoundPlayer || grabSoundPlayer;
+      const releaseRulerSoundPlayer = options.releaseRulerSoundPlayer || releaseSoundPlayer;
+
+      // variable to track location where last movement sound was produced
+      const positionOfLastMotionSound = rulerPositionProperty.value.copy();
+
       this.addInputListener( new DragListener( {
         locationProperty: rulerPositionProperty,
         tandem: tandem.createTandem( 'dragListener' ),
@@ -133,6 +154,21 @@ define( require => {
 
           // map withing the drag bounds, this is the same as using "dragBoundsProperty'
           return dragBoundsWithRulerHeight.closestPointTo( location );
+        },
+        start() {
+          grabRulerSoundPlayer.play();
+          positionOfLastMotionSound.set( rulerPositionProperty.value );
+        },
+        drag() {
+          const rulerPosition = rulerPositionProperty.value;
+          const distanceFromLastMotionSoundPlay = rulerPosition.distance( positionOfLastMotionSound );
+          if ( distanceFromLastMotionSoundPlay > 0.5 ) {
+            softClickSoundPlayer.play();
+            positionOfLastMotionSound.set( rulerPosition );
+          }
+        },
+        end() {
+          releaseRulerSoundPlayer.play();
         }
       } ) );
 
@@ -158,6 +194,7 @@ define( require => {
         // snap to nearest snapToNearest, called on end so that dragging doesn't snap to a value for as long
         // as key is held down
         drag() {
+          softClickSoundPlayer.play();
           if ( options.snapToNearest ) {
             const xModel = rulerPositionProperty.get().x;
             const snappedX = Util.roundSymmetric( xModel / options.snapToNearest ) * options.snapToNearest;
@@ -188,9 +225,14 @@ define( require => {
           } )
         } ),
 
-        onGrab: () => {
+        onGrab() {
+          grabRulerSoundPlayer.play();
           grabbedUtterance.alert = rulerDescriber.getRulerGrabbedAlertable();
           phet.joist.sim.utteranceQueue.addToBack( grabbedUtterance );
+        },
+
+        onRelease() {
+          releaseRulerSoundPlayer.play();
         },
 
         listenersForDrag: [ keyboardDragListener ],
