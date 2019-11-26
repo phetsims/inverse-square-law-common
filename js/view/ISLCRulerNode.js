@@ -133,6 +133,7 @@ define( require => {
       // get default sound generators if needed
       const grabRulerSoundPlayer = options.grabRulerSoundPlayer || grabSoundPlayer;
       const releaseRulerSoundPlayer = options.releaseRulerSoundPlayer || releaseSoundPlayer;
+      const movementSoundPlayer = options.movementSoundPlayer || softClickSoundPlayer;
 
       // variable to track location where last movement sound was produced
       const positionOfLastMotionSound = rulerPositionProperty.value.copy();
@@ -163,7 +164,7 @@ define( require => {
           const rulerPosition = rulerPositionProperty.value;
           const distanceFromLastMotionSoundPlay = rulerPosition.distance( positionOfLastMotionSound );
           if ( distanceFromLastMotionSoundPlay > 0.5 ) {
-            softClickSoundPlayer.play();
+            movementSoundPlayer.play();
             positionOfLastMotionSound.set( rulerPosition );
           }
         },
@@ -194,7 +195,7 @@ define( require => {
         // snap to nearest snapToNearest, called on end so that dragging doesn't snap to a value for as long
         // as key is held down
         drag() {
-          softClickSoundPlayer.play();
+          movementSoundPlayer.play();
           if ( options.snapToNearest ) {
             const xModel = rulerPositionProperty.get().x;
             const snappedX = Util.roundSymmetric( xModel / options.snapToNearest ) * options.snapToNearest;
@@ -244,7 +245,7 @@ define( require => {
       // to the child RulerNode - PDOM siblings need to reposition with the RulerNode
       this.setPDOMTransformSourceNode( ruler );
 
-      // the ruler's orgin is the center, this offset get's the edge of it.
+      // the ruler's origin is the center, this offset get's the edge of it.
       const rulerAlignWithObjectXOffset = modelViewTransform.viewToModelDeltaX( RULER_WIDTH ) / 2;
 
       // register hotkeys
@@ -252,7 +253,11 @@ define( require => {
         keys: [ KeyboardUtil.KEY_J, KeyboardUtil.KEY_C ], // jump to center of object 1
         callback: () => {
           const x = getObject1Position();
-          rulerPositionProperty.set( new Vector2( x + rulerAlignWithObjectXOffset, options.modelYForCenterJump ) );
+          const destinationPosition = new Vector2( x + rulerAlignWithObjectXOffset, options.modelYForCenterJump );
+          if ( !rulerPositionProperty.value.equals( destinationPosition ) ) {
+            rulerPositionProperty.set( destinationPosition );
+            movementSoundPlayer.play();
+          }
 
           // TODO: remove this conditional once CL ruler describer is supported
           if ( rulerDescriber.getJumpCenterMassAlert ) {
@@ -263,6 +268,9 @@ define( require => {
       }, {
         keys: [ KeyboardUtil.KEY_J, KeyboardUtil.KEY_H ], // jump home
         callback: () => {
+          if ( !rulerPositionProperty.value.equals( rulerPositionProperty.initialValue ) ) {
+            movementSoundPlayer.play();
+          }
           rulerPositionProperty.set( rulerPositionProperty.initialValue );
           this.grabDragInteraction.releaseDraggable();
 
