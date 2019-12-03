@@ -13,21 +13,22 @@ define( require => {
   const DragListener = require( 'SCENERY/listeners/DragListener' );
   const FocusHighlightFromNode = require( 'SCENERY/accessibility/FocusHighlightFromNode' );
   const GrabDragInteraction = require( 'SCENERY_PHET/accessibility/GrabDragInteraction' );
-  const grabSoundPlayer = require( 'TAMBO/shared-sound-players/grabSoundPlayer' );
   const inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
   const ISLCA11yStrings = require( 'INVERSE_SQUARE_LAW_COMMON/ISLCA11yStrings' );
   const ISLCQueryParameters = require( 'INVERSE_SQUARE_LAW_COMMON/ISLCQueryParameters' );
+  const islcSoundOptionsDialogContent = require( 'INVERSE_SQUARE_LAW_COMMON/view/islcSoundOptionsDialogContent' );
   const KeyboardDragListener = require( 'SCENERY/listeners/KeyboardDragListener' );
   const KeyboardUtil = require( 'SCENERY/accessibility/KeyboardUtil' );
   const Line = require( 'SCENERY/nodes/Line' );
   const merge = require( 'PHET_CORE/merge' );
   const Node = require( 'SCENERY/nodes/Node' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  const releaseSoundPlayer = require( 'TAMBO/shared-sound-players/releaseSoundPlayer' );
   const RulerNode = require( 'SCENERY_PHET/RulerNode' );
   const SceneryPhetA11yStrings = require( 'SCENERY_PHET/SceneryPhetA11yStrings' );
   const Shape = require( 'KITE/Shape' );
   const softClickSoundPlayer = require( 'TAMBO/shared-sound-players/softClickSoundPlayer' );
+  const SoundClip = require( 'TAMBO/sound-generators/SoundClip' );
+  const soundManager = require( 'TAMBO/soundManager' );
   const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   const Util = require( 'DOT/Util' );
   const Utterance = require( 'UTTERANCE_QUEUE/Utterance' );
@@ -35,6 +36,18 @@ define( require => {
 
   // strings
   const unitsCentimetersString = require( 'string!INVERSE_SQUARE_LAW_COMMON/units.centimeters' );
+
+  // sounds
+  const commonGrabSoundInfo = require( 'sound!TAMBO/grab-v2.mp3' );
+  const commonGrab2SoundInfo = require( 'sound!TAMBO/grab-002.mp3' );
+  const pickUpRuler1SoundInfo = require( 'sound!INVERSE_SQUARE_LAW_COMMON/pick-up-ruler-option-1.mp3' );
+  const pickUpRuler2SoundInfo = require( 'sound!INVERSE_SQUARE_LAW_COMMON/pick-up-ruler-option-2.mp3' );
+  const pickUpRuler3SoundInfo = require( 'sound!INVERSE_SQUARE_LAW_COMMON/pick-up-ruler-option-3.mp3' );
+  const commonReleaseSoundInfo = require( 'sound!TAMBO/release-002.mp3' );
+  const commonRelease2SoundInfo = require( 'sound!TAMBO/release-002.mp3' );
+  const putDownRuler1SoundInfo = require( 'sound!INVERSE_SQUARE_LAW_COMMON/put-down-ruler-option-1.mp3' );
+  const putDownRuler2SoundInfo = require( 'sound!INVERSE_SQUARE_LAW_COMMON/put-down-ruler-option-2.mp3' );
+  const putDownRuler3SoundInfo = require( 'sound!INVERSE_SQUARE_LAW_COMMON/put-down-ruler-option-3.mp3' );
 
   // a11y strings
   const rulerHelpTextString = ISLCA11yStrings.rulerHelpText.value;
@@ -130,9 +143,39 @@ define( require => {
       // `this.height` because RulerNode adds line width around for drawing
       const dragBoundsWithRulerHeight = dragBounds.dilatedY( modelViewTransform.viewToModelDeltaY( RULER_HEIGHT / 2 ) );
 
+      const grabSoundPlayers = [
+        new SoundClip( commonGrabSoundInfo ),
+        new SoundClip( commonGrab2SoundInfo ),
+        new SoundClip( pickUpRuler1SoundInfo ),
+        new SoundClip( pickUpRuler2SoundInfo ),
+        new SoundClip( pickUpRuler3SoundInfo )
+      ];
+      grabSoundPlayers.forEach( soundClip => {
+        soundManager.addSoundGenerator( soundClip );
+      } );
+      const releaseSoundPlayers = [
+        new SoundClip( commonReleaseSoundInfo ),
+        new SoundClip( commonRelease2SoundInfo ),
+        new SoundClip( putDownRuler1SoundInfo ),
+        new SoundClip( putDownRuler2SoundInfo ),
+        new SoundClip( putDownRuler3SoundInfo )
+      ];
+      releaseSoundPlayers.forEach( soundClip => {
+        soundManager.addSoundGenerator( soundClip );
+      } );
+
       // get default sound generators if needed
-      const grabRulerSoundPlayer = options.grabRulerSoundPlayer || grabSoundPlayer;
-      const releaseRulerSoundPlayer = options.releaseRulerSoundPlayer || releaseSoundPlayer;
+      const grabRulerSoundPlayer = options.grabRulerSoundPlayer || {
+        play() {
+          console.log( 'play called on grabRulerSoundPlayer' );
+          grabSoundPlayers[ islcSoundOptionsDialogContent.rulerPickupSoundProperty.value - 1 ].play();
+        }
+      };
+      const releaseRulerSoundPlayer = options.releaseRulerSoundPlayer || {
+        play() {
+          releaseSoundPlayers[ islcSoundOptionsDialogContent.rulerDropSoundProperty.value - 1 ].play();
+        }
+      };
       const movementSoundPlayer = options.movementSoundPlayer || softClickSoundPlayer;
 
       // variable to track location where last movement sound was produced
@@ -157,7 +200,6 @@ define( require => {
           return dragBoundsWithRulerHeight.closestPointTo( location );
         },
         start() {
-          grabRulerSoundPlayer.play();
           positionOfLastMotionSound.set( rulerPositionProperty.value );
         },
         drag() {
@@ -167,9 +209,6 @@ define( require => {
             movementSoundPlayer.play();
             positionOfLastMotionSound.set( rulerPosition );
           }
-        },
-        end() {
-          releaseRulerSoundPlayer.play();
         }
       } ) );
 
