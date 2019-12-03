@@ -17,7 +17,7 @@ define( require => {
   const merge = require( 'PHET_CORE/merge' );
   const Node = require( 'SCENERY/nodes/Node' );
 
-  class ISLCObjectPDOMNode extends Node {
+  class ISLCObjectDescriptionNode extends Node {
 
     /**
      * @param {ISLCModel} model
@@ -54,5 +54,5 @@ define( require => {
     }
   }
 
-  return inverseSquareLawCommon.register( 'ISLCObjectPDOMNode', ISLCObjectPDOMNode );
+  return inverseSquareLawCommon.register( 'ISLCObjectDescriptionNode', ISLCObjectDescriptionNode );
 } );
