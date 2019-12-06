@@ -12,7 +12,7 @@ define( require => {
   const Enumeration = require( 'PHET_CORE/Enumeration' );
   const inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
 
-  return inverseSquareLawCommon.register( 'ISLCObjectEnum', new Enumeration( [
+  return inverseSquareLawCommon.register( 'ISLCObjectEnum', Enumeration.byKeys( [
     'OBJECT_ONE',
     'OBJECT_TWO'
   ], {

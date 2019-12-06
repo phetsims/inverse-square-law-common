@@ -11,7 +11,7 @@ define( require => {
   const Enumeration = require( 'PHET_CORE/Enumeration' );
   const inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
 
-  return inverseSquareLawCommon.register( 'DefaultDirection', new Enumeration( [
+  return inverseSquareLawCommon.register( 'DefaultDirection', Enumeration.byKeys( [
     'LEFT',
     'RIGHT'
   ] ) );
