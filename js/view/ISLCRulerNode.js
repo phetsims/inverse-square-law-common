@@ -63,6 +63,7 @@ define( require => {
   const RULER_HEIGHT = 35;
   const RULER_INSET = 10;
   const SHOW_RULER_REGIONS = ISLCQueryParameters.showRulerRegions;
+  const SOUND_PLAY_DRAG_DISTANCE = 0.5; // in screen coords
 
   class ISLCRulerNode extends Node {
 
@@ -173,7 +174,6 @@ define( require => {
       };
       const releaseRulerSoundPlayer = options.releaseRulerSoundPlayer || {
         play() {
-          console.log( 'playing' );
           releaseSoundPlayers[ islcSoundOptionsDialogContent.rulerGrabReleaseSoundsProperty.value - 1 ].play();
         }
       };
@@ -213,11 +213,10 @@ define( require => {
           positionOfLastMotionSound.set( rulerPositionProperty.value );
         },
         drag() {
-          const rulerPosition = rulerPositionProperty.value;
-          const distanceFromLastMotionSoundPlay = rulerPosition.distance( positionOfLastMotionSound );
-          if ( distanceFromLastMotionSoundPlay > 0.5 ) {
+          const distanceFromLastMotionSoundPlay = rulerPositionProperty.value.distance( positionOfLastMotionSound );
+          if ( distanceFromLastMotionSoundPlay > SOUND_PLAY_DRAG_DISTANCE ) {
             movementSoundPlayer.play();
-            positionOfLastMotionSound.set( rulerPosition );
+            positionOfLastMotionSound.set( rulerPositionProperty.value );
           }
         }
       } ) );
@@ -241,14 +240,27 @@ define( require => {
         dragVelocity: keyboardDragDelta * 60,
         shiftDragVelocity: keyboardDragDelta * 60,
 
+        start() {
+
+          // play a sound at the start of a drag
+          movementSoundPlayer.play();
+          positionOfLastMotionSound.set( rulerPositionProperty.value );
+        },
+
         // snap to nearest snapToNearest, called on end so that dragging doesn't snap to a value for as long
         // as key is held down
         drag() {
-          movementSoundPlayer.play();
           if ( options.snapToNearest ) {
             const xModel = rulerPositionProperty.get().x;
             const snappedX = Util.roundSymmetric( xModel / options.snapToNearest ) * options.snapToNearest;
             rulerPositionProperty.set( new Vector2( snappedX, rulerPositionProperty.get().y ) );
+          }
+
+          // play a sound if the ruler has been dragged for a ways without being released
+          const distanceFromLastMotionSoundPlay = rulerPositionProperty.value.distance( positionOfLastMotionSound );
+          if ( distanceFromLastMotionSoundPlay > SOUND_PLAY_DRAG_DISTANCE ) {
+            movementSoundPlayer.play();
+            positionOfLastMotionSound.set( rulerPositionProperty.value );
           }
         }
       } );
