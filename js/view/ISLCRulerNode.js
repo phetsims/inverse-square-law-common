@@ -38,12 +38,12 @@ define( require => {
   const unitsCentimetersString = require( 'string!INVERSE_SQUARE_LAW_COMMON/units.centimeters' );
 
   // sounds
-  const commonGrabSoundInfo = require( 'sound!TAMBO/grab-v2.mp3' );
+  const commonGrabSoundInfo = require( 'sound!TAMBO/grab.mp3' );
   const commonGrab2SoundInfo = require( 'sound!TAMBO/grab-002.mp3' );
   const pickUpRuler1SoundInfo = require( 'sound!INVERSE_SQUARE_LAW_COMMON/pick-up-ruler-option-1.mp3' );
   const pickUpRuler2SoundInfo = require( 'sound!INVERSE_SQUARE_LAW_COMMON/pick-up-ruler-option-2.mp3' );
   const pickUpRuler3SoundInfo = require( 'sound!INVERSE_SQUARE_LAW_COMMON/pick-up-ruler-option-3.mp3' );
-  const commonReleaseSoundInfo = require( 'sound!TAMBO/release-002.mp3' );
+  const commonReleaseSoundInfo = require( 'sound!TAMBO/release.mp3' );
   const commonRelease2SoundInfo = require( 'sound!TAMBO/release-002.mp3' );
   const putDownRuler1SoundInfo = require( 'sound!INVERSE_SQUARE_LAW_COMMON/put-down-ruler-option-1.mp3' );
   const putDownRuler2SoundInfo = require( 'sound!INVERSE_SQUARE_LAW_COMMON/put-down-ruler-option-2.mp3' );
@@ -173,6 +173,7 @@ define( require => {
       };
       const releaseRulerSoundPlayer = options.releaseRulerSoundPlayer || {
         play() {
+          console.log( 'playing' );
           releaseSoundPlayers[ islcSoundOptionsDialogContent.rulerGrabReleaseSoundsProperty.value - 1 ].play();
         }
       };
