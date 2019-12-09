@@ -40,8 +40,7 @@ define( require => {
     constructor() {
 
       // @public (read-only)
-      this.rulerPickupSoundProperty = new NumberProperty( 1 );
-      this.rulerDropSoundProperty = new NumberProperty( 1 );
+      this.rulerGrabReleaseSoundsProperty = new NumberProperty( 1 );
 
       // @private {Node} - dialog content, created when requested, see explanation below
       this.dialogContent = null;
@@ -62,27 +61,14 @@ define( require => {
 
         // create the radio button selection groups
         const rulerPickupRadioButtonGroup = new VerticalAquaRadioButtonGroup(
-          this.rulerPickupSoundProperty,
+          this.rulerGrabReleaseSoundsProperty,
           createNumberedRadioButtonDescriptorSet( 5 )
         );
         const rulerPickupSoundSelectionPanel = new Panel(
           new VBox( {
             children: [
-              new Text( 'Ruler Pick Up Sound', SELECTOR_TITLE_TEXT_OPTIONS ),
+              new Text( 'Ruler Grab/Release Sounds', SELECTOR_TITLE_TEXT_OPTIONS ),
               rulerPickupRadioButtonGroup
-            ]
-          } )
-        );
-
-        const rulerDropRadioButtonGroup = new VerticalAquaRadioButtonGroup(
-          this.rulerDropSoundProperty,
-          createNumberedRadioButtonDescriptorSet( 5 )
-        );
-        const rulerDropSoundSelectionPanel = new Panel(
-          new VBox( {
-            children: [
-              new Text( 'Ruler Drop Sound', SELECTOR_TITLE_TEXT_OPTIONS ),
-              rulerDropRadioButtonGroup
             ]
           } )
         );
@@ -90,8 +76,7 @@ define( require => {
         // and the selection panels to the root node
         this.dialogContent.addChild( new VBox( {
           children: [
-            rulerPickupSoundSelectionPanel,
-            rulerDropSoundSelectionPanel
+            rulerPickupSoundSelectionPanel
           ],
           spacing: 5
         } ) );

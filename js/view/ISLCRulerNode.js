@@ -168,12 +168,12 @@ define( require => {
       // get default sound generators if needed
       const grabRulerSoundPlayer = options.grabRulerSoundPlayer || {
         play() {
-          grabSoundPlayers[ islcSoundOptionsDialogContent.rulerPickupSoundProperty.value - 1 ].play();
+          grabSoundPlayers[ islcSoundOptionsDialogContent.rulerGrabReleaseSoundsProperty.value - 1 ].play();
         }
       };
       const releaseRulerSoundPlayer = options.releaseRulerSoundPlayer || {
         play() {
-          releaseSoundPlayers[ islcSoundOptionsDialogContent.rulerDropSoundProperty.value - 1 ].play();
+          releaseSoundPlayers[ islcSoundOptionsDialogContent.rulerGrabReleaseSoundsProperty.value - 1 ].play();
         }
       };
 
