@@ -41,6 +41,7 @@ define( require => {
 
       // @public (read-only)
       this.rulerGrabReleaseSoundsProperty = new NumberProperty( 1 );
+      this.rulerMotionSoundProperty = new NumberProperty( 1 );
 
       // @private {Node} - dialog content, created when requested, see explanation below
       this.dialogContent = null;
@@ -73,10 +74,24 @@ define( require => {
           } )
         );
 
+        const rulerMotionSoundButtonGroup = new VerticalAquaRadioButtonGroup(
+          this.rulerMotionSoundProperty,
+          createNumberedRadioButtonDescriptorSet( 3 )
+        );
+        const rulerMotionSoundSelectionPanel = new Panel(
+          new VBox( {
+            children: [
+              new Text( 'Ruler Motion Sound', SELECTOR_TITLE_TEXT_OPTIONS ),
+              rulerMotionSoundButtonGroup
+            ]
+          } )
+        );
+
         // and the selection panels to the root node
         this.dialogContent.addChild( new VBox( {
           children: [
-            rulerPickupSoundSelectionPanel
+            rulerPickupSoundSelectionPanel,
+            rulerMotionSoundSelectionPanel
           ],
           spacing: 5
         } ) );

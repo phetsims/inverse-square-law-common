@@ -48,7 +48,9 @@ define( require => {
   const putDownRuler1SoundInfo = require( 'sound!INVERSE_SQUARE_LAW_COMMON/put-down-ruler-option-1.mp3' );
   const putDownRuler2SoundInfo = require( 'sound!INVERSE_SQUARE_LAW_COMMON/put-down-ruler-option-2.mp3' );
   const putDownRuler3SoundInfo = require( 'sound!INVERSE_SQUARE_LAW_COMMON/put-down-ruler-option-3.mp3' );
-  const clickSoundInfo = require( 'sound!TAMBO/click-001.mp3' );
+  const rulerMovement000SoundInfo = require( 'sound!INVERSE_SQUARE_LAW_COMMON/ruler-movement-000.mp3' );
+  const rulerMovement001SoundInfo = require( 'sound!INVERSE_SQUARE_LAW_COMMON/ruler-movement-001.mp3' );
+  const rulerMovement002SoundInfo = require( 'sound!INVERSE_SQUARE_LAW_COMMON/ruler-movement-002.mp3' );
 
   // a11y strings
   const rulerHelpTextString = ISLCA11yStrings.rulerHelpText.value;
@@ -184,8 +186,21 @@ define( require => {
         movementSoundPlayer = options.movementSoundPlayer;
       }
       else {
-        movementSoundPlayer = new SoundClip( clickSoundInfo, { initialOutputLevel: 0.2 } );
-        soundManager.addSoundGenerator( movementSoundPlayer, { sonificationLevel: SoundLevelEnum.ENHANCED } );
+
+        const movementSoundClips = [
+          new SoundClip( rulerMovement000SoundInfo, { initialOutputLevel: 0.2 } ),
+          new SoundClip( rulerMovement001SoundInfo, { initialOutputLevel: 0.2 } ),
+          new SoundClip( rulerMovement002SoundInfo, { initialOutputLevel: 0.2 } )
+        ];
+        movementSoundClips.forEach( soundClip => {
+          soundManager.addSoundGenerator( soundClip, { sonificationLevel: SoundLevelEnum.ENHANCED } );
+        } );
+
+        movementSoundPlayer = {
+          play() {
+            movementSoundClips[ islcSoundOptionsDialogContent.rulerMotionSoundProperty.value - 1 ].play();
+          }
+        };
       }
 
       // variable to track location where last movement sound was produced
