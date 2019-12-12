@@ -44,7 +44,7 @@ define( require => {
         minWidth: 170,
 
         // phet-io
-        tandem: Tandem.required
+        tandem: Tandem.REQUIRED
       }, options );
 
       // Given a string as a label, convert it to a Text Node.

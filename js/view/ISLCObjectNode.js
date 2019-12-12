@@ -75,7 +75,7 @@ define( require => {
       forceArrowHeight: 150, // height of arrow in view coordinates
 
       // phet-io
-      tandem: Tandem.required,
+      tandem: Tandem.REQUIRED,
 
       // {Property[]} - Properties that need to be monitored to successfully update this Node's PDOM descriptions
       additionalA11yDependencies: []
