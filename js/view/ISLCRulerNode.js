@@ -210,7 +210,9 @@ define( require => {
         locationProperty: rulerPositionProperty,
         tandem: tandem.createTandem( 'dragListener' ),
         transform: modelViewTransform,
-        applyOffset: false, // TODO: we want to be able to apply offset here, but can't because of https://github.com/phetsims/scenery/issues/1014
+        targetNode: ruler,
+        useParentOffset: true,
+        // applyOffset: false, // TODO: we want to be able to apply offset here, but can't because of https://github.com/phetsims/scenery/issues/1014
         mapLocation: location => {
 
           // snap to nearest snapToNearest if specified
