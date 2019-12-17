@@ -16,7 +16,6 @@ define( require => {
   const inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
   const ISLCA11yStrings = require( 'INVERSE_SQUARE_LAW_COMMON/ISLCA11yStrings' );
   const ISLCQueryParameters = require( 'INVERSE_SQUARE_LAW_COMMON/ISLCQueryParameters' );
-  const islcSoundOptionsDialogContent = require( 'INVERSE_SQUARE_LAW_COMMON/view/islcSoundOptionsDialogContent' );
   const KeyboardDragListener = require( 'SCENERY/listeners/KeyboardDragListener' );
   const KeyboardUtil = require( 'SCENERY/accessibility/KeyboardUtil' );
   const Line = require( 'SCENERY/nodes/Line' );
@@ -39,18 +38,8 @@ define( require => {
 
   // sounds
   const commonGrabSoundInfo = require( 'sound!TAMBO/grab.mp3' );
-  const commonGrab2SoundInfo = require( 'sound!TAMBO/grab-002.mp3' );
-  const pickUpRuler1SoundInfo = require( 'sound!INVERSE_SQUARE_LAW_COMMON/pick-up-ruler-option-1.mp3' );
-  const pickUpRuler2SoundInfo = require( 'sound!INVERSE_SQUARE_LAW_COMMON/pick-up-ruler-option-2.mp3' );
-  const pickUpRuler3SoundInfo = require( 'sound!INVERSE_SQUARE_LAW_COMMON/pick-up-ruler-option-3.mp3' );
   const commonReleaseSoundInfo = require( 'sound!TAMBO/release.mp3' );
-  const commonRelease2SoundInfo = require( 'sound!TAMBO/release-002.mp3' );
-  const putDownRuler1SoundInfo = require( 'sound!INVERSE_SQUARE_LAW_COMMON/put-down-ruler-option-1.mp3' );
-  const putDownRuler2SoundInfo = require( 'sound!INVERSE_SQUARE_LAW_COMMON/put-down-ruler-option-2.mp3' );
-  const putDownRuler3SoundInfo = require( 'sound!INVERSE_SQUARE_LAW_COMMON/put-down-ruler-option-3.mp3' );
   const rulerMovement000SoundInfo = require( 'sound!INVERSE_SQUARE_LAW_COMMON/ruler-movement-000.mp3' );
-  const rulerMovement001SoundInfo = require( 'sound!INVERSE_SQUARE_LAW_COMMON/ruler-movement-001.mp3' );
-  const rulerMovement002SoundInfo = require( 'sound!INVERSE_SQUARE_LAW_COMMON/ruler-movement-002.mp3' );
 
   // a11y strings
   const rulerHelpTextString = ISLCA11yStrings.rulerHelpText.value;
@@ -147,60 +136,42 @@ define( require => {
       // `this.height` because RulerNode adds line width around for drawing
       const dragBoundsWithRulerHeight = dragBounds.dilatedY( modelViewTransform.viewToModelDeltaY( RULER_HEIGHT / 2 ) );
 
-      const grabSoundPlayers = [
-        new SoundClip( commonGrabSoundInfo ),
-        new SoundClip( commonGrab2SoundInfo ),
-        new SoundClip( pickUpRuler1SoundInfo ),
-        new SoundClip( pickUpRuler2SoundInfo ),
-        new SoundClip( pickUpRuler3SoundInfo )
-      ];
-      grabSoundPlayers.forEach( soundClip => {
-        soundManager.addSoundGenerator( soundClip );
-      } );
-      const releaseSoundPlayers = [
-        new SoundClip( commonReleaseSoundInfo ),
-        new SoundClip( commonRelease2SoundInfo ),
-        new SoundClip( putDownRuler1SoundInfo ),
-        new SoundClip( putDownRuler2SoundInfo ),
-        new SoundClip( putDownRuler3SoundInfo )
-      ];
-      releaseSoundPlayers.forEach( soundClip => {
-        soundManager.addSoundGenerator( soundClip );
-      } );
+      // sound generation
 
-      // get default sound generators if needed
-      const grabRulerSoundPlayer = options.grabRulerSoundPlayer || {
-        play() {
-          grabSoundPlayers[ islcSoundOptionsDialogContent.rulerGrabReleaseSoundsProperty.value - 1 ].play();
-        }
-      };
-      const releaseRulerSoundPlayer = options.releaseRulerSoundPlayer || {
-        play() {
-          releaseSoundPlayers[ islcSoundOptionsDialogContent.rulerGrabReleaseSoundsProperty.value - 1 ].play();
-        }
-      };
+      let grabRulerSoundPlayer;
+      if ( options.grabRulerSoundPlayer === null ) {
 
+        // no sound player specified by the client, use the default
+        grabRulerSoundPlayer = new SoundClip( commonGrabSoundInfo, { initialOutputLevel: 1 } );
+        soundManager.addSoundGenerator( grabRulerSoundPlayer );
+      }
+      else {
+        grabRulerSoundPlayer = options.grabRulerSoundPlayer;
+      }
+
+      let releaseRulerSoundPlayer;
+      if ( options.releaseRulerSoundPlayer === null ) {
+
+        // no sound player specified by the client, use the default
+        releaseRulerSoundPlayer = new SoundClip( commonReleaseSoundInfo, { initialOutputLevel: 1 } );
+        soundManager.addSoundGenerator( releaseRulerSoundPlayer );
+      }
+      else {
+        releaseRulerSoundPlayer = options.releaseRulerSoundPlayer;
+      }
+      
       // check if a sound player was provided for ruler motion and, if not, create a default
       let movementSoundPlayer;
-      if ( options.movementSoundPlayer ) {
-        movementSoundPlayer = options.movementSoundPlayer;
+      if ( options.movementSoundPlayer === null ) {
+
+        // no sound player provided, so use the default
+        movementSoundPlayer = new SoundClip( rulerMovement000SoundInfo, { initialOutputLevel: 0.2 } );
+        soundManager.addSoundGenerator( movementSoundPlayer, { sonificationLevel: SoundLevelEnum.ENHANCED } );
       }
       else {
 
-        const movementSoundClips = [
-          new SoundClip( rulerMovement000SoundInfo, { initialOutputLevel: 0.2 } ),
-          new SoundClip( rulerMovement001SoundInfo, { initialOutputLevel: 0.2 } ),
-          new SoundClip( rulerMovement002SoundInfo, { initialOutputLevel: 0.2 } )
-        ];
-        movementSoundClips.forEach( soundClip => {
-          soundManager.addSoundGenerator( soundClip, { sonificationLevel: SoundLevelEnum.ENHANCED } );
-        } );
-
-        movementSoundPlayer = {
-          play() {
-            movementSoundClips[ islcSoundOptionsDialogContent.rulerMotionSoundProperty.value - 1 ].play();
-          }
-        };
+        // use the sound player specified by the user
+        movementSoundPlayer = options.movementSoundPlayer;
       }
 
       // variable to track location where last movement sound was produced
