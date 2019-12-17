@@ -141,6 +141,7 @@ define( require => {
       let grabRulerSoundPlayer;
       if ( options.grabRulerSoundPlayer === null ) {
 
+        // TODO - @Ashton-Morris - please adjust level if needed, see https://github.com/phetsims/gravity-force-lab/issues/181
         // no sound player specified by the client, use the default
         grabRulerSoundPlayer = new SoundClip( commonGrabSoundInfo, { initialOutputLevel: 1 } );
         soundManager.addSoundGenerator( grabRulerSoundPlayer );
@@ -152,6 +153,7 @@ define( require => {
       let releaseRulerSoundPlayer;
       if ( options.releaseRulerSoundPlayer === null ) {
 
+        // TODO - @Ashton-Morris - please adjust level if needed, see https://github.com/phetsims/gravity-force-lab/issues/181
         // no sound player specified by the client, use the default
         releaseRulerSoundPlayer = new SoundClip( commonReleaseSoundInfo, { initialOutputLevel: 1 } );
         soundManager.addSoundGenerator( releaseRulerSoundPlayer );
@@ -164,7 +166,8 @@ define( require => {
       let movementSoundPlayer;
       if ( options.movementSoundPlayer === null ) {
 
-        // no sound player provided, so use the default
+        // TODO - @Ashton-Morris - please adjust level if needed, see https://github.com/phetsims/gravity-force-lab/issues/181
+        // no sound player provided, use the default
         movementSoundPlayer = new SoundClip( rulerMovement000SoundInfo, { initialOutputLevel: 0.2 } );
         soundManager.addSoundGenerator( movementSoundPlayer, { sonificationLevel: SoundLevelEnum.ENHANCED } );
       }
