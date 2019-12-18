@@ -85,7 +85,7 @@ define( require => {
     ], ( v1, v2, x1, x2 ) => this.calculateForce( v1, v2, Math.abs( x2 - x1 ) ), {
       phetioType: DerivedPropertyIO( NumberIO ),
       tandem: tandem.createTandem( 'forceProperty' ),
-      units: 'newtons',
+      units: 'N',
       phetioDocumentation: 'The force of one object on the other (in Newtons)'
     } );
 
