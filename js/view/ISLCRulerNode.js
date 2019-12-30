@@ -17,7 +17,7 @@ define( require => {
   const ISLCA11yStrings = require( 'INVERSE_SQUARE_LAW_COMMON/ISLCA11yStrings' );
   const ISLCQueryParameters = require( 'INVERSE_SQUARE_LAW_COMMON/ISLCQueryParameters' );
   const KeyboardDragListener = require( 'SCENERY/listeners/KeyboardDragListener' );
-  const KeyboardUtil = require( 'SCENERY/accessibility/KeyboardUtil' );
+  const KeyboardUtils = require( 'SCENERY/accessibility/KeyboardUtils' );
   const Line = require( 'SCENERY/nodes/Line' );
   const merge = require( 'PHET_CORE/merge' );
   const Node = require( 'SCENERY/nodes/Node' );
@@ -301,7 +301,7 @@ define( require => {
 
       // register hotkeys
       keyboardDragListener.addHotkeys( [ {
-        keys: [ KeyboardUtil.KEY_J, KeyboardUtil.KEY_C ], // jump to center of object 1
+        keys: [ KeyboardUtils.KEY_J, KeyboardUtils.KEY_C ], // jump to center of object 1
         callback: () => {
           const x = getObject1Position();
           const destinationPosition = new Vector2( x + rulerAlignWithObjectXOffset, options.modelYForCenterJump );
@@ -317,7 +317,7 @@ define( require => {
           }
         }
       }, {
-        keys: [ KeyboardUtil.KEY_J, KeyboardUtil.KEY_H ], // jump home
+        keys: [ KeyboardUtils.KEY_J, KeyboardUtils.KEY_H ], // jump home
         callback: () => {
           if ( !rulerPositionProperty.value.equals( rulerPositionProperty.initialValue ) ) {
             movementSoundPlayer.play();
