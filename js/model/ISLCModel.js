@@ -20,7 +20,7 @@ define( require => {
   const NumberIO = require( 'TANDEM/types/NumberIO' );
   const Property = require( 'AXON/Property' );
   const Range = require( 'DOT/Range' );
-  const Util = require( 'DOT/Util' );
+  const Utils = require( 'DOT/Utils' );
 
   // constants
   const OBJECT_ONE = ISLCObjectEnum.OBJECT_ONE;
@@ -427,10 +427,10 @@ define( require => {
      */
     snapToGrid: function( position ) {
       let snappedPosition = position;
-      const numDecimalPlaces = Util.numberOfDecimalPlaces( this.snapObjectsToNearest );
+      const numDecimalPlaces = Utils.numberOfDecimalPlaces( this.snapObjectsToNearest );
       if ( this.snapObjectsToNearest ) {
-        snappedPosition = Util.roundSymmetric( position / this.snapObjectsToNearest ) * this.snapObjectsToNearest;
-        snappedPosition = Util.toFixedNumber( snappedPosition, numDecimalPlaces );
+        snappedPosition = Utils.roundSymmetric( position / this.snapObjectsToNearest ) * this.snapObjectsToNearest;
+        snappedPosition = Utils.toFixedNumber( snappedPosition, numDecimalPlaces );
       }
 
       // now make sure that the snapped position is within the left and right boundaries for this model

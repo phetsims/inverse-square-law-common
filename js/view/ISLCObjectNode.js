@@ -35,7 +35,7 @@ define( require => {
   const RichText = require( 'SCENERY/nodes/RichText' );
   const Shape = require( 'KITE/Shape' );
   const Tandem = require( 'TANDEM/Tandem' );
-  const Util = require( 'DOT/Util' );
+  const Utils = require( 'DOT/Utils' );
 
   // constants
   const NEGATIVE_FILL = new Color( '#66f' );
@@ -273,10 +273,10 @@ define( require => {
       keyboardStep: config.stepSize,
       shiftKeyboardStep: config.snapToNearest,
       pageKeyboardStep: config.stepSize * 2,
-      a11yMapValue: value => Util.toFixedNumber( value, 1 ),
+      a11yMapValue: value => Utils.toFixedNumber( value, 1 ),
       constrainValue: value => {
-        const numberOfDecimalPlaces = Util.numberOfDecimalPlaces( config.snapToNearest );
-        return Util.toFixedNumber( value, numberOfDecimalPlaces );
+        const numberOfDecimalPlaces = Utils.numberOfDecimalPlaces( config.snapToNearest );
+        return Utils.toFixedNumber( value, numberOfDecimalPlaces );
       },
       startDrag: () => {
         object.isDragging = true;

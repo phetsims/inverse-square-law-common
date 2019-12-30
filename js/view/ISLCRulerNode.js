@@ -17,7 +17,7 @@ define( require => {
   const ISLCA11yStrings = require( 'INVERSE_SQUARE_LAW_COMMON/ISLCA11yStrings' );
   const ISLCQueryParameters = require( 'INVERSE_SQUARE_LAW_COMMON/ISLCQueryParameters' );
   const KeyboardDragListener = require( 'SCENERY/listeners/KeyboardDragListener' );
-  const KeyboardUtil = require( 'SCENERY/accessibility/KeyboardUtil' );
+  const KeyboardUtils = require( 'SCENERY/accessibility/KeyboardUtils' );
   const Line = require( 'SCENERY/nodes/Line' );
   const merge = require( 'PHET_CORE/merge' );
   const Node = require( 'SCENERY/nodes/Node' );
@@ -29,7 +29,7 @@ define( require => {
   const SoundLevelEnum = require( 'TAMBO/SoundLevelEnum' );
   const soundManager = require( 'TAMBO/soundManager' );
   const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
-  const Util = require( 'DOT/Util' );
+  const Utils = require( 'DOT/Utils' );
   const Utterance = require( 'UTTERANCE_QUEUE/Utterance' );
   const Vector2 = require( 'DOT/Vector2' );
 
@@ -193,7 +193,7 @@ define( require => {
 
             // x in model coordinates
             const xModel = location.x;
-            location.x = Util.roundSymmetric( xModel / options.snapToNearest ) * options.snapToNearest;
+            location.x = Utils.roundSymmetric( xModel / options.snapToNearest ) * options.snapToNearest;
           }
 
           // map withing the drag bounds, this is the same as using "dragBoundsProperty'
@@ -242,7 +242,7 @@ define( require => {
         drag() {
           if ( options.snapToNearest ) {
             const xModel = rulerPositionProperty.get().x;
-            const snappedX = Util.roundSymmetric( xModel / options.snapToNearest ) * options.snapToNearest;
+            const snappedX = Utils.roundSymmetric( xModel / options.snapToNearest ) * options.snapToNearest;
             rulerPositionProperty.set( new Vector2( snappedX, rulerPositionProperty.get().y ) );
           }
 
@@ -301,7 +301,7 @@ define( require => {
 
       // register hotkeys
       keyboardDragListener.addHotkeys( [ {
-        keys: [ KeyboardUtil.KEY_J, KeyboardUtil.KEY_C ], // jump to center of object 1
+        keys: [ KeyboardUtils.KEY_J, KeyboardUtils.KEY_C ], // jump to center of object 1
         callback: () => {
           const x = getObject1Position();
           const destinationPosition = new Vector2( x + rulerAlignWithObjectXOffset, options.modelYForCenterJump );
@@ -317,7 +317,7 @@ define( require => {
           }
         }
       }, {
-        keys: [ KeyboardUtil.KEY_J, KeyboardUtil.KEY_H ], // jump home
+        keys: [ KeyboardUtils.KEY_J, KeyboardUtils.KEY_H ], // jump home
         callback: () => {
           if ( !rulerPositionProperty.value.equals( rulerPositionProperty.initialValue ) ) {
             movementSoundPlayer.play();
