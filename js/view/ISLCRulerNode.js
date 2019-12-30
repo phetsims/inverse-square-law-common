@@ -39,7 +39,7 @@ define( require => {
   // sounds
   const commonGrabSoundInfo = require( 'sound!TAMBO/grab.mp3' );
   const commonReleaseSoundInfo = require( 'sound!TAMBO/release.mp3' );
-  const rulerMovement000SoundInfo = require( 'sound!INVERSE_SQUARE_LAW_COMMON/ruler-movement-000.mp3' );
+  const rulerMovementSoundInfo = require( 'sound!INVERSE_SQUARE_LAW_COMMON/ruler-movement-000.mp3' );
 
   // a11y strings
   const rulerHelpTextString = ISLCA11yStrings.rulerHelpText.value;
@@ -168,7 +168,7 @@ define( require => {
 
         // TODO - @Ashton-Morris - please adjust level if needed, see https://github.com/phetsims/gravity-force-lab/issues/181
         // no sound player provided, use the default
-        movementSoundPlayer = new SoundClip( rulerMovement000SoundInfo, { initialOutputLevel: 0.2 } );
+        movementSoundPlayer = new SoundClip( rulerMovementSoundInfo, { initialOutputLevel: 0.2 } );
         soundManager.addSoundGenerator( movementSoundPlayer, { sonificationLevel: SoundLevelEnum.ENHANCED } );
       }
       else {
