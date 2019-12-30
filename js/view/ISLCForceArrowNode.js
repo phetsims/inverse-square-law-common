@@ -23,7 +23,7 @@ define( require => {
   const RichText = require( 'SCENERY/nodes/RichText' );
   const ScientificNotationNode = require( 'SCENERY_PHET/ScientificNotationNode' );
   const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
-  const Util = require( 'DOT/Util' );
+  const Utils = require( 'DOT/Utils' );
 
   // strings
   const forceOnObjectByOtherObjectPatternString = require( 'string!INVERSE_SQUARE_LAW_COMMON/forceOnObjectByOtherObjectPattern' );
@@ -219,7 +219,7 @@ define( require => {
     updateLabel: function( forceValue, forceValues ) {
 
       if ( forceValues ) {
-        const forceStr = Util.toFixed( forceValue, this.scientificNotationMode ? 2 : this.forceReadoutDecimalPlaces );
+        const forceStr = Utils.toFixed( forceValue, this.scientificNotationMode ? 2 : this.forceReadoutDecimalPlaces );
 
         // group values together so that they are easy to read
         const pointLocation = forceStr.indexOf( '.' );

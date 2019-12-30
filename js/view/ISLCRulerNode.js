@@ -29,7 +29,7 @@ define( require => {
   const SoundLevelEnum = require( 'TAMBO/SoundLevelEnum' );
   const soundManager = require( 'TAMBO/soundManager' );
   const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
-  const Util = require( 'DOT/Util' );
+  const Utils = require( 'DOT/Utils' );
   const Utterance = require( 'UTTERANCE_QUEUE/Utterance' );
   const Vector2 = require( 'DOT/Vector2' );
 
@@ -193,7 +193,7 @@ define( require => {
 
             // x in model coordinates
             const xModel = location.x;
-            location.x = Util.roundSymmetric( xModel / options.snapToNearest ) * options.snapToNearest;
+            location.x = Utils.roundSymmetric( xModel / options.snapToNearest ) * options.snapToNearest;
           }
 
           // map withing the drag bounds, this is the same as using "dragBoundsProperty'
@@ -242,7 +242,7 @@ define( require => {
         drag() {
           if ( options.snapToNearest ) {
             const xModel = rulerPositionProperty.get().x;
-            const snappedX = Util.roundSymmetric( xModel / options.snapToNearest ) * options.snapToNearest;
+            const snappedX = Utils.roundSymmetric( xModel / options.snapToNearest ) * options.snapToNearest;
             rulerPositionProperty.set( new Vector2( snappedX, rulerPositionProperty.get().y ) );
           }
 

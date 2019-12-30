@@ -22,7 +22,7 @@ define( require => {
   const Node = require( 'SCENERY/nodes/Node' );
   const Path = require( 'SCENERY/nodes/Path' );
   const Shape = require( 'KITE/Shape' );
-  const Util = require( 'DOT/Util' );
+  const Utils = require( 'DOT/Utils' );
   const Vector2 = require( 'DOT/Vector2' );
 
   // constants
@@ -131,7 +131,7 @@ define( require => {
       }
 
       // from the force value, get an index for the visible image
-      let index = Util.roundSymmetric( forceToImage( force ) );
+      let index = Utils.roundSymmetric( forceToImage( force ) );
 
       if ( force !== 0 && index === zeroForceIndex ) {
         index += ( force > 0 ) ? 1 : -1;
@@ -144,7 +144,7 @@ define( require => {
 
       // scale the shadow and place it under the visible image
       shadowNode.radius = forceToShadowWidth( force ) / 2;
-      shadowNode.right = images[ index ].right - offsetX + Util.roundSymmetric( indexToShadowOffset( index ) );
+      shadowNode.right = images[ index ].right - offsetX + Utils.roundSymmetric( indexToShadowOffset( index ) );
       shadowNode.centerY = images[ index ].bottom;
 
       // configure pointer area
