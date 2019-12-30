@@ -215,14 +215,9 @@ define( require => {
      * @public
      */
     getForceVectorMagnitudeText( thisObjectLabel, otherObjectLabel ) {
-      const pattern = this.forceVectorMagnitudeUnitsPatternString;
-      const forceValue = this.getFormattedForce();
-      const units = this.units;
-
-      // In BASICS the object labels are used, in regular the fillin is a no-op because those keys aren't present.
-      return StringUtils.fillIn( pattern, {
-        forceValue: forceValue,
-        units: units,
+      return StringUtils.fillIn( this.forceVectorMagnitudeUnitsPatternString, {
+        forceValue: this.getFormattedForce(),
+        units: this.units,
         thisObjectLabel: thisObjectLabel,
         otherObjectLabel: otherObjectLabel
       } );
