@@ -32,11 +32,7 @@ define( require => {
       options = merge( {
 
         checkboxGroupOptions: {
-          checkboxOptions: {
-            spacing: 10,
-            padding: 8,
-            boxWidth: 16
-          }
+          checkboxOptions: ISLCCheckboxPanel.CHECKBOX_OPTIONS
         },
         fill: '#FDF498',
         xMargin: 10,
@@ -70,6 +66,13 @@ define( require => {
       };
     }
   }
+
+  // @public (read-only) for any checkboxes needed
+  ISLCCheckboxPanel.CHECKBOX_OPTIONS = {
+    spacing: 10,
+    padding: 8,
+    boxWidth: 16
+  };
 
   return inverseSquareLawCommon.register( 'ISLCCheckboxPanel', ISLCCheckboxPanel );
 } );
