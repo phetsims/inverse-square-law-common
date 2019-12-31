@@ -161,7 +161,7 @@ define( require => {
       else {
         releaseRulerSoundPlayer = options.releaseRulerSoundPlayer;
       }
-      
+
       // check if a sound player was provided for ruler motion and, if not, create a default
       let movementSoundPlayer;
       if ( options.movementSoundPlayer === null ) {
@@ -279,6 +279,10 @@ define( require => {
 
         onGrab() {
           grabRulerSoundPlayer.play();
+
+          // call this first to update the dsecriber state before the alert
+          rulerDescriber.onGrab();
+
           grabbedUtterance.alert = rulerDescriber.getRulerGrabbedAlertable();
           phet.joist.sim.utteranceQueue.addToBack( grabbedUtterance );
         },
