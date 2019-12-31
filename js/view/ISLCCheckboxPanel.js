@@ -13,14 +13,14 @@ define( require => {
 
   // modules
   const inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
+  const ISLCPanel = require( 'INVERSE_SQUARE_LAW_COMMON/view/ISLCPanel' );
   const merge = require( 'PHET_CORE/merge' );
-  const Panel = require( 'SUN/Panel' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
   const Tandem = require( 'TANDEM/Tandem' );
   const Text = require( 'SCENERY/nodes/Text' );
   const VerticalCheckboxGroup = require( 'SUN/VerticalCheckboxGroup' );
 
-  class ISLCCheckboxPanel extends Panel {
+  class ISLCCheckboxPanel extends ISLCPanel {
 
     /**
      * @param {Object} checkboxItems - see VerticalCheckboxGroup for doc, note that this Type sets the `node`, and
@@ -50,15 +50,24 @@ define( require => {
       // Given a string as a label, convert it to a Text Node.
       checkboxItems = checkboxItems.map( item => {
         assert && assert( item.tandem );
-        item.node = new Text( item.label, {
-          tandem: item.tandem.createTandem( 'labelNode' ),
-          font: new PhetFont( 14 ),
-          maxWidth: 125
-        } );
+        item.node = new Text( item.label, ISLCCheckboxPanel.getCheckboxTextOptions( item.tandem ) );
         return item;
       } );
 
       super( new VerticalCheckboxGroup( checkboxItems, options.checkboxGroupOptions ), options );
+    }
+
+    /**
+     * TODO: get rid of this
+     * @param {Tandem} tandem
+     * @returns {Object}
+     */
+    static getCheckboxTextOptions( tandem ) {
+      return {
+        tandem: tandem.createTandem( 'labelNode' ),
+        font: new PhetFont( 14 ),
+        maxWidth: 125
+      };
     }
   }
 

@@ -14,6 +14,12 @@
   "scientificNotation": {
     "value": "Scientific Notation"
   },
+  "decimalNotation": {
+    "value": "Decimal Notation"
+  },
+  "hidden": {
+    "value": "Hidden"
+  },
   "units.meter": {
     "value": "meter"
   },
