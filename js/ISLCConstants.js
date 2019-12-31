@@ -10,6 +10,7 @@ define( require => {
 
   // modules
   const inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
+  const PhetFont = require( 'SCENERY_PHET/PhetFont' );
 
   // constants
   const MAX_DISTANCE_FROM_CENTER = 5; // meters, empirically determined boundary for objects
@@ -26,7 +27,17 @@ define( require => {
 
     // mass constants
     CONSTANT_RADIUS: 0.5, // meters
-    MASS_DENSITY: 150 // kg/m^3
+    MASS_DENSITY: 150, // kg/m^3
+
+    CHECKBOX_OPTIONS: {
+      spacing: 10,
+      padding: 8,
+      boxWidth: 16
+    },
+    UI_TEXT_OPTIONS: {
+      font: new PhetFont( 14 ),
+      maxWidth: 125
+    }
   };
 
   inverseSquareLawCommon.register( 'ISLCConstants', ISLCConstants );

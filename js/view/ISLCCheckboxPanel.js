@@ -13,9 +13,9 @@ define( require => {
 
   // modules
   const inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
+  const ISLCConstants = require( 'INVERSE_SQUARE_LAW_COMMON/ISLCConstants' );
   const ISLCPanel = require( 'INVERSE_SQUARE_LAW_COMMON/view/ISLCPanel' );
   const merge = require( 'PHET_CORE/merge' );
-  const PhetFont = require( 'SCENERY_PHET/PhetFont' );
   const Tandem = require( 'TANDEM/Tandem' );
   const Text = require( 'SCENERY/nodes/Text' );
   const VerticalCheckboxGroup = require( 'SUN/VerticalCheckboxGroup' );
@@ -32,7 +32,7 @@ define( require => {
       options = merge( {
 
         checkboxGroupOptions: {
-          checkboxOptions: ISLCCheckboxPanel.CHECKBOX_OPTIONS
+          checkboxOptions: ISLCConstants.CHECKBOX_OPTIONS
         },
         fill: '#FDF498',
         xMargin: 10,
@@ -52,27 +52,7 @@ define( require => {
 
       super( new VerticalCheckboxGroup( checkboxItems, options.checkboxGroupOptions ), options );
     }
-
-    /**
-     * TODO: get rid of this
-     * @param {Tandem} tandem
-     * @returns {Object}
-     */
-    static getCheckboxTextOptions( tandem ) {
-      return {
-        tandem: tandem.createTandem( 'labelNode' ),
-        font: new PhetFont( 14 ),
-        maxWidth: 125
-      };
-    }
   }
-
-  // @public (read-only) for any checkboxes needed
-  ISLCCheckboxPanel.CHECKBOX_OPTIONS = {
-    spacing: 10,
-    padding: 8,
-    boxWidth: 16
-  };
 
   return inverseSquareLawCommon.register( 'ISLCCheckboxPanel', ISLCCheckboxPanel );
 } );
