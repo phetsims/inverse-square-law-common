@@ -11,6 +11,7 @@ define( require => {
   'use strict';
 
   // modules
+  const ForceValuesDisplayEnum = require( 'INVERSE_SQUARE_LAW_COMMON/model/ForceValuesDisplayEnum' );
   const inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
   const ISLCA11yStrings = require( 'INVERSE_SQUARE_LAW_COMMON/ISLCA11yStrings' );
   const ISLCDescriber = require( 'INVERSE_SQUARE_LAW_COMMON/view/describers/ISLCDescriber' );
@@ -96,7 +97,7 @@ define( require => {
   class ForceDescriber extends ISLCDescriber {
 
     /**
-     * @param {ISLCModel} model
+     * @param {ISLCModel} model - supports subtypes with forceValuesDisplayProperty gracefully
      * @param {string} object1Label
      * @param {string} object2Label
      * @param {PositionDescriber} positionDescriber
@@ -142,7 +143,7 @@ define( require => {
       this.forceVectorCapitalizedString = options.forceVectorCapitalizedString; // {string}
 
       // @protected
-      this.scientificNotationProperty = model.scientificNotationProperty;
+      this.forceValuesDisplayProperty = model.forceValuesDisplayProperty || null;
 
       // @private - these string patterns can vary based on options
       this.summaryVectorSizePatternString = StringUtils.fillIn( summaryVectorSizePatternString, {
@@ -274,10 +275,10 @@ define( require => {
      * @public
      */
     getScientificNotationAlertText() {
-      if ( this.scientificNotationProperty.get() ) {
+      assert && assert( this.forceValuesDisplayProperty, 'forceValuesDisplayProperty expected for this alert' );
+      if ( this.forceValuesDisplayProperty.value === ForceValuesDisplayEnum.SCIENTIFIC ) {
         return forcesInScientificNotationString;
       }
-
       return this.getValuesInUnitsText();
     }
 
