@@ -297,7 +297,7 @@ define( require => {
       value: 'If needed, grab ruler to measure distance between centers of spheres. {{deviceSpecificHint}}'
     },
     rulerKeyboardHint: {
-      value: 'Once grabbed, use keyboard shortcuts or letter keys W, A, S, or D to move ruler up, left, down, or right.'
+      value: 'Once grabbed, use keyboard shortcuts to move ruler.'
     },
     measureDistanceRuler: {
       value: 'Measure Distance Ruler'
