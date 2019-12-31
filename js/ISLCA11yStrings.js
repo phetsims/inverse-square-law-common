@@ -308,7 +308,7 @@ define( require => {
       value: 'Explore value of forces in newtons.'
     },
     valuesInUnitsPattern: {
-      value: 'Values in {{units}}.'
+      value: 'Force values in {{units}}.'
     },
     forceValuesHidden: {
       value: 'Force values hidden.'
@@ -317,7 +317,7 @@ define( require => {
       value: 'Choose force value representation.'
     },
     forcesInScientificNotation: {
-      value: 'Values in newtons with scientific notation.'
+      value: 'Force values in newtons with scientific notation.'
     },
 
     // misc
