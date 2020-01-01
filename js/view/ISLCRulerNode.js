@@ -216,7 +216,6 @@ define( require => {
       this.setFocusHighlight( focusHighlight );
 
       const grabbedUtterance = new Utterance();
-      const movedUtterance = new Utterance();
       const keyboardDragDelta = modelViewTransform.modelToViewDeltaX( options.snapToNearest );
 
       // supports keyboard interaction
@@ -317,10 +316,7 @@ define( require => {
           }
 
           // TODO: remove this conditional once CL ruler describer is supported
-          if ( rulerDescriber.getJumpCenterMassAlert ) {
-            movedUtterance.alert = rulerDescriber.getJumpCenterMassAlert();
-            phet.joist.sim.utteranceQueue.addToBack( movedUtterance );
-          }
+          rulerDescriber.alertJumpCenterMass && rulerDescriber.alertJumpCenterMass();
         }
       }, {
         keys: [ KeyboardUtils.KEY_J, KeyboardUtils.KEY_H ], // jump home
@@ -332,10 +328,7 @@ define( require => {
           this.grabDragInteraction.releaseDraggable();
 
           // TODO: remove this conditional once CL ruler describer is supported
-          if ( rulerDescriber.getHomePositionString ) {
-            movedUtterance.alert = rulerDescriber.getHomePositionString();
-            phet.joist.sim.utteranceQueue.addToBack( movedUtterance );
-          }
+          rulerDescriber.alertJumpHome && rulerDescriber.alertJumpHome();
         }
       } ] );
 
