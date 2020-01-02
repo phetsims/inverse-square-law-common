@@ -315,8 +315,7 @@ define( require => {
             movementSoundPlayer.play();
           }
 
-          // TODO: remove this conditional once CL ruler describer is supported
-          rulerDescriber.alertJumpCenterMass && rulerDescriber.alertJumpCenterMass();
+          rulerDescriber.alertJumpCenterMass();
         }
       }, {
         keys: [ KeyboardUtils.KEY_J, KeyboardUtils.KEY_H ], // jump home
@@ -327,8 +326,7 @@ define( require => {
           rulerPositionProperty.set( rulerPositionProperty.initialValue );
           this.grabDragInteraction.releaseDraggable();
 
-          // TODO: remove this conditional once CL ruler describer is supported
-          rulerDescriber.alertJumpHome && rulerDescriber.alertJumpHome();
+          rulerDescriber.alertJumpHome();
         }
       } ] );
 
