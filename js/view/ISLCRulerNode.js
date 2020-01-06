@@ -94,7 +94,29 @@ define( require => {
         movementSoundDistance: 0.5,
 
         // a11y
-        moveOnHoldDelay: 750
+        moveOnHoldDelay: 750,
+        grabDragInteractionOptions: {
+          objectToGrabString: rulerLabelString,
+          grabbableAccessibleName: measureDistanceRulerString,
+
+          // Empirically determined values to place the cue above the ruler.
+          grabCueOptions: {
+            x: 135,
+            y: -45
+          },
+
+          keyboardHelpText: StringUtils.fillIn( rulerHelpTextString, {
+            deviceSpecificHint: rulerKeyboardHintString
+          } ),
+
+          // Overwrite the gesture help text to include ruler-specific logic. This isn't always needed.
+          gestureHelpText: StringUtils.fillIn( rulerHelpTextString, {
+            deviceSpecificHint: StringUtils.fillIn( gestureHelpTextPatternString, {
+              objectToGrab: rulerLabelString
+            } )
+          } ),
+
+        }
       }, options );
 
       assert && assert( options.tagName === undefined, 'RulerNode sets its own tagName, see GrabDragInteraction usage below.' );
@@ -256,27 +278,11 @@ define( require => {
         }
       } );
 
-      // @private - add the "grab button" interaction
-      this.grabDragInteraction = new GrabDragInteraction( this, {
-        objectToGrabString: rulerLabelString,
-        grabbableAccessibleName: measureDistanceRulerString,
-
-        // Empirically determined values to place the cue above the ruler.
-        grabCueOptions: {
-          x: 135,
-          y: -45
-        },
-
-        keyboardHelpText: StringUtils.fillIn( rulerHelpTextString, {
-          deviceSpecificHint: rulerKeyboardHintString
-        } ),
-
-        // Overwrite the gesture help text to include ruler-specific logic. This isn't always needed.
-        gestureHelpText: StringUtils.fillIn( rulerHelpTextString, {
-          deviceSpecificHint: StringUtils.fillIn( gestureHelpTextPatternString, {
-            objectToGrab: rulerLabelString
-          } )
-        } ),
+      assert && assert( !options.onGrab, 'ISLCRulerNode sets its own onGrab' );
+      assert && assert( !options.onRelease, 'ISLCRulerNode sets its own onRelease' );
+      assert && assert( !options.listenersForDrag, 'ISLCRulerNode sets its own listenersForDrag' );
+      assert && assert( !options.tandem, 'ISLCRulerNode sets its own tandem' );
+      const grabDragInteractionOptions = merge( options.grabDragInteractionOptions, {
 
         onGrab() {
           grabRulerSoundPlayer.play();
@@ -296,6 +302,9 @@ define( require => {
 
         tandem: tandem.createTandem( 'grabDragInteraction' )
       } );
+
+      // @private - add the "grab button" interaction
+      this.grabDragInteraction = new GrabDragInteraction( this, grabDragInteractionOptions );
 
       // a11y - the GrabDragInteraction is added to this Node but the drag handler and transform changes are applied
       // to the child RulerNode - PDOM siblings need to reposition with the RulerNode
