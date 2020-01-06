@@ -62,6 +62,9 @@ define( require => {
   const closerString = ISLCA11yStrings.closer.value;
   const fartherAwayString = ISLCA11yStrings.fartherAway.value;
 
+  const distanceApartPatternString = ISLCA11yStrings.distanceApartPattern.value;
+  const spherePositionHelpTextString = ISLCA11yStrings.spherePositionHelpText.value;
+
   // track landmarks
   const leftSideOfTrackString = ISLCA11yStrings.leftSideOfTrack.value;
   const rightSideOfTrackString = ISLCA11yStrings.rightSideOfTrack.value;
@@ -446,6 +449,20 @@ define( require => {
      */
     getDistanceIndex( distance, numberOfRegions ) {
       throw new Error( 'getDistanceIndex MUST be implemented in subtypes.' );
+    }
+
+    /**
+     * @public
+     * @returns {string} - the help text for the sphere positions heading/container node
+     */
+    getSpherePositionsHelpText() {
+      const quantitativeDistance = StringUtils.fillIn( distanceApartPatternString, {
+        distanceAndUnits: this.getDistanceAndUnits()
+      } );
+
+      return StringUtils.fillIn( spherePositionHelpTextString, {
+        distanceApart: this.useQuantitativeDistance ? quantitativeDistance : this.getQualitativeDistanceFromEachOther()
+      } );
     }
 
     /**

@@ -57,8 +57,12 @@ define( require => {
     spherePositions: {
       value: 'Sphere Positions'
     },
+
+    distanceApartPattern: {
+      value: '{{distanceAndUnits}} apart'
+    },
     spherePositionHelpText: {
-      value: 'Move spheres, closer or farther from each other.'
+      value: 'Centers of spheres, {{distanceApart}}. Move spheres, closer or farther from each other.'
     },
     forceVectorMagnitudeUnitsPattern: {
       value: '{{forceMagnitude}} on {{thisObjectLabel}} by {{otherObjectLabel}} is {{forceValue}} {{units}}.'
