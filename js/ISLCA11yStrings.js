@@ -47,7 +47,7 @@ define( require => {
       value: 'Centers of {{objectsDistanceClause}}'
     },
     centersExactlyPattern: {
-      value: ', centers exactly {{distance}} {{units}} apart'
+      value: ', centers exactly {{distanceAndUnits}} apart'
     },
 
     /******************

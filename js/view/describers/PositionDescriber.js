@@ -181,8 +181,6 @@ define( require => {
      * @public
      */
     getObjectDistanceSummary() {
-      const distance = this.distanceBetween;
-
       const qualitativeDistanceClause = StringUtils.fillIn(
         distanceAndValueSummaryPatternString,
         {
@@ -192,8 +190,9 @@ define( require => {
         }
       );
       const quantitativeDistanceClause = StringUtils.fillIn(
-        centersExactlyPatternString,
-        { distance: distance, units: this.units }
+        centersExactlyPatternString, {
+          distanceAndUnits: this.getDistanceAndUnits()
+        }
       );
 
       let summary = StringUtils.fillIn( quantitativeAndQualitativePatternString, {
@@ -217,7 +216,12 @@ define( require => {
      */
     getDistanceAndUnits() {
       const distance = this.distanceBetween;
-      const units = this.units;
+      let units = this.units;
+
+      // singular if there is only '1'
+      if ( distance === 1 ) {
+        units = this.unit;
+      }
 
       return StringUtils.fillIn( distanceAndUnitsPatternString, {
         distance: distance,
