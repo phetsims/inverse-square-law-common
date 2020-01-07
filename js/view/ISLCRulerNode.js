@@ -114,8 +114,7 @@ define( require => {
             deviceSpecificHint: StringUtils.fillIn( gestureHelpTextPatternString, {
               objectToGrab: rulerLabelString
             } )
-          } ),
-
+          } )
         }
       }, options );
 
