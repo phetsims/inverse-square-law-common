@@ -52,7 +52,7 @@ define( require => {
       tandem: tandem.createTandem( 'positionProperty' ),
       units: 'meters',
       range: new Range( options.leftObjectBoundary, options.rightObjectBoundary ),
-      phetioDocumentation: 'The position of the object along the track, in meters.',
+      phetioDocumentation: 'The position of the object along the track, in meters. The origin is in the center between the two objects.',
       phetioStudioControl: false // temporary workaround until we support dynamic ranges in https://github.com/phetsims/gravity-force-lab/issues/172
     } );
 
