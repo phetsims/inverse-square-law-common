@@ -202,23 +202,23 @@ define( require => {
       const positionOfLastMotionSound = rulerPositionProperty.value.copy();
 
       this.addInputListener( new DragListener( {
-        locationProperty: rulerPositionProperty,
+        positionProperty: rulerPositionProperty,
         tandem: tandem.createTandem( 'dragListener' ),
         transform: modelViewTransform,
         targetNode: ruler,
         useParentOffset: true,
-        mapLocation: location => {
+        mapPosition: position => {
 
           // snap to nearest snapToNearest if specified
           if ( options.snapToNearest ) {
 
             // x in model coordinates
-            const xModel = location.x;
-            location.x = Utils.roundSymmetric( xModel / options.snapToNearest ) * options.snapToNearest;
+            const xModel = position.x;
+            position.x = Utils.roundSymmetric( xModel / options.snapToNearest ) * options.snapToNearest;
           }
 
           // map withing the drag bounds, this is the same as using "dragBoundsProperty'
-          return dragBoundsWithRulerHeight.closestPointTo( location );
+          return dragBoundsWithRulerHeight.closestPointTo( position );
         },
         start() {
           positionOfLastMotionSound.set( rulerPositionProperty.value );
