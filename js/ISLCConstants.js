@@ -36,7 +36,7 @@ define( require => {
     },
     UI_TEXT_OPTIONS: {
       font: new PhetFont( 14 ),
-      maxWidth: 125
+      maxWidth: 110
     }
   };
 
