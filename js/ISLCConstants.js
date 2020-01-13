@@ -1,4 +1,4 @@
-// Copyright 2017-2019, University of Colorado Boulder
+// Copyright 2017-2020, University of Colorado Boulder
 
 /**
  * Shared constants used in various places in gravity-force-lab, gravity-force-lab-basics, and coulombs-law.
