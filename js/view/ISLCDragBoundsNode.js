@@ -34,7 +34,7 @@ define( require => {
 
     Node.call( this, options );
 
-    // Show the min/max locations for dragging the objects
+    // Show the min/max positions for dragging the objects
     const verticalMin = layoutBounds.minY;
     const verticalMax = layoutBounds.height;
     const object1LineOptions = { stroke: options.object1Stroke, lineWidth: options.lineWidth };

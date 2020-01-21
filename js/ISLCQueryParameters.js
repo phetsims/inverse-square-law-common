@@ -13,7 +13,7 @@ define( require => {
 
   const ISLCQueryParameters = QueryStringMachine.getAll( {
 
-    // when flagged, shows a grid in the ScreenView that visualizes the possible locations
+    // when flagged, shows a grid in the ScreenView that visualizes the possible positions
     // for the objects (kept after code review for future development debugging)
     showGrid: {
       type: 'flag'

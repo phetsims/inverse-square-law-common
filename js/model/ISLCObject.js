@@ -84,10 +84,10 @@ define( require => {
     const enabledRange = new Range( options.leftObjectBoundary, options.rightObjectBoundary );
 
     // @public {Property.<Range>}- set by ISLCModel when the force changes, the range for position of the objects
-    // based on their radius and location
+    // based on their radius and position
     this.enabledRangeProperty = new Property( enabledRange, {
       tandem: tandem.createTandem( 'enabledRangeProperty' ),
-      phetioDocumentation: 'The range for position of this object based on the radius and location of both objects',
+      phetioDocumentation: 'The range for position of this object based on the radius and position of both objects',
       phetioType: PropertyIO( RangeIO ),
       phetioReadOnly: true
     } );

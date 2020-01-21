@@ -30,13 +30,13 @@ define( require => {
    * @param {number} forceConstant the appropriate force constant (e.g. G or k)
    * @param {ISLCObject} object1 -  the first Mass or Charge object
    * @param {ISLCObject} object2 -  the second Mass or Charge object
-   * @param {Range} locationRange - in meters, location range for the objects, min is the left boundary for left object,
+   * @param {Range} positionRange - in meters, position range for the objects, min is the left boundary for left object,
    *                                and the same for max/right
    * @param {Tandem} tandem
    * @param {Object} [options]
    * @constructor
    */
-  function ISLCModel( forceConstant, object1, object2, locationRange, tandem, options ) {
+  function ISLCModel( forceConstant, object1, object2, positionRange, tandem, options ) {
 
     options = merge( {
       snapObjectsToNearest: null, // {number|null} if defined, objects will snap to nearest value in model coordinates
@@ -46,8 +46,8 @@ define( require => {
     assert && assert( object1.positionProperty.units === object2.positionProperty.units, 'units should be the same' );
 
     // @public (read-only)
-    this.leftObjectBoundary = locationRange.min;
-    this.rightObjectBoundary = locationRange.max;
+    this.leftObjectBoundary = positionRange.min;
+    this.rightObjectBoundary = positionRange.max;
 
     // @public {Property.<boolean>} - whether to display the force values
     this.showForceValuesProperty = new BooleanProperty( true, {
@@ -183,8 +183,8 @@ define( require => {
       const minX = this.leftObjectBoundary;
       const maxX = this.rightObjectBoundary;
 
-      let locationObject1 = this.object1.positionProperty.get();
-      let locationObject2 = this.object2.positionProperty.get();
+      let positionObject1 = this.object1.positionProperty.get();
+      let positionObject2 = this.object2.positionProperty.get();
 
       // bounds for the left object are the left boundary and the right edge of object 2 minus half the min separation
       const minPositionObject1 = minX;
@@ -195,22 +195,22 @@ define( require => {
       const maxPositionObject2 = maxX;
 
       // make sure that the objects don't go beyond the boundaries
-      locationObject1 = Math.max( minPositionObject1, locationObject1 );
-      locationObject2 = Math.min( locationObject2, maxPositionObject2 );
+      positionObject1 = Math.max( minPositionObject1, positionObject1 );
+      positionObject2 = Math.min( positionObject2, maxPositionObject2 );
 
       // make sure objects don't overlap
-      locationObject1 = Math.min( locationObject1, maxPositionObject1 );
-      locationObject2 = Math.max( minPositionObject2, locationObject2 );
+      positionObject1 = Math.min( positionObject1, maxPositionObject1 );
+      positionObject2 = Math.max( minPositionObject2, positionObject2 );
 
       // if objects are limited to a certain precision, round position values to that precision
-      locationObject1 = this.snapToGrid( locationObject1 );
-      locationObject2 = this.snapToGrid( locationObject2 );
+      positionObject1 = this.snapToGrid( positionObject1 );
+      positionObject2 = this.snapToGrid( positionObject2 );
 
       if ( this.object1.isDragging ) {
-        this.object1.positionProperty.set( locationObject1 );
+        this.object1.positionProperty.set( positionObject1 );
       }
       else if ( this.object2.isDragging ) {
-        this.object2.positionProperty.set( locationObject2 );
+        this.object2.positionProperty.set( positionObject2 );
       }
       else {
 
@@ -219,20 +219,20 @@ define( require => {
           if ( this.object2.positionProperty.get() < maxX ) {
 
             // only set if it is different
-            if ( locationObject2 !== this.object2.positionProperty.get() ) {
+            if ( positionObject2 !== this.object2.positionProperty.get() ) {
 
               // object2 is not at the edge update its position
-              this.object2.positionProperty.set( locationObject2 );
+              this.object2.positionProperty.set( positionObject2 );
               this.object2.positionChangedFromSecondarySourceEmitter.emit( OBJECT_ONE );
             }
           }
           else {
 
             // only set if it is different
-            if ( locationObject1 !== this.object1.positionProperty.get() ) {
+            if ( positionObject1 !== this.object1.positionProperty.get() ) {
 
               // object2 is at the edge update object1 position
-              this.object1.positionProperty.set( locationObject1 );
+              this.object1.positionProperty.set( positionObject1 );
               this.object1.positionChangedFromSecondarySourceEmitter.emit( OBJECT_ONE );
             }
           }
@@ -241,19 +241,19 @@ define( require => {
           if ( this.object1.positionProperty.get() > minX ) {
 
             // only set if it is different
-            if ( locationObject1 !== this.object1.positionProperty.get() ) {
+            if ( positionObject1 !== this.object1.positionProperty.get() ) {
 
               // object1 is not at boundary, update position
-              this.object1.positionProperty.set( locationObject1 );
+              this.object1.positionProperty.set( positionObject1 );
               this.object1.positionChangedFromSecondarySourceEmitter.emit( OBJECT_TWO );
             }
           }
           else {
 
             // only set if it is different
-            if ( locationObject2 !== this.object2.positionProperty.get() ) {
+            if ( positionObject2 !== this.object2.positionProperty.get() ) {
 
-              this.object2.positionProperty.set( locationObject2 );
+              this.object2.positionProperty.set( positionObject2 );
               this.object2.positionChangedFromSecondarySourceEmitter.emit( OBJECT_TWO );
             }
           }

@@ -1,7 +1,7 @@
 // Copyright 2017-2019, University of Colorado Boulder
 
 /**
- * Grid that shows the possible locations of where the objects can be in the play area. For several
+ * Grid that shows the possible positions of where the objects can be in the play area. For several
  * sims that use inverse-square-law-common, objects are constrained to positions along a 2D grid.
  * This node should only be used for debugging and will be hidden behind query parameter "showGrid".
  *
@@ -44,7 +44,7 @@ define( require => {
       gridShape.moveTo( viewPosition, layoutBounds.top );
       gridShape.lineTo( viewPosition, layoutBounds.bottom );
 
-      // move to the next location
+      // move to the next position
       gridPosition += deltaX;
     }
 

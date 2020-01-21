@@ -198,7 +198,7 @@ define( require => {
         movementSoundPlayer = options.movementSoundPlayer;
       }
 
-      // variable to track location where last movement sound was produced
+      // variable to track position where last movement sound was produced
       const positionOfLastMotionSound = rulerPositionProperty.value.copy();
 
       this.addInputListener( new DragListener( {

@@ -222,14 +222,14 @@ define( require => {
         const forceStr = Utils.toFixed( forceValue, this.scientificNotationMode ? 2 : this.forceReadoutDecimalPlaces );
 
         // group values together so that they are easy to read
-        const pointLocation = forceStr.indexOf( '.' );
-        if ( pointLocation !== -1 ) {
+        const pointPosition = forceStr.indexOf( '.' );
+        if ( pointPosition !== -1 ) {
 
           // the first group includes the values to the left of the decimal, and first three decimals
-          let formattedString = forceStr.substr( 0, pointLocation + 4 );
+          let formattedString = forceStr.substr( 0, pointPosition + 4 );
 
           // remaining groups of three, separated by spaces
-          for ( let i = pointLocation + 4; i < forceStr.length; i += 3 ) {
+          for ( let i = pointPosition + 4; i < forceStr.length; i += 3 ) {
             formattedString += ' ';
             formattedString += forceStr.substr( i, 3 );
           }
