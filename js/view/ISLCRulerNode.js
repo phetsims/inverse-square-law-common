@@ -242,7 +242,7 @@ define( require => {
       // supports keyboard interaction
       const keyboardDragListener = new KeyboardDragListener( {
         dragBounds: dragBoundsWithRulerHeight,
-        locationProperty: rulerPositionProperty,
+        positionProperty: rulerPositionProperty,
         transform: modelViewTransform,
         moveOnHoldDelay: options.moveOnHoldDelay,
         downDelta: 2 * keyboardDragDelta,
