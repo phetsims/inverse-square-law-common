@@ -226,6 +226,8 @@ define( require => {
             movementSoundPlayer.play();
             positionOfLastMotionSound.set( rulerPositionProperty.value );
           }
+
+          rulerDescriber.onDrag();
         }
       } ) );
 
