@@ -1,4 +1,4 @@
-// Copyright 2017-2019, University of Colorado Boulder
+// Copyright 2017-2020, University of Colorado Boulder
 
 /**
  * A common type for object views in sims that use inverse-square-law-common. The objects have a shaded sphere with a
