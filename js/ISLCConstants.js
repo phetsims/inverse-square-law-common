@@ -37,7 +37,13 @@ define( require => {
     UI_TEXT_OPTIONS: {
       font: new PhetFont( 14 ),
       maxWidth: 110
-    }
+    },
+
+    // The number of decimal places to display scientific notation in.
+    SCIENTIFIC_NOTATION_PRECISION: 2,
+
+    // The number of decimal places to display scientific notation in.
+    DECIMAL_NOTATION_PRECISION: 12
   };
 
   inverseSquareLawCommon.register( 'ISLCConstants', ISLCConstants );

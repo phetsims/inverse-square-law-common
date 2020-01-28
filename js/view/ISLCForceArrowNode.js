@@ -14,6 +14,7 @@ define( require => {
   const DefaultDirection = require( 'INVERSE_SQUARE_LAW_COMMON/view/DefaultDirection' );
   const inherit = require( 'PHET_CORE/inherit' );
   const inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
+  const ISLCConstants = require( 'INVERSE_SQUARE_LAW_COMMON/ISLCConstants' );
   const LinearFunction = require( 'DOT/LinearFunction' );
   const MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
   const merge = require( 'PHET_CORE/merge' );
@@ -53,7 +54,7 @@ define( require => {
       arrowLabelFont: new PhetFont( 16 ),
       arrowLabelFill: '#fff',
       arrowLabelStroke: null,
-      forceReadoutDecimalPlaces: 12, // number of decimal places in force readout
+      forceReadoutDecimalPlaces: ISLCConstants.DECIMAL_NOTATION_PRECISION, // number of decimal places in force readout
 
       // arrow node arguments
       forceArrowHeight: 150,
@@ -219,7 +220,9 @@ define( require => {
     updateLabel: function( forceValue, forceValues ) {
 
       if ( forceValues ) {
-        const forceStr = Utils.toFixed( forceValue, this.scientificNotationMode ? 2 : this.forceReadoutDecimalPlaces );
+        const forceStr = Utils.toFixed( forceValue, this.scientificNotationMode ?
+                                                    ISLCConstants.SCIENTIFIC_NOTATION_PRECISION :
+                                                    this.forceReadoutDecimalPlaces );
 
         // group values together so that they are easy to read
         const pointPosition = forceStr.indexOf( '.' );
@@ -235,7 +238,7 @@ define( require => {
           }
 
           if ( this.scientificNotationMode && forceValue !== 0 ) {
-            const precision = 2;
+            const precision = ISLCConstants.SCIENTIFIC_NOTATION_PRECISION;
             const notationObject = ScientificNotationNode.toScientificNotation( forceValue, { mantissaDecimalPlaces: precision } );
             formattedString = notationObject.mantissa;
 

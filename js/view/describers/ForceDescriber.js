@@ -112,7 +112,7 @@ define( require => {
         // in some scenarios, the force units change. convertForce allows subtypes to define conversion behavior
         // integrates with forceValueToString for necessary conversions (e.g. 300000000 -> 3)
         // always takes place before forceValueToString
-        convertForce: force => force,
+        convertForce: _.identity,
 
         // for adding natural language to the force (e.g. '3 billion' instead of 3000000000)
         forceValueToString: value => StringUtils.fillIn( valuePatternString, { value: value } ),
