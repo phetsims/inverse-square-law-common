@@ -10,7 +10,6 @@ define( require => {
   'use strict';
 
   // modules
-  const FocusHighlightPath = require( 'SCENERY/accessibility/FocusHighlightPath' );
   const GroupFocusHighlightFromNode = require( 'SCENERY/accessibility/GroupFocusHighlightFromNode' );
   const inherit = require( 'PHET_CORE/inherit' );
   const inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
