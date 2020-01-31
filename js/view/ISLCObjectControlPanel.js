@@ -134,9 +134,7 @@ define( require => {
     // NumberControl) has focus
     this.groupFocusHighlight = new GroupFocusHighlightFromNode( this, {
       useLocalBounds: true,
-      dilationCoefficient: 3.7,
-      outerStroke: FocusHighlightPath.OUTER_DARK_GROUP_FOCUS_COLOR,
-      innerStroke: FocusHighlightPath.INNER_DARK_GROUP_FOCUS_COLOR
+      dilationCoefficient: 3.7
     } );
   }
 
