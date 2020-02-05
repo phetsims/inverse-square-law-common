@@ -101,7 +101,7 @@ define( require => {
      * @param {string} object1Label
      * @param {string} object2Label
      * @param {PositionDescriber} positionDescriber
-     * @param {Object} options
+     * @param {Object} [options]
      */
     constructor( model, object1Label, object2Label, positionDescriber, options ) {
       super( model, object1Label, object2Label );
