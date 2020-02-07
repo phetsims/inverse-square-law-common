@@ -9,6 +9,7 @@ define( require => {
   'use strict';
 
   // modules
+  const AccessiblePeer = require( 'SCENERY/accessibility/AccessiblePeer' );
   const ForceValuesDisplayEnum = require( 'INVERSE_SQUARE_LAW_COMMON/model/ForceValuesDisplayEnum' );
   const inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
   const ISLCA11yStrings = require( 'INVERSE_SQUARE_LAW_COMMON/ISLCA11yStrings' );
@@ -88,6 +89,13 @@ define( require => {
         labelContent: forceValuesString,
         descriptionContent: forceValuesHelpTextString,
         tandem: forceValuesGroupTandem
+      } );
+
+      // The ul radio button group is aria-labelledby its label sibling (the h3 "Force Values")
+      radioButtonGroup.addAriaLabelledbyAssociation( {
+        thisElementName: AccessiblePeer.PRIMARY_SIBLING,
+        otherElementName: AccessiblePeer.LABEL_SIBLING,
+        otherNode: radioButtonGroup
       } );
 
       options.children = [
