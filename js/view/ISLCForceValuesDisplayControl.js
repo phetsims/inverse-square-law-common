@@ -1,4 +1,4 @@
-// Copyright 2019, University of Colorado Boulder
+// Copyright 2019-2020, University of Colorado Boulder
 
 /**
  * Aqua radio buttons with a heading that controls the display type for the force values.
