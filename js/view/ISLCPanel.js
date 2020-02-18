@@ -25,7 +25,8 @@ define( require => {
         fill: '#FDF498',
         xMargin: 10,
         yMargin: 10,
-        minWidth: 170
+        minWidth: 170,
+        backgroundPickable: true // when the rule is behind panels, see https://github.com/phetsims/gravity-force-lab/issues/253
       }, options );
 
       super( content, options );
