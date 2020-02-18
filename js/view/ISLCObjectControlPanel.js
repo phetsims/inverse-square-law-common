@@ -11,11 +11,10 @@ define( require => {
 
   // modules
   const GroupFocusHighlightFromNode = require( 'SCENERY/accessibility/GroupFocusHighlightFromNode' );
-  const inherit = require( 'PHET_CORE/inherit' );
   const inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
+  const ISLCPanel = require( 'INVERSE_SQUARE_LAW_COMMON/view/ISLCPanel' );
   const merge = require( 'PHET_CORE/merge' );
   const NumberControl = require( 'SCENERY_PHET/NumberControl' );
-  const Panel = require( 'SUN/Panel' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
   const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   const Tandem = require( 'TANDEM/Tandem' );
@@ -28,116 +27,119 @@ define( require => {
   const TITLE_MAX_WIDTH = 150; // max widths are set empirically to handle long strings
   const VALUE_MAX_WIDTH = 110;
 
-  /**
-   * @param {string} titleString
-   * @param {string} unitString
-   * @param {Property.<number>} objectProperty
-   * @param {Range} valueRange
-   * @param {Object} [options]
-   * @constructor
-   */
-  function ISLCObjectControlPanel( titleString, unitString, objectProperty, valueRange, options ) {
+  class ISLCObjectControlPanel extends ISLCPanel {
 
-    options = merge( {
+    /**
+     * @param {string} titleString
+     * @param {string} unitString
+     * @param {Property.<number>} objectProperty
+     * @param {Range} valueRange
+     * @param {Object} [options]
+     */
+    constructor( titleString, unitString, objectProperty, valueRange, options ) {
 
-      // panel options
-      fill: '#EDEDED',
-      xMargin: 10,
-      yMargin: 4,
-      resize: false,
-      align: 'right',
+      options = merge( {
 
-      numberControlOptions: null, // filled in below
-
-      // filled in here because they are used by numberControlOptions below
-      tickLabelOptions: {
-        pickable: false
-      },
-      additionalTicks: [],
-
-      // a11y
-      tagName: 'div', // this optional structure is added for nicer formatting of value-text in the a11y view
-
-      // phet-io
-      tandem: Tandem.REQUIRED
-    }, options );
-
-    const tandem = options.tandem;
-
-    // options that are passed along to the number control
-    const numberControlOptions = merge( {
-
-      // layout options
-      layoutFunction: NumberControl.createLayoutFunction3( { xSpacing: 10 } ),
-      numberDisplayOptions: {
-        valuePattern: StringUtils.fillIn( pattern0Value1UnitsString, { units: unitString } ),
-        align: 'right',
+        // panel options
+        fill: '#EDEDED',
         xMargin: 10,
         yMargin: 4,
-        backgroundStroke: 'black',
-        cornerRadius: 3,
-        font: new PhetFont( 12 ),
-        maxWidth: VALUE_MAX_WIDTH
-      },
-      sliderOptions: {
-        trackFillEnabled: 'black',
+        resize: false,
+        align: 'right',
+        minWidth: 100, // to offset parent minWidth
 
-        // tick options
-        minorTickSpacing: 2,
-        minorTickLength: 6,
-        majorTicks: [ {
-          value: valueRange.min,
-          label: new Text( valueRange.min, options.tickLabelOptions )
-        }, {
-          value: valueRange.max,
-          label: new Text( valueRange.max, options.tickLabelOptions )
-        } ],
-        majorTickLength: 8,
-        tickLabelSpacing: 1
-      },
-      arrowButtonOptions: {
-        touchAreaXDilation: 15,
-        touchAreaYDilation: 15,
-        scale: 1
-      },
+        numberControlOptions: null, // filled in below
 
-      // title and value text options
-      titleNodeOptions: {
-        font: new PhetFont( 12 ),
-        maxWidth: TITLE_MAX_WIDTH
-      },
+        // filled in here because they are used by numberControlOptions below
+        tickLabelOptions: {
+          pickable: false
+        },
+        additionalTicks: [],
 
-      // phet-io
-      tandem: tandem.createTandem( 'numberControl' )
-    }, options.numberControlOptions );
+        // a11y
+        tagName: 'div', // this optional structure is added for nicer formatting of value-text in the a11y view
 
-    for ( let i = 0; i < options.additionalTicks.length; i++ ) {
-      const tick = {
-        value: options.additionalTicks[ i ].value,
-        label: new Text( options.additionalTicks[ i ].value, options.tickLabelOptions )
-      };
-      numberControlOptions.sliderOptions.majorTicks.push( tick );
+        // phet-io
+        tandem: Tandem.REQUIRED
+      }, options );
+
+      const tandem = options.tandem;
+
+      // options that are passed along to the number control
+      const numberControlOptions = merge( {
+
+        // layout options
+        layoutFunction: NumberControl.createLayoutFunction3( { xSpacing: 10 } ),
+        numberDisplayOptions: {
+          valuePattern: StringUtils.fillIn( pattern0Value1UnitsString, { units: unitString } ),
+          align: 'right',
+          xMargin: 10,
+          yMargin: 4,
+          backgroundStroke: 'black',
+          cornerRadius: 3,
+          font: new PhetFont( 12 ),
+          maxWidth: VALUE_MAX_WIDTH
+        },
+        sliderOptions: {
+          trackFillEnabled: 'black',
+
+          // tick options
+          minorTickSpacing: 2,
+          minorTickLength: 6,
+          majorTicks: [ {
+            value: valueRange.min,
+            label: new Text( valueRange.min, options.tickLabelOptions )
+          }, {
+            value: valueRange.max,
+            label: new Text( valueRange.max, options.tickLabelOptions )
+          } ],
+          majorTickLength: 8,
+          tickLabelSpacing: 1
+        },
+        arrowButtonOptions: {
+          touchAreaXDilation: 15,
+          touchAreaYDilation: 15,
+          scale: 1
+        },
+
+        // title and value text options
+        titleNodeOptions: {
+          font: new PhetFont( 12 ),
+          maxWidth: TITLE_MAX_WIDTH
+        },
+
+        // phet-io
+        tandem: tandem.createTandem( 'numberControl' )
+      }, options.numberControlOptions );
+
+      for ( let i = 0; i < options.additionalTicks.length; i++ ) {
+        const tick = {
+          value: options.additionalTicks[ i ].value,
+          label: new Text( options.additionalTicks[ i ].value, options.tickLabelOptions )
+        };
+        numberControlOptions.sliderOptions.majorTicks.push( tick );
+      }
+
+      // @protected
+      const numberControl = new NumberControl( titleString, objectProperty, valueRange, numberControlOptions );
+
+      options = _.omit( options, [ 'numberControlOptions', 'tickLabelOptions' ] );
+      super( numberControl, options );
+
+      this.numberControl = numberControl;
+
+      // a11y - it looks nicer if the entire panel has a group focus highlight rather than the NumberControl
+      assert && assert( numberControlOptions.groupFocusHighlight === undefined, 'ISLCObjectControlPanel sets group focus highlight' );
+      this.numberControl.groupFocusHighlight = false;
+
+      // a11y - creates highlight that appears around this node when any ancestor (like the
+      // NumberControl) has focus
+      this.groupFocusHighlight = new GroupFocusHighlightFromNode( this, {
+        useLocalBounds: true,
+        dilationCoefficient: 3.7
+      } );
     }
-
-    // @protected
-    this.numberControl = new NumberControl( titleString, objectProperty, valueRange, numberControlOptions );
-
-    options = _.omit( options, [ 'numberControlOptions', 'tickLabelOptions' ] );
-    Panel.call( this, this.numberControl, options );
-
-    // a11y - it looks nicer if the entire panel has a group focus highlight rather than the NumberControl
-    assert && assert( numberControlOptions.groupFocusHighlight === undefined, 'ISLCObjectControlPanel sets group focus highlight' );
-    this.numberControl.groupFocusHighlight = false;
-
-    // a11y - creates highlight that appears around this node when any ancestor (like the
-    // NumberControl) has focus
-    this.groupFocusHighlight = new GroupFocusHighlightFromNode( this, {
-      useLocalBounds: true,
-      dilationCoefficient: 3.7
-    } );
   }
 
-  inverseSquareLawCommon.register( 'ISLCObjectControlPanel', ISLCObjectControlPanel );
-
-  return inherit( Panel, ISLCObjectControlPanel );
+  return inverseSquareLawCommon.register( 'ISLCObjectControlPanel', ISLCObjectControlPanel );
 } );
