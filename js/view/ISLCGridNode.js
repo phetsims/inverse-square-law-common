@@ -7,54 +7,51 @@
  *
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const inherit = require( 'PHET_CORE/inherit' );
-  const inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
-  const merge = require( 'PHET_CORE/merge' );
-  const Path = require( 'SCENERY/nodes/Path' );
-  const Shape = require( 'KITE/Shape' );
+import Shape from '../../../kite/js/Shape.js';
+import inherit from '../../../phet-core/js/inherit.js';
+import merge from '../../../phet-core/js/merge.js';
+import Path from '../../../scenery/js/nodes/Path.js';
+import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
 
-  /**
-   * @param {number} deltaX - position step for the object in model coordinates
-   * @param {Bounds2} layoutBounds - layout bounds of the ScreenView
-   * @param {ModelViewTransform2} modelViewTransform
-   * @param {Object} [options]
-   * @constructor
-   */
-  function ISLCGridNode( deltaX, layoutBounds, modelViewTransform, options ) {
+/**
+ * @param {number} deltaX - position step for the object in model coordinates
+ * @param {Bounds2} layoutBounds - layout bounds of the ScreenView
+ * @param {ModelViewTransform2} modelViewTransform
+ * @param {Object} [options]
+ * @constructor
+ */
+function ISLCGridNode( deltaX, layoutBounds, modelViewTransform, options ) {
 
-    options = merge( {
-      stroke: 'rgba( 0, 0, 0, 0.6 )'
-    }, options );
+  options = merge( {
+    stroke: 'rgba( 0, 0, 0, 0.6 )'
+  }, options );
 
-    const gridShape = new Shape();
+  const gridShape = new Shape();
 
-    // subtract 1 so grid aligns with model, see https://github.com/phetsims/inverse-square-law-common/issues/49
-    let gridPosition = modelViewTransform.viewToModelX( layoutBounds.minX - 1 );
-    const rightBoundary = modelViewTransform.viewToModelX( layoutBounds.maxX );
-    while ( gridPosition <= rightBoundary ) {
+  // subtract 1 so grid aligns with model, see https://github.com/phetsims/inverse-square-law-common/issues/49
+  let gridPosition = modelViewTransform.viewToModelX( layoutBounds.minX - 1 );
+  const rightBoundary = modelViewTransform.viewToModelX( layoutBounds.maxX );
+  while ( gridPosition <= rightBoundary ) {
 
-      // grid position in view coords
-      const viewPosition = modelViewTransform.modelToViewX( gridPosition );
+    // grid position in view coords
+    const viewPosition = modelViewTransform.modelToViewX( gridPosition );
 
-      // draw the grid line
-      gridShape.moveTo( viewPosition, layoutBounds.top );
-      gridShape.lineTo( viewPosition, layoutBounds.bottom );
+    // draw the grid line
+    gridShape.moveTo( viewPosition, layoutBounds.top );
+    gridShape.lineTo( viewPosition, layoutBounds.bottom );
 
-      // move to the next position
-      gridPosition += deltaX;
-    }
-
-    Path.call( this, gridShape, {
-      stroke: options.stroke,
-      lineWidth: 1
-    } );
+    // move to the next position
+    gridPosition += deltaX;
   }
 
-  inverseSquareLawCommon.register( 'ISLCGridNode', ISLCGridNode );
+  Path.call( this, gridShape, {
+    stroke: options.stroke,
+    lineWidth: 1
+  } );
+}
 
-  return inherit( Path, ISLCGridNode );
-} );
+inverseSquareLawCommon.register( 'ISLCGridNode', ISLCGridNode );
+
+inherit( Path, ISLCGridNode );
+export default ISLCGridNode;

@@ -6,19 +6,16 @@
  * @author Michael Kauzmann (PhET Interactive Simulations)
  * @author Michael Barlow (PhET Interactive Simulations)
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
+import inverseSquareLawCommon from '../../inverseSquareLawCommon.js';
 
-  class ISLCObjectDescriber {
-    constructor( model, object, objectLabel ) {
-      this.model = model;
-      this.object = object;
-      this.label = objectLabel;
-    }
+class ISLCObjectDescriber {
+  constructor( model, object, objectLabel ) {
+    this.model = model;
+    this.object = object;
+    this.label = objectLabel;
   }
+}
 
-  return inverseSquareLawCommon.register( 'ISLCObjectDescriber', ISLCObjectDescriber );
-} );
+inverseSquareLawCommon.register( 'ISLCObjectDescriber', ISLCObjectDescriber );
+export default ISLCObjectDescriber;

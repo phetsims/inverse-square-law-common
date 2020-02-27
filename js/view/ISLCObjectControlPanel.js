@@ -6,140 +6,137 @@
  * @author Jesse Greenberg (PhET Interactive Simulations)
  * @author Michael Barlow (PhET Interactive Simulations
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const GroupFocusHighlightFromNode = require( 'SCENERY/accessibility/GroupFocusHighlightFromNode' );
-  const inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
-  const ISLCPanel = require( 'INVERSE_SQUARE_LAW_COMMON/view/ISLCPanel' );
-  const merge = require( 'PHET_CORE/merge' );
-  const NumberControl = require( 'SCENERY_PHET/NumberControl' );
-  const PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
-  const Tandem = require( 'TANDEM/Tandem' );
-  const Text = require( 'SCENERY/nodes/Text' );
+import merge from '../../../phet-core/js/merge.js';
+import StringUtils from '../../../phetcommon/js/util/StringUtils.js';
+import NumberControl from '../../../scenery-phet/js/NumberControl.js';
+import PhetFont from '../../../scenery-phet/js/PhetFont.js';
+import GroupFocusHighlightFromNode from '../../../scenery/js/accessibility/GroupFocusHighlightFromNode.js';
+import Text from '../../../scenery/js/nodes/Text.js';
+import Tandem from '../../../tandem/js/Tandem.js';
+import inverseSquareLawCommonStrings from '../inverse-square-law-common-strings.js';
+import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
+import ISLCPanel from './ISLCPanel.js';
 
-  // strings
-  const pattern0Value1UnitsString = require( 'string!INVERSE_SQUARE_LAW_COMMON/pattern_0value_1units' );
+const pattern0Value1UnitsString = inverseSquareLawCommonStrings.pattern_0value_1units;
 
-  // constants
-  const TITLE_MAX_WIDTH = 150; // max widths are set empirically to handle long strings
-  const VALUE_MAX_WIDTH = 110;
+// constants
+const TITLE_MAX_WIDTH = 150; // max widths are set empirically to handle long strings
+const VALUE_MAX_WIDTH = 110;
 
-  class ISLCObjectControlPanel extends ISLCPanel {
+class ISLCObjectControlPanel extends ISLCPanel {
 
-    /**
-     * @param {string} titleString
-     * @param {string} unitString
-     * @param {Property.<number>} objectProperty
-     * @param {Range} valueRange
-     * @param {Object} [options]
-     */
-    constructor( titleString, unitString, objectProperty, valueRange, options ) {
+  /**
+   * @param {string} titleString
+   * @param {string} unitString
+   * @param {Property.<number>} objectProperty
+   * @param {Range} valueRange
+   * @param {Object} [options]
+   */
+  constructor( titleString, unitString, objectProperty, valueRange, options ) {
 
-      options = merge( {
+    options = merge( {
 
-        // panel options
-        fill: '#EDEDED',
+      // panel options
+      fill: '#EDEDED',
+      xMargin: 10,
+      yMargin: 4,
+      resize: false,
+      align: 'right',
+      minWidth: 100, // to offset parent minWidth
+
+      numberControlOptions: null, // filled in below
+
+      // filled in here because they are used by numberControlOptions below
+      tickLabelOptions: {
+        pickable: false
+      },
+      additionalTicks: [],
+
+      // a11y
+      tagName: 'div', // this optional structure is added for nicer formatting of value-text in the a11y view
+
+      // phet-io
+      tandem: Tandem.REQUIRED
+    }, options );
+
+    const tandem = options.tandem;
+
+    // options that are passed along to the number control
+    const numberControlOptions = merge( {
+
+      // layout options
+      layoutFunction: NumberControl.createLayoutFunction3( { xSpacing: 10 } ),
+      numberDisplayOptions: {
+        valuePattern: StringUtils.fillIn( pattern0Value1UnitsString, { units: unitString } ),
+        align: 'right',
         xMargin: 10,
         yMargin: 4,
-        resize: false,
-        align: 'right',
-        minWidth: 100, // to offset parent minWidth
+        backgroundStroke: 'black',
+        cornerRadius: 3,
+        font: new PhetFont( 12 ),
+        maxWidth: VALUE_MAX_WIDTH
+      },
+      sliderOptions: {
+        trackFillEnabled: 'black',
 
-        numberControlOptions: null, // filled in below
+        // tick options
+        minorTickSpacing: 2,
+        minorTickLength: 6,
+        majorTicks: [ {
+          value: valueRange.min,
+          label: new Text( valueRange.min, options.tickLabelOptions )
+        }, {
+          value: valueRange.max,
+          label: new Text( valueRange.max, options.tickLabelOptions )
+        } ],
+        majorTickLength: 8,
+        tickLabelSpacing: 1
+      },
+      arrowButtonOptions: {
+        touchAreaXDilation: 15,
+        touchAreaYDilation: 15,
+        scale: 1
+      },
 
-        // filled in here because they are used by numberControlOptions below
-        tickLabelOptions: {
-          pickable: false
-        },
-        additionalTicks: [],
+      // title and value text options
+      titleNodeOptions: {
+        font: new PhetFont( 12 ),
+        maxWidth: TITLE_MAX_WIDTH
+      },
 
-        // a11y
-        tagName: 'div', // this optional structure is added for nicer formatting of value-text in the a11y view
+      // phet-io
+      tandem: tandem.createTandem( 'numberControl' )
+    }, options.numberControlOptions );
 
-        // phet-io
-        tandem: Tandem.REQUIRED
-      }, options );
-
-      const tandem = options.tandem;
-
-      // options that are passed along to the number control
-      const numberControlOptions = merge( {
-
-        // layout options
-        layoutFunction: NumberControl.createLayoutFunction3( { xSpacing: 10 } ),
-        numberDisplayOptions: {
-          valuePattern: StringUtils.fillIn( pattern0Value1UnitsString, { units: unitString } ),
-          align: 'right',
-          xMargin: 10,
-          yMargin: 4,
-          backgroundStroke: 'black',
-          cornerRadius: 3,
-          font: new PhetFont( 12 ),
-          maxWidth: VALUE_MAX_WIDTH
-        },
-        sliderOptions: {
-          trackFillEnabled: 'black',
-
-          // tick options
-          minorTickSpacing: 2,
-          minorTickLength: 6,
-          majorTicks: [ {
-            value: valueRange.min,
-            label: new Text( valueRange.min, options.tickLabelOptions )
-          }, {
-            value: valueRange.max,
-            label: new Text( valueRange.max, options.tickLabelOptions )
-          } ],
-          majorTickLength: 8,
-          tickLabelSpacing: 1
-        },
-        arrowButtonOptions: {
-          touchAreaXDilation: 15,
-          touchAreaYDilation: 15,
-          scale: 1
-        },
-
-        // title and value text options
-        titleNodeOptions: {
-          font: new PhetFont( 12 ),
-          maxWidth: TITLE_MAX_WIDTH
-        },
-
-        // phet-io
-        tandem: tandem.createTandem( 'numberControl' )
-      }, options.numberControlOptions );
-
-      for ( let i = 0; i < options.additionalTicks.length; i++ ) {
-        const tick = {
-          value: options.additionalTicks[ i ].value,
-          label: new Text( options.additionalTicks[ i ].value, options.tickLabelOptions )
-        };
-        numberControlOptions.sliderOptions.majorTicks.push( tick );
-      }
-
-      // @protected
-      const numberControl = new NumberControl( titleString, objectProperty, valueRange, numberControlOptions );
-
-      options = _.omit( options, [ 'numberControlOptions', 'tickLabelOptions' ] );
-      super( numberControl, options );
-
-      this.numberControl = numberControl;
-
-      // a11y - it looks nicer if the entire panel has a group focus highlight rather than the NumberControl
-      assert && assert( numberControlOptions.groupFocusHighlight === undefined, 'ISLCObjectControlPanel sets group focus highlight' );
-      this.numberControl.groupFocusHighlight = false;
-
-      // a11y - creates highlight that appears around this node when any ancestor (like the
-      // NumberControl) has focus
-      this.groupFocusHighlight = new GroupFocusHighlightFromNode( this, {
-        useLocalBounds: true,
-        dilationCoefficient: 3.7
-      } );
+    for ( let i = 0; i < options.additionalTicks.length; i++ ) {
+      const tick = {
+        value: options.additionalTicks[ i ].value,
+        label: new Text( options.additionalTicks[ i ].value, options.tickLabelOptions )
+      };
+      numberControlOptions.sliderOptions.majorTicks.push( tick );
     }
-  }
 
-  return inverseSquareLawCommon.register( 'ISLCObjectControlPanel', ISLCObjectControlPanel );
-} );
+    // @protected
+    const numberControl = new NumberControl( titleString, objectProperty, valueRange, numberControlOptions );
+
+    options = _.omit( options, [ 'numberControlOptions', 'tickLabelOptions' ] );
+    super( numberControl, options );
+
+    this.numberControl = numberControl;
+
+    // a11y - it looks nicer if the entire panel has a group focus highlight rather than the NumberControl
+    assert && assert( numberControlOptions.groupFocusHighlight === undefined, 'ISLCObjectControlPanel sets group focus highlight' );
+    this.numberControl.groupFocusHighlight = false;
+
+    // a11y - creates highlight that appears around this node when any ancestor (like the
+    // NumberControl) has focus
+    this.groupFocusHighlight = new GroupFocusHighlightFromNode( this, {
+      useLocalBounds: true,
+      dilationCoefficient: 3.7
+    } );
+  }
+}
+
+inverseSquareLawCommon.register( 'ISLCObjectControlPanel', ISLCObjectControlPanel );
+export default ISLCObjectControlPanel;

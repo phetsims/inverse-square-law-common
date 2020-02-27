@@ -6,41 +6,38 @@
  *
  * @author Michael Kauzmann (PhET Interactive Simulations)
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
-  const merge = require( 'PHET_CORE/merge' );
-  const Path = require( 'SCENERY/nodes/Path' );
-  const Shape = require( 'KITE/Shape' );
+import Shape from '../../../kite/js/Shape.js';
+import merge from '../../../phet-core/js/merge.js';
+import Path from '../../../scenery/js/nodes/Path.js';
+import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
 
-  /**
-   * @param {Array.<number>} rulerRegionPositions - a list of y values that are the ruler region boundaries
-   * @param {Bounds2} layoutBounds
-   * @param {Object} [options]
-   * @constructor
-   */
-  class ISLCRulerRegionsNode extends Path {
-    constructor( rulerRegionPositions, layoutBounds, options ) {
+/**
+ * @param {Array.<number>} rulerRegionPositions - a list of y values that are the ruler region boundaries
+ * @param {Bounds2} layoutBounds
+ * @param {Object} [options]
+ * @constructor
+ */
+class ISLCRulerRegionsNode extends Path {
+  constructor( rulerRegionPositions, layoutBounds, options ) {
 
-      options = merge( {
-        stroke: 'rgba(237,54,187,0.6)',
-        lineWidth: 1.5
-      }, options );
+    options = merge( {
+      stroke: 'rgba(237,54,187,0.6)',
+      lineWidth: 1.5
+    }, options );
 
-      const regionsShape = new Shape();
+    const regionsShape = new Shape();
 
-      rulerRegionPositions.forEach( position => {
+    rulerRegionPositions.forEach( position => {
 
-        // draw the grid line
-        regionsShape.moveTo( layoutBounds.left, position );
-        regionsShape.lineTo( layoutBounds.right, position );
-      } );
+      // draw the grid line
+      regionsShape.moveTo( layoutBounds.left, position );
+      regionsShape.lineTo( layoutBounds.right, position );
+    } );
 
-      super( regionsShape, options );
-    }
+    super( regionsShape, options );
   }
+}
 
-  return inverseSquareLawCommon.register( 'ISLCRulerRegionsNode', ISLCRulerRegionsNode );
-} );
+inverseSquareLawCommon.register( 'ISLCRulerRegionsNode', ISLCRulerRegionsNode );
+export default ISLCRulerRegionsNode;

@@ -8,51 +8,49 @@
  * @author Michael Kauzmann (PhET Interactive Simulations)
  * @author Michael Barlow (PhET Interactive Simulations)
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const ActivationUtterance = require( 'UTTERANCE_QUEUE/ActivationUtterance' );
-  const inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
-  const ISLCA11yStrings = require( 'INVERSE_SQUARE_LAW_COMMON/ISLCA11yStrings' );
+import ActivationUtterance from '../../../utterance-queue/js/ActivationUtterance.js';
+import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
+import ISLCA11yStrings from '../ISLCA11yStrings.js';
+
 // strings
-  const forceValuesHiddenString = ISLCA11yStrings.forceValuesHidden.value;
+const forceValuesHiddenString = ISLCA11yStrings.forceValuesHidden.value;
 
-  class ISLCAlertManager {
+class ISLCAlertManager {
 
-    /**
-     * @param {ISLCModel} model
-     * @param {ForceDescriber} forceDescriber
-     */
-    constructor( model, forceDescriber ) {
+  /**
+   * @param {ISLCModel} model
+   * @param {ForceDescriber} forceDescriber
+   */
+  constructor( model, forceDescriber ) {
 
-      // @protected
-      this.forceDescriber = forceDescriber;
-      this.model = model;
+    // @protected
+    this.forceDescriber = forceDescriber;
+    this.model = model;
 
-      // @public {Utterance} - utterances to be added to utteranceQueue, can be used to leverage
-      // alertStableDelay feature so this alert content doesn't hit the user too frequently
-      this.showForceValuesUtterance = new ActivationUtterance();
-    }
-
-    /**
-     * Alert for when the show force values Property changes
-     * @param {boolean} showForceValues
-     * @public
-     */
-    alertShowForceValues( showForceValues ) {
-      let alert = '';
-      if ( showForceValues ) {
-        alert = this.forceDescriber.getValuesInUnitsText();
-      }
-      else {
-        alert = forceValuesHiddenString;
-      }
-
-      this.showForceValuesUtterance.alert = alert;
-      phet.joist.sim.utteranceQueue.addToBack( this.showForceValuesUtterance );
-    }
+    // @public {Utterance} - utterances to be added to utteranceQueue, can be used to leverage
+    // alertStableDelay feature so this alert content doesn't hit the user too frequently
+    this.showForceValuesUtterance = new ActivationUtterance();
   }
 
-  return inverseSquareLawCommon.register( 'ISLCAlertManager', ISLCAlertManager );
-} );
+  /**
+   * Alert for when the show force values Property changes
+   * @param {boolean} showForceValues
+   * @public
+   */
+  alertShowForceValues( showForceValues ) {
+    let alert = '';
+    if ( showForceValues ) {
+      alert = this.forceDescriber.getValuesInUnitsText();
+    }
+    else {
+      alert = forceValuesHiddenString;
+    }
+
+    this.showForceValuesUtterance.alert = alert;
+    phet.joist.sim.utteranceQueue.addToBack( this.showForceValuesUtterance );
+  }
+}
+
+inverseSquareLawCommon.register( 'ISLCAlertManager', ISLCAlertManager );
+export default ISLCAlertManager;

@@ -5,48 +5,44 @@
  *
  * @author Jesse Greenberg
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
-  const PhetFont = require( 'SCENERY_PHET/PhetFont' );
+import PhetFont from '../../scenery-phet/js/PhetFont.js';
+import inverseSquareLawCommon from './inverseSquareLawCommon.js';
 
-  // constants
-  const MAX_DISTANCE_FROM_CENTER = 5; // meters, empirically determined boundary for objects
+// constants
+const MAX_DISTANCE_FROM_CENTER = 5; // meters, empirically determined boundary for objects
 
-  const ISLCConstants = {
-    k: 8.987551E9, // Coulomb's constant
+const ISLCConstants = {
+  k: 8.987551E9, // Coulomb's constant
 
-    coulombsPerAtomicUnit: 1.6021766208E-19, // atomic unit in C
+  coulombsPerAtomicUnit: 1.6021766208E-19, // atomic unit in C
 
-    RIGHT_OBJECT_BOUNDARY: MAX_DISTANCE_FROM_CENTER,
-    LEFT_OBJECT_BOUNDARY: -MAX_DISTANCE_FROM_CENTER,
+  RIGHT_OBJECT_BOUNDARY: MAX_DISTANCE_FROM_CENTER,
+  LEFT_OBJECT_BOUNDARY: -MAX_DISTANCE_FROM_CENTER,
 
-    MIN_SEPARATION_BETWEEN_OBJECTS: 0.1, // in m
+  MIN_SEPARATION_BETWEEN_OBJECTS: 0.1, // in m
 
-    // mass constants
-    CONSTANT_RADIUS: 0.5, // meters
-    MASS_DENSITY: 150, // kg/m^3
+  // mass constants
+  CONSTANT_RADIUS: 0.5, // meters
+  MASS_DENSITY: 150, // kg/m^3
 
-    CHECKBOX_OPTIONS: {
-      spacing: 10,
-      padding: 8,
-      boxWidth: 16
-    },
-    UI_TEXT_OPTIONS: {
-      font: new PhetFont( 14 ),
-      maxWidth: 110
-    },
+  CHECKBOX_OPTIONS: {
+    spacing: 10,
+    padding: 8,
+    boxWidth: 16
+  },
+  UI_TEXT_OPTIONS: {
+    font: new PhetFont( 14 ),
+    maxWidth: 110
+  },
 
-    // The number of decimal places to display scientific notation in.
-    SCIENTIFIC_NOTATION_PRECISION: 2,
+  // The number of decimal places to display scientific notation in.
+  SCIENTIFIC_NOTATION_PRECISION: 2,
 
-    // The number of decimal places to display scientific notation in.
-    DECIMAL_NOTATION_PRECISION: 12
-  };
+  // The number of decimal places to display scientific notation in.
+  DECIMAL_NOTATION_PRECISION: 12
+};
 
-  inverseSquareLawCommon.register( 'ISLCConstants', ISLCConstants );
+inverseSquareLawCommon.register( 'ISLCConstants', ISLCConstants );
 
-  return ISLCConstants;
-} );
+export default ISLCConstants;

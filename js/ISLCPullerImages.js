@@ -5,187 +5,181 @@
  *
  * @author  Michael Barlow
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const inverseSquareLawCommon = require( 'INVERSE_SQUARE_LAW_COMMON/inverseSquareLawCommon' );
+import zeroForceImage from '../images/figure_0_png.js';
+import atomicZeroForceImage from '../images/figure_atomic_0_png.js';
+import pullImage10 from '../images/figure_pull_10_png.js';
+import pullImage11 from '../images/figure_pull_11_png.js';
+import pullImage12 from '../images/figure_pull_12_png.js';
+import pullImage13 from '../images/figure_pull_13_png.js';
+import pullImage14 from '../images/figure_pull_14_png.js';
+import pullImage15 from '../images/figure_pull_15_png.js';
+import pullImage16 from '../images/figure_pull_16_png.js';
+import pullImage17 from '../images/figure_pull_17_png.js';
+import pullImage18 from '../images/figure_pull_18_png.js';
+import pullImage19 from '../images/figure_pull_19_png.js';
+import pullImage1 from '../images/figure_pull_1_png.js';
+import pullImage20 from '../images/figure_pull_20_png.js';
+import pullImage21 from '../images/figure_pull_21_png.js';
+import pullImage22 from '../images/figure_pull_22_png.js';
+import pullImage23 from '../images/figure_pull_23_png.js';
+import pullImage24 from '../images/figure_pull_24_png.js';
+import pullImage25 from '../images/figure_pull_25_png.js';
+import pullImage26 from '../images/figure_pull_26_png.js';
+import pullImage27 from '../images/figure_pull_27_png.js';
+import pullImage28 from '../images/figure_pull_28_png.js';
+import pullImage29 from '../images/figure_pull_29_png.js';
+import pullImage2 from '../images/figure_pull_2_png.js';
+import pullImage30 from '../images/figure_pull_30_png.js';
+import pullImage31 from '../images/figure_pull_31_png.js';
+import pullImage3 from '../images/figure_pull_3_png.js';
+import pullImage4 from '../images/figure_pull_4_png.js';
+import pullImage5 from '../images/figure_pull_5_png.js';
+import pullImage6 from '../images/figure_pull_6_png.js';
+import pullImage7 from '../images/figure_pull_7_png.js';
+import pullImage8 from '../images/figure_pull_8_png.js';
+import pullImage9 from '../images/figure_pull_9_png.js';
+import atomicPullImage10 from '../images/figure_pull_atomic_10_png.js';
+import atomicPullImage11 from '../images/figure_pull_atomic_11_png.js';
+import atomicPullImage12 from '../images/figure_pull_atomic_12_png.js';
+import atomicPullImage13 from '../images/figure_pull_atomic_13_png.js';
+import atomicPullImage14 from '../images/figure_pull_atomic_14_png.js';
+import atomicPullImage15 from '../images/figure_pull_atomic_15_png.js';
+import atomicPullImage16 from '../images/figure_pull_atomic_16_png.js';
+import atomicPullImage17 from '../images/figure_pull_atomic_17_png.js';
+import atomicPullImage18 from '../images/figure_pull_atomic_18_png.js';
+import atomicPullImage19 from '../images/figure_pull_atomic_19_png.js';
+import atomicPullImage1 from '../images/figure_pull_atomic_1_png.js';
+import atomicPullImage20 from '../images/figure_pull_atomic_20_png.js';
+import atomicPullImage21 from '../images/figure_pull_atomic_21_png.js';
+import atomicPullImage22 from '../images/figure_pull_atomic_22_png.js';
+import atomicPullImage23 from '../images/figure_pull_atomic_23_png.js';
+import atomicPullImage24 from '../images/figure_pull_atomic_24_png.js';
+import atomicPullImage25 from '../images/figure_pull_atomic_25_png.js';
+import atomicPullImage26 from '../images/figure_pull_atomic_26_png.js';
+import atomicPullImage27 from '../images/figure_pull_atomic_27_png.js';
+import atomicPullImage28 from '../images/figure_pull_atomic_28_png.js';
+import atomicPullImage29 from '../images/figure_pull_atomic_29_png.js';
+import atomicPullImage2 from '../images/figure_pull_atomic_2_png.js';
+import atomicPullImage30 from '../images/figure_pull_atomic_30_png.js';
+import atomicPullImage31 from '../images/figure_pull_atomic_31_png.js';
+import atomicPullImage3 from '../images/figure_pull_atomic_3_png.js';
+import atomicPullImage4 from '../images/figure_pull_atomic_4_png.js';
+import atomicPullImage5 from '../images/figure_pull_atomic_5_png.js';
+import atomicPullImage6 from '../images/figure_pull_atomic_6_png.js';
+import atomicPullImage7 from '../images/figure_pull_atomic_7_png.js';
+import atomicPullImage8 from '../images/figure_pull_atomic_8_png.js';
+import atomicPullImage9 from '../images/figure_pull_atomic_9_png.js';
+import pushImage10 from '../images/figure_push_10_png.js';
+import pushImage11 from '../images/figure_push_11_png.js';
+import pushImage12 from '../images/figure_push_12_png.js';
+import pushImage13 from '../images/figure_push_13_png.js';
+import pushImage14 from '../images/figure_push_14_png.js';
+import pushImage15 from '../images/figure_push_15_png.js';
+import pushImage16 from '../images/figure_push_16_png.js';
+import pushImage17 from '../images/figure_push_17_png.js';
+import pushImage18 from '../images/figure_push_18_png.js';
+import pushImage19 from '../images/figure_push_19_png.js';
+import pushImage1 from '../images/figure_push_1_png.js';
+import pushImage20 from '../images/figure_push_20_png.js';
+import pushImage21 from '../images/figure_push_21_png.js';
+import pushImage22 from '../images/figure_push_22_png.js';
+import pushImage23 from '../images/figure_push_23_png.js';
+import pushImage24 from '../images/figure_push_24_png.js';
+import pushImage25 from '../images/figure_push_25_png.js';
+import pushImage26 from '../images/figure_push_26_png.js';
+import pushImage27 from '../images/figure_push_27_png.js';
+import pushImage28 from '../images/figure_push_28_png.js';
+import pushImage29 from '../images/figure_push_29_png.js';
+import pushImage2 from '../images/figure_push_2_png.js';
+import pushImage30 from '../images/figure_push_30_png.js';
+import pushImage31 from '../images/figure_push_31_png.js';
+import pushImage3 from '../images/figure_push_3_png.js';
+import pushImage4 from '../images/figure_push_4_png.js';
+import pushImage5 from '../images/figure_push_5_png.js';
+import pushImage6 from '../images/figure_push_6_png.js';
+import pushImage7 from '../images/figure_push_7_png.js';
+import pushImage8 from '../images/figure_push_8_png.js';
+import pushImage9 from '../images/figure_push_9_png.js';
+import atomicPushImage10 from '../images/figure_push_atomic_10_png.js';
+import atomicPushImage11 from '../images/figure_push_atomic_11_png.js';
+import atomicPushImage12 from '../images/figure_push_atomic_12_png.js';
+import atomicPushImage13 from '../images/figure_push_atomic_13_png.js';
+import atomicPushImage14 from '../images/figure_push_atomic_14_png.js';
+import atomicPushImage15 from '../images/figure_push_atomic_15_png.js';
+import atomicPushImage16 from '../images/figure_push_atomic_16_png.js';
+import atomicPushImage17 from '../images/figure_push_atomic_17_png.js';
+import atomicPushImage18 from '../images/figure_push_atomic_18_png.js';
+import atomicPushImage19 from '../images/figure_push_atomic_19_png.js';
+import atomicPushImage1 from '../images/figure_push_atomic_1_png.js';
+import atomicPushImage20 from '../images/figure_push_atomic_20_png.js';
+import atomicPushImage21 from '../images/figure_push_atomic_21_png.js';
+import atomicPushImage22 from '../images/figure_push_atomic_22_png.js';
+import atomicPushImage23 from '../images/figure_push_atomic_23_png.js';
+import atomicPushImage24 from '../images/figure_push_atomic_24_png.js';
+import atomicPushImage25 from '../images/figure_push_atomic_25_png.js';
+import atomicPushImage26 from '../images/figure_push_atomic_26_png.js';
+import atomicPushImage27 from '../images/figure_push_atomic_27_png.js';
+import atomicPushImage28 from '../images/figure_push_atomic_28_png.js';
+import atomicPushImage29 from '../images/figure_push_atomic_29_png.js';
+import atomicPushImage2 from '../images/figure_push_atomic_2_png.js';
+import atomicPushImage30 from '../images/figure_push_atomic_30_png.js';
+import atomicPushImage31 from '../images/figure_push_atomic_31_png.js';
+import atomicPushImage3 from '../images/figure_push_atomic_3_png.js';
+import atomicPushImage4 from '../images/figure_push_atomic_4_png.js';
+import atomicPushImage5 from '../images/figure_push_atomic_5_png.js';
+import atomicPushImage6 from '../images/figure_push_atomic_6_png.js';
+import atomicPushImage7 from '../images/figure_push_atomic_7_png.js';
+import atomicPushImage8 from '../images/figure_push_atomic_8_png.js';
+import atomicPushImage9 from '../images/figure_push_atomic_9_png.js';
+import inverseSquareLawCommon from './inverseSquareLawCommon.js';
 
-  // standard images
-  const pullImage1 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_pull_1.png' );
-  const pullImage10 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_pull_10.png' );
-  const pullImage11 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_pull_11.png' );
-  const pullImage12 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_pull_12.png' );
-  const pullImage13 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_pull_13.png' );
-  const pullImage14 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_pull_14.png' );
-  const pullImage15 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_pull_15.png' );
-  const pullImage16 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_pull_16.png' );
-  const pullImage17 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_pull_17.png' );
-  const pullImage18 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_pull_18.png' );
-  const pullImage19 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_pull_19.png' );
-  const pullImage2 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_pull_2.png' );
-  const pullImage20 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_pull_20.png' );
-  const pullImage21 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_pull_21.png' );
-  const pullImage22 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_pull_22.png' );
-  const pullImage23 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_pull_23.png' );
-  const pullImage24 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_pull_24.png' );
-  const pullImage25 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_pull_25.png' );
-  const pullImage26 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_pull_26.png' );
-  const pullImage27 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_pull_27.png' );
-  const pullImage28 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_pull_28.png' );
-  const pullImage29 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_pull_29.png' );
-  const pullImage3 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_pull_3.png' );
-  const pullImage30 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_pull_30.png' );
-  const pullImage31 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_pull_31.png' );
-  const pullImage4 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_pull_4.png' );
-  const pullImage5 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_pull_5.png' );
-  const pullImage6 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_pull_6.png' );
-  const pullImage7 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_pull_7.png' );
-  const pullImage8 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_pull_8.png' );
-  const pullImage9 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_pull_9.png' );
+// standard images
 
-  const zeroForceImage = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_0.png' );
 
-  const pushImage1 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_push_1.png' );
-  const pushImage10 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_push_10.png' );
-  const pushImage11 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_push_11.png' );
-  const pushImage12 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_push_12.png' );
-  const pushImage13 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_push_13.png' );
-  const pushImage14 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_push_14.png' );
-  const pushImage15 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_push_15.png' );
-  const pushImage16 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_push_16.png' );
-  const pushImage17 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_push_17.png' );
-  const pushImage18 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_push_18.png' );
-  const pushImage19 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_push_19.png' );
-  const pushImage2 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_push_2.png' );
-  const pushImage20 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_push_20.png' );
-  const pushImage21 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_push_21.png' );
-  const pushImage22 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_push_22.png' );
-  const pushImage23 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_push_23.png' );
-  const pushImage24 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_push_24.png' );
-  const pushImage25 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_push_25.png' );
-  const pushImage26 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_push_26.png' );
-  const pushImage27 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_push_27.png' );
-  const pushImage28 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_push_28.png' );
-  const pushImage29 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_push_29.png' );
-  const pushImage3 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_push_3.png' );
-  const pushImage30 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_push_30.png' );
-  const pushImage31 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_push_31.png' );
-  const pushImage4 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_push_4.png' );
-  const pushImage5 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_push_5.png' );
-  const pushImage6 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_push_6.png' );
-  const pushImage7 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_push_7.png' );
-  const pushImage8 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_push_8.png' );
-  const pushImage9 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_push_9.png' );
+// atomic images
 
-  // atomic images
-  const atomicPullImage1 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_pull_atomic_1.png' );
-  const atomicPullImage10 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_pull_atomic_10.png' );
-  const atomicPullImage11 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_pull_atomic_11.png' );
-  const atomicPullImage12 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_pull_atomic_12.png' );
-  const atomicPullImage13 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_pull_atomic_13.png' );
-  const atomicPullImage14 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_pull_atomic_14.png' );
-  const atomicPullImage15 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_pull_atomic_15.png' );
-  const atomicPullImage16 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_pull_atomic_16.png' );
-  const atomicPullImage17 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_pull_atomic_17.png' );
-  const atomicPullImage18 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_pull_atomic_18.png' );
-  const atomicPullImage19 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_pull_atomic_19.png' );
-  const atomicPullImage2 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_pull_atomic_2.png' );
-  const atomicPullImage20 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_pull_atomic_20.png' );
-  const atomicPullImage21 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_pull_atomic_21.png' );
-  const atomicPullImage22 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_pull_atomic_22.png' );
-  const atomicPullImage23 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_pull_atomic_23.png' );
-  const atomicPullImage24 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_pull_atomic_24.png' );
-  const atomicPullImage25 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_pull_atomic_25.png' );
-  const atomicPullImage26 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_pull_atomic_26.png' );
-  const atomicPullImage27 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_pull_atomic_27.png' );
-  const atomicPullImage28 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_pull_atomic_28.png' );
-  const atomicPullImage29 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_pull_atomic_29.png' );
-  const atomicPullImage3 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_pull_atomic_3.png' );
-  const atomicPullImage30 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_pull_atomic_30.png' );
-  const atomicPullImage31 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_pull_atomic_31.png' );
-  const atomicPullImage4 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_pull_atomic_4.png' );
-  const atomicPullImage5 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_pull_atomic_5.png' );
-  const atomicPullImage6 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_pull_atomic_6.png' );
-  const atomicPullImage7 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_pull_atomic_7.png' );
-  const atomicPullImage8 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_pull_atomic_8.png' );
-  const atomicPullImage9 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_pull_atomic_9.png' );
 
-  const atomicZeroForceImage = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_atomic_0.png' );
+// for all images, the appended number corresponds to their 'level of effort', e.g. pullImage1 shows less pull than pullImage22
+// this is important for mapping force values to the index of the corresponding pull effort
+const pullImages = [ pullImage1, pullImage2, pullImage3, pullImage4, pullImage5, pullImage6, pullImage7,
+  pullImage8, pullImage9, pullImage10, pullImage11, pullImage12, pullImage13, pullImage14, pullImage15, pullImage16,
+  pullImage17, pullImage18, pullImage19, pullImage20, pullImage21, pullImage22, pullImage23, pullImage24, pullImage25,
+  pullImage26, pullImage27, pullImage28, pullImage29, pullImage30, pullImage31 ];
 
-  const atomicPushImage1 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_push_atomic_1.png' );
-  const atomicPushImage10 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_push_atomic_10.png' );
-  const atomicPushImage11 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_push_atomic_11.png' );
-  const atomicPushImage12 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_push_atomic_12.png' );
-  const atomicPushImage13 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_push_atomic_13.png' );
-  const atomicPushImage14 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_push_atomic_14.png' );
-  const atomicPushImage15 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_push_atomic_15.png' );
-  const atomicPushImage16 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_push_atomic_16.png' );
-  const atomicPushImage17 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_push_atomic_17.png' );
-  const atomicPushImage18 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_push_atomic_18.png' );
-  const atomicPushImage19 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_push_atomic_19.png' );
-  const atomicPushImage2 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_push_atomic_2.png' );
-  const atomicPushImage20 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_push_atomic_20.png' );
-  const atomicPushImage21 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_push_atomic_21.png' );
-  const atomicPushImage22 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_push_atomic_22.png' );
-  const atomicPushImage23 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_push_atomic_23.png' );
-  const atomicPushImage24 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_push_atomic_24.png' );
-  const atomicPushImage25 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_push_atomic_25.png' );
-  const atomicPushImage26 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_push_atomic_26.png' );
-  const atomicPushImage27 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_push_atomic_27.png' );
-  const atomicPushImage28 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_push_atomic_28.png' );
-  const atomicPushImage29 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_push_atomic_29.png' );
-  const atomicPushImage3 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_push_atomic_3.png' );
-  const atomicPushImage30 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_push_atomic_30.png' );
-  const atomicPushImage31 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_push_atomic_31.png' );
-  const atomicPushImage4 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_push_atomic_4.png' );
-  const atomicPushImage5 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_push_atomic_5.png' );
-  const atomicPushImage6 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_push_atomic_6.png' );
-  const atomicPushImage7 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_push_atomic_7.png' );
-  const atomicPushImage8 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_push_atomic_8.png' );
-  const atomicPushImage9 = require( 'image!INVERSE_SQUARE_LAW_COMMON/figure_push_atomic_9.png' );
+const pushImages = [ pushImage1, pushImage2, pushImage3, pushImage4, pushImage5, pushImage6, pushImage7,
+  pushImage8, pushImage9, pushImage10, pushImage11, pushImage12, pushImage13, pushImage14, pushImage15, pushImage16,
+  pushImage17, pushImage18, pushImage19, pushImage20, pushImage21, pushImage22, pushImage23, pushImage24, pushImage25,
+  pushImage26, pushImage27, pushImage28, pushImage29, pushImage30, pushImage31 ];
 
-  // for all images, the appended number corresponds to their 'level of effort', e.g. pullImage1 shows less pull than pullImage22
-  // this is important for mapping force values to the index of the corresponding pull effort
-  const pullImages = [ pullImage1, pullImage2, pullImage3, pullImage4, pullImage5, pullImage6, pullImage7,
-    pullImage8, pullImage9, pullImage10, pullImage11, pullImage12, pullImage13, pullImage14, pullImage15, pullImage16,
-    pullImage17, pullImage18, pullImage19, pullImage20, pullImage21, pullImage22, pullImage23, pullImage24, pullImage25,
-    pullImage26, pullImage27, pullImage28, pullImage29, pullImage30, pullImage31 ];
+// ensure push images are ordered from large push to small push
+pushImages.reverse();
 
-  const pushImages = [ pushImage1, pushImage2, pushImage3, pushImage4, pushImage5, pushImage6, pushImage7,
-    pushImage8, pushImage9, pushImage10, pushImage11, pushImage12, pushImage13, pushImage14, pushImage15, pushImage16,
-    pushImage17, pushImage18, pushImage19, pushImage20, pushImage21, pushImage22, pushImage23, pushImage24, pushImage25,
-    pushImage26, pushImage27, pushImage28, pushImage29, pushImage30, pushImage31 ];
+const atomicPullImages = [ atomicPullImage1, atomicPullImage2, atomicPullImage3, atomicPullImage4, atomicPullImage5,
+  atomicPullImage6, atomicPullImage7, atomicPullImage8, atomicPullImage9, atomicPullImage10, atomicPullImage11,
+  atomicPullImage12, atomicPullImage13, atomicPullImage14, atomicPullImage15, atomicPullImage16, atomicPullImage17,
+  atomicPullImage18, atomicPullImage19, atomicPullImage20, atomicPullImage21, atomicPullImage22, atomicPullImage23,
+  atomicPullImage24, atomicPullImage25, atomicPullImage26, atomicPullImage27, atomicPullImage28, atomicPullImage29,
+  atomicPullImage30, atomicPullImage31 ];
 
-  // ensure push images are ordered from large push to small push
-  pushImages.reverse();
+const atomicPushImages = [ atomicPushImage1, atomicPushImage2, atomicPushImage3, atomicPushImage4, atomicPushImage5,
+  atomicPushImage6, atomicPushImage7, atomicPushImage8, atomicPushImage9, atomicPushImage10, atomicPushImage11,
+  atomicPushImage12, atomicPushImage13, atomicPushImage14, atomicPushImage15, atomicPushImage16, atomicPushImage17,
+  atomicPushImage18, atomicPushImage19, atomicPushImage20, atomicPushImage21, atomicPushImage22, atomicPushImage23,
+  atomicPushImage24, atomicPushImage25, atomicPushImage26, atomicPushImage27, atomicPushImage28, atomicPushImage29,
+  atomicPushImage30, atomicPushImage31 ];
 
-  const atomicPullImages = [ atomicPullImage1, atomicPullImage2, atomicPullImage3, atomicPullImage4, atomicPullImage5,
-    atomicPullImage6, atomicPullImage7, atomicPullImage8, atomicPullImage9, atomicPullImage10, atomicPullImage11,
-    atomicPullImage12, atomicPullImage13, atomicPullImage14, atomicPullImage15, atomicPullImage16, atomicPullImage17,
-    atomicPullImage18, atomicPullImage19, atomicPullImage20, atomicPullImage21, atomicPullImage22, atomicPullImage23,
-    atomicPullImage24, atomicPullImage25, atomicPullImage26, atomicPullImage27, atomicPullImage28, atomicPullImage29,
-    atomicPullImage30, atomicPullImage31 ];
+atomicPushImages.reverse();
 
-  const atomicPushImages = [ atomicPushImage1, atomicPushImage2, atomicPushImage3, atomicPushImage4, atomicPushImage5,
-    atomicPushImage6, atomicPushImage7, atomicPushImage8, atomicPushImage9, atomicPushImage10, atomicPushImage11,
-    atomicPushImage12, atomicPushImage13, atomicPushImage14, atomicPushImage15, atomicPushImage16, atomicPushImage17,
-    atomicPushImage18, atomicPushImage19, atomicPushImage20, atomicPushImage21, atomicPushImage22, atomicPushImage23,
-    atomicPushImage24, atomicPushImage25, atomicPushImage26, atomicPushImage27, atomicPushImage28, atomicPushImage29,
-    atomicPushImage30, atomicPushImage31 ];
+const ISLCPullerImages = {
+  pullImages: pullImages,
+  pushImages: pushImages,
+  atomicPullImages: atomicPullImages,
+  atomicPushImages: atomicPushImages,
+  zeroForceImage: zeroForceImage,
+  atomicZeroForceImage: atomicZeroForceImage
+};
 
-  atomicPushImages.reverse();
+inverseSquareLawCommon.register( 'ISLCPullerImages', ISLCPullerImages );
 
-  const ISLCPullerImages = {
-    pullImages: pullImages,
-    pushImages: pushImages,
-    atomicPullImages: atomicPullImages,
-    atomicPushImages: atomicPushImages,
-    zeroForceImage: zeroForceImage,
-    atomicZeroForceImage: atomicZeroForceImage
-  };
-
-  inverseSquareLawCommon.register( 'ISLCPullerImages', ISLCPullerImages );
-
-  return ISLCPullerImages;
-} );
+export default ISLCPullerImages;
