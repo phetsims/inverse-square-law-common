@@ -1,4 +1,4 @@
-// Copyright 2018-2019, University of Colorado Boulder
+// Copyright 2018-2020, University of Colorado Boulder
 
 /**
  * Base type for all ISLC associated Describer types. In general, this stores state that is useful to have for any describer

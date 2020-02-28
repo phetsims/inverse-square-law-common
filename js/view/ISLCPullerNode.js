@@ -1,4 +1,4 @@
-// Copyright 2017-2019, University of Colorado Boulder
+// Copyright 2017-2020, University of Colorado Boulder
 
 /**
  * The pullers attached to the mass and charge objects. The node maintains a list of puller images that vary in
