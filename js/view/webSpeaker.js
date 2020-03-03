@@ -50,7 +50,6 @@ class WebSpeaker {
 
   /**
    * Indicate that the webSpeaker is ready for use, and attempt to populate voices (if they are ready yet).
-   * @returns {[type]} [description]
    */
   initialize() {
     this.initialized = true;
