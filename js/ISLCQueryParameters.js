@@ -24,7 +24,12 @@ const ISLCQueryParameters = QueryStringMachine.getAll( {
 
   // Shows boundary positions of the two objects, as .  The boundary positions for each
   // object will change depending on the size and position of both objects.
-  showDragBounds: { type: 'flag' }
+  showDragBounds: { type: 'flag' },
+
+  // Enables prototype "self voicing" feature set, which uses the Web Speech API to read content from the sim
+  // without the use of a screen reader. This is being tested for the first time in gravity-force-lab-basics, and so this query
+  // parameter will be used by the ISLC dependency repos, see https://github.com/phetsims/gravity-force-lab-basics/issues/193
+  selfVoicing: { type: 'flag' }
 } );
 
 inverseSquareLawCommon.register( 'ISLCQueryParameters', ISLCQueryParameters );
