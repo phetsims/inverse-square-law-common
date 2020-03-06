@@ -11,10 +11,10 @@
 
 import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
 import Enumeration from '../../../phet-core/js/Enumeration.js';
-import EnumerationProperty from '../../../../axon/js/EnumerationProperty.js';
-import NumberProperty from '../../../../axon/js/NumberProperty.js';
-import Property from '../../../../axon/js/Property.js';
-import Range from '../../../../dot/js/Range.js';
+import EnumerationProperty from '../../../axon/js/EnumerationProperty.js';
+import NumberProperty from '../../../axon/js/NumberProperty.js';
+import Property from '../../../axon/js/Property.js';
+import Range from '../../../dot/js/Range.js';
 
 const Verbosity = Enumeration.byKeys( [ 'BRIEF', 'VERBOSE' ] );
 

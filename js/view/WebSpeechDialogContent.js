@@ -8,17 +8,17 @@
  */
 
 import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
-import Utils from '../../../../dot/js/Utils.js';
-import ComboBoxItem from '../../../../sun/js/ComboBoxItem.js';
-import ComboBox from '../../../../sun/js/ComboBox.js';
-import HSlider from '../../../../sun/js/HSlider.js';
-import VerticalAquaRadioButtonGroup from '../../../../sun/js/VerticalAquaRadioButtonGroup.js';
-import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
+import Utils from '../../../dot/js/Utils.js';
+import ComboBoxItem from '../../../sun/js/ComboBoxItem.js';
+import ComboBox from '../../../sun/js/ComboBox.js';
+import HSlider from '../../../sun/js/HSlider.js';
+import VerticalAquaRadioButtonGroup from '../../../sun/js/VerticalAquaRadioButtonGroup.js';
+import StringUtils from '../../../phetcommon/js/util/StringUtils.js';
 import webSpeaker from '../../../inverse-square-law-common/js/view/webSpeaker.js';
-import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import VBox from '../../../../scenery/js/nodes/VBox.js';
-import HBox from '../../../../scenery/js/nodes/HBox.js';
-import Text from '../../../../scenery/js/nodes/Text.js';
+import PhetFont from '../../../scenery-phet/js/PhetFont.js';
+import VBox from '../../../scenery/js/nodes/VBox.js';
+import HBox from '../../../scenery/js/nodes/HBox.js';
+import Text from '../../../scenery/js/nodes/Text.js';
 
 // constants
 const TITLE_FONT = new PhetFont( { size: 16 } );
