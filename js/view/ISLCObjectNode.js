@@ -13,6 +13,7 @@
 
 import BooleanProperty from '../../../axon/js/BooleanProperty.js';
 import Range from '../../../dot/js/Range.js';
+import StringUtils from '../../../phetcommon/js/util/StringUtils.js';
 import Utils from '../../../dot/js/Utils.js';
 import Shape from '../../../kite/js/Shape.js';
 import inherit from '../../../phet-core/js/inherit.js';
@@ -33,7 +34,12 @@ import PositionDescriber from './describers/PositionDescriber.js';
 import ISLCAlertManager from './ISLCAlertManager.js';
 import ISLCForceArrowNode from './ISLCForceArrowNode.js';
 import ISLCObjectEnum from './ISLCObjectEnum.js';
+import ISLCA11yStrings from '../ISLCA11yStrings.js';
 import ISLCPullerNode from './ISLCPullerNode.js';
+import webSpeaker from '../../../inverse-square-law-common/js/view/webSpeaker.js';
+
+// a11y strings
+const massInteractionHintPatternString = ISLCA11yStrings.massInteractionHintPattern.value;
 
 // constants
 const NEGATIVE_FILL = new Color( '#66f' );
@@ -71,6 +77,10 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
     y: 250,
 
     forceArrowHeight: 150, // height of arrow in view coordinates
+
+    // {null|ShapeHitDetector} a11y, hit detector for the view for the Pointer, to support prototype self voicing features
+    shapeHitDetector: null,
+    objectColor: null, // {{string}} @required - description of sphere for self-voicing content
 
     // phet-io
     tandem: Tandem.REQUIRED,
@@ -147,6 +157,17 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
     config.arrowNodeOptions
   );
 
+  // PROTOTYPE a11y code for self-voicing features
+  if ( config.shapeHitDetector ) {
+    config.shapeHitDetector.addNode( this.arrowNode );
+    config.shapeHitDetector.hitShapeEmitter.addListener( hitTarget => {
+      if ( hitTarget === this.arrowNode ) {
+        const utterance = forceDescriber.getForceVectorMagnitudeText( config.label, config.otherObjectLabel );
+        webSpeaker.speak( utterance );
+      }
+    } );
+  }
+
   // set y position for the arrow
   this.arrowNode.y = config.y - config.forceArrowHeight;
 
@@ -170,6 +191,20 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
 
   // @protected - the object
   this.objectCircle = new Circle( radius );
+
+  // PROTOTYPE a11y code, to support self-voicing features
+  if ( config.shapeHitDetector ) {
+    assert && assert( config.objectColor, 'required param, if testing self voicing features');
+    config.shapeHitDetector.addNode( this.objectCircle );
+    config.shapeHitDetector.hitShapeEmitter.addListener( hitTarget => {
+      if ( hitTarget === this.objectCircle ) {
+        webSpeaker.speak( StringUtils.fillIn( massInteractionHintPatternString, {
+          objectLabel: config.label,
+          objectColor: config.objectColor
+        } ) );
+      }
+    } );
+  }
 
   this.dragNode.addChild( this.pullerNode );
   this.dragNode.addChild( this.objectCircle );

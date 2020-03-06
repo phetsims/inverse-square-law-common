@@ -330,6 +330,15 @@ const ISLCA11yStrings = {
   },
   valuePattern: {
     value: '{{value}}'
+  },
+
+  /////////////////////////////////////////////
+  // PROTOTYPE SELF VOICING STRINGS
+  /////////////////////////////////////////////
+
+  // masses
+  massInteractionHintPattern: {
+    value: 'Move {{objectLabel}}, {{objectColor}} Sphere'
   }
 };
 

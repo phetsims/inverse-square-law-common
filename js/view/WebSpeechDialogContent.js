@@ -102,7 +102,7 @@ WebSpeechDialogContent.createLabelledSlider = ( numberProperty, label, changeSuc
     endDrag: () => {
       const utterance = StringUtils.fillIn( changeSuccessPatternString, {
         successDescription: changeSuccessDescription,
-        newValue: Utils.toFixed( webSpeaker.voicePitchProperty.get(), 2 )
+        newValue: Utils.toFixed( numberProperty.get(), 2 )
       } );
       webSpeaker.speak( utterance );
     }

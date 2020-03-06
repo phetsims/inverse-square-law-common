@@ -28,10 +28,10 @@ class WebSpeaker {
     this.voiceProperty = new Property( null );
 
     // @public {NumberProperty} - controls the speaking rate of Web Speech
-    this.voiceRateProperty = new NumberProperty( 1, { range: new Range( 1, 2 ) } );
+    this.voiceRateProperty = new NumberProperty( 1.4, { range: new Range( 1, 1.8 ) } );
 
-    // {NumberProperty} - controls the
-    this.voicePitchProperty = new NumberProperty( 1, { range: new Range( 1, 2 ) } );
+    // {NumberProperty} - controls the pitch of the synth
+    this.voicePitchProperty = new NumberProperty( 1.02, { range: new Range( 1, 1.1 ) } );
 
     // create the synthesizer
     this.synth = window.speechSynthesis;
@@ -41,6 +41,9 @@ class WebSpeaker {
 
     // @public {boolean} - is the WebSpeaker initialized for use? This is prototypal so it isn't always initialized
     this.initialized = false;
+
+    // @public {boolean} - is the WebSpeaker enabled? If not, there will be no speech output from this speaker
+    this.enabled = true;
 
     // On chrome, synth.getVoices() returns an empty array until the onvoiceschanged event, so we have to
     // wait to populate
@@ -77,7 +80,9 @@ class WebSpeaker {
    * @param {string} utterThis
    */
   speak( utterThis ) {
-    if ( this.initialized ) {
+    if ( this.initialized && this.enabled ) {
+      this.synth.cancel();
+
       const utterance = new SpeechSynthesisUtterance( utterThis );
       utterance.voice = this.voiceProperty.value;
       utterance.pitch = this.voicePitchProperty.value;
