@@ -167,8 +167,10 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
     config.shapeHitDetector.addNode( this.arrowNode );
     config.shapeHitDetector.hitShapeEmitter.addListener( hitTarget => {
       if ( hitTarget === this.arrowNode ) {
-        const utterance = forceDescriber.getForceVectorMagnitudeText( config.label, config.otherObjectLabel );
-        webSpeaker.speak( utterance );
+        if ( webSpeaker.exploreModeProperty.get() ) {
+          const utterance = forceDescriber.getForceVectorMagnitudeText( config.label, config.otherObjectLabel );
+          webSpeaker.speak( utterance );
+        }
       }
     } );
   }
