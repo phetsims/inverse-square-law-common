@@ -39,7 +39,8 @@ import ISLCPullerNode from './ISLCPullerNode.js';
 import webSpeaker from '../../../inverse-square-law-common/js/view/webSpeaker.js';
 
 // a11y strings
-const massInteractionHintPatternString = ISLCA11yStrings.massInteractionHintPattern.value;
+const verboseMassInteractionHintPatternString = ISLCA11yStrings.verboseMassInteractionHintPattern.value;
+const briefMassInteractionHintPatternString = ISLCA11yStrings.briefMassInteractionHintPattern.value;
 const positionChangePatternString = ISLCA11yStrings.positionChangePattern.value;
 
 // constants
@@ -202,10 +203,13 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
     config.shapeHitDetector.addNode( this.objectCircle );
     config.shapeHitDetector.hitShapeEmitter.addListener( hitTarget => {
       if ( hitTarget === this.objectCircle ) {
-        webSpeaker.speak( StringUtils.fillIn( massInteractionHintPatternString, {
-          objectLabel: config.label,
-          objectColor: config.objectColor
-        } ) );
+        if ( webSpeaker.exploreModeProperty.get() ) {
+          const patternString = webSpeaker.getExploreModeVerbose() ? verboseMassInteractionHintPatternString : briefMassInteractionHintPatternString;
+          webSpeaker.speak( StringUtils.fillIn( patternString, {
+            objectLabel: config.label,
+            objectColor: config.objectColor
+          } ) );
+        }
       }
     } );
   }

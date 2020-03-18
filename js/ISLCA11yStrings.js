@@ -337,8 +337,12 @@ const ISLCA11yStrings = {
   /////////////////////////////////////////////
 
   // masses
-  massInteractionHintPattern: {
+  verboseMassInteractionHintPattern: {
     value: 'Move {{objectLabel}}, {{objectColor}} Sphere'
+  },
+
+  briefMassInteractionHintPattern: {
+    value: 'Move {{objectLabel}}'
   },
 
   positionChangePattern: {

@@ -104,6 +104,25 @@ class WebSpeaker {
       this.synth.speak( utterance );
     }
   }
+
+  /**
+   * Returns true if "explore" mode is active and we are in "verbose" mode under that setting.
+   */
+  getExploreModeVerbose() {
+    return this.exploreModeProperty.get() && this.exploreModeVerbosityProperty.get() === Verbosity.VERBOSE;
+  }
+
+  getExploreModeBrief() {
+    return this.exploreModeProperty.get() && this.exploreModeVerbosityProperty.get() === Verbosity.BRIEF;
+  }
+
+  getInteractiveModeVerbose() {
+    return this.interactiveModeProperty.get() && this.interactiveModeVerbosityProperty.get() === Verbosity.VERBOSE;
+  }
+
+  getInteractiveModeBrief() {
+    return this.interactiveModeProperty.get() && this.interactiveModeVerbosityProperty.get() === Verbosity.BRIEF;
+  }
 }
 
 const webSpeaker = new WebSpeaker();
