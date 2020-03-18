@@ -7,69 +7,36 @@
  * @author Jesse Greenberg
  */
 
-import VerticalCheckboxGroup from '../../../sun/js/VerticalCheckboxGroup.js';
-import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
 import Utils from '../../../dot/js/Utils.js';
-import ComboBoxItem from '../../../sun/js/ComboBoxItem.js';
+import webSpeaker from '../../../inverse-square-law-common/js/view/webSpeaker.js';
+import StringUtils from '../../../phetcommon/js/util/StringUtils.js';
+import PhetFont from '../../../scenery-phet/js/PhetFont.js';
+import HBox from '../../../scenery/js/nodes/HBox.js';
+import Node from '../../../scenery/js/nodes/Node.js';
+import Text from '../../../scenery/js/nodes/Text.js';
+import VBox from '../../../scenery/js/nodes/VBox.js';
+import Checkbox from '../../../sun/js/Checkbox.js';
 import ComboBox from '../../../sun/js/ComboBox.js';
+import ComboBoxItem from '../../../sun/js/ComboBoxItem.js';
 import HSlider from '../../../sun/js/HSlider.js';
 import VerticalAquaRadioButtonGroup from '../../../sun/js/VerticalAquaRadioButtonGroup.js';
-import StringUtils from '../../../phetcommon/js/util/StringUtils.js';
-import webSpeaker from '../../../inverse-square-law-common/js/view/webSpeaker.js';
-import PhetFont from '../../../scenery-phet/js/PhetFont.js';
-import VBox from '../../../scenery/js/nodes/VBox.js';
-import HBox from '../../../scenery/js/nodes/HBox.js';
-import Text from '../../../scenery/js/nodes/Text.js';
+import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
 
 // constants
-const TITLE_FONT = new PhetFont( { size: 16 } );
+const TITLE_FONT = new PhetFont( { size: 16, weight: 'bold' } );
 const LABEL_FONT = new PhetFont( { size: 12 } );
 const INPUT_SPACING = 8;
 
 class WebSpeechDialogContent extends VBox {
   constructor() {
 
-    // controls for verbosity, the output designed by PhET
-    const verbosityControls = new VerticalAquaRadioButtonGroup( webSpeaker.verbosityProperty,
-      [
-        {
-          node: new Text( 'Verbose', { font: LABEL_FONT } ),
-          value: webSpeaker.Verbosity.VERBOSE,
-          labelContent: 'Verbose'
-        },
-        {
-          node: new Text( 'Brief', { font: LABEL_FONT } ),
-          value: webSpeaker.Verbosity.BRIEF,
-          labelContent: 'Brief'
-        }
-      ], {
-        spacing: 5
-      }
-    );
-    const labelledVerbosityControls = new VBox( {
-      children: [
-        new Text( 'Verbosity', { font: TITLE_FONT } ),
-        verbosityControls
-      ],
-      align: 'center',
-      spacing: INPUT_SPACING
-    } );
-
-    // controls for speech mode
-    const modeControls = new VerticalCheckboxGroup( [
-      {
-        node: new Text( 'Explore', { font: LABEL_FONT } ),
-        property: webSpeaker.exloreModeProperty
-      },
-      {
-        node: new Text( 'Interactive', { font: LABEL_FONT } ),
-        property: webSpeaker.interactiveModeProperty
-      }
-    ] );
+    const exploreModeControls = new ModeVerbosityControls( webSpeaker.exploreModeProperty, webSpeaker.exploreModeVerbosityProperty, 'Explore' );
+    const interactiveModeControls = new ModeVerbosityControls( webSpeaker.interactiveModeProperty, webSpeaker.interactiveModeVerbosityProperty, 'Interactive' );
     const labelledModeControls = new VBox( {
       children: [
-        new Text( 'Mode', { font: TITLE_FONT } ),
-        modeControls
+        new Text( 'Speech Output', { font: TITLE_FONT } ),
+        exploreModeControls,
+        interactiveModeControls
       ],
       align: 'center',
       spacing: INPUT_SPACING
@@ -104,7 +71,7 @@ class WebSpeechDialogContent extends VBox {
     } );
 
     super( {
-      children: [ labelledVerbosityControls, labelledModeControls, labelledVoiceControls ],
+      children: [ labelledModeControls, labelledVoiceControls ],
       spacing: 30
     } );
 
@@ -133,6 +100,47 @@ WebSpeechDialogContent.createLabelledSlider = ( numberProperty, label, changeSuc
     spacing: INPUT_SPACING
   } );
 };
+
+class ModeVerbosityControls extends Node {
+
+  /**
+   * @param {EnumerationProperty.<Verbosity>} modeProperty
+   * @param {BooleanProperty} verbosityProperty
+   * @param {string} modeLabel
+   */
+  constructor( modeProperty, verbosityProperty, modeLabel ) {
+    const checkbox = new Checkbox( new Text( modeLabel, { font: LABEL_FONT } ), modeProperty );
+    const radioButtons = new VerticalAquaRadioButtonGroup( verbosityProperty,
+      [
+        {
+          node: new Text( 'Verbose', { font: LABEL_FONT } ),
+          value: webSpeaker.Verbosity.VERBOSE,
+          labelContent: 'Verbose'
+        },
+        {
+          node: new Text( 'Brief', { font: LABEL_FONT } ),
+          value: webSpeaker.Verbosity.BRIEF,
+          labelContent: 'Brief'
+        }
+      ], {
+        spacing: 5
+      }
+    );
+
+    //layout
+    radioButtons.leftTop = checkbox.leftBottom.plusXY( 20, 8 );
+
+    // VerticalAquaRadioButtonGroup doesn't have a general `enabled` setter
+    modeProperty.link( exploreMode => {
+      radioButtons.opacity = exploreMode ? 1 : 0.4;
+      radioButtons.pickable = exploreMode;
+    } );
+
+    super( {
+      children: [ checkbox, radioButtons ]
+    } );
+  }
+}
 
 inverseSquareLawCommon.register( 'WebSpeechDialogContent', WebSpeechDialogContent );
 

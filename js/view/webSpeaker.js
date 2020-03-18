@@ -22,15 +22,20 @@ const Verbosity = Enumeration.byKeys( [ 'BRIEF', 'VERBOSE' ] );
 class WebSpeaker {
   constructor() {
 
-    // {Property.<Verbosity>} - self voicing content can be brief or more "verbose", debending on user selection
-    this.verbosityProperty = new EnumerationProperty( Verbosity, Verbosity.BRIEF );
-
     // @public {BooleanProperty} - if true, content will be read to the user as they scan for what is in the simulation
     // before actually interacting with anything
-    this.exloreModeProperty = new BooleanProperty( true );
+    this.exploreModeProperty = new BooleanProperty( true );
 
     // @public {BooleanProperty} - if true, content will be read to the user while interacting with various objects
     this.interactiveModeProperty = new BooleanProperty( true );
+
+    // {Property.<Verbosity>} - the "interactive mode" self voicing content can be brief or more "verbose",
+    // debending on user selection
+    this.interactiveModeVerbosityProperty = new EnumerationProperty( Verbosity, Verbosity.VERBOSE );
+
+    // {EnumerationProperty.<Verbosity>} - the "explore mode" self voicing content can be brief or verbose, depending
+    // on user selection
+    this.exploreModeVerbosityProperty = new EnumerationProperty( Verbosity, Verbosity.VERBOSE );
 
     // @public {null|SpeechSynthesisVoice}
     this.voiceProperty = new Property( null );

@@ -48,7 +48,7 @@ class ISLCAlertManager {
    * @public
    *
    * @param {boolean} showForceValues
-   * @return {string}
+   * @returns {string}
    */
   getShowForceValuesAlert( showForceValues ) {
     let alert = '';
