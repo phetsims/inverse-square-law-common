@@ -9,6 +9,7 @@
  * @author Jesse Greenberg
  */
 
+import BooleanProperty from '../../../axon/js/BooleanProperty.js';
 import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
 import Enumeration from '../../../phet-core/js/Enumeration.js';
 import EnumerationProperty from '../../../axon/js/EnumerationProperty.js';
@@ -23,6 +24,13 @@ class WebSpeaker {
 
     // {Property.<Verbosity>} - self voicing content can be brief or more "verbose", debending on user selection
     this.verbosityProperty = new EnumerationProperty( Verbosity, Verbosity.BRIEF );
+
+    // @public {BooleanProperty} - if true, content will be read to the user as they scan for what is in the simulation
+    // before actually interacting with anything
+    this.exloreModeProperty = new BooleanProperty( true );
+
+    // @public {BooleanProperty} - if true, content will be read to the user while interacting with various objects
+    this.interactiveModeProperty = new BooleanProperty( true );
 
     // @public {null|SpeechSynthesisVoice}
     this.voiceProperty = new Property( null );

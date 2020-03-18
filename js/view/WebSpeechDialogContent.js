@@ -7,6 +7,7 @@
  * @author Jesse Greenberg
  */
 
+import VerticalCheckboxGroup from '../../../sun/js/VerticalCheckboxGroup.js';
 import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
 import Utils from '../../../dot/js/Utils.js';
 import ComboBoxItem from '../../../sun/js/ComboBoxItem.js';
@@ -54,6 +55,26 @@ class WebSpeechDialogContent extends VBox {
       spacing: INPUT_SPACING
     } );
 
+    // controls for speech mode
+    const modeControls = new VerticalCheckboxGroup( [
+      {
+        node: new Text( 'Explore', { font: LABEL_FONT } ),
+        property: webSpeaker.exloreModeProperty
+      },
+      {
+        node: new Text( 'Interactive', { font: LABEL_FONT } ),
+        property: webSpeaker.interactiveModeProperty
+      }
+    ] );
+    const labelledModeControls = new VBox( {
+      children: [
+        new Text( 'Mode', { font: TITLE_FONT } ),
+        modeControls
+      ],
+      align: 'center',
+      spacing: INPUT_SPACING
+    } );
+
     // controls for speech synthesis, such as the rate, pitch, and voice
     const voiceRateSlider = WebSpeechDialogContent.createLabelledSlider( webSpeaker.voiceRateProperty, 'Rate', 'New Voice Rate' );
     const voicePitchSlider = WebSpeechDialogContent.createLabelledSlider( webSpeaker.voicePitchProperty, 'Pitch', 'New Voice Pitch' );
@@ -83,7 +104,7 @@ class WebSpeechDialogContent extends VBox {
     } );
 
     super( {
-      children: [ labelledVerbosityControls, labelledVoiceControls ],
+      children: [ labelledVerbosityControls, labelledModeControls, labelledVoiceControls ],
       spacing: 30
     } );
 
@@ -108,7 +129,7 @@ WebSpeechDialogContent.createLabelledSlider = ( numberProperty, label, changeSuc
     }
   } );
   return new HBox( {
-    children: [ new Text( label, { font: LABEL_FONT } ) , slider ],
+    children: [ new Text( label, { font: LABEL_FONT } ), slider ],
     spacing: INPUT_SPACING
   } );
 };

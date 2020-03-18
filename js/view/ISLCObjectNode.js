@@ -40,6 +40,7 @@ import webSpeaker from '../../../inverse-square-law-common/js/view/webSpeaker.js
 
 // a11y strings
 const massInteractionHintPatternString = ISLCA11yStrings.massInteractionHintPattern.value;
+const positionChangePatternString = ISLCA11yStrings.positionChangePattern.value;
 
 // constants
 const NEGATIVE_FILL = new Color( '#66f' );
@@ -141,6 +142,9 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
   this.model = model; // used in abstract method implementations by children.
   this.modelViewTransform = modelViewTransform;
 
+  // @private
+  this.forceDescriber = forceDescriber;
+
   // @public - which object this instance is (one or two)
   this.enum = object === model.object1 ? ISLCObjectEnum.OBJECT_ONE : ISLCObjectEnum.OBJECT_TWO;
 
@@ -194,7 +198,7 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
 
   // PROTOTYPE a11y code, to support self-voicing features
   if ( config.shapeHitDetector ) {
-    assert && assert( config.objectColor, 'required param, if testing self voicing features');
+    assert && assert( config.objectColor, 'required param, if testing self voicing features' );
     config.shapeHitDetector.addNode( this.objectCircle );
     config.shapeHitDetector.hitShapeEmitter.addListener( hitTarget => {
       if ( hitTarget === this.objectCircle ) {
@@ -251,11 +255,14 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
 
   let clickOffset;
 
+  let oldPosition = object.positionProperty.get();
   this.dragNode.addInputListener( new DragListener( {
     allowTouchSnag: true,
     start: event => {
       clickOffset = this.dragNode.globalToParentPoint( event.pointer.point ).x - event.currentTarget.x;
       object.isDragging = true;
+
+      oldPosition = object.positionProperty.get();
     },
     drag: event => {
 
@@ -273,7 +280,14 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
       // snapToGrid method dynamically checks whether to snap or not
       object.positionProperty.set( model.snapToGrid( x ) );
     },
-    end: () => { object.isDragging = false; },
+    end: () => {
+      object.isDragging = false;
+
+      // SELF VOICING PROTOTYPE - when ending drag, speak the result of the interaction
+      if ( webSpeaker.interactiveModeProperty.get() ) {
+        webSpeaker.speak( this.getSelfVoicingPositionChangeAlert( object.positionProperty.get(), oldPosition ) );
+      }
+    },
     tandem: config.tandem.createTandem( 'dragListener' )
   } ) );
 
@@ -301,7 +315,6 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
     this.redrawForce();
   } );
 
-  let oldPosition = object.positionProperty.get();
   const accessibleSliderOptions = {
     keyboardStep: config.stepSize,
     shiftKeyboardStep: config.snapToNearest,
@@ -319,6 +332,10 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
       object.isDragging = false;
       this.redrawForce();
 
+      // SELF VOICING PROTOTYPE - when ending drag, speak the result of the interaction
+      if ( webSpeaker.interactiveModeProperty.get() ) {
+        webSpeaker.speak( this.getSelfVoicingPositionChangeAlert( object.positionProperty.get(), oldPosition ) );
+      }
     },
     a11yCreateValueChangeAlert: () => {
       const newPosition = object.positionProperty.get();
@@ -427,6 +444,15 @@ inherit( Node, ISLCObjectNode, {
 
     // update puller node visibility
     this.pullerNode.setPull( this.model.forceProperty.get(), this.objectCircle.width / 2 );
+  },
+
+  getSelfVoicingPositionChangeAlert( newPosition, oldPosition ) {
+    const vectorChangeText = newPosition !== oldPosition ? this.forceDescriber.getVectorChangeText( this.objectModel ) : this.forceDescriber.getPositionUnchangedAlertText( this.objectModel );
+
+    return StringUtils.fillIn( positionChangePatternString, {
+      valueText: this.getAriaValueText(),
+      vectorText: vectorChangeText
+    } );
   },
 
   /**

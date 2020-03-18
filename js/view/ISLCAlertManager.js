@@ -39,6 +39,18 @@ class ISLCAlertManager {
    * @public
    */
   alertShowForceValues( showForceValues ) {
+    this.showForceValuesUtterance.alert = this.getShowForceValuesAlert( showForceValues );
+    phet.joist.sim.utteranceQueue.addToBack( this.showForceValuesUtterance );
+  }
+
+  /**
+   * Get an alert describing the change in whether force values are shown or hidden.
+   * @public
+   *
+   * @param {boolean} showForceValues
+   * @return {string}
+   */
+  getShowForceValuesAlert( showForceValues ) {
     let alert = '';
     if ( showForceValues ) {
       alert = this.forceDescriber.getValuesInUnitsText();
@@ -46,9 +58,7 @@ class ISLCAlertManager {
     else {
       alert = forceValuesHiddenString;
     }
-
-    this.showForceValuesUtterance.alert = alert;
-    phet.joist.sim.utteranceQueue.addToBack( this.showForceValuesUtterance );
+    return alert;
   }
 }
 
