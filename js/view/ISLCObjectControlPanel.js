@@ -74,7 +74,9 @@ class ISLCObjectControlPanel extends ISLCPanel {
         yMargin: 4,
         backgroundStroke: 'black',
         cornerRadius: 3,
-        font: new PhetFont( 12 ),
+        textOptions: {
+          font: new PhetFont( 12 )
+        },
         maxWidth: VALUE_MAX_WIDTH
       },
       sliderOptions: {
