@@ -8,7 +8,7 @@
 
 import inverseSquareLawCommon from './inverseSquareLawCommon.js';
 
-const gravityForceLabBasicsStrings = {
+const ISLCA11yStrings = {
 
   /***************************
    * Summary Pattern Strings *

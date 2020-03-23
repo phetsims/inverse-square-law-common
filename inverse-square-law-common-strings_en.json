@@ -36,112 +36,115 @@
     "value": "cm"
   },
   "a11y": {
-
-
-    "forceVectorArrows": {
-      "value": "Force vector arrows"
+    "screenSummary": {
+      "forceVectorArrows": {
+        "value": "Force vector arrows"
+      },
+      "summaryVectorSizePattern": {
+        "value": "{{forceVectorArrows}} are {{size}}."
+      },
+      "summaryVectorSizeValueUnitsPattern": {
+        "value": "{{forceVectorArrows}} are {{size}} at {{forceValue}} {{units}}."
+      },
+      "robotPullSummaryPattern": {
+        "value": "Robots pull {{effort}} keeping spheres in place."
+      },
+      "robotPushSummaryPattern": {
+        "value": "Robots push {{effort}} keeping spheres in place."
+      },
+      "summaryInteractionHintPattern": {
+        "value": "Change position and {{massOrCharge}} of spheres to explore."
+      },
+      "quantitativeAndQualitativePattern": {
+        "value": "{{qualitativeClause}}{{quantitativeClause}}."
+      },
+      "qualitativeDistanceEachOtherPattern": {
+        "value": "{{qualitativeDistance}} each other"
+      },
+      "distanceAndValueSummaryPattern": {
+        "value": "{{object1Label}} and {{object2Label}} are {{qualitativeDistanceFromEachOther}}"
+      },
+      "centersOfObjectsDistancePattern": {
+        "value": "Centers of {{objectsDistanceClause}}"
+      },
+      "centersExactlyPattern": {
+        "value": ", centers exactly {{distanceAndUnits}} apart"
+      }
     },
-    "summaryVectorSizePattern": {
-      "value": "{{forceVectorArrows}} are {{size}}."
+    "sphere": {
+      "spherePositions": {
+        "value": "Sphere Positions"
+      },
+      "distanceApartPattern": {
+        "value": "{{distanceAndUnits}} apart"
+      },
+      "positionHelpText": {
+        "value": "Centers of spheres, {{distanceApart}}. Move spheres, closer or farther from each other."
+      },
+      "forceVectorMagnitudeUnitsPattern": {
+        "value": "{{forceMagnitude}} on {{thisObjectLabel}} by {{otherObjectLabel}} is {{forceValue}} {{units}}."
+      },
+      "forceMagnitude": {
+        "value": "Force magnitude"
+      },
+      "forceVectorSizePattern": {
+        "value": "{{forceVector}} is {{size}}"
+      },
+      "forceVectorsSizePattern": {
+        "value": "{{forceVectors}} {{size}}"
+      },
+      "forceAndVectorPattern": {
+        "value": "{{forceVectorSize}}, and points directly at {{otherObjectLabel}}."
+      },
+      "forceVectorCapitalized": {
+        "value": "Force vector"
+      },
+      "objectLabelPositionPattern": {
+        "value": "Move {{label}}"
+      }
     },
-    "summaryVectorSizeValueUnitsPattern": {
-      "value": "{{forceVectorArrows}} are {{size}} at {{forceValue}} {{units}}."
-    },
-    "robotPullSummaryPattern": {
-      "value": "Robots pull {{effort}} keeping spheres in place."
-    },
-    "robotPushSummaryPattern": {
-      "value": "Robots push {{effort}} keeping spheres in place."
-    },
-    "summaryInteractionHintPattern": {
-      "value": "Change position and {{massOrCharge}} of spheres to explore."
-    },
-    "quantitativeAndQualitativePattern": {
-      "value": "{{qualitativeClause}}{{quantitativeClause}}."
-    },
-    "qualitativeDistanceEachOtherPattern": {
-      "value": "{{qualitativeDistance}} each other"
-    },
-    "distanceAndValueSummaryPattern": {
-      "value": "{{object1Label}} and {{object2Label}} are {{qualitativeDistanceFromEachOther}}"
-    },
-    "centersOfObjectsDistancePattern": {
-      "value": "Centers of {{objectsDistanceClause}}"
-    },
-    "centersExactlyPattern": {
-      "value": ", centers exactly {{distanceAndUnits}} apart"
-    },
-
-    "spherePositions": {
-      "value": "Sphere Positions"
-    },
-
-    "distanceApartPattern": {
-      "value": "{{distanceAndUnits}} apart"
-    },
-    "spherePositionHelpText": {
-      "value": "Centers of spheres, {{distanceApart}}. Move spheres, closer or farther from each other."
-    },
-    "forceVectorMagnitudeUnitsPattern": {
-      "value": "{{forceMagnitude}} on {{thisObjectLabel}} by {{otherObjectLabel}} is {{forceValue}} {{units}}."
-    },
-    "forceMagnitude": {
-      "value": "Force magnitude"
-    },
-    "forceVectorSizePattern": {
-      "value": "{{forceVector}} is {{size}}"
-    },
-    "forceVectorsSizePattern": {
-      "value": "{{forceVectors}} {{size}}"
-    },
-    "forceAndVectorPattern": {
-      "value": "{{forceVectorSize}}, and points directly at {{otherObjectLabel}}."
-    },
-    "forceVectorCapitalized": {
-      "value": "Force vector"
-    },
-    "objectLabelPositionPattern": {
-      "value": "Move {{label}}"
-    },
-
-
-    "distanceAndUnitsPattern": {
-      "value": "{{distance}} {{units}}"
-    },
-    "quantitativeDistancePattern": {
-      "value": "{{distanceAndUnits}} from"
-    },
-    "distanceFromOtherObjectPattern": {
-      "value": "{{distance}} {{otherObjectLabel}}"
-    },
-    "positionDistanceFromOtherObjectPattern": {
-      "value": "{{positionRegion}}, {{distanceFromOtherObject}}"
-    },
-    "distanceFromOtherObjectSentencePattern": {
-      "value": "{{distanceFromOtherObject}}"
-    },
-    "leftSideOfTrack": {
-      "value": "left side of track"
-    },
-    "rightSideOfTrack": {
-      "value": "right side of track"
-    },
-    "lastStopRight": {
-      "value": "Last stop right"
-    },
-    "lastStopLeft": {
-      "value": "Last stop left"
-    },
-    "trackEndLeft": {
-      "value": "Track end left"
-    },
-    "trackEndRight": {
-      "value": "Track end right"
+    "position": {
+      "valuetext": {
+        "distanceAndUnitsPattern": {
+          "value": "{{distance}} {{units}}"
+        },
+        "quantitativeDistancePattern": {
+          "value": "{{distanceAndUnits}} from"
+        },
+        "distanceFromOtherObjectPattern": {
+          "value": "{{distance}} {{otherObjectLabel}}"
+        },
+        "positionDistanceFromOtherObjectPattern": {
+          "value": "{{positionRegion}}, {{distanceFromOtherObject}}"
+        },
+        "distanceFromOtherObjectSentencePattern": {
+          "value": "{{distanceFromOtherObject}}"
+        }
+      },
+      "landmarks": {
+        "leftSideOfTrack": {
+          "value": "left side of track"
+        },
+        "rightSideOfTrack": {
+          "value": "right side of track"
+        },
+        "lastStopRight": {
+          "value": "Last stop right"
+        },
+        "lastStopLeft": {
+          "value": "Last stop left"
+        },
+        "trackEndLeft": {
+          "value": "Track end left"
+        },
+        "trackEndRight": {
+          "value": "Track end right"
+        }
+      }
     },
     "positionProgressOrLandmarkClause": {
       "value": "{{progressOrLandmark}},"
     },
-
     "regionForceClausePattern": {
       "value": "{{relativeDistance}} {{otherObjectLabel}}, {{forceClause}}."
     },
@@ -175,7 +178,6 @@
     "forcesValueUnitsClausePattern": {
       "value": "forces {{forceValue}} {{units}}"
     },
-
     "tiny": {
       "value": "tiny"
     },
@@ -269,7 +271,6 @@
     "right": {
       "value": "right"
     },
-
     "veryHard": {
       "value": "very hard"
     },
@@ -327,17 +328,14 @@
     "valuePattern": {
       "value": "{{value}}"
     },
-        "verboseMassInteractionHintPattern": {
+    "verboseMassInteractionHintPattern": {
       "value": "Move {{objectLabel}}, {{objectColor}} Sphere"
     },
-
     "briefMassInteractionHintPattern": {
       "value": "Move {{objectLabel}}"
     },
-
     "positionChangePattern": {
       "value": "{{valueText}}. {{vectorText}}"
     }
-
   }
 }

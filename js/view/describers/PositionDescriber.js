@@ -21,19 +21,19 @@ const unitsMetersString = inverseSquareLawCommonStrings.units.meters;
 const unitsMeterString = inverseSquareLawCommonStrings.units.meter;
 
 // a11y strings
-const objectLabelPositionPatternString = inverseSquareLawCommonStrings.a11y.objectLabelPositionPattern;
-const distanceAndValueSummaryPatternString = inverseSquareLawCommonStrings.a11y.distanceAndValueSummaryPattern;
-const qualitativeDistanceEachOtherPatternString = inverseSquareLawCommonStrings.a11y.qualitativeDistanceEachOtherPattern;
-const centersExactlyPatternString = inverseSquareLawCommonStrings.a11y.centersExactlyPattern;
-const quantitativeAndQualitativePatternString = inverseSquareLawCommonStrings.a11y.quantitativeAndQualitativePattern;
-const centersOfObjectsDistancePatternString = inverseSquareLawCommonStrings.a11y.centersOfObjectsDistancePattern;
+const objectLabelPositionPatternString = inverseSquareLawCommonStrings.a11y.sphere.objectLabelPositionPattern;
+const distanceAndValueSummaryPatternString = inverseSquareLawCommonStrings.a11y.screenSummary.distanceAndValueSummaryPattern;
+const qualitativeDistanceEachOtherPatternString = inverseSquareLawCommonStrings.a11y.screenSummary.qualitativeDistanceEachOtherPattern;
+const centersExactlyPatternString = inverseSquareLawCommonStrings.a11y.screenSummary.centersExactlyPattern;
+const quantitativeAndQualitativePatternString = inverseSquareLawCommonStrings.a11y.screenSummary.quantitativeAndQualitativePattern;
+const centersOfObjectsDistancePatternString = inverseSquareLawCommonStrings.a11y.screenSummary.centersOfObjectsDistancePattern;
 
-const positionDistanceFromOtherObjectPatternString = inverseSquareLawCommonStrings.a11y.positionDistanceFromOtherObjectPattern;
+const positionDistanceFromOtherObjectPatternString = inverseSquareLawCommonStrings.a11y.position.valuetext.positionDistanceFromOtherObjectPattern;
 const positionProgressOrLandmarkClauseString = inverseSquareLawCommonStrings.a11y.positionProgressOrLandmarkClause;
-const distanceAndUnitsPatternString = inverseSquareLawCommonStrings.a11y.distanceAndUnitsPattern;
-const quantitativeDistancePatternString = inverseSquareLawCommonStrings.a11y.quantitativeDistancePattern;
-const distanceFromOtherObjectPatternString = inverseSquareLawCommonStrings.a11y.distanceFromOtherObjectPattern;
-const distanceFromOtherObjectSentencePatternString = inverseSquareLawCommonStrings.a11y.distanceFromOtherObjectSentencePattern;
+const distanceAndUnitsPatternString = inverseSquareLawCommonStrings.a11y.position.valuetext.distanceAndUnitsPattern;
+const quantitativeDistancePatternString = inverseSquareLawCommonStrings.a11y.position.valuetext.quantitativeDistancePattern;
+const distanceFromOtherObjectPatternString = inverseSquareLawCommonStrings.a11y.position.valuetext.distanceFromOtherObjectPattern;
+const distanceFromOtherObjectSentencePatternString = inverseSquareLawCommonStrings.a11y.position.valuetext.distanceFromOtherObjectSentencePattern;
 
 const farthestFromString = inverseSquareLawCommonStrings.a11y.farthestFrom;
 const extremelyFarFromString = inverseSquareLawCommonStrings.a11y.extremelyFarFrom;
@@ -58,16 +58,16 @@ const closestToCapitalizedString = inverseSquareLawCommonStrings.a11y.closestToC
 const closerString = inverseSquareLawCommonStrings.a11y.closer;
 const fartherAwayString = inverseSquareLawCommonStrings.a11y.fartherAway;
 
-const distanceApartPatternString = inverseSquareLawCommonStrings.a11y.distanceApartPattern;
-const spherePositionHelpTextString = inverseSquareLawCommonStrings.a11y.spherePositionHelpText;
+const distanceApartPatternString = inverseSquareLawCommonStrings.a11y.sphere.distanceApartPattern;
+const spherePositionHelpTextString = inverseSquareLawCommonStrings.a11y.sphere.positionHelpText;
 
 // track landmarks
-const leftSideOfTrackString = inverseSquareLawCommonStrings.a11y.leftSideOfTrack;
-const rightSideOfTrackString = inverseSquareLawCommonStrings.a11y.rightSideOfTrack;
-const lastStopRightString = inverseSquareLawCommonStrings.a11y.lastStopRight;
-const lastStopLeftString = inverseSquareLawCommonStrings.a11y.lastStopLeft;
-const trackEndLeftString = inverseSquareLawCommonStrings.a11y.trackEndLeft;
-const trackEndRightString = inverseSquareLawCommonStrings.a11y.trackEndRight;
+const leftSideOfTrackString = inverseSquareLawCommonStrings.a11y.position.landmarks.leftSideOfTrack;
+const rightSideOfTrackString = inverseSquareLawCommonStrings.a11y.position.landmarks.rightSideOfTrack;
+const lastStopRightString = inverseSquareLawCommonStrings.a11y.position.landmarks.lastStopRight;
+const lastStopLeftString = inverseSquareLawCommonStrings.a11y.position.landmarks.lastStopLeft;
+const trackEndLeftString = inverseSquareLawCommonStrings.a11y.position.landmarks.trackEndLeft;
+const trackEndRightString = inverseSquareLawCommonStrings.a11y.position.landmarks.trackEndRight;
 
 const RELATIVE_DISTANCE_STRINGS = [
   farthestFromString,
