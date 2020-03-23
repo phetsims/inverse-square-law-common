@@ -31,22 +31,17 @@ import Utterance from '../../../utterance-queue/js/Utterance.js';
 import rulerMovementSoundInfo from '../../sounds/ruler-movement-000_mp3.js';
 import inverseSquareLawCommonStrings from '../inverse-square-law-common-strings.js';
 import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
-import ISLCA11yStrings from '../ISLCA11yStrings.js';
 import ISLCQueryParameters from '../ISLCQueryParameters.js';
 
-const unitsCentimetersString = inverseSquareLawCommonStrings.units.centimeters;
-
-// sounds
-
-// a11y strings
-const rulerHelpTextString = ISLCA11yStrings.rulerHelpText.value;
-const rulerKeyboardHintString = ISLCA11yStrings.rulerKeyboardHint.value;
-const gestureHelpTextPatternString = SceneryPhetA11yStrings.gestureHelpTextPattern.value;
-const rulerLabelString = ISLCA11yStrings.rulerLabel.value;
-
-const measureDistanceRulerString = ISLCA11yStrings.measureDistanceRuler.value;
-
 // constants
+const unitsCentimetersString = inverseSquareLawCommonStrings.units.centimeters;
+const rulerHelpTextString = inverseSquareLawCommonStrings.a11y.rulerHelpText;
+const rulerKeyboardHintString = inverseSquareLawCommonStrings.a11y.rulerKeyboardHint;
+const gestureHelpTextPatternString = SceneryPhetA11yStrings.gestureHelpTextPattern.value;
+const rulerLabelString = inverseSquareLawCommonStrings.a11y.rulerLabel;
+
+const measureDistanceRulerString = inverseSquareLawCommonStrings.a11y.measureDistanceRuler;
+
 const RULER_WIDTH = 500;
 const RULER_HEIGHT = 35;
 const RULER_INSET = 10;

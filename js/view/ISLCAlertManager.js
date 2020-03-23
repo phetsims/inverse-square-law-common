@@ -11,10 +11,10 @@
 
 import ActivationUtterance from '../../../utterance-queue/js/ActivationUtterance.js';
 import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
-import ISLCA11yStrings from '../ISLCA11yStrings.js';
+import inverseSquareLawCommonStrings from '../inverse-square-law-common-strings.js';
 
-// strings
-const forceValuesHiddenString = ISLCA11yStrings.forceValuesHidden.value;
+// constants
+const forceValuesHiddenString = inverseSquareLawCommonStrings.a11y.forceValuesHidden;
 
 class ISLCAlertManager {
 

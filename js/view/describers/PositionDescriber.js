@@ -14,7 +14,6 @@ import merge from '../../../../phet-core/js/merge.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import inverseSquareLawCommonStrings from '../../inverse-square-law-common-strings.js';
 import inverseSquareLawCommon from '../../inverseSquareLawCommon.js';
-import ISLCA11yStrings from '../../ISLCA11yStrings.js';
 import ISLCObjectEnum from '../ISLCObjectEnum.js';
 import ISLCDescriber from './ISLCDescriber.js';
 
@@ -22,53 +21,53 @@ const unitsMetersString = inverseSquareLawCommonStrings.units.meters;
 const unitsMeterString = inverseSquareLawCommonStrings.units.meter;
 
 // a11y strings
-const objectLabelPositionPatternString = ISLCA11yStrings.objectLabelPositionPattern.value;
-const distanceAndValueSummaryPatternString = ISLCA11yStrings.distanceAndValueSummaryPattern.value;
-const qualitativeDistanceEachOtherPatternString = ISLCA11yStrings.qualitativeDistanceEachOtherPattern.value;
-const centersExactlyPatternString = ISLCA11yStrings.centersExactlyPattern.value;
-const quantitativeAndQualitativePatternString = ISLCA11yStrings.quantitativeAndQualitativePattern.value;
-const centersOfObjectsDistancePatternString = ISLCA11yStrings.centersOfObjectsDistancePattern.value;
+const objectLabelPositionPatternString = inverseSquareLawCommonStrings.a11y.objectLabelPositionPattern;
+const distanceAndValueSummaryPatternString = inverseSquareLawCommonStrings.a11y.distanceAndValueSummaryPattern;
+const qualitativeDistanceEachOtherPatternString = inverseSquareLawCommonStrings.a11y.qualitativeDistanceEachOtherPattern;
+const centersExactlyPatternString = inverseSquareLawCommonStrings.a11y.centersExactlyPattern;
+const quantitativeAndQualitativePatternString = inverseSquareLawCommonStrings.a11y.quantitativeAndQualitativePattern;
+const centersOfObjectsDistancePatternString = inverseSquareLawCommonStrings.a11y.centersOfObjectsDistancePattern;
 
-const positionDistanceFromOtherObjectPatternString = ISLCA11yStrings.positionDistanceFromOtherObjectPattern.value;
-const positionProgressOrLandmarkClauseString = ISLCA11yStrings.positionProgressOrLandmarkClause.value;
-const distanceAndUnitsPatternString = ISLCA11yStrings.distanceAndUnitsPattern.value;
-const quantitativeDistancePatternString = ISLCA11yStrings.quantitativeDistancePattern.value;
-const distanceFromOtherObjectPatternString = ISLCA11yStrings.distanceFromOtherObjectPattern.value;
-const distanceFromOtherObjectSentencePatternString = ISLCA11yStrings.distanceFromOtherObjectSentencePattern.value;
+const positionDistanceFromOtherObjectPatternString = inverseSquareLawCommonStrings.a11y.positionDistanceFromOtherObjectPattern;
+const positionProgressOrLandmarkClauseString = inverseSquareLawCommonStrings.a11y.positionProgressOrLandmarkClause;
+const distanceAndUnitsPatternString = inverseSquareLawCommonStrings.a11y.distanceAndUnitsPattern;
+const quantitativeDistancePatternString = inverseSquareLawCommonStrings.a11y.quantitativeDistancePattern;
+const distanceFromOtherObjectPatternString = inverseSquareLawCommonStrings.a11y.distanceFromOtherObjectPattern;
+const distanceFromOtherObjectSentencePatternString = inverseSquareLawCommonStrings.a11y.distanceFromOtherObjectSentencePattern;
 
-const farthestFromString = ISLCA11yStrings.farthestFrom.value;
-const extremelyFarFromString = ISLCA11yStrings.extremelyFarFrom.value;
-const veryFarFromString = ISLCA11yStrings.veryFarFrom.value;
-const farFromString = ISLCA11yStrings.farFrom.value;
-const notSoCloseToString = ISLCA11yStrings.notSoCloseTo.value;
-const closeToString = ISLCA11yStrings.closeTo.value;
-const veryCloseToString = ISLCA11yStrings.veryCloseTo.value;
-const extremelyCloseToString = ISLCA11yStrings.extremelyCloseTo.value;
-const closestToString = ISLCA11yStrings.closestTo.value;
+const farthestFromString = inverseSquareLawCommonStrings.a11y.farthestFrom;
+const extremelyFarFromString = inverseSquareLawCommonStrings.a11y.extremelyFarFrom;
+const veryFarFromString = inverseSquareLawCommonStrings.a11y.veryFarFrom;
+const farFromString = inverseSquareLawCommonStrings.a11y.farFrom;
+const notSoCloseToString = inverseSquareLawCommonStrings.a11y.notSoCloseTo;
+const closeToString = inverseSquareLawCommonStrings.a11y.closeTo;
+const veryCloseToString = inverseSquareLawCommonStrings.a11y.veryCloseTo;
+const extremelyCloseToString = inverseSquareLawCommonStrings.a11y.extremelyCloseTo;
+const closestToString = inverseSquareLawCommonStrings.a11y.closestTo;
 
-const farthestFromCapitalizedString = ISLCA11yStrings.farthestFromCapitalized.value;
-const extremelyFarFromCapitalizedString = ISLCA11yStrings.extremelyFarFromCapitalized.value;
-const veryFarFromCapitalizedString = ISLCA11yStrings.veryFarFromCapitalized.value;
-const farFromCapitalizedString = ISLCA11yStrings.farFromCapitalized.value;
-const notSoCloseToCapitalizedString = ISLCA11yStrings.notSoCloseToCapitalized.value;
-const closeToCapitalizedString = ISLCA11yStrings.closeToCapitalized.value;
-const veryCloseToCapitalizedString = ISLCA11yStrings.veryCloseToCapitalized.value;
-const extremelyCloseToCapitalizedString = ISLCA11yStrings.extremelyCloseToCapitalized.value;
-const closestToCapitalizedString = ISLCA11yStrings.closestToCapitalized.value;
+const farthestFromCapitalizedString = inverseSquareLawCommonStrings.a11y.farthestFromCapitalized;
+const extremelyFarFromCapitalizedString = inverseSquareLawCommonStrings.a11y.extremelyFarFromCapitalized;
+const veryFarFromCapitalizedString = inverseSquareLawCommonStrings.a11y.veryFarFromCapitalized;
+const farFromCapitalizedString = inverseSquareLawCommonStrings.a11y.farFromCapitalized;
+const notSoCloseToCapitalizedString = inverseSquareLawCommonStrings.a11y.notSoCloseToCapitalized;
+const closeToCapitalizedString = inverseSquareLawCommonStrings.a11y.closeToCapitalized;
+const veryCloseToCapitalizedString = inverseSquareLawCommonStrings.a11y.veryCloseToCapitalized;
+const extremelyCloseToCapitalizedString = inverseSquareLawCommonStrings.a11y.extremelyCloseToCapitalized;
+const closestToCapitalizedString = inverseSquareLawCommonStrings.a11y.closestToCapitalized;
 
-const closerString = ISLCA11yStrings.closer.value;
-const fartherAwayString = ISLCA11yStrings.fartherAway.value;
+const closerString = inverseSquareLawCommonStrings.a11y.closer;
+const fartherAwayString = inverseSquareLawCommonStrings.a11y.fartherAway;
 
-const distanceApartPatternString = ISLCA11yStrings.distanceApartPattern.value;
-const spherePositionHelpTextString = ISLCA11yStrings.spherePositionHelpText.value;
+const distanceApartPatternString = inverseSquareLawCommonStrings.a11y.distanceApartPattern;
+const spherePositionHelpTextString = inverseSquareLawCommonStrings.a11y.spherePositionHelpText;
 
 // track landmarks
-const leftSideOfTrackString = ISLCA11yStrings.leftSideOfTrack.value;
-const rightSideOfTrackString = ISLCA11yStrings.rightSideOfTrack.value;
-const lastStopRightString = ISLCA11yStrings.lastStopRight.value;
-const lastStopLeftString = ISLCA11yStrings.lastStopLeft.value;
-const trackEndLeftString = ISLCA11yStrings.trackEndLeft.value;
-const trackEndRightString = ISLCA11yStrings.trackEndRight.value;
+const leftSideOfTrackString = inverseSquareLawCommonStrings.a11y.leftSideOfTrack;
+const rightSideOfTrackString = inverseSquareLawCommonStrings.a11y.rightSideOfTrack;
+const lastStopRightString = inverseSquareLawCommonStrings.a11y.lastStopRight;
+const lastStopLeftString = inverseSquareLawCommonStrings.a11y.lastStopLeft;
+const trackEndLeftString = inverseSquareLawCommonStrings.a11y.trackEndLeft;
+const trackEndRightString = inverseSquareLawCommonStrings.a11y.trackEndRight;
 
 const RELATIVE_DISTANCE_STRINGS = [
   farthestFromString,

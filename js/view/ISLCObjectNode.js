@@ -28,22 +28,21 @@ import Color from '../../../scenery/js/util/Color.js';
 import AccessibleSlider from '../../../sun/js/accessibility/AccessibleSlider.js';
 import Tandem from '../../../tandem/js/Tandem.js';
 import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
+import inverseSquareLawCommonStrings from '../inverse-square-law-common-strings.js';
 import ISLCConstants from '../ISLCConstants.js';
 import DefaultDirection from './DefaultDirection.js';
 import PositionDescriber from './describers/PositionDescriber.js';
 import ISLCAlertManager from './ISLCAlertManager.js';
 import ISLCForceArrowNode from './ISLCForceArrowNode.js';
 import ISLCObjectEnum from './ISLCObjectEnum.js';
-import ISLCA11yStrings from '../ISLCA11yStrings.js';
 import ISLCPullerNode from './ISLCPullerNode.js';
 import webSpeaker from '../../../inverse-square-law-common/js/view/webSpeaker.js';
 
-// a11y strings
-const verboseMassInteractionHintPatternString = ISLCA11yStrings.verboseMassInteractionHintPattern.value;
-const briefMassInteractionHintPatternString = ISLCA11yStrings.briefMassInteractionHintPattern.value;
-const positionChangePatternString = ISLCA11yStrings.positionChangePattern.value;
-
 // constants
+const verboseMassInteractionHintPatternString = inverseSquareLawCommonStrings.a11y.verboseMassInteractionHintPattern;
+const briefMassInteractionHintPatternString = inverseSquareLawCommonStrings.a11y.briefMassInteractionHintPattern;
+const positionChangePatternString = inverseSquareLawCommonStrings.a11y.positionChangePattern;
+
 const NEGATIVE_FILL = new Color( '#66f' );
 const POSITIVE_FILL = new Color( '#f66' );
 const ZERO_FILL = new Color( 'gray' );

@@ -15,7 +15,6 @@ import VerticalAquaRadioButtonGroup from '../../../sun/js/VerticalAquaRadioButto
 import Tandem from '../../../tandem/js/Tandem.js';
 import inverseSquareLawCommonStrings from '../inverse-square-law-common-strings.js';
 import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
-import ISLCA11yStrings from '../ISLCA11yStrings.js';
 import ISLCConstants from '../ISLCConstants.js';
 import ForceValuesDisplayEnum from '../model/ForceValuesDisplayEnum.js';
 
@@ -24,11 +23,8 @@ const decimalNotationString = inverseSquareLawCommonStrings.decimalNotation;
 const forceValuesString = inverseSquareLawCommonStrings.forceValues;
 const hiddenString = inverseSquareLawCommonStrings.hidden;
 const scientificNotationString = inverseSquareLawCommonStrings.scientificNotation;
+const forceValuesHelpTextString = inverseSquareLawCommonStrings.a11y.forceValuesHelpText;
 
-// a11y strings
-const forceValuesHelpTextString = ISLCA11yStrings.forceValuesHelpText.value;
-
-// constants
 const TEXT_TANDEM_NAME = 'labelText';
 
 class ISLCForceValuesDisplayControl extends VBox {

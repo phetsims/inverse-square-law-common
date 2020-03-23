@@ -13,58 +13,55 @@ import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import ScientificNotationNode from '../../../../scenery-phet/js/ScientificNotationNode.js';
 import inverseSquareLawCommonStrings from '../../inverse-square-law-common-strings.js';
 import inverseSquareLawCommon from '../../inverseSquareLawCommon.js';
-import ISLCA11yStrings from '../../ISLCA11yStrings.js';
 import ForceValuesDisplayEnum from '../../model/ForceValuesDisplayEnum.js';
 import ISLCDescriber from './ISLCDescriber.js';
 
 const unitsNewtonsString = inverseSquareLawCommonStrings.units.newtons;
+const forceVectorArrowsString = inverseSquareLawCommonStrings.a11y.forceVectorArrows;
+const summaryVectorSizePatternString = inverseSquareLawCommonStrings.a11y.summaryVectorSizePattern;
+const summaryVectorSizeValueUnitsPatternString = inverseSquareLawCommonStrings.a11y.summaryVectorSizeValueUnitsPattern;
+const forceVectorMagnitudeUnitsPatternString = inverseSquareLawCommonStrings.a11y.forceVectorMagnitudeUnitsPattern;
+const forceAndVectorPatternString = inverseSquareLawCommonStrings.a11y.forceAndVectorPattern;
+const forceVectorSizePatternString = inverseSquareLawCommonStrings.a11y.forceVectorSizePattern;
+const robotPullSummaryPatternString = inverseSquareLawCommonStrings.a11y.robotPullSummaryPattern;
+const robotPushSummaryPatternString = inverseSquareLawCommonStrings.a11y.robotPushSummaryPattern;
+const vectorsString = inverseSquareLawCommonStrings.a11y.vectors;
+const vectorsSizeClausePatternString = inverseSquareLawCommonStrings.a11y.vectorsSizeClausePattern;
+const forcesValueUnitsClausePatternString = inverseSquareLawCommonStrings.a11y.forcesValueUnitsClausePattern;
+const forceMagnitudeString = inverseSquareLawCommonStrings.a11y.forceMagnitude;
+const forceVectorCapitalizedString = inverseSquareLawCommonStrings.a11y.forceVectorCapitalized;
+const forceVectorsSizePatternString = inverseSquareLawCommonStrings.a11y.forceVectorsSizePattern;
 
-// a11y strings
-const forceVectorArrowsString = ISLCA11yStrings.forceVectorArrows.value;
-const summaryVectorSizePatternString = ISLCA11yStrings.summaryVectorSizePattern.value;
-const summaryVectorSizeValueUnitsPatternString = ISLCA11yStrings.summaryVectorSizeValueUnitsPattern.value;
-const forceVectorMagnitudeUnitsPatternString = ISLCA11yStrings.forceVectorMagnitudeUnitsPattern.value;
-const forceAndVectorPatternString = ISLCA11yStrings.forceAndVectorPattern.value;
-const forceVectorSizePatternString = ISLCA11yStrings.forceVectorSizePattern.value;
-const robotPullSummaryPatternString = ISLCA11yStrings.robotPullSummaryPattern.value;
-const robotPushSummaryPatternString = ISLCA11yStrings.robotPushSummaryPattern.value;
-const vectorsString = ISLCA11yStrings.vectors.value;
-const vectorsSizeClausePatternString = ISLCA11yStrings.vectorsSizeClausePattern.value;
-const forcesValueUnitsClausePatternString = ISLCA11yStrings.forcesValueUnitsClausePattern.value;
-const forceMagnitudeString = ISLCA11yStrings.forceMagnitude.value;
-const forceVectorCapitalizedString = ISLCA11yStrings.forceVectorCapitalized.value;
-const forceVectorsSizePatternString = ISLCA11yStrings.forceVectorsSizePattern.value;
+const valuesInUnitsPatternString = inverseSquareLawCommonStrings.a11y.valuesInUnitsPattern;
+const forcesInScientificNotationString = inverseSquareLawCommonStrings.a11y.forcesInScientificNotation;
 
-const valuesInUnitsPatternString = ISLCA11yStrings.valuesInUnitsPattern.value;
-const forcesInScientificNotationString = ISLCA11yStrings.forcesInScientificNotation.value;
+const vectorChangePatternString = inverseSquareLawCommonStrings.a11y.vectorChangePattern;
+const vectorsCapitalizedString = inverseSquareLawCommonStrings.a11y.vectorsCapitalized;
+const vectorChangeForcesNowValuePatternString = inverseSquareLawCommonStrings.a11y.vectorChangeForcesNowValuePattern;
+const vectorChangeSentencePatternString = inverseSquareLawCommonStrings.a11y.vectorChangeSentencePattern;
+const vectorChangeClausePatternString = inverseSquareLawCommonStrings.a11y.vectorChangeClausePattern;
+const vectorChangeForcesNowClausePatternString = inverseSquareLawCommonStrings.a11y.vectorChangeForcesNowClausePattern;
+const vectorForceClausePatternString = inverseSquareLawCommonStrings.a11y.vectorForceClausePattern;
+const regionForceClausePatternString = inverseSquareLawCommonStrings.a11y.regionForceClausePattern;
 
-const vectorChangePatternString = ISLCA11yStrings.vectorChangePattern.value;
-const vectorsCapitalizedString = ISLCA11yStrings.vectorsCapitalized.value;
-const vectorChangeForcesNowValuePatternString = ISLCA11yStrings.vectorChangeForcesNowValuePattern.value;
-const vectorChangeSentencePatternString = ISLCA11yStrings.vectorChangeSentencePattern.value;
-const vectorChangeClausePatternString = ISLCA11yStrings.vectorChangeClausePattern.value;
-const vectorChangeForcesNowClausePatternString = ISLCA11yStrings.vectorChangeForcesNowClausePattern.value;
-const vectorForceClausePatternString = ISLCA11yStrings.vectorForceClausePattern.value;
-const regionForceClausePatternString = ISLCA11yStrings.regionForceClausePattern.value;
+const tinyString = inverseSquareLawCommonStrings.a11y.tiny;
+const verySmallString = inverseSquareLawCommonStrings.a11y.verySmall;
+const smallString = inverseSquareLawCommonStrings.a11y.small;
+const mediumSizeString = inverseSquareLawCommonStrings.a11y.mediumSize;
+const largeString = inverseSquareLawCommonStrings.a11y.large;
+const veryLargeString = inverseSquareLawCommonStrings.a11y.veryLarge;
+const hugeString = inverseSquareLawCommonStrings.a11y.huge;
 
-const tinyString = ISLCA11yStrings.tiny.value;
-const verySmallString = ISLCA11yStrings.verySmall.value;
-const smallString = ISLCA11yStrings.small.value;
-const mediumSizeString = ISLCA11yStrings.mediumSize.value;
-const largeString = ISLCA11yStrings.large.value;
-const veryLargeString = ISLCA11yStrings.veryLarge.value;
-const hugeString = ISLCA11yStrings.huge.value;
+const getBiggerString = inverseSquareLawCommonStrings.a11y.getBigger;
+const getSmallerString = inverseSquareLawCommonStrings.a11y.getSmaller;
 
-const getBiggerString = ISLCA11yStrings.getBigger.value;
-const getSmallerString = ISLCA11yStrings.getSmaller.value;
-
-const veryHardString = ISLCA11yStrings.veryHard.value;
-const hardString = ISLCA11yStrings.hard.value;
-const moderatelyString = ISLCA11yStrings.moderately.value;
-const gentlyString = ISLCA11yStrings.gently.value;
-const lighlyString = ISLCA11yStrings.lightly.value;
-const aLittleString = ISLCA11yStrings.aLittle.value;
-const aTinyBitString = ISLCA11yStrings.aTinyBit.value;
+const veryHardString = inverseSquareLawCommonStrings.a11y.veryHard;
+const hardString = inverseSquareLawCommonStrings.a11y.hard;
+const moderatelyString = inverseSquareLawCommonStrings.a11y.moderately;
+const gentlyString = inverseSquareLawCommonStrings.a11y.gently;
+const lighlyString = inverseSquareLawCommonStrings.a11y.lightly;
+const aLittleString = inverseSquareLawCommonStrings.a11y.aLittle;
+const aTinyBitString = inverseSquareLawCommonStrings.a11y.aTinyBit;
 
 const SIZE_STRINGS = [
   tinyString,
@@ -87,9 +84,9 @@ const PULL_EFFORT_STINGS = [
 const CHANGE_DIRECTIONS = [ getSmallerString, null, getBiggerString ];
 
 // scientific notation
-const scientificNotationPatternString = ISLCA11yStrings.scientificNotationPattern.value;
-const negativeValuePatternString = ISLCA11yStrings.negativeValuePattern.value;
-const valuePatternString = ISLCA11yStrings.valuePattern.value;
+const scientificNotationPatternString = inverseSquareLawCommonStrings.a11y.scientificNotationPattern;
+const negativeValuePatternString = inverseSquareLawCommonStrings.a11y.negativeValuePattern;
+const valuePatternString = inverseSquareLawCommonStrings.a11y.valuePattern;
 
 class ForceDescriber extends ISLCDescriber {
 
