@@ -151,158 +151,166 @@
     "vectorForceClausePattern": {
       "value": "{{vectorClause}}, {{forceValuesClause}}"
     },
-    "vectorChangePattern": {
-      "value": "{{positionProgressOrLandmarkClause}} {{vectors}} {{changeDirection}}"
+    "alerts": {
+      "vectorChangePattern": {
+        "value": "{{positionProgressOrLandmarkClause}} {{vectors}} {{changeDirection}}"
+      },
+      "vectorChangeSentencePattern": {
+        "value": "{{vectorChange}}."
+      },
+      "vectorChangeForcesNowValuePattern": {
+        "value": "{{vectorChangeClause}}, forces now {{forceValue}} {{units}}."
+      },
+      "vectorsCapitalized": {
+        "value": "Force vectors"
+      },
+      "vectorChangeClausePattern": {
+        "value": "{{vectors}} {{changeDirection}}"
+      },
+      "vectorChangeForcesNowClausePattern": {
+        "value": "{{vectors}} {{changeDirection}}, forces now {{forceValue}} {{units}}"
+      },
+      "vectors": {
+        "value": "force vectors"
+      },
+      "vectorsSizeClausePattern": {
+        "value": "{{vectors}} {{size}}"
+      },
+      "forcesValueUnitsClausePattern": {
+        "value": "forces {{forceValue}} {{units}}"
+      }
     },
-    "vectorChangeSentencePattern": {
-      "value": "{{vectorChange}}."
+    "qualitative": {
+      "tiny": {
+        "value": "tiny"
+      },
+      "verySmall": {
+        "value": "very small"
+      },
+      "small": {
+        "value": "small"
+      },
+      "mediumSize": {
+        "value": "medium size"
+      },
+      "large": {
+        "value": "large"
+      },
+      "veryLarge": {
+        "value": "very large"
+      },
+      "huge": {
+        "value": "huge"
+      },
+      "getBigger": {
+        "value": "get bigger"
+      },
+      "getSmaller": {
+        "value": "get smaller"
+      },
+      "farthestFrom": {
+        "value": "farthest from"
+      },
+      "extremelyFarFrom": {
+        "value": "extremely far from"
+      },
+      "veryFarFrom": {
+        "value": "very far from"
+      },
+      "farFrom": {
+        "value": "far from"
+      },
+      "notSoCloseTo": {
+        "value": "not so close to"
+      },
+      "closeTo": {
+        "value": "close to"
+      },
+      "veryCloseTo": {
+        "value": "very close to"
+      },
+      "extremelyCloseTo": {
+        "value": "extremely close to"
+      },
+      "closestTo": {
+        "value": "closest to"
+      },
+      "farthestFromCapitalized": {
+        "value": "Farthest from"
+      },
+      "extremelyFarFromCapitalized": {
+        "value": "Extremely far from"
+      },
+      "veryFarFromCapitalized": {
+        "value": "Very far from"
+      },
+      "farFromCapitalized": {
+        "value": "Far from"
+      },
+      "notSoCloseToCapitalized": {
+        "value": "Not so close to"
+      },
+      "closeToCapitalized": {
+        "value": "Close to"
+      },
+      "veryCloseToCapitalized": {
+        "value": "Very close to"
+      },
+      "extremelyCloseToCapitalized": {
+        "value": "Extremely close to"
+      },
+      "closestToCapitalized": {
+        "value": "Closest to"
+      },
+      "closer": {
+        "value": "Closer"
+      },
+      "fartherAway": {
+        "value": "Farther away"
+      },
+      "left": {
+        "value": "left"
+      },
+      "right": {
+        "value": "right"
+      }
     },
-    "vectorChangeForcesNowValuePattern": {
-      "value": "{{vectorChangeClause}}, forces now {{forceValue}} {{units}}."
+    "pullerEffort": {
+      "veryHard": {
+        "value": "very hard"
+      },
+      "hard": {
+        "value": "hard"
+      },
+      "moderately": {
+        "value": "moderately"
+      },
+      "gently": {
+        "value": "gently"
+      },
+      "lightly": {
+        "value": "lightly"
+      },
+      "aLittle": {
+        "value": "a little"
+      },
+      "aTinyBit": {
+        "value": "very little"
+      }
     },
-    "vectorsCapitalized": {
-      "value": "Force vectors"
-    },
-    "vectorChangeClausePattern": {
-      "value": "{{vectors}} {{changeDirection}}"
-    },
-    "vectorChangeForcesNowClausePattern": {
-      "value": "{{vectors}} {{changeDirection}}, forces now {{forceValue}} {{units}}"
-    },
-    "vectors": {
-      "value": "force vectors"
-    },
-    "vectorsSizeClausePattern": {
-      "value": "{{vectors}} {{size}}"
-    },
-    "forcesValueUnitsClausePattern": {
-      "value": "forces {{forceValue}} {{units}}"
-    },
-    "tiny": {
-      "value": "tiny"
-    },
-    "verySmall": {
-      "value": "very small"
-    },
-    "small": {
-      "value": "small"
-    },
-    "mediumSize": {
-      "value": "medium size"
-    },
-    "large": {
-      "value": "large"
-    },
-    "veryLarge": {
-      "value": "very large"
-    },
-    "huge": {
-      "value": "huge"
-    },
-    "getBigger": {
-      "value": "get bigger"
-    },
-    "getSmaller": {
-      "value": "get smaller"
-    },
-    "farthestFrom": {
-      "value": "farthest from"
-    },
-    "extremelyFarFrom": {
-      "value": "extremely far from"
-    },
-    "veryFarFrom": {
-      "value": "very far from"
-    },
-    "farFrom": {
-      "value": "far from"
-    },
-    "notSoCloseTo": {
-      "value": "not so close to"
-    },
-    "closeTo": {
-      "value": "close to"
-    },
-    "veryCloseTo": {
-      "value": "very close to"
-    },
-    "extremelyCloseTo": {
-      "value": "extremely close to"
-    },
-    "closestTo": {
-      "value": "closest to"
-    },
-    "farthestFromCapitalized": {
-      "value": "Farthest from"
-    },
-    "extremelyFarFromCapitalized": {
-      "value": "Extremely far from"
-    },
-    "veryFarFromCapitalized": {
-      "value": "Very far from"
-    },
-    "farFromCapitalized": {
-      "value": "Far from"
-    },
-    "notSoCloseToCapitalized": {
-      "value": "Not so close to"
-    },
-    "closeToCapitalized": {
-      "value": "Close to"
-    },
-    "veryCloseToCapitalized": {
-      "value": "Very close to"
-    },
-    "extremelyCloseToCapitalized": {
-      "value": "Extremely close to"
-    },
-    "closestToCapitalized": {
-      "value": "Closest to"
-    },
-    "closer": {
-      "value": "Closer"
-    },
-    "fartherAway": {
-      "value": "Farther away"
-    },
-    "left": {
-      "value": "left"
-    },
-    "right": {
-      "value": "right"
-    },
-    "veryHard": {
-      "value": "very hard"
-    },
-    "hard": {
-      "value": "hard"
-    },
-    "moderately": {
-      "value": "moderately"
-    },
-    "gently": {
-      "value": "gently"
-    },
-    "lightly": {
-      "value": "lightly"
-    },
-    "aLittle": {
-      "value": "a little"
-    },
-    "aTinyBit": {
-      "value": "very little"
-    },
-    "rulerLabel": {
-      "value": "Ruler"
-    },
-    "rulerHelpText": {
-      "value": "If needed, grab ruler to measure distance between centers of spheres. {{deviceSpecificHint}}"
-    },
-    "rulerKeyboardHint": {
-      "value": "Once grabbed, use keyboard shortcuts to move ruler."
-    },
-    "measureDistanceRuler": {
-      "value": "Measure Distance Ruler"
+    "ruler": {
+      "rulerLabel": {
+        "value": "Ruler"
+      },
+      "rulerHelpText": {
+        "value": "If needed, grab ruler to measure distance between centers of spheres. {{deviceSpecificHint}}"
+      },
+      "rulerKeyboardHint": {
+        "value": "Once grabbed, use keyboard shortcuts to move ruler."
+      },
+      "measureDistanceRuler": {
+        "value": "Measure Distance Ruler"
+      }
     },
     "forceValuesCheckboxHelpText": {
       "value": "Explore value of forces in newtons."
@@ -328,14 +336,16 @@
     "valuePattern": {
       "value": "{{value}}"
     },
-    "verboseMassInteractionHintPattern": {
-      "value": "Move {{objectLabel}}, {{objectColor}} Sphere"
-    },
-    "briefMassInteractionHintPattern": {
-      "value": "Move {{objectLabel}}"
-    },
-    "positionChangePattern": {
-      "value": "{{valueText}}. {{vectorText}}"
+    "selfVoicing": {
+      "verboseMassInteractionHintPattern": {
+        "value": "Move {{objectLabel}}, {{objectColor}} Sphere"
+      },
+      "briefMassInteractionHintPattern": {
+        "value": "Move {{objectLabel}}"
+      },
+      "positionChangePattern": {
+        "value": "{{valueText}}. {{vectorText}}"
+      }
     }
   }
 }

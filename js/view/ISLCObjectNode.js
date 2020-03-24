@@ -39,9 +39,9 @@ import ISLCPullerNode from './ISLCPullerNode.js';
 import webSpeaker from '../../../inverse-square-law-common/js/view/webSpeaker.js';
 
 // constants
-const verboseMassInteractionHintPatternString = inverseSquareLawCommonStrings.a11y.verboseMassInteractionHintPattern;
-const briefMassInteractionHintPatternString = inverseSquareLawCommonStrings.a11y.briefMassInteractionHintPattern;
-const positionChangePatternString = inverseSquareLawCommonStrings.a11y.positionChangePattern;
+const verboseMassInteractionHintPatternString = inverseSquareLawCommonStrings.a11y.selfVoicing.verboseMassInteractionHintPattern;
+const briefMassInteractionHintPatternString = inverseSquareLawCommonStrings.a11y.selfVoicing.briefMassInteractionHintPattern;
+const positionChangePatternString = inverseSquareLawCommonStrings.a11y.selfVoicing.positionChangePattern;
 
 const NEGATIVE_FILL = new Color( '#66f' );
 const POSITIVE_FILL = new Color( '#f66' );
