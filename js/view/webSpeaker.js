@@ -31,11 +31,11 @@ class WebSpeaker {
 
     // {Property.<Verbosity>} - the "interactive mode" self voicing content can be brief or more "verbose",
     // debending on user selection
-    this.interactiveModeVerbosityProperty = new EnumerationProperty( Verbosity, Verbosity.BRIEF );
+    this.interactiveModeVerbosityProperty = new EnumerationProperty( Verbosity, Verbosity.VERBOSE );
 
     // {EnumerationProperty.<Verbosity>} - the "explore mode" self voicing content can be brief or verbose, depending
     // on user selection
-    this.exploreModeVerbosityProperty = new EnumerationProperty( Verbosity, Verbosity.BRIEF );
+    this.exploreModeVerbosityProperty = new EnumerationProperty( Verbosity, Verbosity.VERBOSE );
 
     // @public {null|SpeechSynthesisVoice}
     this.voiceProperty = new Property( null );
