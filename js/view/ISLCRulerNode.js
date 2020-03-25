@@ -37,7 +37,7 @@ import ISLCQueryParameters from '../ISLCQueryParameters.js';
 const unitsCentimetersString = inverseSquareLawCommonStrings.units.centimeters;
 const rulerHelpTextString = inverseSquareLawCommonStrings.a11y.ruler.rulerHelpText;
 const rulerKeyboardHintString = inverseSquareLawCommonStrings.a11y.ruler.rulerKeyboardHint;
-const gestureHelpTextPatternString = sceneryPhetStrings.a11y.gestureHelpTextPattern;
+const gestureHelpTextPatternString = sceneryPhetStrings.a11y.grabDrag.gestureHelpTextPattern;
 const rulerLabelString = inverseSquareLawCommonStrings.a11y.ruler.rulerLabel;
 const measureDistanceRulerString = inverseSquareLawCommonStrings.a11y.ruler.measureDistanceRuler;
 
