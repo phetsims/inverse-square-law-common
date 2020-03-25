@@ -345,6 +345,18 @@
       },
       "positionChangePattern": {
         "value": "{{valueText}}. {{vectorText}}"
+      },
+      "briefNewForceNoValuesAlert": {
+        "value": "Forces {{change}}."
+      },
+      "briefNewForceAlertPattern": {
+        "value": "Forces {{change}}, now {{value}} newtons."
+      },
+      "bigger": {
+        "value": "bigger"
+      },
+      "smaller": {
+        "value": "smaller"
       }
     }
   }

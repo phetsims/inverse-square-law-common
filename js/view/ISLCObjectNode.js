@@ -41,7 +41,11 @@ import webSpeaker from '../../../inverse-square-law-common/js/view/webSpeaker.js
 // constants
 const verboseMassInteractionHintPatternString = inverseSquareLawCommonStrings.a11y.selfVoicing.verboseMassInteractionHintPattern;
 const briefMassInteractionHintPatternString = inverseSquareLawCommonStrings.a11y.selfVoicing.briefMassInteractionHintPattern;
-const positionChangePatternString = inverseSquareLawCommonStrings.a11y.selfVoicing.positionChangePattern;
+const selfVoicingPositionChangePatternString = inverseSquareLawCommonStrings.a11y.selfVoicing.positionChangePattern;
+const selfVoicingBiggerString = inverseSquareLawCommonStrings.a11y.selfVoicing.bigger;
+const selfVoicingSmallerString = inverseSquareLawCommonStrings.a11y.selfVoicing.smaller;
+const selfVoicingBriefNewForceNoValuesAlertString = inverseSquareLawCommonStrings.a11y.selfVoicing.briefNewForceNoValuesAlert;
+const selfVoicingBriefNewForceAlertPatternString = inverseSquareLawCommonStrings.a11y.selfVoicing.briefNewForceAlertPattern;
 
 const NEGATIVE_FILL = new Color( '#66f' );
 const POSITIVE_FILL = new Color( '#f66' );
@@ -261,6 +265,7 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
   let clickOffset;
 
   let oldPosition = object.positionProperty.get();
+  let forceOnStart = model.forceProperty.get();
   this.dragNode.addInputListener( new DragListener( {
     allowTouchSnag: true,
     start: event => {
@@ -268,6 +273,7 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
       object.isDragging = true;
 
       oldPosition = object.positionProperty.get();
+      forceOnStart = model.forceProperty.get();
     },
     drag: event => {
 
@@ -290,7 +296,7 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
 
       // SELF VOICING PROTOTYPE - when ending drag, speak the result of the interaction
       if ( webSpeaker.interactiveModeProperty.get() ) {
-        webSpeaker.speak( this.getSelfVoicingPositionChangeAlert( object.positionProperty.get(), oldPosition ) );
+        webSpeaker.speak( this.getSelfVoicingPositionChangeAlert( object.positionProperty.get(), oldPosition, model.forceProperty.get(), forceOnStart ) );
       }
     },
     tandem: config.tandem.createTandem( 'dragListener' )
@@ -332,6 +338,8 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
     startDrag: () => {
       object.isDragging = true;
       oldPosition = object.positionProperty.get();
+
+      forceOnStart = model.forceProperty.get();
     },
     endDrag: () => {
       object.isDragging = false;
@@ -339,7 +347,7 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
 
       // SELF VOICING PROTOTYPE - when ending drag, speak the result of the interaction
       if ( webSpeaker.interactiveModeProperty.get() ) {
-        webSpeaker.speak( this.getSelfVoicingPositionChangeAlert( object.positionProperty.get(), oldPosition ) );
+        webSpeaker.speak( this.getSelfVoicingPositionChangeAlert( object.positionProperty.get(), oldPosition, model.forceProperty.get(), forceOnStart ) );
       }
     },
     a11yCreateValueChangeAlert: () => {
@@ -451,10 +459,41 @@ inherit( Node, ISLCObjectNode, {
     this.pullerNode.setPull( this.model.forceProperty.get(), this.objectCircle.width / 2 );
   },
 
-  getSelfVoicingPositionChangeAlert( newPosition, oldPosition ) {
-    const vectorChangeText = newPosition !== oldPosition ? this.forceDescriber.getVectorChangeText( this.objectModel ) : this.forceDescriber.getPositionUnchangedAlertText( this.objectModel );
+  /**
+   * PROTOTYPE CODE: For the self voicing feature set, get alerts that describe the change in mass position. Only to be read when
+   * "interactive" mode is enabled.
+   * @private
+   *
+   * @param {number} newPosition
+   * @param {number} oldPosition
+   * @returns {string}
+   */
+  getSelfVoicingPositionChangeAlert( newPosition, oldPosition, newForce, oldForce ) {
+    let vectorChangeText;
 
-    return StringUtils.fillIn( positionChangePatternString, {
+    if ( webSpeaker.getInteractiveModeVerbose() ) {
+
+      // just the aria-live alert in verbose mode
+      vectorChangeText = newPosition !== oldPosition ? this.forceDescriber.getVectorChangeText( this.objectModel ) : this.forceDescriber.getPositionUnchangedAlertText( this.objectModel );
+    }
+    else if ( webSpeaker.getInteractiveModeBrief() ) {
+
+      // custom alert if brief mode, description dependent on whether values are shown
+      const changeString = newForce - oldForce > 0 ? selfVoicingBiggerString : selfVoicingSmallerString;
+      if ( this.model.showForceValuesProperty.get() ) {
+        vectorChangeText = StringUtils.fillIn( selfVoicingBriefNewForceAlertPatternString, {
+          change: changeString,
+          value: this.forceDescriber.getFormattedForce()
+        } );
+      }
+      else {
+        vectorChangeText = StringUtils.fillIn( selfVoicingBriefNewForceNoValuesAlertString, {
+          change: changeString
+        } );
+      }
+    }
+
+    return StringUtils.fillIn( selfVoicingPositionChangePatternString, {
       valueText: this.getAriaValueText(),
       vectorText: vectorChangeText
     } );
