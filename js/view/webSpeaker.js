@@ -16,6 +16,7 @@ import EnumerationProperty from '../../../axon/js/EnumerationProperty.js';
 import NumberProperty from '../../../axon/js/NumberProperty.js';
 import Property from '../../../axon/js/Property.js';
 import Range from '../../../dot/js/Range.js';
+import stripEmbeddingMarks from '../../../phet-core/js/stripEmbeddingMarks.js';
 
 const Verbosity = Enumeration.byKeys( [ 'BRIEF', 'VERBOSE' ] );
 
@@ -89,14 +90,15 @@ class WebSpeaker {
   }
 
   /**
-   * Use speech synthesis to speak an utterance. No-op unless webSpeaker is initialized.s
+   * Use speech synthesis to speak an utterance. No-op unless webSpeaker is initialized.
    * @param {string} utterThis
    */
   speak( utterThis ) {
     if ( this.initialized && this.enabled ) {
       this.synth.cancel();
 
-      const utterance = new SpeechSynthesisUtterance( utterThis );
+      // embidding marks (for i18n) impact the output, strip before speaking
+      const utterance = new SpeechSynthesisUtterance( stripEmbeddingMarks( utterThis ) );
       utterance.voice = this.voiceProperty.value;
       utterance.pitch = this.voicePitchProperty.value;
       utterance.rate = this.voiceRateProperty.value;
