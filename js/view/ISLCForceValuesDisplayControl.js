@@ -8,7 +8,6 @@
 
 import merge from '../../../phet-core/js/merge.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
-import AccessiblePeer from '../../../scenery/js/accessibility/AccessiblePeer.js';
 import Text from '../../../scenery/js/nodes/Text.js';
 import VBox from '../../../scenery/js/nodes/VBox.js';
 import VerticalAquaRadioButtonGroup from '../../../sun/js/VerticalAquaRadioButtonGroup.js';
@@ -83,13 +82,6 @@ class ISLCForceValuesDisplayControl extends VBox {
       labelContent: forceValuesString,
       descriptionContent: forceValuesHelpTextString,
       tandem: forceValuesGroupTandem
-    } );
-
-    // The ul radio button group is aria-labelledby its label sibling (the h3 "Force Values")
-    radioButtonGroup.addAriaLabelledbyAssociation( {
-      thisElementName: AccessiblePeer.PRIMARY_SIBLING,
-      otherElementName: AccessiblePeer.LABEL_SIBLING,
-      otherNode: radioButtonGroup
     } );
 
     options.children = [
