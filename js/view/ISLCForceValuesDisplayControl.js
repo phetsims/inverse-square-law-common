@@ -12,7 +12,7 @@ import Text from '../../../scenery/js/nodes/Text.js';
 import VBox from '../../../scenery/js/nodes/VBox.js';
 import VerticalAquaRadioButtonGroup from '../../../sun/js/VerticalAquaRadioButtonGroup.js';
 import Tandem from '../../../tandem/js/Tandem.js';
-import inverseSquareLawCommonStrings from '../inverse-square-law-common-strings.js';
+import inverseSquareLawCommonStrings from '../inverseSquareLawCommonStrings.js';
 import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
 import ISLCConstants from '../ISLCConstants.js';
 import ForceValuesDisplayEnum from '../model/ForceValuesDisplayEnum.js';

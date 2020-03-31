@@ -19,7 +19,7 @@ import ScientificNotationNode from '../../../scenery-phet/js/ScientificNotationN
 import Node from '../../../scenery/js/nodes/Node.js';
 import Rectangle from '../../../scenery/js/nodes/Rectangle.js';
 import RichText from '../../../scenery/js/nodes/RichText.js';
-import inverseSquareLawCommonStrings from '../inverse-square-law-common-strings.js';
+import inverseSquareLawCommonStrings from '../inverseSquareLawCommonStrings.js';
 import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
 import ISLCConstants from '../ISLCConstants.js';
 import DefaultDirection from './DefaultDirection.js';

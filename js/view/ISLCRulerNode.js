@@ -15,7 +15,7 @@ import StringUtils from '../../../phetcommon/js/util/StringUtils.js';
 import GrabDragInteraction from '../../../scenery-phet/js/accessibility/GrabDragInteraction.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
 import RulerNode from '../../../scenery-phet/js/RulerNode.js';
-import sceneryPhetStrings from '../../../scenery-phet/js/scenery-phet-strings.js';
+import sceneryPhetStrings from '../../../scenery-phet/js/sceneryPhetStrings.js';
 import FocusHighlightFromNode from '../../../scenery/js/accessibility/FocusHighlightFromNode.js';
 import KeyboardUtils from '../../../scenery/js/accessibility/KeyboardUtils.js';
 import DragListener from '../../../scenery/js/listeners/DragListener.js';
@@ -29,7 +29,7 @@ import commonGrabSoundInfo from '../../../tambo/sounds/grab_mp3.js';
 import commonReleaseSoundInfo from '../../../tambo/sounds/release_mp3.js';
 import Utterance from '../../../utterance-queue/js/Utterance.js';
 import rulerMovementSoundInfo from '../../sounds/ruler-movement-000_mp3.js';
-import inverseSquareLawCommonStrings from '../inverse-square-law-common-strings.js';
+import inverseSquareLawCommonStrings from '../inverseSquareLawCommonStrings.js';
 import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
 import ISLCQueryParameters from '../ISLCQueryParameters.js';
 

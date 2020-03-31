@@ -11,7 +11,7 @@
 
 import ActivationUtterance from '../../../utterance-queue/js/ActivationUtterance.js';
 import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
-import inverseSquareLawCommonStrings from '../inverse-square-law-common-strings.js';
+import inverseSquareLawCommonStrings from '../inverseSquareLawCommonStrings.js';
 
 // constants
 const forceValuesHiddenString = inverseSquareLawCommonStrings.a11y.forceValuesHidden;

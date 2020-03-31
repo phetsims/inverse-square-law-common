@@ -12,7 +12,7 @@ import Property from '../../../../axon/js/Property.js';
 import StringProperty from '../../../../axon/js/StringProperty.js';
 import merge from '../../../../phet-core/js/merge.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
-import inverseSquareLawCommonStrings from '../../inverse-square-law-common-strings.js';
+import inverseSquareLawCommonStrings from '../../inverseSquareLawCommonStrings.js';
 import inverseSquareLawCommon from '../../inverseSquareLawCommon.js';
 import ISLCObjectEnum from '../ISLCObjectEnum.js';
 import ISLCDescriber from './ISLCDescriber.js';

@@ -14,7 +14,7 @@ import PhetFont from '../../../scenery-phet/js/PhetFont.js';
 import GroupFocusHighlightFromNode from '../../../scenery/js/accessibility/GroupFocusHighlightFromNode.js';
 import Text from '../../../scenery/js/nodes/Text.js';
 import Tandem from '../../../tandem/js/Tandem.js';
-import inverseSquareLawCommonStrings from '../inverse-square-law-common-strings.js';
+import inverseSquareLawCommonStrings from '../inverseSquareLawCommonStrings.js';
 import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
 import ISLCPanel from './ISLCPanel.js';
 
