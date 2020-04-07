@@ -20,7 +20,6 @@ import ISLCDescriber from './ISLCDescriber.js';
 const unitsMetersString = inverseSquareLawCommonStrings.units.meters;
 const unitsMeterString = inverseSquareLawCommonStrings.units.meter;
 
-// a11y strings
 const objectLabelPositionPatternString = inverseSquareLawCommonStrings.a11y.sphere.objectLabelPositionPattern;
 const distanceAndValueSummaryPatternString = inverseSquareLawCommonStrings.a11y.screenSummary.distanceAndValueSummaryPattern;
 const qualitativeDistanceEachOtherPatternString = inverseSquareLawCommonStrings.a11y.screenSummary.qualitativeDistanceEachOtherPattern;
