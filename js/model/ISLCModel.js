@@ -104,7 +104,7 @@ function ISLCModel( forceConstant, object1, object2, positionRange, tandem, opti
     object.enabledRangeProperty.set( new Range( minPosition, maxPosition ) );
   };
 
-  // a11y - necessary to reset the enabledRangeProperty to prevent object overlap, disposal not necessary
+  // pdom - necessary to reset the enabledRangeProperty to prevent object overlap, disposal not necessary
   // We need to update the available range for each object when the either's radius or position changes.
   Property.multilink( [ object1.positionProperty, object2.positionProperty ], () => {
     updateRange( object1 );

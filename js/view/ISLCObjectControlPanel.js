@@ -53,7 +53,7 @@ class ISLCObjectControlPanel extends ISLCPanel {
       },
       additionalTicks: [],
 
-      // a11y
+      // pdom
       tagName: 'div', // this optional structure is added for nicer formatting of value-text in the a11y view
 
       // phet-io
@@ -127,11 +127,11 @@ class ISLCObjectControlPanel extends ISLCPanel {
 
     this.numberControl = numberControl;
 
-    // a11y - it looks nicer if the entire panel has a group focus highlight rather than the NumberControl
+    // pdom - it looks nicer if the entire panel has a group focus highlight rather than the NumberControl
     assert && assert( numberControlOptions.groupFocusHighlight === undefined, 'ISLCObjectControlPanel sets group focus highlight' );
     this.numberControl.groupFocusHighlight = false;
 
-    // a11y - creates highlight that appears around this node when any ancestor (like the
+    // pdom - creates highlight that appears around this node when any ancestor (like the
     // NumberControl) has focus
     this.groupFocusHighlight = new GroupFocusHighlightFromNode( this, {
       useLocalBounds: true,

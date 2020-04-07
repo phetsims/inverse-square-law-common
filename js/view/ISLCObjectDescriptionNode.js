@@ -27,7 +27,7 @@ class ISLCObjectDescriptionNode extends Node {
       object1Label: null, // {string} @required
       object2Label: null, // {string} @required
 
-      // a11y
+      // pdom
       labelTagName: 'h3',
       tagName: 'ul'
     }, config );

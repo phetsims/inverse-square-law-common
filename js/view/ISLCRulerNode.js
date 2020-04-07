@@ -84,7 +84,7 @@ class ISLCRulerNode extends Node {
       // rulerPositionProperty.
       movementSoundDistance: 0.5,
 
-      // a11y
+      // pdom
       moveOnHoldDelay: 750,
       grabDragInteractionOptions: {
         objectToGrabString: rulerLabelString,
@@ -222,7 +222,7 @@ class ISLCRulerNode extends Node {
       }
     } ) );
 
-    // a11y - custom focus highlight
+    // pdom - custom focus highlight
     const focusHighlight = new FocusHighlightFromNode( ruler, { useLocalBounds: true } );
     this.setFocusHighlight( focusHighlight );
 
@@ -295,7 +295,7 @@ class ISLCRulerNode extends Node {
     // @private - add the "grab button" interaction
     this.grabDragInteraction = new GrabDragInteraction( this, grabDragInteractionOptions );
 
-    // a11y - the GrabDragInteraction is added to this Node but the drag handler and transform changes are applied
+    // pdom - the GrabDragInteraction is added to this Node but the drag handler and transform changes are applied
     // to the child RulerNode - PDOM siblings need to reposition with the RulerNode
     this.setPDOMTransformSourceNode( ruler );
 
