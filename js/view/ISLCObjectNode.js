@@ -230,7 +230,7 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
   this.labelText = new RichText( config.label, config.labelOptions );
 
   this.dragNode.addChild( this.labelText );
-  this.labelText.on( 'bounds', () => {
+  this.labelText.boundsProperty.lazyLink( () => {
     this.labelText.centerX = this.objectCircle.centerX;
   } );
 
