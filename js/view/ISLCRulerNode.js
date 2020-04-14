@@ -154,7 +154,7 @@ class ISLCRulerNode extends Node {
     if ( options.grabRulerSoundPlayer === null ) {
 
       // no sound player specified by the client, use the default
-      grabRulerSoundPlayer = new SoundClip( commonGrabSoundInfo, { initialOutputLevel: 1 } );
+      grabRulerSoundPlayer = new SoundClip( commonGrabSoundInfo  );
       soundManager.addSoundGenerator( grabRulerSoundPlayer );
     }
     else {
@@ -165,7 +165,7 @@ class ISLCRulerNode extends Node {
     if ( options.releaseRulerSoundPlayer === null ) {
 
       // no sound player specified by the client, use the default
-      releaseRulerSoundPlayer = new SoundClip( commonReleaseSoundInfo, { initialOutputLevel: 1 } );
+      releaseRulerSoundPlayer = new SoundClip( commonReleaseSoundInfo  );
       soundManager.addSoundGenerator( releaseRulerSoundPlayer );
     }
     else {
