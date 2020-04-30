@@ -151,7 +151,7 @@ function ISLCForceArrowNode( arrowForceRange, layoutBounds, label, otherObjectLa
 
 inverseSquareLawCommon.register( 'ISLCForceArrowNode', ISLCForceArrowNode );
 
-export default inherit( Node, ISLCForceArrowNode, {
+inherit( Node, ISLCForceArrowNode, {
 
   /**
    * Draw the length of the arrow based on the value of the force.
@@ -263,3 +263,5 @@ export default inherit( Node, ISLCForceArrowNode, {
     }
   }
 } );
+
+export default ISLCForceArrowNode;

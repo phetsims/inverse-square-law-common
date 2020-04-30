@@ -169,7 +169,7 @@ function ISLCModel( forceConstant, object1, object2, positionRange, tandem, opti
 
 inverseSquareLawCommon.register( 'ISLCModel', ISLCModel );
 
-export default inherit( Object, ISLCModel, {
+inherit( Object, ISLCModel, {
 
   /**
    * Step function makes sure objects don't go out of bounds and don't overlap each other at each time step.
@@ -455,3 +455,5 @@ export default inherit( Object, ISLCModel, {
     this.pushedObjectEnumProperty.reset();
   }
 } );
+
+export default ISLCModel;

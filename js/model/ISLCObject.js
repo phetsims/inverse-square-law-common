@@ -130,7 +130,7 @@ function ISLCObject( initialMass, initialPosition, valueRange, constantRadiusPro
 
 inverseSquareLawCommon.register( 'ISLCObject', ISLCObject );
 
-export default inherit( Object, ISLCObject, {
+inherit( Object, ISLCObject, {
 
   /**
    * Clear flags that keep track of data that needs to be kept track of until the next step function is called.
@@ -151,3 +151,5 @@ export default inherit( Object, ISLCObject, {
     this.positionProperty.reset();
   }
 } );
+
+export default ISLCObject;
