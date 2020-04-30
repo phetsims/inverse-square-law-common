@@ -9,7 +9,7 @@
 import Enumeration from '../../../phet-core/js/Enumeration.js';
 import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
 
-export default inverseSquareLawCommon.register( 'ISLCObjectEnum', Enumeration.byKeys( [
+const ISLCObjectEnum = Enumeration.byKeys( [
   'OBJECT_ONE',
   'OBJECT_TWO'
 ], {
@@ -43,4 +43,6 @@ export default inverseSquareLawCommon.register( 'ISLCObjectEnum', Enumeration.by
       return objectEnum === ISLCObjectEnum.OBJECT_TWO;
     };
   }
-} ) );
+} );
+inverseSquareLawCommon.register( 'ISLCObjectEnum', ISLCObjectEnum );
+export default ISLCObjectEnum;

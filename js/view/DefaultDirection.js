@@ -8,7 +8,9 @@
 import Enumeration from '../../../phet-core/js/Enumeration.js';
 import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
 
-export default inverseSquareLawCommon.register( 'DefaultDirection', Enumeration.byKeys( [
+const DefaultDirection = Enumeration.byKeys( [
   'LEFT',
   'RIGHT'
-] ) );
+] );
+inverseSquareLawCommon.register( 'DefaultDirection', DefaultDirection );
+export default DefaultDirection;

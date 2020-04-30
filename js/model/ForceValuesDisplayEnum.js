@@ -8,7 +8,8 @@
 import Enumeration from '../../../phet-core/js/Enumeration.js';
 import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
 
-export default inverseSquareLawCommon.register( 'ForceValuesDisplayEnum', Enumeration.byKeys( [
-    'DECIMAL', 'SCIENTIFIC', 'HIDDEN'
-  ] )
-);
+const ForceValuesDisplayEnum = Enumeration.byKeys( [
+  'DECIMAL', 'SCIENTIFIC', 'HIDDEN'
+] );
+inverseSquareLawCommon.register( 'ForceValuesDisplayEnum', ForceValuesDisplayEnum );
+export default ForceValuesDisplayEnum;
