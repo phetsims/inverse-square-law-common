@@ -25,10 +25,10 @@ import Node from '../../../scenery/js/nodes/Node.js';
 import SoundClip from '../../../tambo/js/sound-generators/SoundClip.js';
 import SoundLevelEnum from '../../../tambo/js/SoundLevelEnum.js';
 import soundManager from '../../../tambo/js/soundManager.js';
-import commonGrabSoundInfo from '../../../tambo/sounds/grab_mp3.js';
-import commonReleaseSoundInfo from '../../../tambo/sounds/release_mp3.js';
+import commonGrabSound from '../../../tambo/sounds/grab_mp3.js';
+import commonReleaseSound from '../../../tambo/sounds/release_mp3.js';
 import Utterance from '../../../utterance-queue/js/Utterance.js';
-import rulerMovementSoundInfo from '../../sounds/ruler-movement-000_mp3.js';
+import rulerMovementSound from '../../sounds/ruler-movement-000_mp3.js';
 import inverseSquareLawCommonStrings from '../inverseSquareLawCommonStrings.js';
 import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
 import ISLCQueryParameters from '../ISLCQueryParameters.js';
@@ -154,7 +154,7 @@ class ISLCRulerNode extends Node {
     if ( options.grabRulerSoundPlayer === null ) {
 
       // no sound player specified by the client, use the default
-      grabRulerSoundPlayer = new SoundClip( commonGrabSoundInfo  );
+      grabRulerSoundPlayer = new SoundClip( commonGrabSound );
       soundManager.addSoundGenerator( grabRulerSoundPlayer );
     }
     else {
@@ -165,7 +165,7 @@ class ISLCRulerNode extends Node {
     if ( options.releaseRulerSoundPlayer === null ) {
 
       // no sound player specified by the client, use the default
-      releaseRulerSoundPlayer = new SoundClip( commonReleaseSoundInfo  );
+      releaseRulerSoundPlayer = new SoundClip( commonReleaseSound );
       soundManager.addSoundGenerator( releaseRulerSoundPlayer );
     }
     else {
@@ -177,7 +177,7 @@ class ISLCRulerNode extends Node {
     if ( options.movementSoundPlayer === null ) {
 
       // no sound player provided, use the default
-      movementSoundPlayer = new SoundClip( rulerMovementSoundInfo, { initialOutputLevel: 0.2 } );
+      movementSoundPlayer = new SoundClip( rulerMovementSound, { initialOutputLevel: 0.2 } );
       soundManager.addSoundGenerator( movementSoundPlayer, { sonificationLevel: SoundLevelEnum.ENHANCED } );
     }
     else {
