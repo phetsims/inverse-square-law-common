@@ -132,5 +132,5 @@ const webSpeaker = new WebSpeaker();
 // @public
 // @static
 webSpeaker.Verbosity = Verbosity;
-inverseSquareLawCommon.register( 'WebSpeaker', webSpeaker );
+inverseSquareLawCommon.register( 'webSpeaker', webSpeaker );
 export default webSpeaker;
