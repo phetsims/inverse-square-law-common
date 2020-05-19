@@ -296,7 +296,9 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
 
       // SELF VOICING PROTOTYPE - when ending drag, speak the result of the interaction
       if ( webSpeaker.interactiveModeProperty.get() ) {
-        webSpeaker.speak( this.getSelfVoicingPositionChangeAlert( object.positionProperty.get(), oldPosition, model.forceProperty.get(), forceOnStart ) );
+        if ( oldPosition !== object.positionProperty.get() ) {
+          webSpeaker.speak( this.getSelfVoicingPositionChangeAlert( object.positionProperty.get(), oldPosition, model.forceProperty.get(), forceOnStart ) );
+        }
       }
     },
     tandem: config.tandem.createTandem( 'dragListener' )
@@ -347,7 +349,9 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
 
       // SELF VOICING PROTOTYPE - when ending drag, speak the result of the interaction
       if ( webSpeaker.interactiveModeProperty.get() ) {
-        webSpeaker.speak( this.getSelfVoicingPositionChangeAlert( object.positionProperty.get(), oldPosition, model.forceProperty.get(), forceOnStart ) );
+        if ( oldPosition !== object.positionProperty.get() ) {
+          webSpeaker.speak( this.getSelfVoicingPositionChangeAlert( object.positionProperty.get(), oldPosition, model.forceProperty.get(), forceOnStart ) );
+        }
       }
     },
     a11yCreateValueChangeAlert: () => {
@@ -466,6 +470,8 @@ inherit( Node, ISLCObjectNode, {
    *
    * @param {number} newPosition
    * @param {number} oldPosition
+   * @param {number} newForce
+   * @param {number} oldForce
    * @returns {string}
    */
   getSelfVoicingPositionChangeAlert( newPosition, oldPosition, newForce, oldForce ) {
