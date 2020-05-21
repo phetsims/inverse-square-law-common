@@ -30,6 +30,7 @@ class ISLCDescriber {
   /**
    * @param {ISLCObjectEnum} objectEnum
    * @returns {Mass}
+   * @private
    */
   getObjectFromEnum( objectEnum ) {
     assert && assert( ISLCObjectEnum.includes( objectEnum ) );
@@ -39,6 +40,7 @@ class ISLCDescriber {
   /**
    * @param {ISLCObjectEnum} objectEnum
    * @returns {Mass}
+   * @private
    */
   getOtherObjectFromEnum( objectEnum ) {
     assert && assert( ISLCObjectEnum.includes( objectEnum ) );
@@ -48,6 +50,7 @@ class ISLCDescriber {
   /**
    * @param {ISLCObjectEnum} objectEnum
    * @returns {string}
+   * @private
    */
   getObjectLabelFromEnum( objectEnum ) {
     assert && assert( ISLCObjectEnum.includes( objectEnum ) );
@@ -57,6 +60,7 @@ class ISLCDescriber {
   /**
    * @param {ISLCObjectEnum} objectEnum
    * @returns {string}
+   * @private
    */
   getOtherObjectLabelFromEnum( objectEnum ) {
     assert && assert( ISLCObjectEnum.includes( objectEnum ) );

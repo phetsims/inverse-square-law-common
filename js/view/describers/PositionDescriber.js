@@ -441,6 +441,7 @@ class PositionDescriber extends ISLCDescriber {
    * @param  {number} distance
    * @param {number} numberOfRegions - for crosscheck
    * @returns {number} - integer
+   * @private
    */
   getDistanceIndex( distance, numberOfRegions ) {
     throw new Error( 'getDistanceIndex MUST be implemented in subtypes.' );
@@ -465,6 +466,7 @@ class PositionDescriber extends ISLCDescriber {
    *
    * @param  {string} label
    * @returns {string}
+   * @public
    */
   static getObjectLabelPositionText( label ) {
     return StringUtils.fillIn( objectLabelPositionPatternString, { label: label } );

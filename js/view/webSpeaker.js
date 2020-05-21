@@ -72,6 +72,7 @@ class WebSpeaker {
 
   /**
    * Indicate that the webSpeaker is ready for use, and attempt to populate voices (if they are ready yet).
+   * @public
    */
   initialize() {
     this.initialized = true;
@@ -82,7 +83,7 @@ class WebSpeaker {
 
   /**
    * Get the available voices for the synth, and set to default.
-   * @rivate
+   * @private
    */
   populateVoices() {
     this.voices = this.synth.getVoices();
@@ -92,6 +93,7 @@ class WebSpeaker {
   /**
    * Use speech synthesis to speak an utterance. No-op unless webSpeaker is initialized.
    * @param {string} utterThis
+   * @public
    */
   speak( utterThis ) {
     if ( this.initialized && this.enabled ) {
@@ -109,19 +111,32 @@ class WebSpeaker {
 
   /**
    * Returns true if "explore" mode is active and we are in "verbose" mode under that setting.
+   * @public
    */
   getExploreModeVerbose() {
     return this.exploreModeProperty.get() && this.exploreModeVerbosityProperty.get() === Verbosity.VERBOSE;
   }
 
+  /**
+   * @public
+   * @returns {boolean}
+   */
   getExploreModeBrief() {
     return this.exploreModeProperty.get() && this.exploreModeVerbosityProperty.get() === Verbosity.BRIEF;
   }
 
+  /**
+   * @public
+   * @returns {boolean}
+   */
   getInteractiveModeVerbose() {
     return this.interactiveModeProperty.get() && this.interactiveModeVerbosityProperty.get() === Verbosity.VERBOSE;
   }
 
+  /**
+   * @public
+   * @returns {boolean}
+   */
   getInteractiveModeBrief() {
     return this.interactiveModeProperty.get() && this.interactiveModeVerbosityProperty.get() === Verbosity.BRIEF;
   }
