@@ -21,6 +21,8 @@ import ComboBoxItem from '../../../sun/js/ComboBoxItem.js';
 import HSlider from '../../../sun/js/HSlider.js';
 import VerticalAquaRadioButtonGroup from '../../../sun/js/VerticalAquaRadioButtonGroup.js';
 import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
+import ISLCQueryParameters from '../ISLCQueryParameters.js';
+import cursorSpeakerModel from './CursorSpeakerModel.js';
 
 // constants
 const TITLE_FONT = new PhetFont( { size: 16, weight: 'bold' } );
@@ -30,17 +32,7 @@ const INPUT_SPACING = 8;
 class WebSpeechDialogContent extends VBox {
   constructor() {
 
-    const exploreModeControls = new ModeVerbosityControls( webSpeaker.exploreModeProperty, webSpeaker.exploreModeVerbosityProperty, 'Explore' );
-    const interactiveModeControls = new ModeVerbosityControls( webSpeaker.interactiveModeProperty, webSpeaker.interactiveModeVerbosityProperty, 'Interactive' );
-    const labelledModeControls = new VBox( {
-      children: [
-        new Text( 'Speech Output', { font: TITLE_FONT } ),
-        exploreModeControls,
-        interactiveModeControls
-      ],
-      align: 'center',
-      spacing: INPUT_SPACING
-    } );
+    const modeControls = ISLCQueryParameters.selfVoicing === 'cursor' ? new CursorModeControls() : new Node();
 
     // controls for speech synthesis, such as the rate, pitch, and voice
     const voiceRateSlider = WebSpeechDialogContent.createLabelledSlider( webSpeaker.voiceRateProperty, 'Rate', 'New Voice Rate' );
@@ -71,7 +63,7 @@ class WebSpeechDialogContent extends VBox {
     } );
 
     super( {
-      children: [ labelledModeControls, labelledVoiceControls ],
+      children: [ modeControls, labelledVoiceControls ],
       spacing: 30
     } );
 
@@ -114,12 +106,12 @@ class ModeVerbosityControls extends Node {
       [
         {
           node: new Text( 'Verbose', { font: LABEL_FONT } ),
-          value: webSpeaker.Verbosity.VERBOSE,
+          value: cursorSpeakerModel.Verbosity.VERBOSE,
           labelContent: 'Verbose'
         },
         {
           node: new Text( 'Brief', { font: LABEL_FONT } ),
-          value: webSpeaker.Verbosity.BRIEF,
+          value: cursorSpeakerModel.Verbosity.BRIEF,
           labelContent: 'Brief'
         }
       ], {
@@ -138,6 +130,26 @@ class ModeVerbosityControls extends Node {
 
     super( {
       children: [ checkbox, radioButtons ]
+    } );
+  }
+}
+
+/**
+ * Controls for the "cursor" prototype of self voicing controls, including controls for things like verbosity
+ * and "explore" vs "interactive" modes.
+ */
+class CursorModeControls extends VBox {
+  constructor() {
+    const exploreModeControls = new ModeVerbosityControls( cursorSpeakerModel.exploreModeProperty, cursorSpeakerModel.exploreModeVerbosityProperty, 'Explore' );
+    const interactiveModeControls = new ModeVerbosityControls( cursorSpeakerModel.interactiveModeProperty, cursorSpeakerModel.interactiveModeVerbosityProperty, 'Interactive' );
+    super( {
+      children: [
+        new Text( 'Speech Output', { font: TITLE_FONT } ),
+        exploreModeControls,
+        interactiveModeControls
+      ],
+      align: 'center',
+      spacing: INPUT_SPACING
     } );
   }
 }

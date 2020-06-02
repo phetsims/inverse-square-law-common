@@ -30,6 +30,8 @@ import Tandem from '../../../tandem/js/Tandem.js';
 import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
 import inverseSquareLawCommonStrings from '../inverseSquareLawCommonStrings.js';
 import ISLCConstants from '../ISLCConstants.js';
+import ISLCQueryParameters from '../ISLCQueryParameters.js';
+import cursorSpeakerModel from './CursorSpeakerModel.js';
 import DefaultDirection from './DefaultDirection.js';
 import PositionDescriber from './describers/PositionDescriber.js';
 import ISLCAlertManager from './ISLCAlertManager.js';
@@ -166,11 +168,11 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
   );
 
   // PROTOTYPE a11y code for self-voicing features
-  if ( config.shapeHitDetector ) {
+  if ( config.shapeHitDetector && ISLCQueryParameters.selfVoicing === 'cursor' ) {
     config.shapeHitDetector.addNode( this.arrowNode );
     config.shapeHitDetector.hitShapeEmitter.addListener( hitTarget => {
       if ( hitTarget === this.arrowNode ) {
-        if ( webSpeaker.exploreModeProperty.get() ) {
+        if ( cursorSpeakerModel.exploreModeProperty.get() ) {
           const utterance = forceDescriber.getForceVectorMagnitudeText( config.label, config.otherObjectLabel );
           webSpeaker.speak( utterance );
         }
@@ -203,13 +205,13 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
   this.objectCircle = new Circle( radius );
 
   // PROTOTYPE a11y code, to support self-voicing features
-  if ( config.shapeHitDetector ) {
+  if ( config.shapeHitDetector && ISLCQueryParameters.selfVoicing === 'cursor' ) {
     assert && assert( config.objectColor, 'required param, if testing self voicing features' );
     config.shapeHitDetector.addNode( this.objectCircle );
     config.shapeHitDetector.hitShapeEmitter.addListener( hitTarget => {
       if ( hitTarget === this.objectCircle ) {
-        if ( webSpeaker.exploreModeProperty.get() ) {
-          const patternString = webSpeaker.getExploreModeVerbose() ? verboseMassInteractionHintPatternString : briefMassInteractionHintPatternString;
+        if ( cursorSpeakerModel.exploreModeProperty.get() ) {
+          const patternString = cursorSpeakerModel.getExploreModeVerbose() ? verboseMassInteractionHintPatternString : briefMassInteractionHintPatternString;
           webSpeaker.speak( StringUtils.fillIn( patternString, {
             objectLabel: config.label,
             objectColor: config.objectColor
@@ -295,9 +297,11 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
       object.isDragging = false;
 
       // SELF VOICING PROTOTYPE - when ending drag, speak the result of the interaction
-      if ( webSpeaker.interactiveModeProperty.get() ) {
-        if ( oldPosition !== object.positionProperty.get() ) {
-          webSpeaker.speak( this.getSelfVoicingPositionChangeAlert( object.positionProperty.get(), oldPosition, model.forceProperty.get(), forceOnStart ) );
+      if ( ISLCQueryParameters.selfVoicing === 'cursor' ) {
+        if ( webSpeaker.interactiveModeProperty.get() ) {
+          if ( oldPosition !== object.positionProperty.get() ) {
+            webSpeaker.speak( this.getSelfVoicingPositionChangeAlert( object.positionProperty.get(), oldPosition, model.forceProperty.get(), forceOnStart ) );
+          }
         }
       }
     },
@@ -477,12 +481,12 @@ inherit( Node, ISLCObjectNode, {
   getSelfVoicingPositionChangeAlert( newPosition, oldPosition, newForce, oldForce ) {
     let vectorChangeText;
 
-    if ( webSpeaker.getInteractiveModeVerbose() ) {
+    if ( cursorSpeakerModel.getInteractiveModeVerbose() ) {
 
       // just the aria-live alert in verbose mode
       vectorChangeText = newPosition !== oldPosition ? this.forceDescriber.getVectorChangeText( this.objectModel ) : this.forceDescriber.getPositionUnchangedAlertText( this.objectModel );
     }
-    else if ( webSpeaker.getInteractiveModeBrief() ) {
+    else if ( cursorSpeakerModel.getInteractiveModeBrief() ) {
 
       // custom alert if brief mode, description dependent on whether values are shown
       const changeString = newForce - oldForce > 0 ? selfVoicingBiggerString : selfVoicingSmallerString;

@@ -29,7 +29,11 @@ const ISLCQueryParameters = QueryStringMachine.getAll( {
   // Enables prototype "self voicing" feature set, which uses the Web Speech API to read content from the sim
   // without the use of a screen reader. This is being tested for the first time in gravity-force-lab-basics, and so this query
   // parameter will be used by the ISLC dependency repos, see https://github.com/phetsims/gravity-force-lab-basics/issues/193
-  selfVoicing: { type: 'flag' }
+  selfVoicing: {
+    type: 'string',
+    defaultValue: null,
+    validValues: [ null, 'cursor', 'levels' ]
+  }
 } );
 
 inverseSquareLawCommon.register( 'ISLCQueryParameters', ISLCQueryParameters );
