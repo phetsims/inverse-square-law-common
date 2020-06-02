@@ -69,6 +69,6 @@ const cursorSpeakerModel = new CursorSpeakerModel();
 // @static
 cursorSpeakerModel.Verbosity = Verbosity;
 
-inverseSquareLawCommon.register( 'CursorSpeakerModel', CursorSpeakerModel );
+inverseSquareLawCommon.register( 'cursorSpeakerModel', cursorSpeakerModel );
 
 export default cursorSpeakerModel;

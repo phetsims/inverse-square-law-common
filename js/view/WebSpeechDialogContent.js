@@ -20,9 +20,11 @@ import ComboBox from '../../../sun/js/ComboBox.js';
 import ComboBoxItem from '../../../sun/js/ComboBoxItem.js';
 import HSlider from '../../../sun/js/HSlider.js';
 import VerticalAquaRadioButtonGroup from '../../../sun/js/VerticalAquaRadioButtonGroup.js';
+import VerticalCheckboxGroup from '../../../sun/js/VerticalCheckboxGroup.js';
 import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
 import ISLCQueryParameters from '../ISLCQueryParameters.js';
 import cursorSpeakerModel from './CursorSpeakerModel.js';
+import levelSpeakerModel from './levelSpeakerModel.js';
 
 // constants
 const TITLE_FONT = new PhetFont( { size: 16, weight: 'bold' } );
@@ -32,7 +34,7 @@ const INPUT_SPACING = 8;
 class WebSpeechDialogContent extends VBox {
   constructor() {
 
-    const modeControls = ISLCQueryParameters.selfVoicing === 'cursor' ? new CursorModeControls() : new Node();
+    const modeControls = ISLCQueryParameters.selfVoicing === 'cursor' ? new CursorModeControls() : new LevelModeControls();
 
     // controls for speech synthesis, such as the rate, pitch, and voice
     const voiceRateSlider = WebSpeechDialogContent.createLabelledSlider( webSpeaker.voiceRateProperty, 'Rate', 'New Voice Rate' );
@@ -150,6 +152,36 @@ class CursorModeControls extends VBox {
       ],
       align: 'center',
       spacing: INPUT_SPACING
+    } );
+  }
+}
+
+class LevelModeControls extends VBox {
+  constructor() {
+    const checkboxGroup = new VerticalCheckboxGroup( [
+      {
+        node: new Text( 'Basic Reading Support', { font: LABEL_FONT } ),
+        property: levelSpeakerModel.basicReadingProperty
+      },
+      {
+        node: new Text( 'Adds Object changes', { font: LABEL_FONT } ),
+        property: levelSpeakerModel.objectChangesProperty
+      },
+      {
+        node: new Text( 'Adds Context Changes', { font: LABEL_FONT } ),
+        property: levelSpeakerModel.contextChangesProperty
+      },
+      {
+        node: new Text( 'Adds helpful hints', { font: LABEL_FONT } ),
+        property: levelSpeakerModel.hintsProperty
+      }
+    ] );
+    super( {
+      children: [
+        new Text( 'Speech Output Levels', { font: TITLE_FONT } ),
+        checkboxGroup
+      ],
+      spacing: 10
     } );
   }
 }
