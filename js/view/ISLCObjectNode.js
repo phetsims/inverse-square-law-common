@@ -168,16 +168,27 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
   );
 
   // PROTOTYPE a11y code for self-voicing features
-  if ( config.shapeHitDetector && ISLCQueryParameters.selfVoicing === 'cursor' ) {
+  if ( config.shapeHitDetector && ISLCQueryParameters.selfVoicing ) {
     config.shapeHitDetector.addNode( this.arrowNode );
-    config.shapeHitDetector.hitShapeEmitter.addListener( hitTarget => {
-      if ( hitTarget === this.arrowNode ) {
-        if ( cursorSpeakerModel.exploreModeProperty.get() ) {
-          const utterance = forceDescriber.getForceVectorMagnitudeText( config.label, config.otherObjectLabel );
+
+    if ( ISLCQueryParameters.selfVoicing === 'cursor' ) {
+      config.shapeHitDetector.hitShapeEmitter.addListener( hitTarget => {
+        if ( hitTarget === this.arrowNode ) {
+          if ( cursorSpeakerModel.exploreModeProperty.get() ) {
+            const utterance = forceDescriber.getForceVectorMagnitudeText( config.label, config.otherObjectLabel );
+            webSpeaker.speak( utterance );
+          }
+        }
+      } );
+    }
+    else if ( ISLCQueryParameters.selfVoicing === 'levels' ) {
+      config.shapeHitDetector.downOnHittableEmitter.addListener( hitTarget => {
+        if ( hitTarget === this.arrowNode ) {
+          const utterance = forceDescriber.getSelfVoicingForceVectorMagnitudeText( config.label, config.otherObjectLabel );
           webSpeaker.speak( utterance );
         }
-      }
-    } );
+      } );
+    }
   }
 
   // set y position for the arrow
@@ -205,20 +216,30 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
   this.objectCircle = new Circle( radius );
 
   // PROTOTYPE a11y code, to support self-voicing features
-  if ( config.shapeHitDetector && ISLCQueryParameters.selfVoicing === 'cursor' ) {
+  if ( config.shapeHitDetector ) {
     assert && assert( config.objectColor, 'required param, if testing self voicing features' );
     config.shapeHitDetector.addNode( this.objectCircle );
-    config.shapeHitDetector.hitShapeEmitter.addListener( hitTarget => {
-      if ( hitTarget === this.objectCircle ) {
-        if ( cursorSpeakerModel.exploreModeProperty.get() ) {
-          const patternString = cursorSpeakerModel.getExploreModeVerbose() ? verboseMassInteractionHintPatternString : briefMassInteractionHintPatternString;
-          webSpeaker.speak( StringUtils.fillIn( patternString, {
-            objectLabel: config.label,
-            objectColor: config.objectColor
-          } ) );
+
+    if ( ISLCQueryParameters.selfVoicing === 'cursor' ) {
+      config.shapeHitDetector.hitShapeEmitter.addListener( hitTarget => {
+        if ( hitTarget === this.objectCircle ) {
+          if ( cursorSpeakerModel.exploreModeProperty.get() ) {
+            const patternString = cursorSpeakerModel.getExploreModeVerbose() ? verboseMassInteractionHintPatternString : briefMassInteractionHintPatternString;
+            webSpeaker.speak( StringUtils.fillIn( patternString, {
+              objectLabel: config.label,
+              objectColor: config.objectColor
+            } ) );
+          }
         }
-      }
-    } );
+      } );
+    }
+    else if ( ISLCQueryParameters.selfVoicing === 'levels' ) {
+      config.shapeHitDetector.downOnHittableEmitter.addListener( hitTarget => {
+        if ( hitTarget === this.objectCircle ) {
+          webSpeaker.speak( positionDescriber.getSelfVoicingDistanceDescription( config.label, config.otherObjectLabel ) );
+        }
+      } );
+    }
   }
 
   this.dragNode.addChild( this.pullerNode );
@@ -298,7 +319,7 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
 
       // SELF VOICING PROTOTYPE - when ending drag, speak the result of the interaction
       if ( ISLCQueryParameters.selfVoicing === 'cursor' ) {
-        if ( webSpeaker.interactiveModeProperty.get() ) {
+        if ( cursorSpeakerModel.interactiveModeProperty.get() ) {
           if ( oldPosition !== object.positionProperty.get() ) {
             webSpeaker.speak( this.getSelfVoicingPositionChangeAlert( object.positionProperty.get(), oldPosition, model.forceProperty.get(), forceOnStart ) );
           }
@@ -352,7 +373,7 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
       this.redrawForce();
 
       // SELF VOICING PROTOTYPE - when ending drag, speak the result of the interaction
-      if ( webSpeaker.interactiveModeProperty.get() ) {
+      if ( cursorSpeakerModel.interactiveModeProperty.get() ) {
         if ( oldPosition !== object.positionProperty.get() ) {
           webSpeaker.speak( this.getSelfVoicingPositionChangeAlert( object.positionProperty.get(), oldPosition, model.forceProperty.get(), forceOnStart ) );
         }

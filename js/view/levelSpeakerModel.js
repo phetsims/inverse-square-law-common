@@ -16,7 +16,7 @@ class LevelSpeakerModel {
   constructor() {
 
     // @public {BooleanProperty} - whether or not basic information is read on activation of help areas
-    this.basicReadingProperty = new BooleanProperty( false );
+    this.basicReadingProperty = new BooleanProperty( true );
 
     // @public {BooleanProperty} - whether or not 'object responses' are read as interactive components change
     this.objectChangesProperty = new BooleanProperty( false );

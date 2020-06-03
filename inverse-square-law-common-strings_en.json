@@ -357,6 +357,17 @@
       },
       "smaller": {
         "value": "smaller"
+      },
+      "levels": {
+        "forcePattern": {
+          "value":"Force on {{object1}} by {{object2}} equals {{value}} newtons."
+        },
+        "massQuantitativePattern": {
+          "value": "{{object}}, {{distance}} from {{otherObject}}."
+        },
+        "massQualitativePattern": {
+          "value": "{{object}}, {{distance}} {{otherObject}}."
+        }
       }
     }
   }

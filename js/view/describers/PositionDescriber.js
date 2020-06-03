@@ -68,6 +68,9 @@ const lastStopLeftString = inverseSquareLawCommonStrings.a11y.position.landmarks
 const trackEndLeftString = inverseSquareLawCommonStrings.a11y.position.landmarks.trackEndLeft;
 const trackEndRightString = inverseSquareLawCommonStrings.a11y.position.landmarks.trackEndRight;
 
+const selfVoicingLevelsMassQuantitativePatternString = inverseSquareLawCommonStrings.a11y.selfVoicing.levels.massQuantitativePattern;
+const selfVoicingLevelsMassQualitativePatternString = inverseSquareLawCommonStrings.a11y.selfVoicing.levels.massQualitativePattern;
+
 const RELATIVE_DISTANCE_STRINGS = [
   farthestFromString,
   extremelyFarFromString,
@@ -458,6 +461,22 @@ class PositionDescriber extends ISLCDescriber {
 
     return StringUtils.fillIn( spherePositionHelpTextString, {
       distanceApart: this.useQuantitativeDistance ? quantitativeDistance : this.getQualitativeDistanceFromEachOther()
+    } );
+  }
+
+  /**
+   * Returns a string to be used in the prototype self-voicing context. Returns something like
+   * "mass 1, 4 kilometers from mass 1" (distances shown) or
+   * "mass 1, close to mass 1" (distances hidden)
+   */
+  getSelfVoicingDistanceDescription( objectLabel, otherObjectLabel ) {
+    const patternString = this.useQuantitativeDistance ? selfVoicingLevelsMassQuantitativePatternString : selfVoicingLevelsMassQualitativePatternString;
+    const distanceDescription = this.useQuantitativeDistance ? this.getDistanceAndUnits() : this.getQualitativeRelativeDistanceRegion();
+
+    return StringUtils.fillIn( patternString, {
+      object: objectLabel,
+      distance: distanceDescription,
+      otherObject: otherObjectLabel
     } );
   }
 

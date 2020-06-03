@@ -63,6 +63,8 @@ const lighlyString = inverseSquareLawCommonStrings.a11y.pullerEffort.lightly;
 const aLittleString = inverseSquareLawCommonStrings.a11y.pullerEffort.aLittle;
 const aTinyBitString = inverseSquareLawCommonStrings.a11y.pullerEffort.aTinyBit;
 
+const selfVoicingLevelsForcePatternString = inverseSquareLawCommonStrings.a11y.selfVoicing.levels.forcePattern;
+
 const SIZE_STRINGS = [
   tinyString,
   verySmallString,
@@ -215,6 +217,14 @@ class ForceDescriber extends ISLCDescriber {
       units: this.units,
       thisObjectLabel: thisObjectLabel,
       otherObjectLabel: otherObjectLabel
+    } );
+  }
+
+  getSelfVoicingForceVectorMagnitudeText( thisObjectLabel, otherObjectLabel ) {
+    return StringUtils.fillIn( selfVoicingLevelsForcePatternString, {
+      object1: thisObjectLabel,
+      object2: otherObjectLabel,
+      value: this.getFormattedForce()
     } );
   }
 

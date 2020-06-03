@@ -24,6 +24,7 @@ import VerticalCheckboxGroup from '../../../sun/js/VerticalCheckboxGroup.js';
 import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
 import ISLCQueryParameters from '../ISLCQueryParameters.js';
 import cursorSpeakerModel from './CursorSpeakerModel.js';
+import BooleanProperty from '../../../axon/js/BooleanProperty.js';
 import levelSpeakerModel from './levelSpeakerModel.js';
 
 // constants
@@ -165,15 +166,19 @@ class LevelModeControls extends VBox {
       },
       {
         node: new Text( 'Adds Object changes', { font: LABEL_FONT } ),
-        property: levelSpeakerModel.objectChangesProperty
+        property: levelSpeakerModel.objectChangesProperty,
+        options: { enabledProperty: new BooleanProperty( false ) }
       },
       {
         node: new Text( 'Adds Context Changes', { font: LABEL_FONT } ),
-        property: levelSpeakerModel.contextChangesProperty
+        property: levelSpeakerModel.contextChangesProperty,
+        options: { enabledProperty: new BooleanProperty( false ) }
+
       },
       {
         node: new Text( 'Adds helpful hints', { font: LABEL_FONT } ),
-        property: levelSpeakerModel.hintsProperty
+        property: levelSpeakerModel.hintsProperty,
+        options: { enabledProperty: new BooleanProperty( false ) }
       }
     ] );
     super( {

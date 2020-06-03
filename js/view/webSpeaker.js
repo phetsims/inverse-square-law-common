@@ -14,6 +14,7 @@ import NumberProperty from '../../../axon/js/NumberProperty.js';
 import Property from '../../../axon/js/Property.js';
 import Range from '../../../dot/js/Range.js';
 import stripEmbeddingMarks from '../../../phet-core/js/stripEmbeddingMarks.js';
+import Emitter from '../../../axon/js/Emitter.js';
 
 class WebSpeaker {
   constructor() {
@@ -26,6 +27,9 @@ class WebSpeaker {
 
     // {NumberProperty} - controls the pitch of the synth
     this.voicePitchProperty = new NumberProperty( 1.02, { range: new Range( 1, 1.1 ) } );
+
+    this.startSpeakingEmitter = new Emitter();
+    this.endSpeakingEmitter = new Emitter();
 
     // create the synthesizer
     this.synth = window.speechSynthesis;
@@ -84,6 +88,19 @@ class WebSpeaker {
       utterance.voice = this.voiceProperty.value;
       utterance.pitch = this.voicePitchProperty.value;
       utterance.rate = this.voiceRateProperty.value;
+
+      const startListener = () => {
+        this.startSpeakingEmitter.emit();
+        utterance.removeEventListener( 'start', startListener );
+      };
+
+      const endListener = () => {
+        this.endSpeakingEmitter.emit();
+        utterance.removeEventListener( 'end', endListener );
+      };
+
+      utterance.addEventListener( 'start', startListener );
+      utterance.addEventListener( 'end', endListener );
 
       this.synth.speak( utterance );
     }
