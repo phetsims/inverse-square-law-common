@@ -34,6 +34,7 @@ import ISLCQueryParameters from '../ISLCQueryParameters.js';
 import cursorSpeakerModel from './CursorSpeakerModel.js';
 import DefaultDirection from './DefaultDirection.js';
 import PositionDescriber from './describers/PositionDescriber.js';
+import focusSpeaker from './FocusSpeaker.js';
 import ISLCAlertManager from './ISLCAlertManager.js';
 import ISLCForceArrowNode from './ISLCForceArrowNode.js';
 import ISLCObjectEnum from './ISLCObjectEnum.js';
@@ -182,6 +183,7 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
       } );
     }
     else if ( ISLCQueryParameters.selfVoicing === 'levels' ) {
+      focusSpeaker.addNode( this.arrowNode );
       config.shapeHitDetector.downOnHittableEmitter.addListener( hitTarget => {
         if ( hitTarget === this.arrowNode ) {
           const utterance = forceDescriber.getSelfVoicingForceVectorMagnitudeText( config.label, config.otherObjectLabel );
