@@ -12,10 +12,10 @@
  * @author Jesse Greenberg
  */
 
-import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
 import Shape from '../../../kite/js/Shape.js';
-import Path from '../../../scenery/js/nodes/Path.js';
 import Node from '../../../scenery/js/nodes/Node.js';
+import Path from '../../../scenery/js/nodes/Path.js';
+import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
 
 class SpeakerHighlighter extends Node {
   constructor( shapeHitDetector, webSpeaker ) {
@@ -62,6 +62,10 @@ class SpeakerHighlighter extends Node {
     this.children = [ this.speakingPath, this.speakablePath ];
   }
 
+  /**
+   * TODO document
+   * @private
+   */
   activateSpeakablePath() {
     this.speakablePath.visible = true;
     this.speakablePath.shape = this.highlightShape;
@@ -69,6 +73,10 @@ class SpeakerHighlighter extends Node {
     this.speakableActivated = true;
   }
 
+  /**
+   * TODO document
+   * @private
+   */
   deactivateSpeakablePath() {
     this.speakablePath.visible = false;
     this.speakablePath.shape = null;
@@ -76,11 +84,19 @@ class SpeakerHighlighter extends Node {
     this.speakableActivated = false;
   }
 
+  /**
+   * TODO document
+   * @private
+   */
   activateSpeakingPath() {
     this.speakingPath.visible = true;
     this.speakingPath.shape = this.highlightShape;
   }
 
+  /**
+   * TODO document
+   * @private
+   */
   deactivateSpeakingPath() {
     this.speakingPath.visible = false;
     this.speakingPath.shape = null;

@@ -12,8 +12,8 @@ import Property from '../../../../axon/js/Property.js';
 import StringProperty from '../../../../axon/js/StringProperty.js';
 import merge from '../../../../phet-core/js/merge.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
-import inverseSquareLawCommonStrings from '../../inverseSquareLawCommonStrings.js';
 import inverseSquareLawCommon from '../../inverseSquareLawCommon.js';
+import inverseSquareLawCommonStrings from '../../inverseSquareLawCommonStrings.js';
 import ISLCObjectEnum from '../ISLCObjectEnum.js';
 import ISLCDescriber from './ISLCDescriber.js';
 
@@ -468,6 +468,9 @@ class PositionDescriber extends ISLCDescriber {
    * Returns a string to be used in the prototype self-voicing context. Returns something like
    * "mass 1, 4 kilometers from mass 1" (distances shown) or
    * "mass 1, close to mass 1" (distances hidden)
+   * @param objectLabel TODO type expression
+   * @param otherObjectLabel TODO type expression
+   * @public
    */
   getSelfVoicingDistanceDescription( objectLabel, otherObjectLabel ) {
     const patternString = this.useQuantitativeDistance ? selfVoicingLevelsMassQuantitativePatternString : selfVoicingLevelsMassQualitativePatternString;

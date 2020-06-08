@@ -11,8 +11,8 @@
 import merge from '../../../../phet-core/js/merge.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import ScientificNotationNode from '../../../../scenery-phet/js/ScientificNotationNode.js';
-import inverseSquareLawCommonStrings from '../../inverseSquareLawCommonStrings.js';
 import inverseSquareLawCommon from '../../inverseSquareLawCommon.js';
+import inverseSquareLawCommonStrings from '../../inverseSquareLawCommonStrings.js';
 import ForceValuesDisplayEnum from '../../model/ForceValuesDisplayEnum.js';
 import ISLCDescriber from './ISLCDescriber.js';
 
@@ -220,6 +220,13 @@ class ForceDescriber extends ISLCDescriber {
     } );
   }
 
+  /**
+   *
+   * @param thisObjectLabel TODO type expression
+   * @param otherObjectLabel TODO type expression
+   * @returns {string}
+   * @public
+   */
   getSelfVoicingForceVectorMagnitudeText( thisObjectLabel, otherObjectLabel ) {
     return StringUtils.fillIn( selfVoicingLevelsForcePatternString, {
       object1: thisObjectLabel,

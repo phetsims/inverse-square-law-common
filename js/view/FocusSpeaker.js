@@ -14,6 +14,11 @@ class FocusSpeaker {
     this.targetNodes = [];
   }
 
+  /**
+   * TODO document
+   * @param targetNode
+   * @public
+   */
   addNode( targetNode ) {
     this.targetNodes.push( targetNode );
 
@@ -27,6 +32,11 @@ class FocusSpeaker {
     } );
   }
 
+  /**
+   * TODO document
+   * @param targetNode
+   * @private
+   */
   makeTargetFocusable( targetNode ) {
     assert && assert( targetNode.tagName === null, 'target should have no accessible content before becoming focusable for self-voicing' );
     assert && assert( targetNode.focusable === false, 'target should not be initially focusable' );
@@ -35,6 +45,11 @@ class FocusSpeaker {
     targetNode.focusable = true;
   }
 
+  /**
+   * TODO document
+   * @param targetNode
+   * @private
+   */
   makeTargetNonFocusable( targetNode ) {
     assert && assert( targetNode.tagName === 'div', 'target should only have default tagname, no other semantics' );
     assert && assert( targetNode.focusable === true, 'target should be initially focusable' );
