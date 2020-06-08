@@ -63,7 +63,8 @@ class SpeakerHighlighter extends Node {
   }
 
   /**
-   * TODO document
+   * "Activate" the path during speaking, making it visible and giving it the active highlight shape. This is
+   * the path that indicates that the object has some content to be read.
    * @private
    */
   activateSpeakablePath() {
@@ -74,8 +75,8 @@ class SpeakerHighlighter extends Node {
   }
 
   /**
-   * TODO document
-   * @private
+   * The highlight path becomes invisible, removing any highlighting around the target hittble of the
+   * shapeHitDetector. This is the path that indicates that the object has some content to be read.
    */
   deactivateSpeakablePath() {
     this.speakablePath.visible = false;
@@ -85,7 +86,9 @@ class SpeakerHighlighter extends Node {
   }
 
   /**
-   * TODO document
+   * "Activate" the path during speaking, making it visible and giving it the active highlight shape. This path
+   * indicates that the target of the shapeHitDetector is active and the web speaker is actively speaking
+   * about it.
    * @private
    */
   activateSpeakingPath() {
@@ -94,7 +97,8 @@ class SpeakerHighlighter extends Node {
   }
 
   /**
-   * TODO document
+   * The highlight for the speaking path becomes invisible, and is removed. Indicates that the webSpeaker is done
+   * speaking.
    * @private
    */
   deactivateSpeakingPath() {

@@ -221,11 +221,13 @@ class ForceDescriber extends ISLCDescriber {
   }
 
   /**
-   *
-   * @param thisObjectLabel TODO type expression
-   * @param otherObjectLabel TODO type expression
-   * @returns {string}
+   * Get a string that describes the force vectors, for the self voicing prototype - not used yet for
+   * production code.
    * @public
+   *
+   * @param {string} thisObjectLabel
+   * @param {string} otherObjectLabel
+   * @returns {string}
    */
   getSelfVoicingForceVectorMagnitudeText( thisObjectLabel, otherObjectLabel ) {
     return StringUtils.fillIn( selfVoicingLevelsForcePatternString, {
