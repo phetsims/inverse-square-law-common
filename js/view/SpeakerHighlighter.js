@@ -75,9 +75,9 @@ class SpeakerHighlighter extends Node {
   }
 
   /**
-   * The highlight path becomes invisible, removing any highlighting around the target hittble of the
+   * The highlight path becomes invisible, removing any highlighting around the target of the
    * shapeHitDetector. This is the path that indicates that the object has some content to be read.
-   * 
+   *
    * @public
    */
   deactivateSpeakablePath() {
