@@ -15,11 +15,8 @@ import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
 class LevelSpeakerModel {
   constructor() {
 
-    // @public {BooleanProperty} - whether or not basic information is read on activation of help areas
-    this.basicReadingProperty = new BooleanProperty( true );
-
     // @public {BooleanProperty} - whether or not 'object responses' are read as interactive components change
-    this.objectChangesProperty = new BooleanProperty( false );
+    this.objectChangesProperty = new BooleanProperty( true );
 
     // @public {BooleanProperty} - whether or not "context responses" are read as simulation objects change
     this.contextChangesProperty = new BooleanProperty( false );

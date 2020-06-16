@@ -19,7 +19,7 @@ class FocusSpeaker {
   }
 
   /**
-   * Add a node to the FocusSpeaker, adding listeners to the basicReadingProperty. When the basicReadingProperty
+   * Add a node to the FocusSpeaker, adding listeners to the objectChangesProperty. When the objectChangesProperty
    * is true, the targetNode becomes focusable so that when focus lands on it information will be spoken.
    * @public
    *
@@ -28,7 +28,7 @@ class FocusSpeaker {
   addNode( targetNode ) {
     this.targetNodes.push( targetNode );
 
-    levelSpeakerModel.basicReadingProperty.link( basicReading => {
+    levelSpeakerModel.objectChangesProperty.link( basicReading => {
       if ( basicReading ) {
         this.makeTargetFocusable( targetNode );
       }
