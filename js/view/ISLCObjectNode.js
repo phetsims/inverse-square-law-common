@@ -394,7 +394,7 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
         }
       }
       else if ( ISLCQueryParameters.selfVoicing === 'levels' ) {
-        webSpeaker.speak( positionDescriber.getSelfVoicingDistanceDescription( config.label, config.otherObjectLabel ) );
+        webSpeaker.speak( positionDescriber.getSelfVoicingDistanceDescriptionWithoutLabel( config.otherObjectLabel ) );
       }
     },
     a11yCreateValueChangeAlert: () => {

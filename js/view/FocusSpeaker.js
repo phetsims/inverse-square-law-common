@@ -49,6 +49,7 @@ class FocusSpeaker {
     assert && assert( targetNode.focusable === false, 'target should not be initially focusable' );
 
     targetNode.tagName = 'div';
+    //targetNode.focusHighlight = 'invisible';
     targetNode.focusable = true;
   }
 

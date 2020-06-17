@@ -367,6 +367,12 @@
         },
         "massQualitativePattern": {
           "value": "{{object}}, {{distance}} {{otherObject}}."
+        },
+        "massQuantitativeWithoutLabelPattern": {
+          "value": "{{distance}} from {{otherObject}}."
+        },
+        "massQualitativeWithoutLabelPattern": {
+          "value": "{{distance}} {{otherObject}}."
         }
       }
     }

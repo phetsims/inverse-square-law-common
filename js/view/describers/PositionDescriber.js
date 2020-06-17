@@ -71,6 +71,9 @@ const trackEndRightString = inverseSquareLawCommonStrings.a11y.position.landmark
 const selfVoicingLevelsMassQuantitativePatternString = inverseSquareLawCommonStrings.a11y.selfVoicing.levels.massQuantitativePattern;
 const selfVoicingLevelsMassQualitativePatternString = inverseSquareLawCommonStrings.a11y.selfVoicing.levels.massQualitativePattern;
 
+const selfVoicingLevelsMassQuantitativeWithoutLabelPatternString = inverseSquareLawCommonStrings.a11y.selfVoicing.levels.massQuantitativeWithoutLabelPattern;
+const selfVoicingLevelsMassQualitativeWithoutLabelPatternString = inverseSquareLawCommonStrings.a11y.selfVoicing.levels.massQualitativeWithoutLabelPattern;
+
 const RELATIVE_DISTANCE_STRINGS = [
   farthestFromString,
   extremelyFarFromString,
@@ -478,6 +481,27 @@ class PositionDescriber extends ISLCDescriber {
 
     return StringUtils.fillIn( patternString, {
       object: objectLabel,
+      distance: distanceDescription,
+      otherObject: otherObjectLabel
+    } );
+  }
+
+  /**
+   * Returns a string to be used in the prototype self-voicing content, describing the distance betwseen objects. Similar
+   * to getSelfVoicingDistanceDescription, but does not inlucde the label to reduce verbocity. Returns something like
+   *
+   * "4 kilometers from mass 1" or
+   * "close to mass 1"
+   * @public
+   *
+   * @param {String} otherObjectLabel
+   * @returns {string}
+   */
+  getSelfVoicingDistanceDescriptionWithoutLabel( otherObjectLabel ) {
+    const patternString = this.useQuantitativeDistance ? selfVoicingLevelsMassQuantitativeWithoutLabelPatternString : selfVoicingLevelsMassQualitativeWithoutLabelPatternString;
+    const distanceDescription = this.useQuantitativeDistance ? this.getDistanceAndUnits() : this.getQualitativeRelativeDistanceRegion();
+
+    return StringUtils.fillIn( patternString, {
       distance: distanceDescription,
       otherObject: otherObjectLabel
     } );
