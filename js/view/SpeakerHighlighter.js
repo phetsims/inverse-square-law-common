@@ -16,8 +16,8 @@ import Shape from '../../../kite/js/Shape.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
 import Node from '../../../scenery/js/nodes/Node.js';
 import Path from '../../../scenery/js/nodes/Path.js';
+import FontAwesomeNode from '../../../sun/js/FontAwesomeNode.js';
 import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
-import Circle from '../../../scenery/js/nodes/Circle.js';
 import Text from '../../../scenery/js/nodes/Text.js';
 import levelSpeakerModel from './levelSpeakerModel.js';
 
@@ -38,11 +38,10 @@ class SpeakerHighlighter extends Node {
       lineWidth: 0.5
     } );
 
-    const iconCircle = new Circle( 15, { fill: 'grey' } );
-    iconCircle.setScaleMagnitude( 1, 0.7 ); // make it eliptical
-    const rText = new Text( 'R', { font: new PhetFont( { size: 12 } ), fill: 'white', center: iconCircle.center } );
+    const bubbleIcon = new FontAwesomeNode( 'comment', { fill: 'grey', scale: 0.75 } );
+    const rText = new Text( 'R', { font: new PhetFont( { size: 12 } ), fill: 'white', center: bubbleIcon.center.plusXY( 1, -2 ) } );
     const speakableIcon = new Node( {
-      children: [ iconCircle, rText ]
+      children: [ bubbleIcon, rText ]
     } );
     this.speakablePath.addChild( speakableIcon );
 
@@ -53,7 +52,7 @@ class SpeakerHighlighter extends Node {
       // interactive objects do not have a highlight to indicate that they have self voicing content
       if ( hitTarget !== null && !levelSpeakerModel.getNodeInteractive( hitTarget ) ) {
         this.highlightShape = Shape.bounds( hitTarget.globalBounds );
-        speakableIcon.center = hitTarget.globalBounds.rightBottom;
+        speakableIcon.centerBottom = hitTarget.globalBounds.rightBottom;
         this.activateSpeakablePath();
       }
       else {
