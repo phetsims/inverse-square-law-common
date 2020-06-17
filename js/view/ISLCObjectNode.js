@@ -40,6 +40,7 @@ import ISLCForceArrowNode from './ISLCForceArrowNode.js';
 import ISLCObjectEnum from './ISLCObjectEnum.js';
 import ISLCPullerNode from './ISLCPullerNode.js';
 import webSpeaker from '../../../inverse-square-law-common/js/view/webSpeaker.js';
+import levelSpeakerModel from './levelSpeakerModel.js';
 
 // constants
 const verboseMassInteractionHintPatternString = inverseSquareLawCommonStrings.a11y.selfVoicing.verboseMassInteractionHintPattern;
@@ -236,6 +237,8 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
       } );
     }
     else if ( ISLCQueryParameters.selfVoicing === 'levels' ) {
+      levelSpeakerModel.setNodeInteractive( this.objectCircle, true );
+
       config.shapeHitDetector.downOnHittableEmitter.addListener( hitTarget => {
         if ( hitTarget === this.objectCircle ) {
           webSpeaker.speak( positionDescriber.getSelfVoicingDistanceDescription( config.label, config.otherObjectLabel ) );

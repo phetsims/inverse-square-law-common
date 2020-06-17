@@ -16,6 +16,7 @@ import Shape from '../../../kite/js/Shape.js';
 import Node from '../../../scenery/js/nodes/Node.js';
 import Path from '../../../scenery/js/nodes/Path.js';
 import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
+import levelSpeakerModel from './levelSpeakerModel.js';
 
 class SpeakerHighlighter extends Node {
   constructor( shapeHitDetector, webSpeaker ) {
@@ -38,11 +39,14 @@ class SpeakerHighlighter extends Node {
     this.speakableActivated = false;
 
     shapeHitDetector.hitShapeEmitter.addListener( hitTarget => {
-      if ( hitTarget !== null ) {
+
+      // interactive objects do not have a highlight to indicate that they have self voicing content
+      if ( hitTarget !== null && !levelSpeakerModel.getNodeInteractive( hitTarget ) ) {
         this.highlightShape = Shape.bounds( hitTarget.globalBounds );
         this.activateSpeakablePath();
       }
       else {
+        this.highlightShape = null;
         this.deactivateSpeakablePath();
       }
     } );
