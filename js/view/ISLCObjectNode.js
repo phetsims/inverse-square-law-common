@@ -238,12 +238,6 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
     }
     else if ( ISLCQueryParameters.selfVoicing === 'levels' ) {
       levelSpeakerModel.setNodeInteractive( this.objectCircle, true );
-
-      config.shapeHitDetector.downOnHittableEmitter.addListener( hitTarget => {
-        if ( hitTarget === this.objectCircle ) {
-          webSpeaker.speak( positionDescriber.getSelfVoicingDistanceDescription( config.label, config.otherObjectLabel ) );
-        }
-      } );
     }
   }
 
@@ -330,6 +324,9 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
           }
         }
       }
+      else if ( ISLCQueryParameters.selfVoicing === 'levels' ) {
+        webSpeaker.speak( positionDescriber.getSelfVoicingDistanceDescription( config.label, config.otherObjectLabel ) );
+      }
     },
     tandem: config.tandem.createTandem( 'dragListener' )
   } ) );
@@ -378,10 +375,15 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
       this.redrawForce();
 
       // SELF VOICING PROTOTYPE - when ending drag, speak the result of the interaction
-      if ( cursorSpeakerModel.interactiveModeProperty.get() ) {
-        if ( oldPosition !== object.positionProperty.get() ) {
-          webSpeaker.speak( this.getSelfVoicingPositionChangeAlert( object.positionProperty.get(), oldPosition, model.forceProperty.get(), forceOnStart ) );
+      if ( ISLCQueryParameters.selfVoicing === 'cursor' ) {
+        if ( cursorSpeakerModel.interactiveModeProperty.get() ) {
+          if ( oldPosition !== object.positionProperty.get() ) {
+            webSpeaker.speak( this.getSelfVoicingPositionChangeAlert( object.positionProperty.get(), oldPosition, model.forceProperty.get(), forceOnStart ) );
+          }
         }
+      }
+      else if ( ISLCQueryParameters.selfVoicing === 'levels' ) {
+        webSpeaker.speak( positionDescriber.getSelfVoicingDistanceDescription( config.label, config.otherObjectLabel ) );
       }
     },
     a11yCreateValueChangeAlert: () => {
