@@ -13,9 +13,12 @@
  */
 
 import Shape from '../../../kite/js/Shape.js';
+import PhetFont from '../../../scenery-phet/js/PhetFont.js';
 import Node from '../../../scenery/js/nodes/Node.js';
 import Path from '../../../scenery/js/nodes/Path.js';
 import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
+import Circle from '../../../scenery/js/nodes/Circle.js';
+import Text from '../../../scenery/js/nodes/Text.js';
 import levelSpeakerModel from './levelSpeakerModel.js';
 
 class SpeakerHighlighter extends Node {
@@ -31,10 +34,17 @@ class SpeakerHighlighter extends Node {
     } );
 
     this.speakablePath = new Path( null, {
-      fill: 'rgba(0,255,255,0.5)',
       stroke: 'black',
       lineWidth: 0.5
     } );
+
+    const iconCircle = new Circle( 15, { fill: 'grey' } );
+    iconCircle.setScaleMagnitude( 1, 0.7 ); // make it eliptical
+    const rText = new Text( 'R', { font: new PhetFont( { size: 12 } ), fill: 'white', center: iconCircle.center } );
+    const speakableIcon = new Node( {
+      children: [ iconCircle, rText ]
+    } );
+    this.speakablePath.addChild( speakableIcon );
 
     this.speakableActivated = false;
 
@@ -43,6 +53,7 @@ class SpeakerHighlighter extends Node {
       // interactive objects do not have a highlight to indicate that they have self voicing content
       if ( hitTarget !== null && !levelSpeakerModel.getNodeInteractive( hitTarget ) ) {
         this.highlightShape = Shape.bounds( hitTarget.globalBounds );
+        speakableIcon.center = hitTarget.globalBounds.rightBottom;
         this.activateSpeakablePath();
       }
       else {
@@ -72,10 +83,12 @@ class SpeakerHighlighter extends Node {
    * @private
    */
   activateSpeakablePath() {
-    this.speakablePath.visible = true;
-    this.speakablePath.shape = this.highlightShape;
+    if ( this.highlightShape !== null ) {
+      this.speakablePath.visible = true;
+      this.speakablePath.shape = this.highlightShape;
 
-    this.speakableActivated = true;
+      this.speakableActivated = true;
+    }
   }
 
   /**
