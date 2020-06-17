@@ -221,9 +221,9 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
   // PROTOTYPE a11y code, to support self-voicing features
   if ( config.shapeHitDetector ) {
     assert && assert( config.objectColor, 'required param, if testing self voicing features' );
-    config.shapeHitDetector.addNode( this.objectCircle );
 
     if ( ISLCQueryParameters.selfVoicing === 'cursor' ) {
+      config.shapeHitDetector.addNode( this.objectCircle );
       config.shapeHitDetector.hitShapeEmitter.addListener( hitTarget => {
         if ( hitTarget === this.objectCircle ) {
           if ( cursorSpeakerModel.exploreModeProperty.get() ) {
@@ -237,7 +237,18 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
       } );
     }
     else if ( ISLCQueryParameters.selfVoicing === 'levels' ) {
-      levelSpeakerModel.setNodeInteractive( this.objectCircle, true );
+      config.shapeHitDetector.addNode( this );
+      levelSpeakerModel.setNodeInteractive( this, true );
+
+      config.shapeHitDetector.hitShapeEmitter.addListener( hitTarget => {
+
+        // if we get a hit while focused, it is a hit from keyboard
+        // NOTE: We would need a more general way to do this, so that different kinds of hits have different emitters
+        // or something
+        if ( hitTarget === this && hitTarget.isFocused() ) {
+          webSpeaker.speak( positionDescriber.getSelfVoicingDistanceDescription( config.label, config.otherObjectLabel ) );
+        }
+      } );
     }
   }
 
