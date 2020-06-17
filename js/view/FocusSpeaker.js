@@ -28,8 +28,8 @@ class FocusSpeaker {
   addNode( targetNode ) {
     this.targetNodes.push( targetNode );
 
-    levelSpeakerModel.objectChangesProperty.link( basicReading => {
-      if ( basicReading ) {
+    levelSpeakerModel.objectChangesProperty.link( objectChanges => {
+      if ( objectChanges ) {
         this.makeTargetFocusable( targetNode );
       }
       else {
@@ -48,7 +48,7 @@ class FocusSpeaker {
     assert && assert( targetNode.tagName === null, 'target should have no accessible content before becoming focusable for self-voicing' );
     assert && assert( targetNode.focusable === false, 'target should not be initially focusable' );
 
-    targetNode.tagName = 'div';
+    targetNode.tagName = 'button';
     targetNode.focusable = true;
   }
 
@@ -59,7 +59,7 @@ class FocusSpeaker {
    * @param targetNode
    */
   makeTargetNonFocusable( targetNode ) {
-    assert && assert( targetNode.tagName === 'div', 'target should only have default tagname, no other semantics' );
+    assert && assert( targetNode.tagName === 'button', 'target should only have default tagname, no other semantics' );
     assert && assert( targetNode.focusable === true, 'target should be initially focusable' );
 
     targetNode.tagName = null;
