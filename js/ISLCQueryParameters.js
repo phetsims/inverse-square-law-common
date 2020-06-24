@@ -29,10 +29,20 @@ const ISLCQueryParameters = QueryStringMachine.getAll( {
   // Enables prototype "self voicing" feature set, which uses the Web Speech API to read content from the sim
   // without the use of a screen reader. This is being tested for the first time in gravity-force-lab-basics, and so this query
   // parameter will be used by the ISLC dependency repos, see https://github.com/phetsims/gravity-force-lab-basics/issues/193
+  // The behavior of each value is as follows:
+  //  null - No self voicing content (feature disabled)
+  //  'cursor' - Self voicing content on 'hover' with mouse and keyboard focus, with different levels of verbosity
+  //             that can be set by the user.
+  //  'levels' - Self voicing content on activation with mouse/cursor for all objects with speakable content, and
+  //             self voicing content on focus for interactive things, and on 'click' for non-interactive things.
+  //             User can chose between speaking about objects, and whether to include other 'alert' like responses
+  //             during simulation changes.
+  //  'minimalLevels' - Similar to 'levels', but with less non-interactive objects added to the focus order, since
+  //                    often information in non-interactive objects can be combined in interactive object descriptions.
   selfVoicing: {
     type: 'string',
     defaultValue: null,
-    validValues: [ null, 'cursor', 'levels' ]
+    validValues: [ null, 'cursor', 'levels', 'minimalLevels' ]
   }
 } );
 

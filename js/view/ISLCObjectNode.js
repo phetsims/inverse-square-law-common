@@ -183,7 +183,7 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
         }
       } );
     }
-    else if ( ISLCQueryParameters.selfVoicing === 'levels' ) {
+    else if ( ISLCQueryParameters.selfVoicing === 'levels' || ISLCQueryParameters.selfVoicing === 'minimalLevels' ) {
       focusSpeaker.addNode( this.arrowNode );
       config.shapeHitDetector.downOnHittableEmitter.addListener( hitTarget => {
         if ( hitTarget === this.arrowNode ) {
@@ -236,7 +236,7 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
         }
       } );
     }
-    else if ( ISLCQueryParameters.selfVoicing === 'levels' ) {
+    else if ( ISLCQueryParameters.selfVoicing === 'levels' || ISLCQueryParameters.selfVoicing === 'minimalLevels' ) {
       config.shapeHitDetector.addNode( this );
       levelSpeakerModel.setNodeInteractive( this, true );
 
@@ -335,7 +335,7 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
           }
         }
       }
-      else if ( ISLCQueryParameters.selfVoicing === 'levels' ) {
+      else if ( ISLCQueryParameters.selfVoicing === 'levels' || ISLCQueryParameters.selfVoicing === 'minimalLevels' ) {
         webSpeaker.speak( positionDescriber.getSelfVoicingDistanceDescription( config.label, config.otherObjectLabel ) );
       }
     },
@@ -393,7 +393,7 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
           }
         }
       }
-      else if ( ISLCQueryParameters.selfVoicing === 'levels' ) {
+      else if ( ISLCQueryParameters.selfVoicing === 'levels' || ISLCQueryParameters.selfVoicing === 'minimalLevels' ) {
         webSpeaker.speak( positionDescriber.getSelfVoicingDistanceDescriptionWithoutLabel( config.otherObjectLabel ) );
       }
     },
