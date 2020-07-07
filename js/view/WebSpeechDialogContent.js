@@ -35,7 +35,7 @@ const INPUT_SPACING = 8;
 class WebSpeechDialogContent extends VBox {
   constructor() {
 
-    const modeControls = ISLCQueryParameters.selfVoicing === 'cursor' ? new CursorModeControls() : new LevelModeControls();
+    const modeControls = ISLCQueryParameters.selfVoicing === 'paradigm1' ? new CursorModeControls() : new LevelModeControls();
 
     // controls for speech synthesis, such as the rate, pitch, and voice
     const voiceRateSlider = WebSpeechDialogContent.createLabelledSlider( webSpeaker.voiceRateProperty, 'Rate', 'New Voice Rate' );

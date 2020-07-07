@@ -173,7 +173,7 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
   if ( config.shapeHitDetector && ISLCQueryParameters.selfVoicing ) {
     config.shapeHitDetector.addNode( this.arrowNode );
 
-    if ( ISLCQueryParameters.selfVoicing === 'cursor' ) {
+    if ( ISLCQueryParameters.selfVoicing === 'paradigm1' ) {
       config.shapeHitDetector.hitShapeEmitter.addListener( hitTarget => {
         if ( hitTarget === this.arrowNode ) {
           if ( cursorSpeakerModel.exploreModeProperty.get() ) {
@@ -183,7 +183,7 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
         }
       } );
     }
-    else if ( ISLCQueryParameters.selfVoicing === 'levels' || ISLCQueryParameters.selfVoicing === 'minimalLevels' ) {
+    else if ( ISLCQueryParameters.selfVoicing === 'paradigm2' || ISLCQueryParameters.selfVoicing === 'paradigm3' ) {
       focusSpeaker.addNode( this.arrowNode );
       config.shapeHitDetector.downOnHittableEmitter.addListener( hitTarget => {
         if ( hitTarget === this.arrowNode ) {
@@ -222,7 +222,7 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
   if ( config.shapeHitDetector ) {
     assert && assert( config.objectColor, 'required param, if testing self voicing features' );
 
-    if ( ISLCQueryParameters.selfVoicing === 'cursor' ) {
+    if ( ISLCQueryParameters.selfVoicing === 'paradigm1' ) {
       config.shapeHitDetector.addNode( this.objectCircle );
       config.shapeHitDetector.hitShapeEmitter.addListener( hitTarget => {
         if ( hitTarget === this.objectCircle ) {
@@ -236,7 +236,7 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
         }
       } );
     }
-    else if ( ISLCQueryParameters.selfVoicing === 'levels' || ISLCQueryParameters.selfVoicing === 'minimalLevels' ) {
+    else if ( ISLCQueryParameters.selfVoicing === 'paradigm2' || ISLCQueryParameters.selfVoicing === 'paradigm3' ) {
       config.shapeHitDetector.addNode( this );
       levelSpeakerModel.setNodeInteractive( this, true );
 
@@ -328,14 +328,14 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
       object.isDragging = false;
 
       // SELF VOICING PROTOTYPE - when ending drag, speak the result of the interaction
-      if ( ISLCQueryParameters.selfVoicing === 'cursor' ) {
+      if ( ISLCQueryParameters.selfVoicing === 'paradigm1' ) {
         if ( cursorSpeakerModel.interactiveModeProperty.get() ) {
           if ( oldPosition !== object.positionProperty.get() ) {
             webSpeaker.speak( this.getSelfVoicingPositionChangeAlert( object.positionProperty.get(), oldPosition, model.forceProperty.get(), forceOnStart ) );
           }
         }
       }
-      else if ( ISLCQueryParameters.selfVoicing === 'levels' || ISLCQueryParameters.selfVoicing === 'minimalLevels' ) {
+      else if ( ISLCQueryParameters.selfVoicing === 'paradigm2' || ISLCQueryParameters.selfVoicing === 'paradigm3' ) {
         webSpeaker.speak( positionDescriber.getSelfVoicingDistanceDescription( config.label, config.otherObjectLabel ) );
       }
     },
@@ -386,14 +386,14 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
       this.redrawForce();
 
       // SELF VOICING PROTOTYPE - when ending drag, speak the result of the interaction
-      if ( ISLCQueryParameters.selfVoicing === 'cursor' ) {
+      if ( ISLCQueryParameters.selfVoicing === 'paradigm1' ) {
         if ( cursorSpeakerModel.interactiveModeProperty.get() ) {
           if ( oldPosition !== object.positionProperty.get() ) {
             webSpeaker.speak( this.getSelfVoicingPositionChangeAlert( object.positionProperty.get(), oldPosition, model.forceProperty.get(), forceOnStart ) );
           }
         }
       }
-      else if ( ISLCQueryParameters.selfVoicing === 'levels' || ISLCQueryParameters.selfVoicing === 'minimalLevels' ) {
+      else if ( ISLCQueryParameters.selfVoicing === 'paradigm2' || ISLCQueryParameters.selfVoicing === 'paradigm3' ) {
         webSpeaker.speak( positionDescriber.getSelfVoicingDistanceDescriptionWithoutLabel( config.otherObjectLabel ) );
       }
     },
