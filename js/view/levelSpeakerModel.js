@@ -11,6 +11,7 @@
 
 import BooleanProperty from '../../../axon/js/BooleanProperty.js';
 import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
+import webSpeaker from './webSpeaker.js';
 
 class LevelSpeakerModel {
   constructor() {
@@ -19,7 +20,7 @@ class LevelSpeakerModel {
     this.objectChangesProperty = new BooleanProperty( true );
 
     // @public {BooleanProperty} - whether or not "context responses" are read as simulation objects change
-    this.contextChangesProperty = new BooleanProperty( false );
+    this.contextChangesProperty = new BooleanProperty( true );
 
     // @public {BooleanProperty} - whether or not helpful or interaction hints are read to the user
     this.hintsProperty = new BooleanProperty( false );
@@ -51,6 +52,36 @@ class LevelSpeakerModel {
    */
   getNodeInteractive( node ) {
     return node.consideredInteractive;
+  }
+
+  /**
+   * Prepares final output with both an object and a context response. Each response is only sent to the webSpeaker
+   * if the Properties for speaking that content indicate that content should be spoken. Both are added as
+   * independent utterances to the webSpeaker because we only want the objectResponse portion to have object glow.
+   * @public
+   *
+   * @param {string} objectResponse
+   * @param {string} contextResponse
+   */
+  speakObjectAndContextResponse( objectResponse, contextResponse ) {
+    const objectChanges = this.objectChangesProperty.get();
+    const contextChanges = this.contextChangesProperty.get();
+    if ( objectChanges && contextChanges ) {
+
+      // speaking both, speak the object response first (with interruption) followed by the context response
+      webSpeaker.speak( objectResponse, true );
+      webSpeaker.speak( contextResponse, false );
+    }
+    else if ( objectChanges ) {
+
+      // only utterance, interrupt anything else in queue
+      webSpeaker.speak( objectResponse, true );
+    }
+    else if ( contextChanges ) {
+
+      // only utterance, interrupt anything else in queue
+      webSpeaker.speak( contextResponse, true );
+    }
   }
 }
 

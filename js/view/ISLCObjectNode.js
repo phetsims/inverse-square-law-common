@@ -336,7 +336,14 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
         }
       }
       else if ( ISLCQueryParameters.selfVoicing === 'paradigm2' || ISLCQueryParameters.selfVoicing === 'paradigm3' ) {
-        webSpeaker.speak( positionDescriber.getSelfVoicingDistanceDescription( config.label, config.otherObjectLabel ) );
+        const distanceDescription = positionDescriber.getSelfVoicingDistanceDescription( config.label, config.otherObjectLabel );
+
+        // only speak force change if it has changed
+        let forceChangeText = '';
+        if ( oldPosition !== object.positionProperty.get() ) {
+          forceChangeText = this.forceDescriber.getVectorChangeText( this.objectModel );
+        }
+        levelSpeakerModel.speakObjectAndContextResponse( distanceDescription, forceChangeText );
       }
     },
     tandem: config.tandem.createTandem( 'dragListener' )
@@ -394,7 +401,14 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
         }
       }
       else if ( ISLCQueryParameters.selfVoicing === 'paradigm2' || ISLCQueryParameters.selfVoicing === 'paradigm3' ) {
-        webSpeaker.speak( positionDescriber.getSelfVoicingDistanceDescriptionWithoutLabel( config.otherObjectLabel ) );
+        const distanceDescription = positionDescriber.getSelfVoicingDistanceDescriptionWithoutLabel( config.otherObjectLabel );
+
+        // only speak force change if it has changed
+        let forceChangeText = '';
+        if ( oldPosition !== object.positionProperty.get() ) {
+          forceChangeText = this.forceDescriber.getVectorChangeText( this.objectModel );
+        }
+        levelSpeakerModel.speakObjectAndContextResponse( distanceDescription, forceChangeText );
       }
     },
     a11yCreateValueChangeAlert: () => {

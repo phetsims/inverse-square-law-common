@@ -76,12 +76,16 @@ class WebSpeaker {
 
   /**
    * Use speech synthesis to speak an utterance. No-op unless webSpeaker is initialized.
-   * @param {string} utterThis
    * @public
+   *
+   * @param {string} utterThis
+   * @param {boolean} withCancel - if true, any utterances remaining in the queue will be removed and this utterance
+   *                               will take priority. Hopefully this works on all platforms, if it does not we
+   *                               need to implement our own queing system.
    */
-  speak( utterThis ) {
+  speak( utterThis, withCancel = true ) {
     if ( this.initialized && this.enabled ) {
-      this.synth.cancel();
+      withCancel && this.synth.cancel();
 
       // embidding marks (for i18n) impact the output, strip before speaking
       const utterance = new SpeechSynthesisUtterance( stripEmbeddingMarks( utterThis ) );

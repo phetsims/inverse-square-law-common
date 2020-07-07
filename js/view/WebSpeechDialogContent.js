@@ -168,7 +168,7 @@ class LevelModeControls extends VBox {
       {
         node: new Text( 'Voice Context Changes', { font: LABEL_FONT } ),
         property: levelSpeakerModel.contextChangesProperty,
-        options: { enabledProperty: new BooleanProperty( false ) }
+        options: { enabledProperty: new BooleanProperty( true ) }
 
       },
       {
