@@ -364,8 +364,7 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
           forceChangeText = this.forceDescriber.getVectorChangeText( this.objectModel );
         }
 
-        const interactionHint = selfVoicingLevelsMoveSpheresHintString;
-        levelSpeakerModel.speakAllResponses( distanceDescription, forceChangeText, interactionHint );
+        levelSpeakerModel.speakAllResponses( distanceDescription, forceChangeText );
       }
     },
     tandem: config.tandem.createTandem( 'dragListener' )
