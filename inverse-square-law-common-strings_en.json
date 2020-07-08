@@ -379,6 +379,9 @@
         },
         "massQualitativeWithoutLabelPattern": {
           "value": "{{distance}} {{otherObject}}."
+        },
+        "moveSpheresHintString": {
+          "value": "Move spheres, closer or farther from each other."
         }
       }
     }

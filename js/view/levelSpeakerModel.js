@@ -12,6 +12,7 @@
 import BooleanProperty from '../../../axon/js/BooleanProperty.js';
 import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
 import webSpeaker from './webSpeaker.js';
+import Property from '../../../axon/js/Property.js';
 
 class LevelSpeakerModel {
   constructor() {
@@ -55,17 +56,25 @@ class LevelSpeakerModel {
   }
 
   /**
-   * Adds a node to the ShapeHitDetector, but removes it if the objectChangesProperty is set to false so that
-   * it cannot be hit for that selection.
+   * Adds a node to the ShapeHitDetector, but removes it if the objectChangesProperty or help text is set
+   * to false.
+   *
+   * NOTE: At the moment all Non-interactive objects that have object responses also have hint content, so this
+   * works out. But if in the future we have a non-interactive object without help text, it will
+   * remain hittable even when it has no content, so they must be separated.
    * @public
    *
    * @param {Node} node
    * @param {ShapeHitDetector} shapeHitDetector
    */
-  addHitDetectionForObjectResponses( node, shapeHitDetector ) {
-    this.objectChangesProperty.link( objectChanges => {
-      if ( objectChanges ) {
-        shapeHitDetector.addNode( node );
+  addHitDetectionForObjectResponsesAndHelpText( node, shapeHitDetector ) {
+    Property.multilink( [ this.objectChangesProperty, this.hintsProperty ], ( objectChanges, hints ) => {
+      if ( objectChanges || hints ) {
+
+        // don't add the node twice
+        if ( !shapeHitDetector.hasNode( node ) ) {
+          shapeHitDetector.addNode( node );
+        }
       }
       else {
         shapeHitDetector.removeNode( node );
@@ -75,32 +84,36 @@ class LevelSpeakerModel {
 
   /**
    * Prepares final output with both an object and a context response. Each response is only sent to the webSpeaker
-   * if the Properties for speaking that content indicate that content should be spoken. Both are added as
-   * independent utterances to the webSpeaker because we only want the objectResponse portion to have object glow.
+   * if the Properties for speaking that content indicate that content should be spoken. Rather than using
+   * unique utterances, we use string interpolation so that the highlight around the abject being spoken
+   * about stays lit for the entire combination of responses.
    * @public
    *
    * @param {string} objectResponse
    * @param {string} contextResponse
+   * @param {string} interactionHint
    */
-  speakAllResponses( objectResponse, contextResponse ) {
+  speakAllResponses( objectResponse, contextResponse, interactionHint ) {
     const objectChanges = this.objectChangesProperty.get();
     const contextChanges = this.contextChangesProperty.get();
-    if ( objectChanges && contextChanges ) {
+    const interactionHints = this.hintsProperty.get();
 
-      // speaking both, speak the object response first (with interruption) followed by the context response
-      webSpeaker.speak( objectResponse, true );
-      webSpeaker.speak( contextResponse, false );
+    let usedObjectString = '';
+    let usedContextString = '';
+    let usedInteractionHint = '';
+    if ( objectChanges && objectResponse ) {
+      usedObjectString = objectResponse;
     }
-    else if ( objectChanges ) {
+    if ( contextChanges && contextResponse ) {
+      usedContextString = contextResponse;
+    }
+    if ( interactionHints && interactionHint ) {
+      usedInteractionHint = interactionHint;
+    }
 
-      // only utterance, interrupt anything else in queue
-      webSpeaker.speak( objectResponse, true );
-    }
-    else if ( contextChanges ) {
-
-      // only utterance, interrupt anything else in queue
-      webSpeaker.speak( contextResponse, true );
-    }
+    // cant decide if punctuation is right here, it always sounds better but is likely wrong in many cases.
+    const outputString = `${usedObjectString}. ${usedContextString}. ${usedInteractionHint}`;
+    webSpeaker.speak( outputString, true );
   }
 }
 

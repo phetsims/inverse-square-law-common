@@ -174,7 +174,7 @@ class LevelModeControls extends VBox {
       {
         node: new Text( 'Voice Helpful Hints', { font: LABEL_FONT } ),
         property: levelSpeakerModel.hintsProperty,
-        options: { enabledProperty: new BooleanProperty( false ) }
+        options: { enabledProperty: new BooleanProperty( true ) }
       }
     ] );
     super( {

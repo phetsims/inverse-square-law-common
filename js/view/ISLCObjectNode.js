@@ -13,11 +13,12 @@
 
 import BooleanProperty from '../../../axon/js/BooleanProperty.js';
 import Range from '../../../dot/js/Range.js';
-import StringUtils from '../../../phetcommon/js/util/StringUtils.js';
 import Utils from '../../../dot/js/Utils.js';
+import webSpeaker from '../../../inverse-square-law-common/js/view/webSpeaker.js';
 import Shape from '../../../kite/js/Shape.js';
 import inherit from '../../../phet-core/js/inherit.js';
 import merge from '../../../phet-core/js/merge.js';
+import StringUtils from '../../../phetcommon/js/util/StringUtils.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
 import DragListener from '../../../scenery/js/listeners/DragListener.js';
 import Circle from '../../../scenery/js/nodes/Circle.js';
@@ -39,7 +40,6 @@ import ISLCAlertManager from './ISLCAlertManager.js';
 import ISLCForceArrowNode from './ISLCForceArrowNode.js';
 import ISLCObjectEnum from './ISLCObjectEnum.js';
 import ISLCPullerNode from './ISLCPullerNode.js';
-import webSpeaker from '../../../inverse-square-law-common/js/view/webSpeaker.js';
 import levelSpeakerModel from './levelSpeakerModel.js';
 
 // constants
@@ -50,6 +50,8 @@ const selfVoicingBiggerString = inverseSquareLawCommonStrings.a11y.selfVoicing.b
 const selfVoicingSmallerString = inverseSquareLawCommonStrings.a11y.selfVoicing.smaller;
 const selfVoicingBriefNewForceNoValuesAlertString = inverseSquareLawCommonStrings.a11y.selfVoicing.briefNewForceNoValuesAlert;
 const selfVoicingBriefNewForceAlertPatternString = inverseSquareLawCommonStrings.a11y.selfVoicing.briefNewForceAlertPattern;
+const summaryInteractionHintPatternString = inverseSquareLawCommonStrings.a11y.screenSummary.summaryInteractionHintPattern;
+const selfVoicingLevelsMoveSpheresHintString = inverseSquareLawCommonStrings.a11y.selfVoicing.levels.moveSpheresHintString;
 
 const NEGATIVE_FILL = new Color( '#66f' );
 const POSITIVE_FILL = new Color( '#f66' );
@@ -184,22 +186,27 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
       } );
     }
     else if ( ISLCQueryParameters.selfVoicing === 'paradigm2' || ISLCQueryParameters.selfVoicing === 'paradigm3' ) {
-      levelSpeakerModel.addHitDetectionForObjectResponses( this.arrowNode, config.shapeHitDetector );
+      levelSpeakerModel.addHitDetectionForObjectResponsesAndHelpText( this.arrowNode, config.shapeHitDetector );
       focusSpeaker.addNode( this.arrowNode );
       config.shapeHitDetector.downOnHittableEmitter.addListener( hitTarget => {
         if ( hitTarget === this.arrowNode ) {
+          let objectResponse;
           if ( ISLCQueryParameters.selfVoicingVersion === 1 ) {
 
             // custom self voicing string
-            const utterance = forceDescriber.getSelfVoicingForceVectorMagnitudeText( config.label, config.otherObjectLabel );
-            webSpeaker.speak( utterance );
+            objectResponse = forceDescriber.getSelfVoicingForceVectorMagnitudeText( config.label, config.otherObjectLabel );
           }
           else {
 
             // string directly from PDOM strings
-            const utterance = forceDescriber.getForceVectorMagnitudeText( config.label, config.otherObjectLabel );
-            webSpeaker.speak( utterance );
+            objectResponse = forceDescriber.getForceVectorMagnitudeText( config.label, config.otherObjectLabel );
           }
+
+          const helpText = StringUtils.fillIn( summaryInteractionHintPatternString, {
+            massOrCharge: 'mass'
+          } );
+
+          levelSpeakerModel.speakAllResponses( objectResponse, null, helpText );
         }
       } );
     }
@@ -257,7 +264,9 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
         // NOTE: We would need a more general way to do this, so that different kinds of hits have different emitters
         // or something
         if ( hitTarget === this && hitTarget.isFocused() ) {
-          webSpeaker.speak( positionDescriber.getSelfVoicingDistanceDescription( config.label, config.otherObjectLabel ) );
+          const interactionHint = selfVoicingLevelsMoveSpheresHintString;
+          const objectResponse = positionDescriber.getSelfVoicingDistanceDescription( config.label, config.otherObjectLabel );
+          levelSpeakerModel.speakAllResponses( objectResponse, null, interactionHint );
         }
       } );
     }
@@ -354,7 +363,9 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
         if ( oldPosition !== object.positionProperty.get() ) {
           forceChangeText = this.forceDescriber.getVectorChangeText( this.objectModel );
         }
-        levelSpeakerModel.speakAllResponses( distanceDescription, forceChangeText );
+
+        const interactionHint = selfVoicingLevelsMoveSpheresHintString;
+        levelSpeakerModel.speakAllResponses( distanceDescription, forceChangeText, interactionHint );
       }
     },
     tandem: config.tandem.createTandem( 'dragListener' )
