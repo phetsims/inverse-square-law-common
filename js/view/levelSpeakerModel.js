@@ -82,7 +82,7 @@ class LevelSpeakerModel {
    * @param {string} objectResponse
    * @param {string} contextResponse
    */
-  speakObjectAndContextResponse( objectResponse, contextResponse ) {
+  speakAllResponses( objectResponse, contextResponse ) {
     const objectChanges = this.objectChangesProperty.get();
     const contextChanges = this.contextChangesProperty.get();
     if ( objectChanges && contextChanges ) {

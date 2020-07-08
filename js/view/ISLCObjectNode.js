@@ -354,7 +354,7 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
         if ( oldPosition !== object.positionProperty.get() ) {
           forceChangeText = this.forceDescriber.getVectorChangeText( this.objectModel );
         }
-        levelSpeakerModel.speakObjectAndContextResponse( distanceDescription, forceChangeText );
+        levelSpeakerModel.speakAllResponses( distanceDescription, forceChangeText );
       }
     },
     tandem: config.tandem.createTandem( 'dragListener' )
@@ -419,7 +419,7 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
         if ( oldPosition !== object.positionProperty.get() ) {
           forceChangeText = this.forceDescriber.getVectorChangeText( this.objectModel );
         }
-        levelSpeakerModel.speakObjectAndContextResponse( distanceDescription, forceChangeText );
+        levelSpeakerModel.speakAllResponses( distanceDescription, forceChangeText );
       }
     },
     a11yCreateValueChangeAlert: () => {
