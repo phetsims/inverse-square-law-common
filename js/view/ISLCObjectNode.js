@@ -187,8 +187,18 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
       focusSpeaker.addNode( this.arrowNode );
       config.shapeHitDetector.downOnHittableEmitter.addListener( hitTarget => {
         if ( hitTarget === this.arrowNode ) {
-          const utterance = forceDescriber.getSelfVoicingForceVectorMagnitudeText( config.label, config.otherObjectLabel );
-          webSpeaker.speak( utterance );
+          if ( ISLCQueryParameters.selfVoicingVersion === 1 ) {
+
+            // custom self voicing string
+            const utterance = forceDescriber.getSelfVoicingForceVectorMagnitudeText( config.label, config.otherObjectLabel );
+            webSpeaker.speak( utterance );
+          }
+          else {
+
+            // string directly from PDOM strings
+            const utterance = forceDescriber.getForceVectorMagnitudeText( config.label, config.otherObjectLabel );
+            webSpeaker.speak( utterance );
+          }
         }
       } );
     }

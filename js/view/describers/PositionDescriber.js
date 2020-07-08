@@ -14,6 +14,7 @@ import merge from '../../../../phet-core/js/merge.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import inverseSquareLawCommon from '../../inverseSquareLawCommon.js';
 import inverseSquareLawCommonStrings from '../../inverseSquareLawCommonStrings.js';
+import ISLCQueryParameters from '../../ISLCQueryParameters.js';
 import ISLCObjectEnum from '../ISLCObjectEnum.js';
 import ISLCDescriber from './ISLCDescriber.js';
 
@@ -30,6 +31,7 @@ const centersOfObjectsDistancePatternString = inverseSquareLawCommonStrings.a11y
 const positionDistanceFromOtherObjectPatternString = inverseSquareLawCommonStrings.a11y.position.valuetext.positionDistanceFromOtherObjectPattern;
 const positionProgressOrLandmarkClauseString = inverseSquareLawCommonStrings.a11y.positionProgressOrLandmarkClause;
 const distanceAndUnitsPatternString = inverseSquareLawCommonStrings.a11y.position.valuetext.distanceAndUnitsPattern;
+const centersApartPatternString = inverseSquareLawCommonStrings.a11y.position.valuetext.centersApartPattern;
 const quantitativeDistancePatternString = inverseSquareLawCommonStrings.a11y.position.valuetext.quantitativeDistancePattern;
 const distanceFromOtherObjectPatternString = inverseSquareLawCommonStrings.a11y.position.valuetext.distanceFromOtherObjectPattern;
 const distanceFromOtherObjectSentencePatternString = inverseSquareLawCommonStrings.a11y.position.valuetext.distanceFromOtherObjectSentencePattern;
@@ -70,6 +72,7 @@ const trackEndRightString = inverseSquareLawCommonStrings.a11y.position.landmark
 
 const selfVoicingLevelsMassQuantitativePatternString = inverseSquareLawCommonStrings.a11y.selfVoicing.levels.massQuantitativePattern;
 const selfVoicingLevelsMassQualitativePatternString = inverseSquareLawCommonStrings.a11y.selfVoicing.levels.massQualitativePattern;
+const selfVoicingLevelsMoveObjectPatternString = inverseSquareLawCommonStrings.a11y.selfVoicing.levels.moveObjectPattern;
 
 const selfVoicingLevelsMassQuantitativeWithoutLabelPatternString = inverseSquareLawCommonStrings.a11y.selfVoicing.levels.massQuantitativeWithoutLabelPattern;
 const selfVoicingLevelsMassQualitativeWithoutLabelPatternString = inverseSquareLawCommonStrings.a11y.selfVoicing.levels.massQualitativeWithoutLabelPattern;
@@ -230,6 +233,19 @@ class PositionDescriber extends ISLCDescriber {
     return StringUtils.fillIn( distanceAndUnitsPatternString, {
       distance: distance,
       units: units
+    } );
+  }
+
+  /**
+   * Returns a string describing the distance between centers, something like
+   * "Centers of spheres, 4 kilometers apart."
+   *
+   * @public
+   * @returns {*|string}
+   */
+  getCentersApartDistance() {
+    return StringUtils.fillIn( centersApartPatternString, {
+      distanceAndUnits: this.getDistanceAndUnits()
     } );
   }
 
@@ -470,7 +486,8 @@ class PositionDescriber extends ISLCDescriber {
   /**
    * Returns a string to be used in the prototype self-voicing context. Returns something like
    * "mass 1, 4 kilometers from mass 1" (distances shown) or
-   * "mass 1, close to mass 1" (distances hidden)
+   * "mass 1, close to mass 1" (distances hidden) or
+   * "Move mass 1, 4 kilometers from mass 2 (sounding more like the PDOM, "version 2")
    * @param {string} objectLabel
    * @param {string} otherObjectLabel
    * @public
@@ -479,11 +496,21 @@ class PositionDescriber extends ISLCDescriber {
     const patternString = this.useQuantitativeDistance ? selfVoicingLevelsMassQuantitativePatternString : selfVoicingLevelsMassQualitativePatternString;
     const distanceDescription = this.useQuantitativeDistance ? this.getDistanceAndUnits() : this.getQualitativeRelativeDistanceRegion();
 
-    return StringUtils.fillIn( patternString, {
+    const objectDescription = StringUtils.fillIn( patternString, {
       object: objectLabel,
       distance: distanceDescription,
       otherObject: otherObjectLabel
     } );
+
+    // add "move" to make it sound more like the PDOM
+    if ( ISLCQueryParameters.selfVoicingVersion === 1 ) {
+      return objectDescription;
+    }
+    else {
+      return StringUtils.fillIn( selfVoicingLevelsMoveObjectPatternString, {
+        description: objectDescription
+      } );
+    }
   }
 
   /**

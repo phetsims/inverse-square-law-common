@@ -119,6 +119,9 @@
         },
         "distanceFromOtherObjectSentencePattern": {
           "value": "{{distanceFromOtherObject}}"
+        },
+        "centersApartPattern": {
+          "value": "Centers of spheres {{distanceAndUnits}} apart."
         }
       },
       "landmarks": {
@@ -360,13 +363,16 @@
       },
       "levels": {
         "forcePattern": {
-          "value":"Force on {{object1}} by {{object2}} equals {{value}} newtons."
+          "value": "Force on {{object1}} by {{object2}} equals {{value}} newtons."
         },
         "massQuantitativePattern": {
           "value": "{{object}}, {{distance}} from {{otherObject}}."
         },
         "massQualitativePattern": {
           "value": "{{object}}, {{distance}} {{otherObject}}."
+        },
+        "moveObjectPattern": {
+          "value": "Move {{description}}"
         },
         "massQuantitativeWithoutLabelPattern": {
           "value": "{{distance}} from {{otherObject}}."
