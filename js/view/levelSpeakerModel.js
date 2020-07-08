@@ -55,6 +55,25 @@ class LevelSpeakerModel {
   }
 
   /**
+   * Adds a node to the ShapeHitDetector, but removes it if the objectChangesProperty is set to false so that
+   * it cannot be hit for that selection.
+   * @public
+   *
+   * @param {Node} node
+   * @param {ShapeHitDetector} shapeHitDetector
+   */
+  addHitDetectionForObjectResponses( node, shapeHitDetector ) {
+    this.objectChangesProperty.link( objectChanges => {
+      if ( objectChanges ) {
+        shapeHitDetector.addNode( node );
+      }
+      else {
+        shapeHitDetector.removeNode( node );
+      }
+    } );
+  }
+
+  /**
    * Prepares final output with both an object and a context response. Each response is only sent to the webSpeaker
    * if the Properties for speaking that content indicate that content should be spoken. Both are added as
    * independent utterances to the webSpeaker because we only want the objectResponse portion to have object glow.

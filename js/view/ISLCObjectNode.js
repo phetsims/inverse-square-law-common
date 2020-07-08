@@ -171,9 +171,9 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
 
   // PROTOTYPE a11y code for self-voicing features
   if ( config.shapeHitDetector && ISLCQueryParameters.selfVoicing ) {
-    config.shapeHitDetector.addNode( this.arrowNode );
-
     if ( ISLCQueryParameters.selfVoicing === 'paradigm1' ) {
+      config.shapeHitDetector.addNode( this.arrowNode );
+
       config.shapeHitDetector.hitShapeEmitter.addListener( hitTarget => {
         if ( hitTarget === this.arrowNode ) {
           if ( cursorSpeakerModel.exploreModeProperty.get() ) {
@@ -184,6 +184,7 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
       } );
     }
     else if ( ISLCQueryParameters.selfVoicing === 'paradigm2' || ISLCQueryParameters.selfVoicing === 'paradigm3' ) {
+      levelSpeakerModel.addHitDetectionForObjectResponses( this.arrowNode, config.shapeHitDetector );
       focusSpeaker.addNode( this.arrowNode );
       config.shapeHitDetector.downOnHittableEmitter.addListener( hitTarget => {
         if ( hitTarget === this.arrowNode ) {
