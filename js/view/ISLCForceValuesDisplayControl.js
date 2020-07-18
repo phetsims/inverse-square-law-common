@@ -37,7 +37,7 @@ class ISLCForceValuesDisplayControl extends VBox {
     options = merge( {
       align: 'left',
       spacing: 5,
-      tandem: Tandem.required
+      tandem: Tandem.REQUIRED
     }, options );
 
     assert && assert( options.children === undefined, 'sets its own children' );
