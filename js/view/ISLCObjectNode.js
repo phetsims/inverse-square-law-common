@@ -258,15 +258,15 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
       config.shapeHitDetector.addNode( this );
       levelSpeakerModel.setNodeInteractive( this, true );
 
-      config.shapeHitDetector.hitShapeEmitter.addListener( hitTarget => {
+      config.shapeHitDetector.focusHitEmitter.addListener( hitTarget => {
 
-        // if we get a hit while focused, it is a hit from keyboard
+        // special behavior if the hit is from a keyboard
         // NOTE: We would need a more general way to do this, so that different kinds of hits have different emitters
         // or something
-        if ( hitTarget === this && hitTarget.isFocused() ) {
+        if ( hitTarget === this ) {
           const interactionHint = selfVoicingLevelsMoveSpheresHintString;
           const objectResponse = positionDescriber.getSelfVoicingDistanceDescription( config.label, config.otherObjectLabel );
-          levelSpeakerModel.speakAllResponses( objectResponse, null, interactionHint );
+          levelSpeakerModel.speakAllResponses ( objectResponse, null, interactionHint );
         }
       } );
     }

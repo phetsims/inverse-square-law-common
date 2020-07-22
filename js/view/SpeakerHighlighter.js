@@ -47,8 +47,7 @@ class SpeakerHighlighter extends Node {
 
     this.speakableActivated = false;
 
-    shapeHitDetector.hitShapeEmitter.addListener( hitTarget => {
-
+    const updateSpeakablePathListener = hitTarget => {
       // interactive objects do not have a highlight to indicate that they have self voicing content
       if ( hitTarget !== null && !levelSpeakerModel.getNodeInteractive( hitTarget ) ) {
         this.highlightShape = Shape.bounds( hitTarget.globalBounds );
@@ -59,7 +58,9 @@ class SpeakerHighlighter extends Node {
         this.highlightShape = null;
         this.deactivateSpeakablePath();
       }
-    } );
+    };
+    shapeHitDetector.hitShapeEmitter.addListener( updateSpeakablePathListener );
+    shapeHitDetector.focusHitEmitter.addListener( updateSpeakablePathListener );
 
     webSpeaker.startSpeakingEmitter.addListener( () => {
       if ( this.speakableActivated ) {
