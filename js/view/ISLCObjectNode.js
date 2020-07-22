@@ -191,15 +191,22 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
       config.shapeHitDetector.downOnHittableEmitter.addListener( hitTarget => {
         if ( hitTarget === this.arrowNode ) {
           let objectResponse;
-          if ( ISLCQueryParameters.selfVoicingVersion === 1 ) {
+          if ( model.showForceValuesProperty.get() ) {
+            if ( ISLCQueryParameters.selfVoicingVersion === 1 ) {
 
-            // custom self voicing string
-            objectResponse = forceDescriber.getSelfVoicingForceVectorMagnitudeText( config.label, config.otherObjectLabel );
+              // custom self voicing string
+              objectResponse = forceDescriber.getSelfVoicingForceVectorMagnitudeText( config.label, config.otherObjectLabel );
+            }
+            else {
+
+              // string directly from PDOM strings
+              objectResponse = forceDescriber.getForceVectorMagnitudeText( config.label, config.otherObjectLabel );
+            }
           }
           else {
 
-            // string directly from PDOM strings
-            objectResponse = forceDescriber.getForceVectorMagnitudeText( config.label, config.otherObjectLabel );
+            // custom response for self voicing when force values are hidden
+            objectResponse = forceDescriber.getSelfVoicingQualitativeForceVectorText( config.otherObjectLabel );
           }
 
           const helpText = StringUtils.fillIn( summaryInteractionHintPatternString, {
@@ -266,7 +273,7 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
         if ( hitTarget === this ) {
           const interactionHint = selfVoicingLevelsMoveSpheresHintString;
           const objectResponse = positionDescriber.getSelfVoicingDistanceDescription( config.label, config.otherObjectLabel );
-          levelSpeakerModel.speakAllResponses ( objectResponse, null, interactionHint );
+          levelSpeakerModel.speakAllResponses( objectResponse, null, interactionHint );
         }
       } );
     }

@@ -365,6 +365,9 @@
         "forcePattern": {
           "value": "Force on {{object1}} by {{object2}} equals {{value}} newtons."
         },
+        "qualitativeVectorPattern": {
+          "value": "Force arrow is {{size}}, and points directly at {{otherObject}}."
+        },
         "massQuantitativePattern": {
           "value": "{{object}}, {{distance}} from {{otherObject}}."
         },

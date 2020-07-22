@@ -64,6 +64,7 @@ const aLittleString = inverseSquareLawCommonStrings.a11y.pullerEffort.aLittle;
 const aTinyBitString = inverseSquareLawCommonStrings.a11y.pullerEffort.aTinyBit;
 
 const selfVoicingLevelsForcePatternString = inverseSquareLawCommonStrings.a11y.selfVoicing.levels.forcePattern;
+const selfVoicingQualitativeVectorPatternString = inverseSquareLawCommonStrings.a11y.selfVoicing.levels.qualitativeVectorPattern;
 
 const SIZE_STRINGS = [
   tinyString,
@@ -238,7 +239,25 @@ class ForceDescriber extends ISLCDescriber {
   }
 
   /**
-   * Get the size of the vectors clause.
+   * For the self voicing prototype - returns a string that describes the size of the force arrow and its direction.
+   * Returns something like
+   * "Force arrow is very small, and points directly at mass 1.
+   *
+   * @public
+   * @param otherObjectLabel
+   * @returns {string}
+   */
+  getSelfVoicingQualitativeForceVectorText( otherObjectLabel ) {
+    return StringUtils.fillIn( selfVoicingQualitativeVectorPatternString, {
+      size: this.getVectorSize(),
+      otherObject: otherObjectLabel
+    } );
+  }
+
+  /**
+   * Get the size of the vectors clause. Returns something like
+   * "Force arrow is tiny"
+   *
    * @public
    * @returns {string}
    */
