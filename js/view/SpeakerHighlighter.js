@@ -33,6 +33,9 @@ class SpeakerHighlighter extends Node {
       stroke: 'black'
     } );
 
+    // @private {Node} a reference to the active Node that is currently being spoken about
+    this.activeTarget = null;
+
     this.speakablePath = new Path( null, {
       stroke: 'black',
       lineWidth: 0.5
@@ -48,11 +51,14 @@ class SpeakerHighlighter extends Node {
     this.speakableActivated = false;
 
     const updateSpeakablePathListener = hitTarget => {
+
       // interactive objects do not have a highlight to indicate that they have self voicing content
       if ( hitTarget !== null && !levelSpeakerModel.getNodeInteractive( hitTarget ) ) {
         this.highlightShape = Shape.bounds( hitTarget.globalBounds );
         speakableIcon.centerBottom = hitTarget.globalBounds.rightBottom;
         this.activateSpeakablePath();
+
+        this.activeTarget = hitTarget;
       }
       else {
         this.highlightShape = null;
@@ -61,6 +67,14 @@ class SpeakerHighlighter extends Node {
     };
     shapeHitDetector.hitShapeEmitter.addListener( updateSpeakablePathListener );
     shapeHitDetector.focusHitEmitter.addListener( updateSpeakablePathListener );
+
+    // if pressing down on a new target,
+    shapeHitDetector.downOnHittableEmitter.addListener( hittable => {
+      if ( hittable !== this.activeTarget ) {
+        this.deactivateSpeakingPath();
+        this.deactivateSpeakablePath();
+      }
+    } );
 
     webSpeaker.startSpeakingEmitter.addListener( () => {
       if ( this.speakableActivated ) {
