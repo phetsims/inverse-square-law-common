@@ -66,14 +66,15 @@ class LevelSpeakerModel {
    *
    * @param {Node} node
    * @param {ShapeHitDetector} shapeHitDetector
+   * @param {Object} [options] - options passed to the Hittable on addNode
    */
-  addHitDetectionForObjectResponsesAndHelpText( node, shapeHitDetector ) {
+  addHitDetectionForObjectResponsesAndHelpText( node, shapeHitDetector, options ) {
     Property.multilink( [ this.objectChangesProperty, this.hintsProperty ], ( objectChanges, hints ) => {
       if ( objectChanges || hints ) {
 
         // don't add the node twice
         if ( !shapeHitDetector.hasNode( node ) ) {
-          shapeHitDetector.addNode( node );
+          shapeHitDetector.addNode( node, options );
         }
       }
       else {
