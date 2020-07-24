@@ -68,7 +68,7 @@ class SpeakerHighlighter extends Node {
     shapeHitDetector.hitShapeEmitter.addListener( updateSpeakablePathListener );
     shapeHitDetector.focusHitEmitter.addListener( updateSpeakablePathListener );
 
-    // if pressing down on a new target,
+    // if pressing down on a new target, clear the old path
     shapeHitDetector.downOnHittableEmitter.addListener( hittable => {
       if ( hittable !== this.activeTarget ) {
         this.deactivateSpeakingPath();
