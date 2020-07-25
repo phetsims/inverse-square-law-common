@@ -9,6 +9,7 @@
  * @author Jesse Greenberg
  */
 
+import platform from '../../../phet-core/js/platform.js';
 import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
 import NumberProperty from '../../../axon/js/NumberProperty.js';
 import Property from '../../../axon/js/Property.js';
@@ -42,6 +43,16 @@ class WebSpeaker {
 
     // @public {boolean} - is the WebSpeaker enabled? If not, there will be no speech output from this speaker
     this.enabled = true;
+
+    // fixes a bug on Safari where the `start` and `end` Utterances don't fire! The
+    // issue is (apparently) that Safari internally clears the reference to the
+    // Utterance on speak which prevents it from firing these events at the right
+    // time - fix borrowed from
+    // https://stackoverflow.com/questions/23483990/speechsynthesis-api-onend-callback-not-working
+    // Unfortunately, this also introduces a memory leak, we should be smarter about
+    // clearing this, though it is a bit tricky since we don't have a way to know
+    // when we are done with an utterance - see #215
+    this.utterances = [];
 
     // On chrome, synth.getVoices() returns an empty array until the onvoiceschanged event, so we have to
     // wait to populate
@@ -87,11 +98,22 @@ class WebSpeaker {
     if ( this.initialized && this.enabled ) {
       withCancel && this.synth.cancel();
 
+      // since the "end" event doesn't come through all the time after cancel() on
+      // safari, we broadcast this right away to indicate that any previous speaking
+      // is done
+      if ( withCancel ) {
+        this.endSpeakingEmitter.emit();
+      }
+
       // embidding marks (for i18n) impact the output, strip before speaking
       const utterance = new SpeechSynthesisUtterance( stripEmbeddingMarks( utterThis ) );
       utterance.voice = this.voiceProperty.value;
       utterance.pitch = this.voicePitchProperty.value;
       utterance.rate = this.voiceRateProperty.value;
+
+      // kep a reference to teh WebSpeechUtterance or Safari, so the browser
+      // doesn't dispose of it before firing, see #215
+      this.utterances.push( utterance );
 
       const startListener = () => {
         this.startSpeakingEmitter.emit();
@@ -106,7 +128,16 @@ class WebSpeaker {
       utterance.addEventListener( 'start', startListener );
       utterance.addEventListener( 'end', endListener );
 
-      this.synth.speak( utterance );
+      // on safari, giving a bit of a delay to the speak request makes the `end`
+      // SpeechSynthesisUtterance event come through much more consistently
+      if ( platform.safari ) {
+        window.setTimeout( () => {
+          this.synth.speak( utterance );
+        }, 500 );
+      }
+      else {
+        this.synth.speak( utterance );
+      }
     }
   }
 }
