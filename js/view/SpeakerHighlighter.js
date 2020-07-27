@@ -14,6 +14,7 @@
 
 import Shape from '../../../kite/js/Shape.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
+import Display from '../../../scenery/js/display/Display.js';
 import Node from '../../../scenery/js/nodes/Node.js';
 import Path from '../../../scenery/js/nodes/Path.js';
 import FontAwesomeNode from '../../../sun/js/FontAwesomeNode.js';
@@ -86,6 +87,14 @@ class SpeakerHighlighter extends Node {
     webSpeaker.endSpeakingEmitter.addListener( () => {
       this.deactivateSpeakingPath();
       this.activateSpeakablePath();
+    } );
+
+    Display.focusProperty.lazyLink( focus => {
+      if ( focus === null ) {
+
+        // clear the 'activeTarget' when focus moves so that we don't
+        this.activeTarget = null;
+      }
     } );
 
     this.children = [ this.speakingPath, this.speakablePath ];
