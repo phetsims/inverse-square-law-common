@@ -15,8 +15,12 @@ import NumberProperty from '../../../axon/js/NumberProperty.js';
 import Property from '../../../axon/js/Property.js';
 import Range from '../../../dot/js/Range.js';
 import stripEmbeddingMarks from '../../../phet-core/js/stripEmbeddingMarks.js';
+import EnabledComponent from '../../../sun/js/EnabledComponent.js';
 import Emitter from '../../../axon/js/Emitter.js';
 
+/**
+ * @mixes EnabledComponent
+ */
 class WebSpeaker {
   constructor() {
 
@@ -41,8 +45,16 @@ class WebSpeaker {
     // @public {boolean} - is the WebSpeaker initialized for use? This is prototypal so it isn't always initialized
     this.initialized = false;
 
-    // @public {boolean} - is the WebSpeaker enabled? If not, there will be no speech output from this speaker
-    this.enabled = true;
+    // initialize the EnabledComponent mixin, giving this a @public enabledProperty
+    this.initializeEnabledComponent();
+
+    // @public {boolean} - a more interal way to disable speaking - the enabledProperty
+    // can be set by the user and is publicly observable for other things - but if
+    // you need to temporarily shut down speaking without changing that observable
+    // you can set onHold to true to prevent all speaking. Useful in cases like
+    // the ResetAllButton where you want to describe the reset without
+    // any of the other changing Properties in that interaction
+    this.onHold = false;
 
     // fixes a bug on Safari where the `start` and `end` Utterances don't fire! The
     // issue is (apparently) that Safari internally clears the reference to the
@@ -95,7 +107,7 @@ class WebSpeaker {
    *                               need to implement our own queing system.
    */
   speak( utterThis, withCancel = true ) {
-    if ( this.initialized && this.enabled ) {
+    if ( this.initialized && this.enabled && !this.onHold ) {
       withCancel && this.synth.cancel();
 
       // since the "end" event doesn't come through all the time after cancel() on
@@ -141,6 +153,8 @@ class WebSpeaker {
     }
   }
 }
+
+EnabledComponent.mixInto( WebSpeaker );
 
 const webSpeaker = new WebSpeaker();
 
