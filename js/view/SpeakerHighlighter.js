@@ -54,7 +54,7 @@ class SpeakerHighlighter extends Node {
     const updateSpeakablePathListener = hitTarget => {
 
       // interactive objects do not have a highlight to indicate that they have self voicing content
-      if ( hitTarget !== null && !levelSpeakerModel.getNodeInteractive( hitTarget ) ) {
+      if ( hitTarget !== null && !levelSpeakerModel.getNodeInteractive( hitTarget ) && webSpeaker.enabled ) {
         this.highlightShape = Shape.bounds( hitTarget.globalBounds );
         speakableIcon.centerBottom = hitTarget.globalBounds.rightBottom;
         this.activateSpeakablePath();
