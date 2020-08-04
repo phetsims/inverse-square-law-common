@@ -25,8 +25,8 @@ import Node from '../../../scenery/js/nodes/Node.js';
 import SoundClip from '../../../tambo/js/sound-generators/SoundClip.js';
 import SoundLevelEnum from '../../../tambo/js/SoundLevelEnum.js';
 import soundManager from '../../../tambo/js/soundManager.js';
-import commonGrabSound from '../../../tambo/sounds/grab_mp3.js';
-import commonReleaseSound from '../../../tambo/sounds/release_mp3.js';
+import grabSound from '../../../tambo/sounds/grab_mp3.js';
+import releaseSound from '../../../tambo/sounds/release_mp3.js';
 import Utterance from '../../../utterance-queue/js/Utterance.js';
 import rulerMovementSound from '../../sounds/ruler-movement-000_mp3.js';
 import inverseSquareLawCommonStrings from '../inverseSquareLawCommonStrings.js';
@@ -154,7 +154,7 @@ class ISLCRulerNode extends Node {
     if ( options.grabRulerSoundPlayer === null ) {
 
       // no sound player specified by the client, use the default
-      grabRulerSoundPlayer = new SoundClip( commonGrabSound );
+      grabRulerSoundPlayer = new SoundClip( grabSound );
       soundManager.addSoundGenerator( grabRulerSoundPlayer );
     }
     else {
@@ -165,7 +165,7 @@ class ISLCRulerNode extends Node {
     if ( options.releaseRulerSoundPlayer === null ) {
 
       // no sound player specified by the client, use the default
-      releaseRulerSoundPlayer = new SoundClip( commonReleaseSound );
+      releaseRulerSoundPlayer = new SoundClip( releaseSound );
       soundManager.addSoundGenerator( releaseRulerSoundPlayer );
     }
     else {
