@@ -262,7 +262,9 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
       } );
     }
     else if ( ISLCQueryParameters.selfVoicing === 'paradigm2' || ISLCQueryParameters.selfVoicing === 'paradigm3' ) {
-      config.shapeHitDetector.addNode( this );
+      config.shapeHitDetector.addNode( this, {
+        useHitTest: true
+      } );
       levelSpeakerModel.setNodeInteractive( this, true );
 
       config.shapeHitDetector.focusHitEmitter.addListener( hitTarget => {

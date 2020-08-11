@@ -62,6 +62,7 @@ class SpeakerHighlighter extends Node {
         this.activeTarget = hitTarget;
       }
       else {
+        console.log( hitTarget );
         this.highlightShape = null;
         this.deactivateSpeakablePath();
       }
