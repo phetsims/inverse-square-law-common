@@ -161,7 +161,7 @@ class LevelModeControls extends VBox {
   constructor() {
     const checkboxGroup = new VerticalCheckboxGroup( [
       {
-        node: new Text( 'Voice Screen Text & Object Changes', { font: LABEL_FONT } ),
+        node: new Text( 'Voice Object Changes & Screen Text', { font: LABEL_FONT } ),
         property: levelSpeakerModel.objectChangesProperty,
         options: { enabledProperty: new BooleanProperty( true ) }
       },
