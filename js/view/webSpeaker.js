@@ -75,6 +75,14 @@ class WebSpeaker {
       this.synth.onvoiceschanged = null;
     };
     this.synth.onvoiceschanged = populateVoicesListener;
+
+    // when becoming disabled, we want to cancel any current speech
+    const enabledListener = enabled => {
+      if ( !enabled ) {
+        this.cancel();
+      }
+    };
+    this.enabledProperty.link( enabledListener );
   }
 
   /**
@@ -151,6 +159,14 @@ class WebSpeaker {
         this.synth.speak( utterance );
       }
     }
+  }
+
+  /**
+   * Stops all current speech as well and removes all utterances in the queue.
+   * @public
+   */
+  cancel() {
+    this.synth.cancel();
   }
 }
 
