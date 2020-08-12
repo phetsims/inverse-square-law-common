@@ -59,8 +59,8 @@ function ISLCForceArrowNode( arrowForceRange, layoutBounds, label, otherObjectLa
     // arrow node options
     maxArrowWidth: 15, // max width of the arrow when when redrawn, in view coordinates - used in mapping function
     minArrowWidth: 0, // Some ISLC sims support an object value of zero, setting this to zero supports this case.
-    headHeight: 8,
-    headWidth: 8,
+    headHeight: 10.4,
+    headWidth: 10.4,
     tailWidth: 3,
     arrowStroke: null,
     arrowFill: '#fff',
