@@ -188,7 +188,7 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
     else if ( ISLCQueryParameters.selfVoicing === 'paradigm2' || ISLCQueryParameters.selfVoicing === 'paradigm3' ) {
       levelSpeakerModel.addHitDetectionForObjectResponsesAndHelpText( this.arrowNode, config.shapeHitDetector );
       focusSpeaker.addNode( this.arrowNode );
-      config.shapeHitDetector.downOnHittableEmitter.addListener( hitTarget => {
+      const arrowHitListener = hitTarget => {
         if ( hitTarget === this.arrowNode ) {
           let objectResponse;
           if ( model.showForceValuesProperty.get() ) {
@@ -215,7 +215,9 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
 
           levelSpeakerModel.speakAllResponses( objectResponse, null, helpText );
         }
-      } );
+      };
+      config.shapeHitDetector.downOnHittableEmitter.addListener( arrowHitListener );
+      config.shapeHitDetector.focusHitEmitter.addListener( arrowHitListener );
     }
   }
 
