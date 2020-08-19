@@ -14,7 +14,10 @@
 
 import Shape from '../../../kite/js/Shape.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
+import Matrix3 from '../../../dot/js/Matrix3.js';
+import FocusHighlightFromNode from '../../../scenery/js/accessibility/FocusHighlightFromNode.js';
 import Display from '../../../scenery/js/display/Display.js';
+import TransformTracker from '../../../scenery/js/util/TransformTracker.js';
 import Node from '../../../scenery/js/nodes/Node.js';
 import Path from '../../../scenery/js/nodes/Path.js';
 import FontAwesomeNode from '../../../sun/js/FontAwesomeNode.js';
@@ -42,6 +45,12 @@ class SpeakerHighlighter extends Node {
       lineWidth: 0.5
     } );
 
+    this.interactiveHighlightNode = new Node();
+    this.interactiveHighlightPath = new FocusHighlightFromNode( null );
+
+    this.interactiveHighlightTransformTracker = null;
+    this.existingHighlightNode  = null;
+
     const bubbleIcon = new FontAwesomeNode( 'comment', { fill: 'grey', scale: 0.75 } );
     const rText = new Text( 'R', { font: new PhetFont( { size: 12 } ), fill: 'white', center: bubbleIcon.center.plusXY( 1, -2 ) } );
     const speakableIcon = new Node( {
@@ -61,12 +70,36 @@ class SpeakerHighlighter extends Node {
 
         this.activeTarget = hitTarget;
       }
+        // else if ( hitTarget !== null && levelSpeakerModel.getNodeInteractive( hitTarget ) && webSpeaker.enabled ) {
+        //
+        //   // clear the highlightShape as we will use Node focusHighlights in this mode
+        //   this.highlightShape = null;
+        //
+        //   this.activeTarget = hitTarget;
+        //   this.activateInteractivePath();
+      // }
       else {
         this.highlightShape = null;
         this.deactivateSpeakablePath();
+        this.deactivateInteractivePath();
       }
     };
-    shapeHitDetector.hitShapeEmitter.addListener( updateSpeakablePathListener );
+    shapeHitDetector.hitShapeEmitter.addListener( hitTarget => {
+      updateSpeakablePathListener( hitTarget );
+
+      if ( hitTarget !== null && levelSpeakerModel.getNodeInteractive( hitTarget ) && webSpeaker.enabled ) {
+
+        // clear any focus if we are activating this highlight since we will be using Node
+        // focusHighlights so we want to make sure they are detached from the FocusOverlay
+        Display.focus = null;
+
+        // clear the highlightShape as we will use Node focusHighlights in this mode
+        this.highlightShape = null;
+
+        this.activeTarget = hitTarget;
+        this.activateInteractivePath();
+      }
+    } );
     shapeHitDetector.focusHitEmitter.addListener( updateSpeakablePathListener );
 
     // if pressing down on a new target, clear the old path
@@ -90,14 +123,20 @@ class SpeakerHighlighter extends Node {
     } );
 
     Display.focusProperty.lazyLink( focus => {
+
+      // remove any highlights around interactive Nodes that have speakable content, since
+      // the highlight will be used for focus.
+      // In the future this may be a feature that is separate from the self-voicing work.
+      this.deactivateInteractivePath();
+
       if ( focus === null ) {
 
-        // clear the 'activeTarget' when focus moves so that we don't
+        // clear the 'activeTarget' when focus moves so that we don't keep a highlight for too long
         this.activeTarget = null;
       }
     } );
 
-    this.children = [ this.speakingPath, this.speakablePath ];
+    this.children = [ this.speakingPath, this.speakablePath, this.interactiveHighlightNode ];
   }
 
   /**
@@ -146,6 +185,75 @@ class SpeakerHighlighter extends Node {
   deactivateSpeakingPath() {
     this.speakingPath.visible = false;
     this.speakingPath.shape = null;
+  }
+
+  /**
+   * Enable a highlight that indicates that a Node is interactive with a mouse.
+   * This should likely be built into FocusOverlay if we decide that this feature
+   * is something somethine we want to invest in.
+   * @private
+   */
+  activateInteractivePath() {
+    if ( this.activeTarget ) {
+
+      const trailToNode = this.activeTarget.getUniqueTrail();
+      this.interactiveHighlightTransformTracker = new TransformTracker( trailToNode );
+
+      const existingHighlight = this.activeTarget.focusHighlight;
+      console.log( existingHighlight );
+      if ( existingHighlight instanceof Node ) {
+        existingHighlight.setMatrix( this.interactiveHighlightTransformTracker.matrix );
+        this.interactiveHighlightTransformTracker.addListener( this.updateInteractiveHighlightMatrix.bind( this, existingHighlight ) );
+
+        this.existingHighlightNode = existingHighlight;
+
+        // make sure that the line width is updated after becoming visible
+        existingHighlight.updateLineWidth();
+
+        // the highlight for the hit target is a Node, add it as a child ot this overlay
+        this.interactiveHighlightNode.addChild( existingHighlight );
+      }
+      else if ( existingHighlight instanceof Shape ) {
+        this.interactiveHighlightPath.setShape( existingHighlight );
+        this.interactiveHighlightPath.setMatrix( this.interactiveHighlightTransformTracker.matrix );
+        this.interactiveHighlightTransformTracker.addListener( this.updateInteractiveHighlightMatrix.bind( this, this.interactiveHighlightPath ) );
+
+
+        this.interactiveHighlightNode.addChild( this.interactiveHighlightPath );
+      }
+      else if ( existingHighlight === null ) {
+        this.interactiveHighlightPath.setShapeFromNode( this.activeTarget );
+        this.interactiveHighlightNode.addChild( this.interactiveHighlightPath );
+        this.interactiveHighlightPath.setMatrix( this.interactiveHighlightTransformTracker.matrix );
+        this.interactiveHighlightTransformTracker.addListener( this.updateInteractiveHighlightMatrix.bind( this, this.interactiveHighlightPath ) );
+      }
+    }
+  }
+
+  /**
+   * @private
+   */
+  deactivateInteractivePath() {
+    if ( this.interactiveHighlightTransformTracker ) {
+      this.interactiveHighlightTransformTracker.dispose();
+    }
+
+    if ( this.existingHighlightNode ) {
+      this.existingHighlightNode.setMatrix( Matrix3.IDENTITY );
+      this.existingHighlightNode = null;
+    }
+
+    this.interactiveHighlightNode.removeAllChildren();
+  }
+
+  /**
+   * Update the matrix for the provided highlight Node.
+   * @private
+   *
+   * @param {Node} highlightNode
+   */
+  updateInteractiveHighlightMatrix( highlightNode ) {
+    highlightNode.setMatrix( this.interactiveHighlightTransformTracker.matrix );
   }
 }
 
