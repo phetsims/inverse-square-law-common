@@ -70,14 +70,6 @@ class SpeakerHighlighter extends Node {
 
         this.activeTarget = hitTarget;
       }
-        // else if ( hitTarget !== null && levelSpeakerModel.getNodeInteractive( hitTarget ) && webSpeaker.enabled ) {
-        //
-        //   // clear the highlightShape as we will use Node focusHighlights in this mode
-        //   this.highlightShape = null;
-        //
-        //   this.activeTarget = hitTarget;
-        //   this.activateInteractivePath();
-      // }
       else {
         this.highlightShape = null;
         this.deactivateSpeakablePath();
@@ -87,7 +79,9 @@ class SpeakerHighlighter extends Node {
     shapeHitDetector.hitShapeEmitter.addListener( hitTarget => {
       updateSpeakablePathListener( hitTarget );
 
-      if ( hitTarget !== null && levelSpeakerModel.getNodeInteractive( hitTarget ) && webSpeaker.enabled ) {
+      // behavior specific to mouse input
+      const highlightEnabled = webSpeaker.enabled && levelSpeakerModel.showHoverHighlights.get();
+      if ( hitTarget !== null && levelSpeakerModel.getNodeInteractive( hitTarget ) && highlightEnabled ) {
 
         // clear any focus if we are activating this highlight since we will be using Node
         // focusHighlights so we want to make sure they are detached from the FocusOverlay
@@ -200,7 +194,6 @@ class SpeakerHighlighter extends Node {
       this.interactiveHighlightTransformTracker = new TransformTracker( trailToNode );
 
       const existingHighlight = this.activeTarget.focusHighlight;
-      console.log( existingHighlight );
       if ( existingHighlight instanceof Node ) {
         existingHighlight.setMatrix( this.interactiveHighlightTransformTracker.matrix );
         this.interactiveHighlightTransformTracker.addListener( this.updateInteractiveHighlightMatrix.bind( this, existingHighlight ) );

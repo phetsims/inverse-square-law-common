@@ -25,6 +25,10 @@ class LevelSpeakerModel {
 
     // @public {BooleanProperty} - whether or not helpful or interaction hints are read to the user
     this.hintsProperty = new BooleanProperty( false );
+
+    // @public {BooleanProperty - whether or not the PhET focus highlight
+    // appears around interactive nodes from mouse hover
+    this.showHoverHighlights = new BooleanProperty( false );
   }
 
   /**

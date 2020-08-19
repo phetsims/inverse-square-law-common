@@ -58,7 +58,7 @@ class WebSpeechDialogContent extends VBox {
 
     const labelledVoiceControls = new VBox( {
       children: [
-        new Text( 'Voice', { font: TITLE_FONT } ),
+        new Text( 'Voice Options', { font: TITLE_FONT } ),
         voiceControls
       ],
       align: 'center',
@@ -67,7 +67,8 @@ class WebSpeechDialogContent extends VBox {
 
     super( {
       children: [ modeControls, labelledVoiceControls ],
-      spacing: 30
+      spacing: 30,
+      pickable: true
     } );
 
     webSpeaker.voiceProperty.lazyLink( voice => {
@@ -177,12 +178,37 @@ class LevelModeControls extends VBox {
         options: { enabledProperty: new BooleanProperty( true ) }
       }
     ] );
-    super( {
+
+    // options for the highlighting behavior
+    const showHighlightsCheckbox = new Checkbox(
+      new Text( 'Show interactive highlights', { font: LABEL_FONT } ),
+      levelSpeakerModel.showHoverHighlights
+    );
+    const visualOptionsHeading = new Text( 'Visual Options', { font: TITLE_FONT } );
+
+    const visualOptionsBox = new VBox( {
+      children: [
+        visualOptionsHeading,
+        showHighlightsCheckbox
+      ],
+      spacing: 10
+    } );
+
+    const speechOutputBox = new VBox( {
       children: [
         new Text( 'Speech Output Levels', { font: TITLE_FONT } ),
         checkboxGroup
       ],
       spacing: 10
+    } );
+
+
+    super( {
+      children: [
+        visualOptionsBox,
+        speechOutputBox
+      ],
+      spacing: 20
     } );
   }
 }
