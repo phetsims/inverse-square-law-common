@@ -28,7 +28,7 @@ class LevelSpeakerModel {
 
     // @public {BooleanProperty - whether or not the PhET focus highlight
     // appears around interactive nodes from mouse hover
-    this.showHoverHighlights = new BooleanProperty( false );
+    this.showHoverHighlights = new BooleanProperty( true );
   }
 
   /**
