@@ -11,7 +11,7 @@
 
 import BooleanProperty from '../../../axon/js/BooleanProperty.js';
 import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
-import webSpeaker from './webSpeaker.js';
+import webSpeaker from '../../../scenery/js/accessibility/speaker/webSpeaker.js';
 import Property from '../../../axon/js/Property.js';
 
 class LevelSpeakerModel {

@@ -8,7 +8,7 @@
  */
 
 import Utils from '../../../dot/js/Utils.js';
-import webSpeaker from '../../../inverse-square-law-common/js/view/webSpeaker.js';
+import webSpeaker from '../../../scenery/js/accessibility/speaker/webSpeaker.js';
 import StringUtils from '../../../phetcommon/js/util/StringUtils.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
 import HBox from '../../../scenery/js/nodes/HBox.js';
