@@ -23,7 +23,7 @@ import Path from '../../../scenery/js/nodes/Path.js';
 import FontAwesomeNode from '../../../sun/js/FontAwesomeNode.js';
 import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
 import Text from '../../../scenery/js/nodes/Text.js';
-import levelSpeakerModel from './levelSpeakerModel.js';
+import levelSpeakerModel from '../../../scenery-phet/js/accessibility/speaker/levelSpeakerModel.js';
 
 class SpeakerHighlighter extends Node {
   constructor( shapeHitDetector, webSpeaker ) {

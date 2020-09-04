@@ -25,7 +25,7 @@ import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
 import ISLCQueryParameters from '../ISLCQueryParameters.js';
 import cursorSpeakerModel from './CursorSpeakerModel.js';
 import BooleanProperty from '../../../axon/js/BooleanProperty.js';
-import levelSpeakerModel from './levelSpeakerModel.js';
+import levelSpeakerModel from '../../../scenery-phet/js/accessibility/speaker/levelSpeakerModel.js';
 
 // constants
 const TITLE_FONT = new PhetFont( { size: 16, weight: 'bold' } );

@@ -40,7 +40,7 @@ import ISLCAlertManager from './ISLCAlertManager.js';
 import ISLCForceArrowNode from './ISLCForceArrowNode.js';
 import ISLCObjectEnum from './ISLCObjectEnum.js';
 import ISLCPullerNode from './ISLCPullerNode.js';
-import levelSpeakerModel from './levelSpeakerModel.js';
+import levelSpeakerModel from '../../../scenery-phet/js/accessibility/speaker/levelSpeakerModel.js';
 
 // constants
 const verboseMassInteractionHintPatternString = inverseSquareLawCommonStrings.a11y.selfVoicing.verboseMassInteractionHintPattern;

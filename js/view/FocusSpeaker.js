@@ -9,7 +9,7 @@
  */
 
 import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
-import levelSpeakerModel from './levelSpeakerModel.js';
+import levelSpeakerModel from '../../../scenery-phet/js/accessibility/speaker/levelSpeakerModel.js';
 
 class FocusSpeaker {
   constructor() {
