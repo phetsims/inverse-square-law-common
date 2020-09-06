@@ -191,6 +191,11 @@ class SpeakerHighlighter extends Node {
     if ( this.activeTarget ) {
 
       const trailToNode = this.activeTarget.getUniqueTrail();
+
+      if ( !trailToNode.isVisible() ) {
+        return;
+      }
+
       this.interactiveHighlightTransformTracker = new TransformTracker( trailToNode );
 
       const existingHighlight = this.activeTarget.focusHighlight;
