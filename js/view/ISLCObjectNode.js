@@ -52,6 +52,7 @@ const selfVoicingBriefNewForceNoValuesAlertString = inverseSquareLawCommonString
 const selfVoicingBriefNewForceAlertPatternString = inverseSquareLawCommonStrings.a11y.selfVoicing.briefNewForceAlertPattern;
 const summaryInteractionHintPatternString = inverseSquareLawCommonStrings.a11y.screenSummary.summaryInteractionHintPattern;
 const selfVoicingLevelsMoveSpheresHintString = inverseSquareLawCommonStrings.a11y.selfVoicing.levels.moveSpheresHintString;
+const forceArrowSizePatternString = inverseSquareLawCommonStrings.a11y.selfVoicing.levels.forceArrowSizePattern;
 
 const NEGATIVE_FILL = new Color( '#66f' );
 const POSITIVE_FILL = new Color( '#f66' );
@@ -202,6 +203,13 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
               // string directly from PDOM strings
               objectResponse = forceDescriber.getForceVectorMagnitudeText( config.label, config.otherObjectLabel );
             }
+
+            // for the self-voicing (regardless of version), we always want to include arrow size
+            // description in this content
+            objectResponse = StringUtils.fillIn( forceArrowSizePatternString, {
+              response: objectResponse,
+              size: forceDescriber.getVectorSize()
+            } );
           }
           else {
 

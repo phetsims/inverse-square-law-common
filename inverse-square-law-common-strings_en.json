@@ -368,6 +368,9 @@
         "qualitativeVectorPattern": {
           "value": "Force arrow is {{size}}, and points directly at {{otherObject}}."
         },
+        "forceArrowSizePattern": {
+          "value": "{{response}}, force arrow {{size}}."
+        },
         "massQuantitativePattern": {
           "value": "{{object}}, {{distance}} from {{otherObject}}."
         },
