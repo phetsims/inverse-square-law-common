@@ -80,7 +80,7 @@ class SpeakerHighlighter extends Node {
       updateSpeakablePathListener( hitTarget );
 
       // behavior specific to mouse input
-      const highlightEnabled = webSpeaker.enabled && levelSpeakerModel.showHoverHighlights.get();
+      const highlightEnabled = webSpeaker.enabled && levelSpeakerModel.showHoverHighlightsProperty.get();
       if ( hitTarget !== null && levelSpeakerModel.getNodeInteractive( hitTarget ) && highlightEnabled ) {
 
         // clear any focus if we are activating this highlight since we will be using Node

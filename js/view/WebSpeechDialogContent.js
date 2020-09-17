@@ -160,7 +160,7 @@ class CursorModeControls extends VBox {
 
 class LevelModeControls extends VBox {
   constructor() {
-    const checkboxGroup = new VerticalCheckboxGroup( [
+    const levelsCheckboxGroup = new VerticalCheckboxGroup( [
       {
         node: new Text( 'Voice Object Changes & Screen Text', { font: LABEL_FONT } ),
         property: levelSpeakerModel.objectChangesProperty,
@@ -179,17 +179,21 @@ class LevelModeControls extends VBox {
       }
     ] );
 
-    // options for the highlighting behavior
-    const showHighlightsCheckbox = new Checkbox(
-      new Text( 'Show interactive highlights', { font: LABEL_FONT } ),
-      levelSpeakerModel.showHoverHighlights
-    );
-    const visualOptionsHeading = new Text( 'General Options', { font: TITLE_FONT } );
+    const generalCheckboxGroup = new VerticalCheckboxGroup( [
+      {
+        node: new Text( 'Show Interactive Highlights', { font: LABEL_FONT } ),
+        property: levelSpeakerModel.showHoverHighlightsProperty
+      },
+      {
+        node: new Text( 'Show Self Voicing Quick Menu', { font: LABEL_FONT } ),
+        property: levelSpeakerModel.showQuickMenuProperty
+      }
+    ] );
 
     const visualOptionsBox = new VBox( {
       children: [
-        visualOptionsHeading,
-        showHighlightsCheckbox
+        new Text( 'General Options', { font: TITLE_FONT } ),
+        generalCheckboxGroup
       ],
       spacing: 10
     } );
@@ -197,7 +201,7 @@ class LevelModeControls extends VBox {
     const speechOutputBox = new VBox( {
       children: [
         new Text( 'Speech Output Levels', { font: TITLE_FONT } ),
-        checkboxGroup
+        levelsCheckboxGroup
       ],
       spacing: 10
     } );
