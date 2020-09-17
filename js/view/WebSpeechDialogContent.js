@@ -184,7 +184,7 @@ class LevelModeControls extends VBox {
       new Text( 'Show interactive highlights', { font: LABEL_FONT } ),
       levelSpeakerModel.showHoverHighlights
     );
-    const visualOptionsHeading = new Text( 'Visual Options', { font: TITLE_FONT } );
+    const visualOptionsHeading = new Text( 'General Options', { font: TITLE_FONT } );
 
     const visualOptionsBox = new VBox( {
       children: [
