@@ -8,7 +8,6 @@
 
 import BooleanProperty from '../../../axon/js/BooleanProperty.js';
 import DerivedProperty from '../../../axon/js/DerivedProperty.js';
-import DerivedPropertyIO from '../../../axon/js/DerivedPropertyIO.js';
 import Emitter from '../../../axon/js/Emitter.js';
 import Property from '../../../axon/js/Property.js';
 import Range from '../../../dot/js/Range.js';
@@ -80,7 +79,7 @@ function ISLCModel( forceConstant, object1, object2, positionRange, tandem, opti
     this.object1.positionProperty,
     this.object2.positionProperty
   ], ( v1, v2, x1, x2 ) => this.calculateForce( v1, v2, Math.abs( x2 - x1 ) ), {
-    phetioType: DerivedPropertyIO( NumberIO ),
+    phetioType: DerivedProperty.DerivedPropertyIO( NumberIO ),
     tandem: tandem.createTandem( 'forceProperty' ),
     units: 'N',
     phetioDocumentation: 'The force of one object on the other (in Newtons)'
@@ -91,7 +90,7 @@ function ISLCModel( forceConstant, object1, object2, positionRange, tandem, opti
     this.object1.positionProperty,
     this.object2.positionProperty
   ], ( p1, p2 ) => Math.abs( p2 - p1 ), {
-    phetioType: DerivedPropertyIO( NumberIO ),
+    phetioType: DerivedProperty.DerivedPropertyIO( NumberIO ),
     tandem: tandem.createTandem( 'separationProperty' ),
     units: object1.positionProperty.units,
     phetioDocumentation: 'The distance between the two objects\' centers'

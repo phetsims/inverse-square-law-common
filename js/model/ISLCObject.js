@@ -7,7 +7,6 @@
  */
 
 import DerivedProperty from '../../../axon/js/DerivedProperty.js';
-import DerivedPropertyIO from '../../../axon/js/DerivedPropertyIO.js';
 import Emitter from '../../../axon/js/Emitter.js';
 import NumberProperty from '../../../axon/js/NumberProperty.js';
 import Property from '../../../axon/js/Property.js';
@@ -74,7 +73,7 @@ function ISLCObject( initialMass, initialPosition, valueRange, constantRadiusPro
       tandem: tandem.createTandem( 'radiusProperty' ),
       phetioDocumentation: 'The radius of the object',
       units: 'meters',
-      phetioType: DerivedPropertyIO( NumberIO )
+      phetioType: DerivedProperty.DerivedPropertyIO( NumberIO )
     }
   );
 
