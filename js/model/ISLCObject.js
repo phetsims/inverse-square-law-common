@@ -10,7 +10,6 @@ import DerivedProperty from '../../../axon/js/DerivedProperty.js';
 import Emitter from '../../../axon/js/Emitter.js';
 import NumberProperty from '../../../axon/js/NumberProperty.js';
 import Property from '../../../axon/js/Property.js';
-import PropertyIO from '../../../axon/js/PropertyIO.js';
 import Range from '../../../dot/js/Range.js';
 import RangeIO from '../../../dot/js/RangeIO.js';
 import inherit from '../../../phet-core/js/inherit.js';
@@ -84,7 +83,7 @@ function ISLCObject( initialMass, initialPosition, valueRange, constantRadiusPro
   this.enabledRangeProperty = new Property( enabledRange, {
     tandem: tandem.createTandem( 'enabledRangeProperty' ),
     phetioDocumentation: 'The range for position of this object based on the radius and position of both objects',
-    phetioType: PropertyIO( RangeIO ),
+    phetioType: Property.PropertyIO( RangeIO ),
     phetioReadOnly: true
   } );
 
