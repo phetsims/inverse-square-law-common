@@ -19,8 +19,8 @@ import ScientificNotationNode from '../../../scenery-phet/js/ScientificNotationN
 import Node from '../../../scenery/js/nodes/Node.js';
 import Rectangle from '../../../scenery/js/nodes/Rectangle.js';
 import RichText from '../../../scenery/js/nodes/RichText.js';
-import inverseSquareLawCommonStrings from '../inverseSquareLawCommonStrings.js';
 import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
+import inverseSquareLawCommonStrings from '../inverseSquareLawCommonStrings.js';
 import ISLCConstants from '../ISLCConstants.js';
 import DefaultDirection from './DefaultDirection.js';
 
@@ -204,7 +204,6 @@ inherit( Node, ISLCForceArrowNode, {
     this.arrowTextBackground.rectWidth = this.arrowText.width + 4;
     this.arrowTextBackground.rectHeight = this.arrowText.height + 2;
     this.arrowTextBackground.center = this.arrowText.center;
-
   },
 
   /**

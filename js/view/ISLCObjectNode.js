@@ -14,11 +14,13 @@
 import BooleanProperty from '../../../axon/js/BooleanProperty.js';
 import Range from '../../../dot/js/Range.js';
 import Utils from '../../../dot/js/Utils.js';
-import webSpeaker from '../../../scenery/js/accessibility/speaker/webSpeaker.js';
 import Shape from '../../../kite/js/Shape.js';
 import inherit from '../../../phet-core/js/inherit.js';
 import merge from '../../../phet-core/js/merge.js';
 import StringUtils from '../../../phetcommon/js/util/StringUtils.js';
+import levelSpeakerModel from '../../../scenery-phet/js/accessibility/speaker/levelSpeakerModel.js';
+import SelfVoicingInputListener from '../../../scenery-phet/js/accessibility/speaker/SelfVoicingInputListener.js';
+import SelfVoicingWrapperNode from '../../../scenery-phet/js/accessibility/speaker/SelfVoicingWrapperNode.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
 import DragListener from '../../../scenery/js/listeners/DragListener.js';
 import Circle from '../../../scenery/js/nodes/Circle.js';
@@ -35,16 +37,12 @@ import ISLCQueryParameters from '../ISLCQueryParameters.js';
 import cursorSpeakerModel from './CursorSpeakerModel.js';
 import DefaultDirection from './DefaultDirection.js';
 import PositionDescriber from './describers/PositionDescriber.js';
-import focusSpeaker from './FocusSpeaker.js';
 import ISLCAlertManager from './ISLCAlertManager.js';
 import ISLCForceArrowNode from './ISLCForceArrowNode.js';
 import ISLCObjectEnum from './ISLCObjectEnum.js';
 import ISLCPullerNode from './ISLCPullerNode.js';
-import levelSpeakerModel from '../../../scenery-phet/js/accessibility/speaker/levelSpeakerModel.js';
 
 // constants
-const verboseMassInteractionHintPatternString = inverseSquareLawCommonStrings.a11y.selfVoicing.verboseMassInteractionHintPattern;
-const briefMassInteractionHintPatternString = inverseSquareLawCommonStrings.a11y.selfVoicing.briefMassInteractionHintPattern;
 const selfVoicingPositionChangePatternString = inverseSquareLawCommonStrings.a11y.selfVoicing.positionChangePattern;
 const selfVoicingBiggerString = inverseSquareLawCommonStrings.a11y.selfVoicing.bigger;
 const selfVoicingSmallerString = inverseSquareLawCommonStrings.a11y.selfVoicing.smaller;
@@ -173,60 +171,49 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
   );
 
   // PROTOTYPE a11y code for self-voicing features
-  if ( config.shapeHitDetector && ISLCQueryParameters.selfVoicing ) {
-    if ( ISLCQueryParameters.selfVoicing === 'paradigm1' ) {
-      config.shapeHitDetector.addNode( this.arrowNode );
+  if ( phet.chipper.queryParameters.supportsSelfVoicing ) {
+    const arrowHitListener = () => {
+      let objectResponse;
+      if ( model.showForceValuesProperty.get() ) {
+        if ( ISLCQueryParameters.selfVoicingVersion === 1 ) {
 
-      config.shapeHitDetector.hitShapeEmitter.addListener( hitTarget => {
-        if ( hitTarget === this.arrowNode ) {
-          if ( cursorSpeakerModel.exploreModeProperty.get() ) {
-            const utterance = forceDescriber.getForceVectorMagnitudeText( config.label, config.otherObjectLabel );
-            webSpeaker.speak( utterance );
-          }
+          // custom self voicing string
+          objectResponse = forceDescriber.getSelfVoicingForceVectorMagnitudeText( config.label, config.otherObjectLabel );
         }
+        else {
+
+          // string directly from PDOM strings
+          objectResponse = forceDescriber.getForceVectorMagnitudeText( config.label, config.otherObjectLabel );
+        }
+
+        // for the self-voicing (regardless of version), we always want to include arrow size
+        // description in the self-voicing content
+        objectResponse = StringUtils.fillIn( forceArrowSizePatternString, {
+          response: objectResponse,
+          size: forceDescriber.getVectorSize()
+        } );
+      }
+      else {
+
+        // custom response for self voicing when force values are hidden
+        objectResponse = forceDescriber.getSelfVoicingQualitativeForceVectorText( config.otherObjectLabel );
+      }
+
+      const helpText = StringUtils.fillIn( summaryInteractionHintPatternString, {
+        massOrCharge: 'mass'
       } );
-    }
-    else if ( ISLCQueryParameters.selfVoicing === 'paradigm2' || ISLCQueryParameters.selfVoicing === 'paradigm3' ) {
-      levelSpeakerModel.addHitDetectionForObjectResponsesAndHelpText( this.arrowNode, config.shapeHitDetector );
-      focusSpeaker.addNode( this.arrowNode );
-      const arrowHitListener = hitTarget => {
-        if ( hitTarget === this.arrowNode ) {
-          let objectResponse;
-          if ( model.showForceValuesProperty.get() ) {
-            if ( ISLCQueryParameters.selfVoicingVersion === 1 ) {
 
-              // custom self voicing string
-              objectResponse = forceDescriber.getSelfVoicingForceVectorMagnitudeText( config.label, config.otherObjectLabel );
-            }
-            else {
+      levelSpeakerModel.speakAllResponses( objectResponse, null, helpText );
+    };
 
-              // string directly from PDOM strings
-              objectResponse = forceDescriber.getForceVectorMagnitudeText( config.label, config.otherObjectLabel );
-            }
-
-            // for the self-voicing (regardless of version), we always want to include arrow size
-            // description in this content
-            objectResponse = StringUtils.fillIn( forceArrowSizePatternString, {
-              response: objectResponse,
-              size: forceDescriber.getVectorSize()
-            } );
-          }
-          else {
-
-            // custom response for self voicing when force values are hidden
-            objectResponse = forceDescriber.getSelfVoicingQualitativeForceVectorText( config.otherObjectLabel );
-          }
-
-          const helpText = StringUtils.fillIn( summaryInteractionHintPatternString, {
-            massOrCharge: 'mass'
-          } );
-
-          levelSpeakerModel.speakAllResponses( objectResponse, null, helpText );
-        }
-      };
-      config.shapeHitDetector.downOnHittableEmitter.addListener( arrowHitListener );
-      config.shapeHitDetector.focusHitEmitter.addListener( arrowHitListener );
-    }
+    // @public (read-only) - wraps the arrow node that receives hit detection
+    // anywhere within so that
+    this.selfVoicingWrapper = new SelfVoicingWrapperNode( this.arrowNode, {
+      listenerOptions: {
+        onFocusIn: arrowHitListener,
+        onPress: arrowHitListener
+      }
+    } );
   }
 
   // set y position for the arrow
@@ -254,41 +241,19 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
   this.objectCircle = new Circle( radius );
 
   // PROTOTYPE a11y code, to support self-voicing features
-  if ( config.shapeHitDetector ) {
+  if ( phet.chipper.queryParameters.supportsSelfVoicing ) {
     assert && assert( config.objectColor, 'required param, if testing self voicing features' );
 
-    if ( ISLCQueryParameters.selfVoicing === 'paradigm1' ) {
-      config.shapeHitDetector.addNode( this.objectCircle );
-      config.shapeHitDetector.hitShapeEmitter.addListener( hitTarget => {
-        if ( hitTarget === this.objectCircle ) {
-          if ( cursorSpeakerModel.exploreModeProperty.get() ) {
-            const patternString = cursorSpeakerModel.getExploreModeVerbose() ? verboseMassInteractionHintPatternString : briefMassInteractionHintPatternString;
-            webSpeaker.speak( StringUtils.fillIn( patternString, {
-              objectLabel: config.label,
-              objectColor: config.objectColor
-            } ) );
-          }
-        }
-      } );
-    }
-    else if ( ISLCQueryParameters.selfVoicing === 'paradigm2' || ISLCQueryParameters.selfVoicing === 'paradigm3' ) {
-      config.shapeHitDetector.addNode( this, {
-        useHitTest: true
-      } );
-      levelSpeakerModel.setNodeInteractive( this, true );
-
-      config.shapeHitDetector.focusHitEmitter.addListener( hitTarget => {
+    this.addInputListener( new SelfVoicingInputListener( {
+      onFocusIn: () => {
 
         // special behavior if the hit is from a keyboard
-        // NOTE: We would need a more general way to do this, so that different kinds of hits have different emitters
-        // or something
-        if ( hitTarget === this ) {
-          const interactionHint = selfVoicingLevelsMoveSpheresHintString;
-          const objectResponse = positionDescriber.getSelfVoicingDistanceDescription( config.label, config.otherObjectLabel );
-          levelSpeakerModel.speakAllResponses( objectResponse, null, interactionHint );
-        }
-      } );
-    }
+        const interactionHint = selfVoicingLevelsMoveSpheresHintString;
+        const objectResponse = positionDescriber.getSelfVoicingDistanceDescription( config.label, config.otherObjectLabel );
+        levelSpeakerModel.speakAllResponses( objectResponse, null, interactionHint );
+      },
+      highlightTarget: this
+    } ) );
   }
 
   this.dragNode.addChild( this.pullerNode );
@@ -337,7 +302,6 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
   let clickOffset;
 
   let oldPosition = object.positionProperty.get();
-  let forceOnStart = model.forceProperty.get();
   this.dragNode.addInputListener( new DragListener( {
     allowTouchSnag: true,
     start: event => {
@@ -345,7 +309,6 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
       object.isDragging = true;
 
       oldPosition = object.positionProperty.get();
-      forceOnStart = model.forceProperty.get();
     },
     drag: event => {
 
@@ -366,15 +329,8 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
     end: () => {
       object.isDragging = false;
 
-      // SELF VOICING PROTOTYPE - when ending drag, speak the result of the interaction
-      if ( ISLCQueryParameters.selfVoicing === 'paradigm1' ) {
-        if ( cursorSpeakerModel.interactiveModeProperty.get() ) {
-          if ( oldPosition !== object.positionProperty.get() ) {
-            webSpeaker.speak( this.getSelfVoicingPositionChangeAlert( object.positionProperty.get(), oldPosition, model.forceProperty.get(), forceOnStart ) );
-          }
-        }
-      }
-      else if ( ISLCQueryParameters.selfVoicing === 'paradigm2' || ISLCQueryParameters.selfVoicing === 'paradigm3' ) {
+
+      if ( phet.chipper.queryParameters.supportsSelfVoicing ) {
         const distanceDescription = positionDescriber.getSelfVoicingDistanceDescription( config.label, config.otherObjectLabel );
 
         // only speak force change if it has changed
@@ -425,31 +381,19 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
     startDrag: () => {
       object.isDragging = true;
       oldPosition = object.positionProperty.get();
-
-      forceOnStart = model.forceProperty.get();
     },
     endDrag: () => {
       object.isDragging = false;
       this.redrawForce();
 
-      // SELF VOICING PROTOTYPE - when ending drag, speak the result of the interaction
-      if ( ISLCQueryParameters.selfVoicing === 'paradigm1' ) {
-        if ( cursorSpeakerModel.interactiveModeProperty.get() ) {
-          if ( oldPosition !== object.positionProperty.get() ) {
-            webSpeaker.speak( this.getSelfVoicingPositionChangeAlert( object.positionProperty.get(), oldPosition, model.forceProperty.get(), forceOnStart ) );
-          }
-        }
-      }
-      else if ( ISLCQueryParameters.selfVoicing === 'paradigm2' || ISLCQueryParameters.selfVoicing === 'paradigm3' ) {
-        const distanceDescription = positionDescriber.getSelfVoicingDistanceDescriptionWithoutLabel( config.otherObjectLabel );
+      const distanceDescription = positionDescriber.getSelfVoicingDistanceDescriptionWithoutLabel( config.otherObjectLabel );
 
-        // only speak force change if it has changed
-        let forceChangeText = '';
-        if ( oldPosition !== object.positionProperty.get() ) {
-          forceChangeText = this.forceDescriber.getVectorChangeText( this.objectModel );
-        }
-        levelSpeakerModel.speakAllResponses( distanceDescription, forceChangeText );
+      // only speak force change if it has changed
+      let forceChangeText = '';
+      if ( oldPosition !== object.positionProperty.get() ) {
+        forceChangeText = this.forceDescriber.getVectorChangeText( this.objectModel );
       }
+      levelSpeakerModel.speakAllResponses( distanceDescription, forceChangeText );
     },
     a11yCreateValueChangeAlert: () => {
       const newPosition = object.positionProperty.get();
