@@ -59,8 +59,10 @@ class SpeakerHighlighter {
       const trailToHighlight = speakingTrail || overTrail;
       if ( trailToHighlight ) {
         if ( phet.joist.sim.display._focusOverlay.hasHighlight() ) {
-          assert && assert( activeHighlightTrail, 'trail to active highlight required' );
-          phet.joist.sim.display._focusOverlay.deactivateHighlight( activeHighlightTrail );
+
+          // deactivate whatever trail is being used, it may be the activeHighlightTrail, but
+          // it could also be trail that has DOM focus
+          phet.joist.sim.display._focusOverlay.deactivateHighlight( phet.joist.sim.display._focusOverlay.trail );
         }
 
         // SelfVoicingFocusHighlights are always show, but only show default highlights if option is selected by user
