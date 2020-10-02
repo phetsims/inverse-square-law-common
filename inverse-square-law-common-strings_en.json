@@ -53,7 +53,7 @@
         "value": "Robots push {{effort}} keeping spheres in place."
       },
       "summaryInteractionHintPattern": {
-        "value": "Change position and {{massOrCharge}} of spheres to explore."
+        "value": "Change position, and {{massOrCharge}} of spheres to explore."
       },
       "quantitativeAndQualitativePattern": {
         "value": "{{qualitativeClause}}{{quantitativeClause}}."
