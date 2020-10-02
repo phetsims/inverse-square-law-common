@@ -52,6 +52,15 @@ class SpeakerHighlighter {
       }
     } );
 
+    // set the overTrailProperty when focus lands on something so that when
+    // speaking starts, it sets the speakingTrailProperty to the focused trail
+    Display.focusProperty.link( focus => {
+      if ( focus ) {
+        this.overTrailProperty.set( focus.trail );
+      }
+    } );
+
+    // activate highlights for self-voicing
     Property.multilink( [ this.overTrailProperty, this.speakingTrailProperty ], ( overTrail, speakingTrail ) => {
 
       // prioritize the speakingHighlightTrail as long as the webSpeaker is speaking - otherwise show highlights
@@ -71,7 +80,6 @@ class SpeakerHighlighter {
 
         activeHighlightTrail = trailToHighlight;
         if ( showHighlight ) {
-          Display.focusedNode && Display.focusedNode.blur();
           phet.joist.sim.display._focusOverlay.activateHighlight( activeHighlightTrail );
         }
       }
