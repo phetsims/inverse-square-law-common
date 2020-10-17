@@ -124,9 +124,7 @@ function ISLCForceArrowNode( arrowForceRange, layoutBounds, label, otherObjectLa
     y: -20,
     tandem: tandem.createTandem( 'forceText' ),
     phetioDocumentation: 'This text updates from the model as the force changes, and cannot be edited.',
-    phetioComponentOptions: {
-      textProperty: { phetioReadOnly: true }
-    }
+    textPropertyOptions: { phetioReadOnly: true }
   } );
 
   // @private - tip and tail set in redrawArrow
