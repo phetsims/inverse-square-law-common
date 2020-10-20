@@ -203,7 +203,8 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
         massOrCharge: 'mass'
       } );
 
-      levelSpeakerModel.speakAllResponses( objectResponse, null, helpText );
+      const response = levelSpeakerModel.collectResponses( objectResponse, null, helpText );
+      phet.joist.sim.selfVoicingUtteranceQueue.addToBack( response );
     };
 
     // @public (read-only) - wraps the arrow node that receives hit detection
@@ -250,7 +251,8 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
         // special behavior if the hit is from a keyboard
         const interactionHint = selfVoicingLevelsMoveSpheresHintString;
         const objectResponse = positionDescriber.getSelfVoicingDistanceDescription( config.label, config.otherObjectLabel );
-        levelSpeakerModel.speakAllResponses( objectResponse, null, interactionHint );
+        const response = levelSpeakerModel.collectResponses( objectResponse, null, interactionHint );
+        phet.joist.sim.selfVoicingUtteranceQueue.addToBack( response );
       },
       highlightTarget: this
     } ) );
@@ -339,7 +341,8 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
           forceChangeText = this.forceDescriber.getVectorChangeText( this.objectModel );
         }
 
-        levelSpeakerModel.speakAllResponses( distanceDescription, forceChangeText );
+        const response = levelSpeakerModel.collectResponses( distanceDescription, forceChangeText );
+        phet.joist.sim.selfVoicingUtteranceQueue.addToBack( response );
       }
     },
     tandem: config.tandem.createTandem( 'dragListener' )
@@ -393,7 +396,8 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
       if ( oldPosition !== object.positionProperty.get() ) {
         forceChangeText = this.forceDescriber.getVectorChangeText( this.objectModel );
       }
-      levelSpeakerModel.speakAllResponses( distanceDescription, forceChangeText );
+      const response = levelSpeakerModel.collectResponses( distanceDescription, forceChangeText );
+      phet.joist.sim.selfVoicingUtteranceQueue.addToBack( response );
     },
     a11yCreateValueChangeAlert: () => {
       const newPosition = object.positionProperty.get();
