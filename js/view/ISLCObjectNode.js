@@ -304,7 +304,10 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
   let clickOffset;
 
   let oldPosition = object.positionProperty.get();
-  this.dragNode.addInputListener( new DragListener( {
+
+  // @public - so that events can be forwarded to this DragListener in the
+  // case of alternative input
+  this.dragListener = new DragListener( {
     allowTouchSnag: true,
     start: event => {
       clickOffset = this.dragNode.globalToParentPoint( event.pointer.point ).x - event.currentTarget.x;
@@ -346,7 +349,8 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
       }
     },
     tandem: config.tandem.createTandem( 'dragListener' )
-  } ) );
+  } );
+  this.dragNode.addInputListener( this.dragListener );
 
   const boundRedrawForce = this.redrawForce.bind( this );
   model.showForceValuesProperty.lazyLink( boundRedrawForce );
