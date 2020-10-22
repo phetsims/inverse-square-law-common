@@ -251,8 +251,11 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
         // special behavior if the hit is from a keyboard
         const interactionHint = selfVoicingLevelsMoveSpheresHintString;
         const objectResponse = positionDescriber.getSelfVoicingDistanceDescription( config.label, config.otherObjectLabel );
-        const response = levelSpeakerModel.collectResponses( objectResponse, null, interactionHint );
-        phet.joist.sim.selfVoicingUtteranceQueue.addToBack( response );
+
+        if ( phet.joist.chipper.queryParameters.supportsSelfVoicing ) {
+          const response = levelSpeakerModel.collectResponses( objectResponse, null, interactionHint );
+          phet.joist.sim.selfVoicingUtteranceQueue.addToBack( response );
+        }
       },
       highlightTarget: this
     } ) );
@@ -400,8 +403,11 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
       if ( oldPosition !== object.positionProperty.get() ) {
         forceChangeText = this.forceDescriber.getVectorChangeText( this.objectModel );
       }
-      const response = levelSpeakerModel.collectResponses( distanceDescription, forceChangeText );
-      phet.joist.sim.selfVoicingUtteranceQueue.addToBack( response );
+
+      if ( phet.chipper.queryParameters.supportsSelfVoicing ) {
+        const response = levelSpeakerModel.collectResponses( distanceDescription, forceChangeText );
+        phet.joist.sim.selfVoicingUtteranceQueue.addToBack( response );
+      }
     },
     a11yCreateValueChangeAlert: () => {
       const newPosition = object.positionProperty.get();
