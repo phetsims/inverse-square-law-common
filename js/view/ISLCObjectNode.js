@@ -252,7 +252,7 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
         const interactionHint = selfVoicingLevelsMoveSpheresHintString;
         const objectResponse = positionDescriber.getSelfVoicingDistanceDescription( config.label, config.otherObjectLabel );
 
-        if ( phet.joist.chipper.queryParameters.supportsSelfVoicing ) {
+        if ( phet.chipper.queryParameters.supportsSelfVoicing ) {
           const response = levelSpeakerModel.collectResponses( objectResponse, null, interactionHint );
           phet.joist.sim.selfVoicingUtteranceQueue.addToBack( response );
         }
