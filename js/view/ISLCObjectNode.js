@@ -30,6 +30,7 @@ import RichText from '../../../scenery/js/nodes/RichText.js';
 import Color from '../../../scenery/js/util/Color.js';
 import AccessibleSlider from '../../../sun/js/accessibility/AccessibleSlider.js';
 import Tandem from '../../../tandem/js/Tandem.js';
+import SelfVoicingUtterance from '../../../utterance-queue/js/SelfVoicingUtterance.js';
 import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
 import inverseSquareLawCommonStrings from '../inverseSquareLawCommonStrings.js';
 import ISLCConstants from '../ISLCConstants.js';
@@ -310,6 +311,11 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
 
   // @public - so that events can be forwarded to this DragListener in the
   // case of alternative input
+  const selfVoicingDragUtterance = new SelfVoicingUtterance( {
+    alertStableDelay: 500,
+    alertMaximumDelay: 1000,
+    cancelOther: false
+  } );
   this.dragListener = new DragListener( {
     allowTouchSnag: true,
     start: event => {
@@ -333,10 +339,6 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
 
       // snapToGrid method dynamically checks whether to snap or not
       object.positionProperty.set( model.snapToGrid( x ) );
-    },
-    end: () => {
-      object.isDragging = false;
-
 
       if ( phet.chipper.queryParameters.supportsSelfVoicing ) {
         const distanceDescription = positionDescriber.getSelfVoicingDistanceDescription( config.label, config.otherObjectLabel );
@@ -347,9 +349,26 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
           forceChangeText = this.forceDescriber.getVectorChangeText( this.objectModel );
         }
 
-        const response = levelSpeakerModel.collectResponses( distanceDescription, forceChangeText );
-        phet.joist.sim.selfVoicingUtteranceQueue.addToBack( response );
+        selfVoicingDragUtterance.alert = levelSpeakerModel.collectResponses( distanceDescription, forceChangeText );
+        phet.joist.sim.selfVoicingUtteranceQueue.addToBack( selfVoicingDragUtterance );
       }
+    },
+    end: () => {
+      object.isDragging = false;
+
+      //
+      // if ( phet.chipper.queryParameters.supportsSelfVoicing ) {
+      //   const distanceDescription = positionDescriber.getSelfVoicingDistanceDescription( config.label, config.otherObjectLabel );
+      //
+      //   // only speak force change if it has changed
+      //   let forceChangeText = '';
+      //   if ( oldPosition !== object.positionProperty.get() ) {
+      //     forceChangeText = this.forceDescriber.getVectorChangeText( this.objectModel );
+      //   }
+      //
+      //   const response = levelSpeakerModel.collectResponses( distanceDescription, forceChangeText );
+      //   phet.joist.sim.selfVoicingUtteranceQueue.addToBack( response );
+      // }
     },
     tandem: config.tandem.createTandem( 'dragListener' )
   } );
