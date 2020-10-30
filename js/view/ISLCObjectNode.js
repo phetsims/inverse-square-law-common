@@ -428,7 +428,7 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
         phet.joist.sim.selfVoicingUtteranceQueue.addToBack( response );
       }
     },
-    a11yCreateValueChangeAlert: () => {
+    a11yCreateContextResponseAlert: () => {
       const newPosition = object.positionProperty.get();
       const positionChanged = newPosition !== oldPosition;
       return positionChanged ? forceDescriber.getVectorChangeText( object ) : forceDescriber.getPositionUnchangedAlertText( object );
