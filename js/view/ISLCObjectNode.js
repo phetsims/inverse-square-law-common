@@ -337,8 +337,7 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
       if ( phet.chipper.queryParameters.supportsSelfVoicing ) {
         const response = levelSpeakerModel.collectResponses( objectResponse, null, interactionHint );
         const dragStartUtterance = new SelfVoicingUtterance( {
-          alert: response,
-          cancelOther: false
+          alert: response
         } );
         phet.joist.sim.selfVoicingUtteranceQueue.addToBack( dragStartUtterance );
       }
