@@ -323,6 +323,21 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
       object.isDragging = true;
 
       oldPosition = object.positionProperty.get();
+
+      // the initial dragging alert does not use the utterance because it must be assertive and
+      // should interrupt any other utterance being spoken
+      // special behavior if the hit is from a keyboard
+      const interactionHint = selfVoicingLevelsMoveSpheresHintString;
+      const objectResponse = positionDescriber.getSelfVoicingDistanceDescription( config.label, config.otherObjectLabel );
+
+      if ( phet.chipper.queryParameters.supportsSelfVoicing ) {
+        const response = levelSpeakerModel.collectResponses( objectResponse, null, interactionHint );
+        const dragStartUtterance = new SelfVoicingUtterance( {
+          alert: response,
+          cancelOther: false
+        } );
+        phet.joist.sim.selfVoicingUtteranceQueue.addToBack( dragStartUtterance );
+      }
     },
     drag: event => {
 
