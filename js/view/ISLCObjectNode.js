@@ -310,6 +310,9 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
   let oldPosition = object.positionProperty.get();
   let previousSeparation = model.separationProperty.get();
 
+  // reusable utterance to prevent a pile-up of alerts while the object moves
+  const separationUtterance = new SelfVoicingUtterance();
+
   // @public - so that events can be forwarded to this DragListener in the
   // case of alternative input
   const selfVoicingDragUtterance = new SelfVoicingUtterance( {
@@ -367,7 +370,6 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
 
         if ( model.separationProperty.get() !== previousSeparation ) {
 
-          const separationUtterance = new SelfVoicingUtterance();
           if ( model.separationProperty.get() < previousSeparation ) {
             separationUtterance.alert = 'Closer';
           }
