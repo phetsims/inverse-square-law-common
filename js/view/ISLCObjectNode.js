@@ -355,20 +355,6 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
     },
     end: () => {
       object.isDragging = false;
-
-      //
-      // if ( phet.chipper.queryParameters.supportsSelfVoicing ) {
-      //   const distanceDescription = positionDescriber.getSelfVoicingDistanceDescription( config.label, config.otherObjectLabel );
-      //
-      //   // only speak force change if it has changed
-      //   let forceChangeText = '';
-      //   if ( oldPosition !== object.positionProperty.get() ) {
-      //     forceChangeText = this.forceDescriber.getVectorChangeText( this.objectModel );
-      //   }
-      //
-      //   const response = levelSpeakerModel.collectResponses( distanceDescription, forceChangeText );
-      //   phet.joist.sim.selfVoicingUtteranceQueue.addToBack( response );
-      // }
     },
     tandem: config.tandem.createTandem( 'dragListener' )
   } );
