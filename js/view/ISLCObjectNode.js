@@ -308,6 +308,7 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
   let clickOffset;
 
   let oldPosition = object.positionProperty.get();
+  let previousSeparation = model.separationProperty.get();
 
   // @public - so that events can be forwarded to this DragListener in the
   // case of alternative input
@@ -356,13 +357,28 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
       object.positionProperty.set( model.snapToGrid( x ) );
 
       if ( phet.chipper.queryParameters.supportsSelfVoicing ) {
-        const distanceDescription = positionDescriber.getSelfVoicingDistanceDescriptionWithoutLabel( config.label, config.otherObjectLabel );
+        const distanceDescription = positionDescriber.getSelfVoicingDistanceDescriptionWithoutLabel( config.otherObjectLabel );
 
         // only speak force change if it has changed
         let forceChangeText = '';
         if ( oldPosition !== object.positionProperty.get() ) {
           forceChangeText = this.forceDescriber.getVectorChangeText( this.objectModel );
         }
+
+        if ( model.separationProperty.get() !== previousSeparation ) {
+
+          const separationUtterance = new SelfVoicingUtterance();
+          if ( model.separationProperty.get() < previousSeparation ) {
+            separationUtterance.alert = 'Closer';
+          }
+          else {
+            separationUtterance.alert = 'Farther away';
+          }
+
+          phet.joist.sim.selfVoicingUtteranceQueue.addToBack( separationUtterance );
+        }
+
+        previousSeparation = model.separationProperty.get();
 
         selfVoicingDragUtterance.alert = levelSpeakerModel.collectResponses( distanceDescription, forceChangeText );
         phet.joist.sim.selfVoicingUtteranceQueue.addToBack( selfVoicingDragUtterance );
