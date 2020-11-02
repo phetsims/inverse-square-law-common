@@ -341,7 +341,7 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
       object.positionProperty.set( model.snapToGrid( x ) );
 
       if ( phet.chipper.queryParameters.supportsSelfVoicing ) {
-        const distanceDescription = positionDescriber.getSelfVoicingDistanceDescription( config.label, config.otherObjectLabel );
+        const distanceDescription = positionDescriber.getSelfVoicingDistanceDescriptionWithoutLabel( config.label, config.otherObjectLabel );
 
         // only speak force change if it has changed
         let forceChangeText = '';
