@@ -324,7 +324,7 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
     allowTouchSnag: true,
     start: event => {
       clickOffset = this.dragNode.globalToParentPoint( event.pointer.point ).x - event.currentTarget.x;
-      object.isDragging = true;
+      object.isDraggingProperty.value = true;
 
       oldPosition = object.positionProperty.get();
 
@@ -386,7 +386,7 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
       }
     },
     end: () => {
-      object.isDragging = false;
+      object.isDraggingProperty.value = false;
     },
     tandem: config.tandem.createTandem( 'dragListener' )
   } );
@@ -426,11 +426,11 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
       return Utils.toFixedNumber( value, numberOfDecimalPlaces );
     },
     startDrag: () => {
-      object.isDragging = true;
+      object.isDraggingProperty.value = true;
       oldPosition = object.positionProperty.get();
     },
     endDrag: () => {
-      object.isDragging = false;
+      object.isDraggingProperty.value = false;
       this.redrawForce();
 
       const distanceDescription = positionDescriber.getSelfVoicingDistanceDescriptionWithoutLabel( config.otherObjectLabel );

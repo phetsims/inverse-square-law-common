@@ -202,10 +202,10 @@ inherit( Object, ISLCModel, {
     positionObject1 = this.snapToGrid( positionObject1 );
     positionObject2 = this.snapToGrid( positionObject2 );
 
-    if ( this.object1.isDragging ) {
+    if ( this.object1.isDraggingProperty.get() ) {
       this.object1.positionProperty.set( positionObject1 );
     }
-    else if ( this.object2.isDragging ) {
+    else if ( this.object2.isDraggingProperty.get() ) {
       this.object2.positionProperty.set( positionObject2 );
     }
     else {

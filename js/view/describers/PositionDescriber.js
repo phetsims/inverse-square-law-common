@@ -158,7 +158,7 @@ class PositionDescriber extends ISLCDescriber {
         this.distanceBetween = this.formatDisplayDistance( Math.abs( x1 - x2 ) );
 
         // only set movedCloser if the user is manipulating the value, null otherwise for comparison on focus
-        if ( this.object1.isDragging || this.object2.isDragging ) {
+        if ( this.object1.isDraggingProperty.get() || this.object2.isDraggingProperty.get() ) {
           this.movedCloser = this.distanceBetween < this.oldDistanceBetween;
         }
         else {

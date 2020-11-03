@@ -6,6 +6,7 @@
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 
+import BooleanProperty from '../../../axon/js/BooleanProperty.js';
 import DerivedProperty from '../../../axon/js/DerivedProperty.js';
 import Emitter from '../../../axon/js/Emitter.js';
 import NumberProperty from '../../../axon/js/NumberProperty.js';
@@ -92,7 +93,7 @@ function ISLCObject( initialMass, initialPosition, valueRange, constantRadiusPro
 
   // @public - flag to check if the object is being dragged by the user
   //           set in the drag handler
-  this.isDragging = false;
+  this.isDraggingProperty = new BooleanProperty( false );
 
   // @public - flag to check whether object's radius was updated, used to determine positioning
   this.radiusLastChanged = false;
