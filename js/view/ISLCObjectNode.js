@@ -420,7 +420,7 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
     keyboardStep: config.stepSize,
     shiftKeyboardStep: config.snapToNearest,
     pageKeyboardStep: config.stepSize * 2,
-    a11yMapValue: value => Utils.toFixedNumber( value, 1 ),
+    a11yMapPDOMValue: value => Utils.toFixedNumber( value, 1 ),
     constrainValue: value => {
       const numberOfDecimalPlaces = Utils.numberOfDecimalPlaces( config.snapToNearest );
       return Utils.toFixedNumber( value, numberOfDecimalPlaces );
