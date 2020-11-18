@@ -22,6 +22,7 @@ import levelSpeakerModel from '../../../scenery-phet/js/accessibility/speaker/le
 import SelfVoicingInputListener from '../../../scenery-phet/js/accessibility/speaker/SelfVoicingInputListener.js';
 import SelfVoicingWrapperNode from '../../../scenery-phet/js/accessibility/speaker/SelfVoicingWrapperNode.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
+import sceneryPhetStrings from '../../../scenery-phet/js/sceneryPhetStrings.js';
 import DragListener from '../../../scenery/js/listeners/DragListener.js';
 import Circle from '../../../scenery/js/nodes/Circle.js';
 import Node from '../../../scenery/js/nodes/Node.js';
@@ -52,6 +53,7 @@ const selfVoicingBriefNewForceAlertPatternString = inverseSquareLawCommonStrings
 const summaryInteractionHintPatternString = inverseSquareLawCommonStrings.a11y.screenSummary.summaryInteractionHintPattern;
 const selfVoicingLevelsMoveSpheresHintString = inverseSquareLawCommonStrings.a11y.selfVoicing.levels.moveSpheresHintString;
 const forceArrowSizePatternString = inverseSquareLawCommonStrings.a11y.selfVoicing.levels.forceArrowSizePattern;
+const grabbedString = sceneryPhetStrings.a11y.selfVoicing.grabbedAlert;
 
 const NEGATIVE_FILL = new Color( '#66f' );
 const POSITIVE_FILL = new Color( '#f66' );
@@ -328,13 +330,19 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
 
       oldPosition = object.positionProperty.get();
 
-      // the initial dragging alert does not use the utterance because it must be assertive and
-      // should interrupt any other utterance being spoken
-      // special behavior if the hit is from a keyboard
-      const interactionHint = selfVoicingLevelsMoveSpheresHintString;
-      const objectResponse = positionDescriber.getSelfVoicingDistanceDescription( config.label, config.otherObjectLabel );
-
       if ( phet.chipper.queryParameters.supportsSelfVoicing ) {
+
+        // the initial dragging alert does not use the utterance because it must be assertive and
+        // should interrupt any other utterance being spoken
+        // special behavior if the hit is from a keyboard
+        const interactionHint = selfVoicingLevelsMoveSpheresHintString;
+        const distanceDescription = positionDescriber.getSelfVoicingDistanceDescription( config.label, config.otherObjectLabel );
+
+        const objectResponse = StringUtils.fillIn( '{{grabbed}}. {{response}}', {
+          grabbed: grabbedString,
+          response: distanceDescription
+        } );
+
         const response = levelSpeakerModel.collectResponses( objectResponse, null, interactionHint );
         const dragStartUtterance = new SelfVoicingUtterance( {
           alert: response
