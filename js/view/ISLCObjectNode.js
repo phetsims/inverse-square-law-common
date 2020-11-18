@@ -323,7 +323,7 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
   this.dragListener = new DragListener( {
     allowTouchSnag: true,
     start: event => {
-      clickOffset = this.dragNode.globalToParentPoint( event.pointer.point ).x - event.currentTarget.x;
+      clickOffset = this.dragNode.globalToParentPoint( event.pointer.point ).x - event.target.x;
       object.isDraggingProperty.value = true;
 
       oldPosition = object.positionProperty.get();
