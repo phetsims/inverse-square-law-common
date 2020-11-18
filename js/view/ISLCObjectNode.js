@@ -361,13 +361,9 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
       if ( phet.chipper.queryParameters.supportsSelfVoicing ) {
         const distanceDescription = positionDescriber.getSelfVoicingDistanceDescriptionWithoutLabel( config.otherObjectLabel );
 
-        // only speak force change if it has changed
-        let forceChangeText = '';
+        // only speak something if the positions have changed during drag
         if ( oldPosition !== object.positionProperty.get() ) {
-          forceChangeText = this.forceDescriber.getVectorChangeText( this.objectModel );
-        }
-
-        if ( model.separationProperty.get() !== previousSeparation ) {
+          const forceChangeText = this.forceDescriber.getVectorChangeText( this.objectModel );
 
           if ( model.separationProperty.get() < previousSeparation ) {
             separationUtterance.alert = 'Closer';
@@ -377,12 +373,12 @@ function ISLCObjectNode( model, object, layoutBounds, modelViewTransform, alertM
           }
 
           phet.joist.sim.selfVoicingUtteranceQueue.addToBack( separationUtterance );
+          previousSeparation = model.separationProperty.get();
+          oldPosition = object.positionProperty.get();
+
+          selfVoicingDragUtterance.alert = levelSpeakerModel.collectResponses( distanceDescription, forceChangeText );
+          phet.joist.sim.selfVoicingUtteranceQueue.addToBack( selfVoicingDragUtterance );
         }
-
-        previousSeparation = model.separationProperty.get();
-
-        selfVoicingDragUtterance.alert = levelSpeakerModel.collectResponses( distanceDescription, forceChangeText );
-        phet.joist.sim.selfVoicingUtteranceQueue.addToBack( selfVoicingDragUtterance );
       }
     },
     end: () => {
