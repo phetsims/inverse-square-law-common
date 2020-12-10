@@ -4,10 +4,10 @@
  * @author Jesse Greenberg
  */
 
-import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
-import Enumeration from '../../../phet-core/js/Enumeration.js';
 import BooleanProperty from '../../../axon/js/BooleanProperty.js';
 import EnumerationProperty from '../../../axon/js/EnumerationProperty.js';
+import Enumeration from '../../../phet-core/js/Enumeration.js';
+import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
 
 const Verbosity = Enumeration.byKeys( [ 'BRIEF', 'VERBOSE' ] );
 
