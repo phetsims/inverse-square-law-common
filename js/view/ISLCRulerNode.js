@@ -287,13 +287,11 @@ class ISLCRulerNode extends Node {
         releaseRulerSoundPlayer.play();
       },
 
-      listenersForDrag: [ keyboardDragListener ],
-
       tandem: tandem.createTandem( 'grabDragInteraction' )
     } );
 
     // @private - add the "grab button" interaction
-    this.grabDragInteraction = new GrabDragInteraction( this, grabDragInteractionOptions );
+    this.grabDragInteraction = new GrabDragInteraction( this, keyboardDragListener, grabDragInteractionOptions );
 
     // pdom - the GrabDragInteraction is added to this Node but the drag handler and transform changes are applied
     // to the child RulerNode - PDOM siblings need to reposition with the RulerNode
