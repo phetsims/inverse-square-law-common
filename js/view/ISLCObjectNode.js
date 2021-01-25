@@ -91,8 +91,6 @@ class ISLCObjectNode extends Node {
   
       forceArrowHeight: 150, // height of arrow in view coordinates
   
-      // {null|ShapeHitDetector} a11y, hit detector for the view for the Pointer, to support prototype self voicing features
-      shapeHitDetector: null,
       objectColor: null, // {{string}} @required - description of sphere for self-voicing content
   
       // phet-io
