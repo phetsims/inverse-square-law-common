@@ -269,7 +269,7 @@ class ISLCRulerNode extends Node {
 
     assert && assert( !options.onGrab, 'ISLCRulerNode sets its own onGrab' );
     assert && assert( !options.onRelease, 'ISLCRulerNode sets its own onRelease' );
-    assert && assert( !options.listenersForDrag, 'ISLCRulerNode sets its own listenersForDrag' );
+    assert && assert( !options.listenersForDragState, 'ISLCRulerNode sets its own listenersForDragState' );
     assert && assert( !options.tandem, 'ISLCRulerNode sets its own tandem' );
     const grabDragInteractionOptions = merge( options.grabDragInteractionOptions, {
 
