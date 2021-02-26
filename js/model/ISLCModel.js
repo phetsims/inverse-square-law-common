@@ -22,7 +22,7 @@ const OBJECT_ONE = ISLCObjectEnum.OBJECT_ONE;
 const OBJECT_TWO = ISLCObjectEnum.OBJECT_TWO;
 
 class ISLCModel {
-  
+
   /**
    * @param {number} forceConstant the appropriate force constant (e.g. G or k)
    * @param {ISLCObject} object1 -  the first Mass or Charge object
@@ -33,44 +33,44 @@ class ISLCModel {
    * @param {Object} [options]
    */
   constructor( forceConstant, object1, object2, positionRange, tandem, options ) {
-  
+
     options = merge( {
       snapObjectsToNearest: null, // {number|null} if defined, objects will snap to nearest value in model coordinates
       minSeparationBetweenObjects: 0.1 // in meters
     }, options );
-  
+
     assert && assert( object1.positionProperty.units === object2.positionProperty.units, 'units should be the same' );
-  
+
     // @public (read-only)
     this.leftObjectBoundary = positionRange.min;
     this.rightObjectBoundary = positionRange.max;
-  
+
     // @public {Property.<boolean>} - whether to display the force values
     this.showForceValuesProperty = new BooleanProperty( true, {
       tandem: tandem.createTandem( 'showForceValuesProperty' ),
       phetioDocumentation: 'Whether or not the force values should be displayed'
     } );
-  
+
     // @public
     this.object1 = object1;
     this.object2 = object2;
-  
+
     // set the appropriate enum reference to each object.
     object1.enum = ISLCObjectEnum.OBJECT_ONE;
     object2.enum = ISLCObjectEnum.OBJECT_TWO;
-  
+
     // @public
     // {Property.<ISLCObjectEnum|null>} - needed for adjusting alerts when an object moves as a result of a radius increase
     this.pushedObjectEnumProperty = new Property( null );
-  
+
     // @private
     this.snapObjectsToNearest = options.snapObjectsToNearest;
     this.minSeparationBetweenObjects = options.minSeparationBetweenObjects;
     this.forceConstant = forceConstant;
-  
+
     // @public - emits an event when the model is updated by step
     this.stepEmitter = new Emitter();
-  
+
     // @public {Property.<number>} - calculates the force based on changes to values and positions
     // objects are never destroyed, so forceProperty does not require disposal
     this.forceProperty = new DerivedProperty( [
@@ -84,7 +84,7 @@ class ISLCModel {
       units: 'N',
       phetioDocumentation: 'The force of one object on the other (in Newtons)'
     } );
-  
+
     // @private {Property.<number>} - The distance between the two objects. Added for PhET-iO.
     this.separationProperty = new DerivedProperty( [
       this.object1.positionProperty,
@@ -95,45 +95,45 @@ class ISLCModel {
       units: object1.positionProperty.units,
       phetioDocumentation: 'The distance between the two objects\' centers'
     } );
-  
+
     const updateRange = object => {
       const maxPosition = this.getObjectMaxPosition( object );
       const minPosition = this.getObjectMinPosition( object );
-  
+
       object.enabledRangeProperty.set( new Range( minPosition, maxPosition ) );
     };
-  
+
     // pdom - necessary to reset the enabledRangeProperty to prevent object overlap, disposal not necessary
     // We need to update the available range for each object when the either's radius or position changes.
     Property.multilink( [ object1.positionProperty, object2.positionProperty ], () => {
       updateRange( object1 );
       updateRange( object2 );
     } );
-  
+
     // when sim is reset, we only reset the position properties of each object to their initial values
     // thus, there is no need to dispose of the listeners below
     this.object1.radiusProperty.link( () => {
       this.object1.radiusLastChanged = true;
       this.object2.radiusLastChanged = false;
-  
+
       // update range if radius changed with "constant radius" setting (which didn't trigger other model updates)
       updateRange( object1 );
       updateRange( object2 );
     } );
-  
+
     this.object2.radiusProperty.link( () => {
       this.object2.radiusLastChanged = true;
       this.object1.radiusLastChanged = false;
-  
+
       // update range if radius changed with "constant radius" setting (which didn't trigger other model updates)
       updateRange( object2 );
       updateRange( object1 );
     } );
-  
+
     // wire up logic to update the state of the pushedObjectEnumProperty
     const createPushedPositionListener = objectEnum => {
       return () => {
-  
+
         // This conditional should only be hit if the mass has changed in addition to the position. Since the object's
         // valueProperty would be set in the previous frame, and then this frame's step function would update the
         // position.
@@ -145,11 +145,11 @@ class ISLCModel {
         }
       };
     };
-  
+
     // lazy link so we don't have a strange initial condition even though we haven't moved the pushers.
     object1.positionProperty.lazyLink( createPushedPositionListener( ISLCObjectEnum.OBJECT_ONE ) );
     object2.positionProperty.lazyLink( createPushedPositionListener( ISLCObjectEnum.OBJECT_TWO ) );
-  
+
     // when the mass is lessened, there is no way that pushed an object, so set to null
     const massChangedListener = ( newMass, oldMass ) => {
       if ( oldMass > newMass ) {
@@ -158,7 +158,7 @@ class ISLCModel {
     };
     object1.valueProperty.link( massChangedListener );
     object2.valueProperty.link( massChangedListener );
-  
+
     // reset after step is complete.
     this.stepEmitter.addListener( () => {
       this.object1.onStepEnd();
@@ -408,7 +408,7 @@ class ISLCModel {
   /**
    * Get whether or not the position of a mass was most recently changed based on the other pushing it.
    * @public
-   * 
+   *
    * @returns {boolean}
    */
   massWasPushed() {

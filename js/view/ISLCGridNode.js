@@ -14,7 +14,7 @@ import Path from '../../../scenery/js/nodes/Path.js';
 import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
 
 class ISLCGridNode extends Path {
-  
+
   /**
    * @param {number} deltaX - position step for the object in model coordinates
    * @param {Bounds2} layoutBounds - layout bounds of the ScreenView
@@ -22,29 +22,29 @@ class ISLCGridNode extends Path {
    * @param {Object} [options]
    */
   constructor( deltaX, layoutBounds, modelViewTransform, options ) {
-  
+
     options = merge( {
       stroke: 'rgba( 0, 0, 0, 0.6 )'
     }, options );
-  
+
     const gridShape = new Shape();
-  
+
     // subtract 1 so grid aligns with model, see https://github.com/phetsims/inverse-square-law-common/issues/49
     let gridPosition = modelViewTransform.viewToModelX( layoutBounds.minX - 1 );
     const rightBoundary = modelViewTransform.viewToModelX( layoutBounds.maxX );
     while ( gridPosition <= rightBoundary ) {
-  
+
       // grid position in view coords
       const viewPosition = modelViewTransform.modelToViewX( gridPosition );
-  
+
       // draw the grid line
       gridShape.moveTo( viewPosition, layoutBounds.top );
       gridShape.lineTo( viewPosition, layoutBounds.bottom );
-  
+
       // move to the next position
       gridPosition += deltaX;
     }
-  
+
     super( gridShape, {
       stroke: options.stroke,
       lineWidth: 1

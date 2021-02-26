@@ -31,7 +31,7 @@ const ARROW_LENGTH = 8; // empirically determined
 const TEXT_OFFSET = 10; // empirically determined to make sure text does not go out of bounds
 
 class ISLCForceArrowNode extends Node {
-  
+
   /**
    * @param {Range} arrowForceRange - the range in force magnitude
    * @param {Bounds2} layoutBounds
@@ -41,21 +41,21 @@ class ISLCForceArrowNode extends Node {
    * @param {Object} [options]
    */
   constructor( arrowForceRange, layoutBounds, label, otherObjectLabel, tandem, options ) {
-  
+
     options = merge( {
       defaultDirection: DefaultDirection.LEFT,
       attractNegative: true, // if true, arrows will point towards each other if force is negative
       arrowNodeLineWidth: 0.25,
-  
+
       // label options
       arrowLabelFont: new PhetFont( 16 ),
       arrowLabelFill: '#fff',
       arrowLabelStroke: null,
       forceReadoutDecimalPlaces: ISLCConstants.DECIMAL_NOTATION_PRECISION, // number of decimal places in force readout
-  
+
       // arrow node arguments
       forceArrowHeight: 150,
-  
+
       // arrow node options
       maxArrowWidth: 15, // max width of the arrow when when redrawn, in view coordinates - used in mapping function
       minArrowWidth: 0, // Some ISLC sims support an object value of zero, setting this to zero supports this case.
@@ -65,21 +65,21 @@ class ISLCForceArrowNode extends Node {
       arrowStroke: null,
       arrowFill: '#fff',
       backgroundFill: 'black',
-  
+
       // arrow mapping function options
       // By default, only use a single mapping function to go from force to arrow width, but with this option and
       // those below use two.
       mapArrowWidthWithTwoFunctions: false,
-  
+
       // only if mapArrowWidthWithTwoFunctions is true
       forceThresholdPercent: 0, // the percent to switch mappings from the min to the main linear function.
       thresholdArrowWidth: 1 // This default is used by GFL(B) as a good in between the min/max arrow widths.
     }, options );
-  
+
     options.tandem = tandem;
 
     super( options );
-  
+
     // @private
     this.layoutBounds = layoutBounds;
     this.defaultDirection = options.defaultDirection;
@@ -88,24 +88,24 @@ class ISLCForceArrowNode extends Node {
     this.otherObjectLabel = otherObjectLabel;
     this.scientificNotationMode = false;
     this.attractNegative = options.attractNegative;
-  
+
     assert && options.mapArrowWidthWithTwoFunctions && assert( options.forceThresholdPercent !== 0,
       'set forceThresholdPercent to map arrow width with two functions' );
-  
+
     const forceThreshold = arrowForceRange.min + ( arrowForceRange.getLength() * options.forceThresholdPercent );
-  
+
     // Maps the force value to the desired width of the arrow in view coordinates. This mapping can be done
     // two ways. The first is with a single function (when `options.mapArrowWidthWithTwoFunctions` is set to false).
     // If that is the case, this is the only mapping function. This is to support single mapping in CL and multi mapping
     // in GFL(B). See https://github.com/phetsims/inverse-square-law-common/issues/76 for details on the design.
     const mainForceToArrowWidthFunction = new LinearFunction( forceThreshold, arrowForceRange.max,
       options.mapArrowWidthWithTwoFunctions ? options.thresholdArrowWidth : options.minArrowWidth, options.maxArrowWidth, false );
-  
+
     // When `options.mapArrowWidthWithTwoFunctions` is true, this function will be used to map the arrow width
     // from the minimum to a specified percentage of the force range, see options.forceThresholdPercent.
     const minTwoForceToArrowWidthFunction = new LinearFunction( arrowForceRange.min, forceThreshold,
       options.minArrowWidth, options.thresholdArrowWidth, false );
-  
+
     /**
      * Map a force value to an arrow width
      * @param {number} forceValue
@@ -115,7 +115,7 @@ class ISLCForceArrowNode extends Node {
       const linearFunction = forceValue < forceThreshold ? minTwoForceToArrowWidthFunction : mainForceToArrowWidthFunction;
       return linearFunction( forceValue );
     };
-  
+
     // @public (read-only) - for layout, the label for the arrow
     this.arrowText = new RichText( '', {
       font: options.arrowLabelFont,
@@ -128,7 +128,7 @@ class ISLCForceArrowNode extends Node {
       phetioDocumentation: 'This text updates from the model as the force changes, and cannot be edited.',
       textPropertyOptions: { phetioReadOnly: true }
     } );
-  
+
     // @private - tip and tail set in redrawArrow
     this.arrow = new ArrowNode( 0, -options.forceArrowHeight, 200, -options.forceArrowHeight, merge( {
       lineWidth: options.arrowNodeLineWidth,
@@ -136,14 +136,14 @@ class ISLCForceArrowNode extends Node {
       fill: options.arrowFill,
       tandem: tandem.createTandem( 'arrowNode' )
     }, _.pick( options, [ 'headHeight', 'headWidth', 'tailWidth' ] ) ) );
-  
+
     // @private
-      this.arrowTextBackground = new Rectangle( 0, 0, 1000, 1000, { fill: options.backgroundFill, opacity: .3 } );
+    this.arrowTextBackground = new Rectangle( 0, 0, 1000, 1000, { fill: options.backgroundFill, opacity: .3 } );
     this.addChild( this.arrowTextBackground );
-  
+
     this.addChild( this.arrowText );
     this.addChild( this.arrow );
-  
+
     this.y = 0;
   }
 

@@ -75,34 +75,34 @@ class ISLCObjectNode extends Node {
    * @mixes AccessibleSlider
    */
   constructor( model, object, layoutBounds, modelViewTransform, alertManager, forceDescriber, positionDescriber, config ) {
-  
+
     config = merge( {
       label: null, // {string} @required
       otherObjectLabel: null, // {string} @required
       defaultDirection: DefaultDirection.LEFT,
-  
+
       // {boolean} - if true, arrows will point towards each other if forces is negative. Used by the puller and arrow nodes
       attractNegative: false,
       snapToNearest: null, // {number} if present, object node will snap to the nearest snapToNearest value on drag
       stepSize: null, // {number} step size when moving the object keyboard. By default based on snapToNearest, see below.
-  
+
       arrowColor: '#66f', // color of vertical line
       y: 250,
-  
+
       forceArrowHeight: 150, // height of arrow in view coordinates
-  
+
       objectColor: null, // {{string}} @required - description of sphere for self-voicing content
-  
+
       // phet-io
       tandem: Tandem.REQUIRED,
-  
+
       // {Property[]} - Properties that need to be monitored to successfully update this Node's PDOM descriptions
       additionalA11yDependencies: []
     }, config );
-  
+
     // separate call because of the use of a config value from the above defaults
     config = merge( {
-  
+
       // options passed to ISLCForceArrowNode, filled in below
       arrowNodeOptions: {
         attractNegative: config.attractNegative,
@@ -110,57 +110,57 @@ class ISLCObjectNode extends Node {
         forceArrowHeight: config.forceArrowHeight,
         forceReadoutDecimalPlaces: ISLCConstants.DECIMAL_NOTATION_PRECISION // number of decimal places in force readout
       },
-  
+
       // options for the RichText label on the object circle
       labelOptions: {
         fill: 'black',
         font: new PhetFont( { size: 12 } ),
-  
+
         pickable: false,
         maxWidth: LABEL_MAX_WIDTH,
         centerX: LABEL_CENTER_X,
-  
+
         tandem: config.tandem.createTandem( 'labelText' )
       },
-  
+
       // options passed to the PullerNode, filled in below
       pullerNodeOptions: {
         attractNegative: config.attractNegative
       }
     }, config );
-  
+
     // use snapToNearest if stepSize is not provided
     if ( config.stepSize === null ) {
       assert && assert( config.snapToNearest, 'snapToNearest is required if stepSize is not provided.' );
       config.stepSize = config.snapToNearest * 2;
     }
-  
+
     assert && assert( config.label, 'required param' );
     assert && assert( config.otherObjectLabel, 'required param' );
     assert && assert( alertManager instanceof ISLCAlertManager );
-  
+
     super( {
       containerTagName: 'div',
       tandem: config.tandem
     } );
-  
+
     this.accessibleName = PositionDescriber.getObjectLabelPositionText( config.label );
-  
+
     // @protected
     this.layoutBounds = layoutBounds;
     this.objectModel = object;
     this.model = model; // used in abstract method implementations by children.
     this.modelViewTransform = modelViewTransform;
-  
+
     // @private
     this.forceDescriber = forceDescriber;
-  
+
     // @public - which object this instance is (one or two)
     this.enum = object === model.object1 ? ISLCObjectEnum.OBJECT_ONE : ISLCObjectEnum.OBJECT_TWO;
-  
+
     // the full range of force for the arrow node (note: this is distinct)
     const arrowForceRange = new Range( model.getMinForceMagnitude(), model.getMaxForce() );
-  
+
     // @protected - arrow node
     this.arrowNode = new ISLCForceArrowNode(
       arrowForceRange,
@@ -170,23 +170,23 @@ class ISLCObjectNode extends Node {
       config.tandem.createTandem( 'forceDisplayNode' ),
       config.arrowNodeOptions
     );
-  
+
     // PROTOTYPE a11y code for self-voicing features
     if ( phet.chipper.queryParameters.supportsSelfVoicing ) {
       const arrowHitListener = () => {
         let objectResponse;
         if ( model.showForceValuesProperty.get() ) {
           if ( ISLCQueryParameters.selfVoicingVersion === 1 ) {
-  
+
             // custom self voicing string
             objectResponse = forceDescriber.getSelfVoicingForceVectorMagnitudeText( config.label, config.otherObjectLabel );
           }
           else {
-  
+
             // string directly from PDOM strings
             objectResponse = forceDescriber.getForceVectorMagnitudeText( config.label, config.otherObjectLabel );
           }
-  
+
           // for the self-voicing (regardless of version), we always want to include arrow size
           // description in the self-voicing content
           objectResponse = StringUtils.fillIn( forceArrowSizePatternString, {
@@ -195,19 +195,19 @@ class ISLCObjectNode extends Node {
           } );
         }
         else {
-  
+
           // custom response for self voicing when force values are hidden
           objectResponse = forceDescriber.getSelfVoicingQualitativeForceVectorText( config.otherObjectLabel );
         }
-  
+
         const helpText = StringUtils.fillIn( summaryInteractionHintPatternString, {
           massOrCharge: 'mass'
         } );
-  
+
         const response = levelSpeakerModel.collectResponses( objectResponse, null, helpText );
         phet.joist.sim.selfVoicingUtteranceQueue.addToBack( response );
       };
-  
+
       // @public (read-only) - wraps the arrow node that receives hit detection
       // anywhere within so that
       this.selfVoicingWrapper = new SelfVoicingWrapperNode( this.arrowNode, {
@@ -217,42 +217,42 @@ class ISLCObjectNode extends Node {
         }
       } );
     }
-  
+
     // set y position for the arrow
     this.arrowNode.y = config.y - config.forceArrowHeight;
-  
+
     // @private - the puller node
     this.pullerNode = new ISLCPullerNode(
       new Range( model.getMinForce(), model.getMaxForce() ),
       config.pullerNodeOptions
     );
-  
+
     if ( config.defaultDirection === DefaultDirection.RIGHT ) {
       this.pullerNode.scale( -1, 1 );
     }
-  
+
     // @protected - a parent node that applies the drag handler
     this.dragNode = new Node( {
       cursor: 'pointer'
     } );
-  
+
     // the 'object' - a shaded circle
     const radius = modelViewTransform.modelToViewDeltaX( object.radiusProperty.get() );
-  
+
     // @protected - the object
     this.objectCircle = new Circle( radius );
-  
+
     // PROTOTYPE a11y code, to support self-voicing features
     if ( phet.chipper.queryParameters.supportsSelfVoicing ) {
       assert && assert( config.objectColor, 'required param, if testing self voicing features' );
-  
+
       this.addInputListener( new SelfVoicingInputListener( {
         onFocusIn: () => {
-  
+
           // special behavior if the hit is from a keyboard
           const interactionHint = selfVoicingLevelsMoveSpheresHintString;
           const objectResponse = positionDescriber.getSelfVoicingDistanceDescription( config.label, config.otherObjectLabel );
-  
+
           if ( phet.chipper.queryParameters.supportsSelfVoicing ) {
             const response = levelSpeakerModel.collectResponses( objectResponse, null, interactionHint );
             phet.joist.sim.selfVoicingUtteranceQueue.addToBack( response );
@@ -261,31 +261,31 @@ class ISLCObjectNode extends Node {
         highlightTarget: this
       } ) );
     }
-  
+
     this.dragNode.addChild( this.pullerNode );
     this.dragNode.addChild( this.objectCircle );
-  
+
     // @public - for ruler regions
     // Small black dot where vertical arrow line connects to the object
     this.centerPoint = new Circle( 2, { fill: '#000' } );
     this.dragNode.addChild( this.centerPoint );
-  
+
     this.labelText = new RichText( config.label, config.labelOptions );
-  
+
     this.dragNode.addChild( this.labelText );
     this.labelText.boundsProperty.lazyLink( () => {
       this.labelText.centerX = this.objectCircle.centerX;
     } );
-  
+
     this.addChild( this.dragNode );
-  
+
     // @private
     this.y = config.y; // TODO: is this needed?
-  
+
     // Added for PhET-iO as a way to hide the dashed lines.
     const centerOfMassLineNode = new Node( { tandem: config.tandem.createTandem( 'centerOfMassLineNode' ) } );
     this.addChild( centerOfMassLineNode );
-  
+
     // The marker line, connecting the arrow to the object. The first one is for the shadow so that
     // it is visible on top of the object
     const markerLineShape = new Shape();
@@ -304,15 +304,15 @@ class ISLCObjectNode extends Node {
       lineWidth: 2
     } );
     centerOfMassLineNode.addChild( markerLineShapeTop );
-  
+
     let clickOffset;
-  
+
     let oldPosition = object.positionProperty.get();
     let previousSeparation = model.separationProperty.get();
-  
+
     // reusable utterance to prevent a pile-up of alerts while the object moves
     const separationUtterance = new SelfVoicingUtterance();
-  
+
     // @public - so that events can be forwarded to this DragListener in the
     // case of alternative input
     const selfVoicingDragUtterance = new SelfVoicingUtterance( {
@@ -325,22 +325,22 @@ class ISLCObjectNode extends Node {
       start: event => {
         clickOffset = this.dragNode.globalToParentPoint( event.pointer.point ).x - event.target.x;
         object.isDraggingProperty.value = true;
-  
+
         oldPosition = object.positionProperty.get();
-  
+
         if ( phet.chipper.queryParameters.supportsSelfVoicing ) {
-  
+
           // the initial dragging alert does not use the utterance because it must be assertive and
           // should interrupt any other utterance being spoken
           // special behavior if the hit is from a keyboard
           const interactionHint = selfVoicingLevelsMoveSpheresHintString;
           const distanceDescription = positionDescriber.getSelfVoicingDistanceDescription( config.label, config.otherObjectLabel );
-  
+
           const objectResponse = StringUtils.fillIn( '{{grabbed}}. {{response}}', {
             grabbed: grabbedString,
             response: distanceDescription
           } );
-  
+
           const response = levelSpeakerModel.collectResponses( objectResponse, null, interactionHint );
           const dragStartUtterance = new SelfVoicingUtterance( {
             alert: response
@@ -349,39 +349,39 @@ class ISLCObjectNode extends Node {
         }
       },
       drag: event => {
-  
+
         // drag position relative to the pointer pointer start position and convert to model coordinates
         let x = modelViewTransform.viewToModelX( this.globalToParentPoint( event.pointer.point ).x - clickOffset );
-  
+
         // absolute drag bounds based on model
         // see method descriptions for details
         const xMax = model.getObjectMaxPosition( object );
         const xMin = model.getObjectMinPosition( object );
-  
+
         // apply limitations and update position
         x = Math.max( Math.min( x, xMax ), xMin ); // limited value of x (by boundary) in model coordinates
-  
+
         // snapToGrid method dynamically checks whether to snap or not
         object.positionProperty.set( model.snapToGrid( x ) );
-  
+
         if ( phet.chipper.queryParameters.supportsSelfVoicing ) {
           const distanceDescription = positionDescriber.getSelfVoicingDistanceDescriptionWithoutLabel( config.otherObjectLabel );
-  
+
           // only speak something if the positions have changed during drag
           if ( oldPosition !== object.positionProperty.get() ) {
             const forceChangeText = this.forceDescriber.getVectorChangeText( this.objectModel );
-  
+
             if ( model.separationProperty.get() < previousSeparation ) {
               separationUtterance.alert = 'Closer';
             }
             else {
               separationUtterance.alert = 'Farther away';
             }
-  
+
             phet.joist.sim.selfVoicingUtteranceQueue.addToBack( separationUtterance );
             previousSeparation = model.separationProperty.get();
             oldPosition = object.positionProperty.get();
-  
+
             selfVoicingDragUtterance.alert = levelSpeakerModel.collectResponses( distanceDescription, forceChangeText );
             phet.joist.sim.selfVoicingUtteranceQueue.addToBack( selfVoicingDragUtterance );
           }
@@ -393,31 +393,31 @@ class ISLCObjectNode extends Node {
       tandem: config.tandem.createTandem( 'dragListener' )
     } );
     this.dragNode.addInputListener( this.dragListener );
-  
+
     const boundRedrawForce = this.redrawForce.bind( this );
     model.showForceValuesProperty.lazyLink( boundRedrawForce );
     object.radiusProperty.lazyLink( boundRedrawForce );
     object.valueProperty.lazyLink( boundRedrawForce );
     model.forceProperty.lazyLink( boundRedrawForce );
-  
+
     object.baseColorProperty.link( baseColor => {
       this.updateGradient( baseColor );
       if ( config.attractNegative ) {
         markerLineShapeTop.stroke = getUpdatedFill( object.valueProperty.get() );
       }
     } );
-  
+
     // on reset, no objects are destroyed and properties are set to initial values
     // no need to dispose of any of the below listeners
     object.positionProperty.link( property => {
-  
+
       // position this node and its force arrow with label
       const transformedValue = modelViewTransform.modelToViewX( property );
       this.x = transformedValue;
       this.arrowNode.x = transformedValue;
       this.redrawForce();
     } );
-  
+
     const accessibleSliderOptions = {
       keyboardStep: config.stepSize,
       shiftKeyboardStep: config.snapToNearest,
@@ -434,15 +434,15 @@ class ISLCObjectNode extends Node {
       endDrag: () => {
         object.isDraggingProperty.value = false;
         this.redrawForce();
-  
+
         const distanceDescription = positionDescriber.getSelfVoicingDistanceDescriptionWithoutLabel( config.otherObjectLabel );
-  
+
         // only speak force change if it has changed
         let forceChangeText = '';
         if ( oldPosition !== object.positionProperty.get() ) {
           forceChangeText = this.forceDescriber.getVectorChangeText( this.objectModel );
         }
-  
+
         if ( phet.chipper.queryParameters.supportsSelfVoicing ) {
           const response = levelSpeakerModel.collectResponses( distanceDescription, forceChangeText );
           phet.joist.sim.selfVoicingUtteranceQueue.addToBack( response );
@@ -454,12 +454,12 @@ class ISLCObjectNode extends Node {
         return positionChanged ? forceDescriber.getVectorChangeText( object ) : forceDescriber.getPositionUnchangedAlertText( object );
       },
       a11yCreateAriaValueText: positionDescriber.getPositionAriaValueTextCreator( this.enum ),
-  
+
       // This object's PDOM description also depends on the position of the other object, so include it here.
       a11yDependencies: config.additionalA11yDependencies.concat( object === model.object1 ?
         [ model.object2.positionProperty ] : [ model.object1.positionProperty ] )
     };
-  
+
     // pdom - initialize the accessible slider, which makes this Node act like an accessible range input
     this.initializeAccessibleSlider(
       object.positionProperty,
@@ -467,7 +467,7 @@ class ISLCObjectNode extends Node {
       new BooleanProperty( true ), // always enabled
       accessibleSliderOptions
     );
-  
+
     // for layering purposes, we assume that the ScreenView will add the arrow node and label - by the
     // time the sim is stepped, make sure that the arrows are added to the view
     if ( assert ) {
@@ -475,7 +475,7 @@ class ISLCObjectNode extends Node {
         if ( this.arrowNode.parents.length === 0 ) {
           throw new Error( 'ArrowNode should be added to the view in inverse-square-law-common sim screen view' );
         }
-  
+
         // no need to keep checking
         model.stepEmitter.removeListener( checkForArrowAdded );
       };
