@@ -38,14 +38,14 @@ class ISLCObject {
       rightObjectBoundary: ISLCConstants.RIGHT_OBJECT_BOUNDARY,
       constantRadius: ISLCConstants.CONSTANT_RADIUS, // radius when constant
   
-      valueUnits: 'kilograms',
+      valueUnits: 'kg',
       valueStep: null
     }, options );
   
     // @public
     this.positionProperty = new NumberProperty( initialPosition, {
       tandem: tandem.createTandem( 'positionProperty' ),
-      units: 'meters',
+      units: 'm',
       range: new Range( options.leftObjectBoundary, options.rightObjectBoundary ),
       phetioDocumentation: 'The position of the object along the track, in meters. The origin is in the center between the two objects.',
       phetioStudioControl: false // temporary workaround until we support dynamic ranges in https://github.com/phetsims/gravity-force-lab/issues/172
@@ -71,7 +71,7 @@ class ISLCObject {
       }, {
         tandem: tandem.createTandem( 'radiusProperty' ),
         phetioDocumentation: 'The radius of the object',
-        units: 'meters',
+        units: 'm',
         phetioType: DerivedProperty.DerivedPropertyIO( NumberIO )
       }
     );
