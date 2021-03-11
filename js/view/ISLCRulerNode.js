@@ -71,7 +71,7 @@ class ISLCRulerNode extends Node {
       rulerInset: RULER_INSET,
 
       // {number} If using with snapToNearest, then this number will be rounded by the that value.
-      modelYForCenterJump: .5,
+      modelYForCenterJump: 0.5,
 
       // sound generation
 

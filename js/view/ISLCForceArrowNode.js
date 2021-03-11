@@ -138,7 +138,7 @@ class ISLCForceArrowNode extends Node {
     }, _.pick( options, [ 'headHeight', 'headWidth', 'tailWidth' ] ) ) );
 
     // @private
-    this.arrowTextBackground = new Rectangle( 0, 0, 1000, 1000, { fill: options.backgroundFill, opacity: .3 } );
+    this.arrowTextBackground = new Rectangle( 0, 0, 1000, 1000, { fill: options.backgroundFill, opacity: 0.3 } );
     this.addChild( this.arrowTextBackground );
 
     this.addChild( this.arrowText );
