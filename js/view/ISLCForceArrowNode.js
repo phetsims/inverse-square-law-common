@@ -234,8 +234,8 @@ class ISLCForceArrowNode extends Node {
           formattedString = notationObject.mantissa;
 
           if ( notationObject.exponent !== '0' ) {
-            formattedString += ' ' + MathSymbols.TIMES;
-            formattedString += ' 10<sup>' + notationObject.exponent + '</sup>';
+            formattedString += ` ${MathSymbols.TIMES}`;
+            formattedString += ` 10<sup>${notationObject.exponent}</sup>`;
           }
         }
 
