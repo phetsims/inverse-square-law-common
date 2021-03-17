@@ -205,7 +205,7 @@ class ISLCObjectNode extends Node {
         } );
 
         const response = levelSpeakerModel.collectResponses( objectResponse, null, helpText );
-        phet.joist.sim.selfVoicingUtteranceQueue.addToBack( response );
+        phet.joist.sim.voicingUtteranceQueue.addToBack( response );
       };
 
       // @public (read-only) - wraps the arrow node that receives hit detection
@@ -255,7 +255,7 @@ class ISLCObjectNode extends Node {
 
           if ( phet.chipper.queryParameters.supportsSelfVoicing ) {
             const response = levelSpeakerModel.collectResponses( objectResponse, null, interactionHint );
-            phet.joist.sim.selfVoicingUtteranceQueue.addToBack( response );
+            phet.joist.sim.voicingUtteranceQueue.addToBack( response );
           }
         },
         highlightTarget: this
@@ -345,7 +345,7 @@ class ISLCObjectNode extends Node {
           const dragStartUtterance = new SelfVoicingUtterance( {
             alert: response
           } );
-          phet.joist.sim.selfVoicingUtteranceQueue.addToBack( dragStartUtterance );
+          phet.joist.sim.voicingUtteranceQueue.addToBack( dragStartUtterance );
         }
       },
       drag: event => {
@@ -378,12 +378,12 @@ class ISLCObjectNode extends Node {
               separationUtterance.alert = 'Farther away';
             }
 
-            phet.joist.sim.selfVoicingUtteranceQueue.addToBack( separationUtterance );
+            phet.joist.sim.voicingUtteranceQueue.addToBack( separationUtterance );
             previousSeparation = model.separationProperty.get();
             oldPosition = object.positionProperty.get();
 
             selfVoicingDragUtterance.alert = levelSpeakerModel.collectResponses( distanceDescription, forceChangeText );
-            phet.joist.sim.selfVoicingUtteranceQueue.addToBack( selfVoicingDragUtterance );
+            phet.joist.sim.voicingUtteranceQueue.addToBack( selfVoicingDragUtterance );
           }
         }
       },
@@ -445,7 +445,7 @@ class ISLCObjectNode extends Node {
 
         if ( phet.chipper.queryParameters.supportsSelfVoicing ) {
           const response = levelSpeakerModel.collectResponses( distanceDescription, forceChangeText );
-          phet.joist.sim.selfVoicingUtteranceQueue.addToBack( response );
+          phet.joist.sim.voicingUtteranceQueue.addToBack( response );
         }
       },
       a11yCreateContextResponseAlert: () => {
