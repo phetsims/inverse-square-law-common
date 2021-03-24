@@ -50,7 +50,7 @@ const ISLCQueryParameters = QueryStringMachine.getAll( {
   // to custom strings vs PDOM strings. PDOM strings are generally more verbose and so they may be too much
   // for users. Has no impact if selfVoicing query parameter is set to null. Value is of type number because
   // a convention has been established in the design document that these are called "Version 1" and "Version 2".
-  selfVoicingVersion: {
+  voicingVersion: {
     type: 'number',
     defaultValue: 1,
     validValues: [ 1, 2 ]

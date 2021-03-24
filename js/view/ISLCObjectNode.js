@@ -176,7 +176,7 @@ class ISLCObjectNode extends Node {
       const arrowHitListener = () => {
         let objectResponse;
         if ( model.showForceValuesProperty.get() ) {
-          if ( ISLCQueryParameters.selfVoicingVersion === 1 ) {
+          if ( ISLCQueryParameters.voicingVersion === 1 ) {
 
             // custom self voicing string
             objectResponse = forceDescriber.getSelfVoicingForceVectorMagnitudeText( config.label, config.otherObjectLabel );

@@ -503,7 +503,7 @@ class PositionDescriber extends ISLCDescriber {
     } );
 
     // add "move" to make it sound more like the PDOM
-    if ( ISLCQueryParameters.selfVoicingVersion === 1 ) {
+    if ( ISLCQueryParameters.voicingVersion === 1 ) {
       return objectDescription;
     }
     else {
