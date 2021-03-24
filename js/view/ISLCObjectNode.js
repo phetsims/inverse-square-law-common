@@ -18,7 +18,7 @@ import Shape from '../../../kite/js/Shape.js';
 import merge from '../../../phet-core/js/merge.js';
 import StringUtils from '../../../phetcommon/js/util/StringUtils.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
-import SelfVoicingInputListener from '../../../scenery-phet/js/accessibility/speaker/SelfVoicingInputListener.js';
+import VoicingInputListener from '../../../scenery-phet/js/accessibility/speaker/VoicingInputListener.js';
 import SelfVoicingWrapperNode from '../../../scenery-phet/js/accessibility/speaker/SelfVoicingWrapperNode.js';
 import levelSpeakerModel from '../../../scenery-phet/js/accessibility/speaker/levelSpeakerModel.js';
 import sceneryPhetStrings from '../../../scenery-phet/js/sceneryPhetStrings.js';
@@ -246,7 +246,7 @@ class ISLCObjectNode extends Node {
     if ( phet.chipper.queryParameters.supportsSelfVoicing ) {
       assert && assert( config.objectColor, 'required param, if testing self voicing features' );
 
-      this.addInputListener( new SelfVoicingInputListener( {
+      this.addInputListener( new VoicingInputListener( {
         onFocusIn: () => {
 
           // special behavior if the hit is from a keyboard
