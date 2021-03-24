@@ -30,7 +30,7 @@ import RichText from '../../../scenery/js/nodes/RichText.js';
 import Color from '../../../scenery/js/util/Color.js';
 import AccessibleSlider from '../../../sun/js/accessibility/AccessibleSlider.js';
 import Tandem from '../../../tandem/js/Tandem.js';
-import SelfVoicingUtterance from '../../../utterance-queue/js/SelfVoicingUtterance.js';
+import VoicingUtterance from '../../../utterance-queue/js/VoicingUtterance.js';
 import ISLCConstants from '../ISLCConstants.js';
 import ISLCQueryParameters from '../ISLCQueryParameters.js';
 import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
@@ -311,11 +311,11 @@ class ISLCObjectNode extends Node {
     let previousSeparation = model.separationProperty.get();
 
     // reusable utterance to prevent a pile-up of alerts while the object moves
-    const separationUtterance = new SelfVoicingUtterance();
+    const separationUtterance = new VoicingUtterance();
 
     // @public - so that events can be forwarded to this DragListener in the
     // case of alternative input
-    const selfVoicingDragUtterance = new SelfVoicingUtterance( {
+    const selfVoicingDragUtterance = new VoicingUtterance( {
       alertStableDelay: 500,
       alertMaximumDelay: 1000,
       cancelOther: false
@@ -342,7 +342,7 @@ class ISLCObjectNode extends Node {
           } );
 
           const response = levelSpeakerModel.collectResponses( objectResponse, null, interactionHint );
-          const dragStartUtterance = new SelfVoicingUtterance( {
+          const dragStartUtterance = new VoicingUtterance( {
             alert: response
           } );
           phet.joist.sim.voicingUtteranceQueue.addToBack( dragStartUtterance );
