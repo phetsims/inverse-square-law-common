@@ -19,7 +19,7 @@ import merge from '../../../phet-core/js/merge.js';
 import StringUtils from '../../../phetcommon/js/util/StringUtils.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
 import VoicingInputListener from '../../../scenery-phet/js/accessibility/speaker/VoicingInputListener.js';
-import SelfVoicingWrapperNode from '../../../scenery-phet/js/accessibility/speaker/SelfVoicingWrapperNode.js';
+import VoicingWrapperNode from '../../../scenery-phet/js/accessibility/speaker/VoicingWrapperNode.js';
 import levelSpeakerModel from '../../../scenery-phet/js/accessibility/speaker/levelSpeakerModel.js';
 import sceneryPhetStrings from '../../../scenery-phet/js/sceneryPhetStrings.js';
 import DragListener from '../../../scenery/js/listeners/DragListener.js';
@@ -210,7 +210,7 @@ class ISLCObjectNode extends Node {
 
       // @public (read-only) - wraps the arrow node that receives hit detection
       // anywhere within so that
-      this.selfVoicingWrapper = new SelfVoicingWrapperNode( this.arrowNode, {
+      this.selfVoicingWrapper = new VoicingWrapperNode( this.arrowNode, {
         listenerOptions: {
           onFocusIn: arrowHitListener,
           onPress: arrowHitListener
