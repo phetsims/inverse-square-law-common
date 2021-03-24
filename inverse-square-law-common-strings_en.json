@@ -339,7 +339,7 @@
     "valuePattern": {
       "value": "{{value}}"
     },
-    "selfVoicing": {
+    "voicing": {
       "verboseMassInteractionHintPattern": {
         "value": "Move {{objectLabel}}, {{objectColor}} Sphere"
       },

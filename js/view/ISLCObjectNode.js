@@ -44,15 +44,15 @@ import ISLCPullerNode from './ISLCPullerNode.js';
 import PositionDescriber from './describers/PositionDescriber.js';
 
 // constants
-const selfVoicingPositionChangePatternString = inverseSquareLawCommonStrings.a11y.selfVoicing.positionChangePattern;
-const selfVoicingBiggerString = inverseSquareLawCommonStrings.a11y.selfVoicing.bigger;
-const selfVoicingSmallerString = inverseSquareLawCommonStrings.a11y.selfVoicing.smaller;
-const selfVoicingBriefNewForceNoValuesAlertString = inverseSquareLawCommonStrings.a11y.selfVoicing.briefNewForceNoValuesAlert;
-const selfVoicingBriefNewForceAlertPatternString = inverseSquareLawCommonStrings.a11y.selfVoicing.briefNewForceAlertPattern;
+const selfVoicingPositionChangePatternString = inverseSquareLawCommonStrings.a11y.voicing.positionChangePattern;
+const selfVoicingBiggerString = inverseSquareLawCommonStrings.a11y.voicing.bigger;
+const selfVoicingSmallerString = inverseSquareLawCommonStrings.a11y.voicing.smaller;
+const selfVoicingBriefNewForceNoValuesAlertString = inverseSquareLawCommonStrings.a11y.voicing.briefNewForceNoValuesAlert;
+const selfVoicingBriefNewForceAlertPatternString = inverseSquareLawCommonStrings.a11y.voicing.briefNewForceAlertPattern;
 const summaryInteractionHintPatternString = inverseSquareLawCommonStrings.a11y.screenSummary.summaryInteractionHintPattern;
-const selfVoicingLevelsMoveSpheresHintString = inverseSquareLawCommonStrings.a11y.selfVoicing.levels.moveSpheresHintString;
-const forceArrowSizePatternString = inverseSquareLawCommonStrings.a11y.selfVoicing.levels.forceArrowSizePattern;
-const grabbedString = sceneryPhetStrings.a11y.selfVoicing.grabbedAlert;
+const selfVoicingLevelsMoveSpheresHintString = inverseSquareLawCommonStrings.a11y.voicing.levels.moveSpheresHintString;
+const forceArrowSizePatternString = inverseSquareLawCommonStrings.a11y.voicing.levels.forceArrowSizePattern;
+const grabbedString = sceneryPhetStrings.a11y.voicing.grabbedAlert;
 
 const NEGATIVE_FILL = new Color( '#66f' );
 const POSITIVE_FILL = new Color( '#f66' );

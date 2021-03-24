@@ -63,8 +63,8 @@ const lighlyString = inverseSquareLawCommonStrings.a11y.pullerEffort.lightly;
 const aLittleString = inverseSquareLawCommonStrings.a11y.pullerEffort.aLittle;
 const aTinyBitString = inverseSquareLawCommonStrings.a11y.pullerEffort.aTinyBit;
 
-const selfVoicingLevelsForcePatternString = inverseSquareLawCommonStrings.a11y.selfVoicing.levels.forcePattern;
-const selfVoicingQualitativeVectorPatternString = inverseSquareLawCommonStrings.a11y.selfVoicing.levels.qualitativeVectorPattern;
+const selfVoicingLevelsForcePatternString = inverseSquareLawCommonStrings.a11y.voicing.levels.forcePattern;
+const selfVoicingQualitativeVectorPatternString = inverseSquareLawCommonStrings.a11y.voicing.levels.qualitativeVectorPattern;
 
 const SIZE_STRINGS = [
   tinyString,
