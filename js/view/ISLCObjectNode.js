@@ -172,7 +172,7 @@ class ISLCObjectNode extends Node {
     );
 
     // PROTOTYPE a11y code for self-voicing features
-    if ( phet.chipper.queryParameters.supportsSelfVoicing ) {
+    if ( phet.chipper.queryParameters.supportsVoicing ) {
       const arrowHitListener = () => {
         let objectResponse;
         if ( model.showForceValuesProperty.get() ) {
@@ -243,7 +243,7 @@ class ISLCObjectNode extends Node {
     this.objectCircle = new Circle( radius );
 
     // PROTOTYPE a11y code, to support self-voicing features
-    if ( phet.chipper.queryParameters.supportsSelfVoicing ) {
+    if ( phet.chipper.queryParameters.supportsVoicing ) {
       assert && assert( config.objectColor, 'required param, if testing self voicing features' );
 
       this.addInputListener( new VoicingInputListener( {
@@ -253,7 +253,7 @@ class ISLCObjectNode extends Node {
           const interactionHint = selfVoicingLevelsMoveSpheresHintString;
           const objectResponse = positionDescriber.getSelfVoicingDistanceDescription( config.label, config.otherObjectLabel );
 
-          if ( phet.chipper.queryParameters.supportsSelfVoicing ) {
+          if ( phet.chipper.queryParameters.supportsVoicing ) {
             const response = levelSpeakerModel.collectResponses( objectResponse, null, interactionHint );
             phet.joist.sim.voicingUtteranceQueue.addToBack( response );
           }
@@ -328,7 +328,7 @@ class ISLCObjectNode extends Node {
 
         oldPosition = object.positionProperty.get();
 
-        if ( phet.chipper.queryParameters.supportsSelfVoicing ) {
+        if ( phet.chipper.queryParameters.supportsVoicing ) {
 
           // the initial dragging alert does not use the utterance because it must be assertive and
           // should interrupt any other utterance being spoken
@@ -364,7 +364,7 @@ class ISLCObjectNode extends Node {
         // snapToGrid method dynamically checks whether to snap or not
         object.positionProperty.set( model.snapToGrid( x ) );
 
-        if ( phet.chipper.queryParameters.supportsSelfVoicing ) {
+        if ( phet.chipper.queryParameters.supportsVoicing ) {
           const distanceDescription = positionDescriber.getSelfVoicingDistanceDescriptionWithoutLabel( config.otherObjectLabel );
 
           // only speak something if the positions have changed during drag
@@ -443,7 +443,7 @@ class ISLCObjectNode extends Node {
           forceChangeText = this.forceDescriber.getVectorChangeText( this.objectModel );
         }
 
-        if ( phet.chipper.queryParameters.supportsSelfVoicing ) {
+        if ( phet.chipper.queryParameters.supportsVoicing ) {
           const response = levelSpeakerModel.collectResponses( distanceDescription, forceChangeText );
           phet.joist.sim.voicingUtteranceQueue.addToBack( response );
         }
