@@ -14,7 +14,6 @@ import merge from '../../../../phet-core/js/merge.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import inverseSquareLawCommon from '../../inverseSquareLawCommon.js';
 import inverseSquareLawCommonStrings from '../../inverseSquareLawCommonStrings.js';
-import ISLCQueryParameters from '../../ISLCQueryParameters.js';
 import ISLCObjectEnum from '../ISLCObjectEnum.js';
 import ISLCDescriber from './ISLCDescriber.js';
 
@@ -72,7 +71,6 @@ const trackEndRightString = inverseSquareLawCommonStrings.a11y.position.landmark
 
 const selfVoicingLevelsMassQuantitativePatternString = inverseSquareLawCommonStrings.a11y.voicing.levels.massQuantitativePattern;
 const selfVoicingLevelsMassQualitativePatternString = inverseSquareLawCommonStrings.a11y.voicing.levels.massQualitativePattern;
-const selfVoicingLevelsMoveObjectPatternString = inverseSquareLawCommonStrings.a11y.voicing.levels.moveObjectPattern;
 
 const selfVoicingLevelsMassQuantitativeWithoutLabelPatternString = inverseSquareLawCommonStrings.a11y.voicing.levels.massQuantitativeWithoutLabelPattern;
 const selfVoicingLevelsMassQualitativeWithoutLabelPatternString = inverseSquareLawCommonStrings.a11y.voicing.levels.massQualitativeWithoutLabelPattern;
@@ -502,15 +500,7 @@ class PositionDescriber extends ISLCDescriber {
       otherObject: otherObjectLabel
     } );
 
-    // add "move" to make it sound more like the PDOM
-    if ( ISLCQueryParameters.voicingVersion === 1 ) {
-      return objectDescription;
-    }
-    else {
-      return StringUtils.fillIn( selfVoicingLevelsMoveObjectPatternString, {
-        description: objectDescription
-      } );
-    }
+    return objectDescription;
   }
 
   /**

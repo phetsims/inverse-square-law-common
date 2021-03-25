@@ -32,7 +32,6 @@ import AccessibleSlider from '../../../sun/js/accessibility/AccessibleSlider.js'
 import Tandem from '../../../tandem/js/Tandem.js';
 import VoicingUtterance from '../../../utterance-queue/js/VoicingUtterance.js';
 import ISLCConstants from '../ISLCConstants.js';
-import ISLCQueryParameters from '../ISLCQueryParameters.js';
 import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
 import inverseSquareLawCommonStrings from '../inverseSquareLawCommonStrings.js';
 import cursorSpeakerModel from './CursorSpeakerModel.js';
@@ -176,19 +175,10 @@ class ISLCObjectNode extends Node {
       const arrowHitListener = () => {
         let objectResponse;
         if ( model.showForceValuesProperty.get() ) {
-          if ( ISLCQueryParameters.voicingVersion === 1 ) {
 
-            // custom self voicing string
-            objectResponse = forceDescriber.getSelfVoicingForceVectorMagnitudeText( config.label, config.otherObjectLabel );
-          }
-          else {
+          objectResponse = forceDescriber.getSelfVoicingForceVectorMagnitudeText( config.label, config.otherObjectLabel );
 
-            // string directly from PDOM strings
-            objectResponse = forceDescriber.getForceVectorMagnitudeText( config.label, config.otherObjectLabel );
-          }
-
-          // for the self-voicing (regardless of version), we always want to include arrow size
-          // description in the self-voicing content
+          // for the voicing, we always want to include arrow size
           objectResponse = StringUtils.fillIn( forceArrowSizePatternString, {
             response: objectResponse,
             size: forceDescriber.getVectorSize()
@@ -210,7 +200,7 @@ class ISLCObjectNode extends Node {
 
       // @public (read-only) - wraps the arrow node that receives hit detection
       // anywhere within so that
-      this.selfVoicingWrapper = new VoicingWrapperNode( this.arrowNode, {
+      this.voicingWrapper = new VoicingWrapperNode( this.arrowNode, {
         listenerOptions: {
           onFocusIn: arrowHitListener,
           onPress: arrowHitListener
