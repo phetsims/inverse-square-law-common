@@ -1,9 +1,9 @@
 // Copyright 2020, University of Colorado Boulder
 
 /**
- * A class that makes usually non-focusable things focusable for the self voicing prototype. Text and
+ * A class that makes usually non-focusable things focusable for the voicing prototype. Text and
  * other non-interactive things need to have a place in the navigation order so that they can be discovered
- * and read in the self-voicing feature set.
+ * and read in the voicing feature set.
  *
  * @author Jesse Greenberg
  */
@@ -45,13 +45,13 @@ class FocusSpeaker {
    * @param targetNode
    */
   makeTargetFocusable( targetNode ) {
-    assert && assert( targetNode.tagName === null, 'target should have no accessible content before becoming focusable for self-voicing' );
+    assert && assert( targetNode.tagName === null, 'target should have no accessible content before becoming focusable for voicing' );
     assert && assert( targetNode.focusable === false, 'target should not be initially focusable' );
 
     targetNode.tagName = 'div';
 
     // these nodes have a different highlight managed by SpeakerHighlighter, which indicates what
-    // has self-voicing content and when the speaker is talking
+    // has voicing content and when the speaker is talking
     targetNode.focusHighlight = 'invisible';
     targetNode.focusable = true;
   }

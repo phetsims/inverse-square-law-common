@@ -69,11 +69,11 @@ const lastStopLeftString = inverseSquareLawCommonStrings.a11y.position.landmarks
 const trackEndLeftString = inverseSquareLawCommonStrings.a11y.position.landmarks.trackEndLeft;
 const trackEndRightString = inverseSquareLawCommonStrings.a11y.position.landmarks.trackEndRight;
 
-const selfVoicingLevelsMassQuantitativePatternString = inverseSquareLawCommonStrings.a11y.voicing.levels.massQuantitativePattern;
-const selfVoicingLevelsMassQualitativePatternString = inverseSquareLawCommonStrings.a11y.voicing.levels.massQualitativePattern;
+const voicingLevelsMassQuantitativePatternString = inverseSquareLawCommonStrings.a11y.voicing.levels.massQuantitativePattern;
+const voicingLevelsMassQualitativePatternString = inverseSquareLawCommonStrings.a11y.voicing.levels.massQualitativePattern;
 
-const selfVoicingLevelsMassQuantitativeWithoutLabelPatternString = inverseSquareLawCommonStrings.a11y.voicing.levels.massQuantitativeWithoutLabelPattern;
-const selfVoicingLevelsMassQualitativeWithoutLabelPatternString = inverseSquareLawCommonStrings.a11y.voicing.levels.massQualitativeWithoutLabelPattern;
+const voicingLevelsMassQuantitativeWithoutLabelPatternString = inverseSquareLawCommonStrings.a11y.voicing.levels.massQuantitativeWithoutLabelPattern;
+const voicingLevelsMassQualitativeWithoutLabelPatternString = inverseSquareLawCommonStrings.a11y.voicing.levels.massQualitativeWithoutLabelPattern;
 
 const RELATIVE_DISTANCE_STRINGS = [
   farthestFromString,
@@ -482,7 +482,7 @@ class PositionDescriber extends ISLCDescriber {
   }
 
   /**
-   * Returns a string to be used in the prototype self-voicing context. Returns something like
+   * Returns a string to be used in the prototype voicing context. Returns something like
    * "mass 1, 4 kilometers from mass 1" (distances shown) or
    * "mass 1, close to mass 1" (distances hidden) or
    * "Move mass 1, 4 kilometers from mass 2 (sounding more like the PDOM, "version 2")
@@ -490,8 +490,8 @@ class PositionDescriber extends ISLCDescriber {
    * @param {string} otherObjectLabel
    * @public
    */
-  getSelfVoicingDistanceDescription( objectLabel, otherObjectLabel ) {
-    const patternString = this.useQuantitativeDistance ? selfVoicingLevelsMassQuantitativePatternString : selfVoicingLevelsMassQualitativePatternString;
+  getVoicingDistanceDescription( objectLabel, otherObjectLabel ) {
+    const patternString = this.useQuantitativeDistance ? voicingLevelsMassQuantitativePatternString : voicingLevelsMassQualitativePatternString;
     const distanceDescription = this.useQuantitativeDistance ? this.getDistanceAndUnits() : this.getQualitativeRelativeDistanceRegion();
 
     const objectDescription = StringUtils.fillIn( patternString, {
@@ -504,8 +504,8 @@ class PositionDescriber extends ISLCDescriber {
   }
 
   /**
-   * Returns a string to be used in the prototype self-voicing content, describing the distance betwseen objects. Similar
-   * to getSelfVoicingDistanceDescription, but does not inlucde the label to reduce verbocity. Returns something like
+   * Returns a string to be used in the prototype voicing content, describing the distance betwseen objects. Similar
+   * to getVoicingDistanceDescription, but does not inlucde the label to reduce verbocity. Returns something like
    *
    * "4 kilometers from mass 1" or
    * "close to mass 1"
@@ -514,8 +514,8 @@ class PositionDescriber extends ISLCDescriber {
    * @param {String} otherObjectLabel
    * @returns {string}
    */
-  getSelfVoicingDistanceDescriptionWithoutLabel( otherObjectLabel ) {
-    const patternString = this.useQuantitativeDistance ? selfVoicingLevelsMassQuantitativeWithoutLabelPatternString : selfVoicingLevelsMassQualitativeWithoutLabelPatternString;
+  getVoicingDistanceDescriptionWithoutLabel( otherObjectLabel ) {
+    const patternString = this.useQuantitativeDistance ? voicingLevelsMassQuantitativeWithoutLabelPatternString : voicingLevelsMassQualitativeWithoutLabelPatternString;
     const distanceDescription = this.useQuantitativeDistance ? this.getDistanceAndUnits() : this.getQualitativeRelativeDistanceRegion();
 
     return StringUtils.fillIn( patternString, {

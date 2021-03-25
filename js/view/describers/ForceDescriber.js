@@ -63,8 +63,8 @@ const lighlyString = inverseSquareLawCommonStrings.a11y.pullerEffort.lightly;
 const aLittleString = inverseSquareLawCommonStrings.a11y.pullerEffort.aLittle;
 const aTinyBitString = inverseSquareLawCommonStrings.a11y.pullerEffort.aTinyBit;
 
-const selfVoicingLevelsForcePatternString = inverseSquareLawCommonStrings.a11y.voicing.levels.forcePattern;
-const selfVoicingQualitativeVectorPatternString = inverseSquareLawCommonStrings.a11y.voicing.levels.qualitativeVectorPattern;
+const voicingLevelsForcePatternString = inverseSquareLawCommonStrings.a11y.voicing.levels.forcePattern;
+const voicingQualitativeVectorPatternString = inverseSquareLawCommonStrings.a11y.voicing.levels.qualitativeVectorPattern;
 
 const SIZE_STRINGS = [
   tinyString,
@@ -222,7 +222,7 @@ class ForceDescriber extends ISLCDescriber {
   }
 
   /**
-   * Get a string that describes the force vectors, for the self voicing prototype - not used yet for
+   * Get a string that describes the force vectors, for the voicing prototype - not used yet for
    * production code.
    * @public
    *
@@ -231,7 +231,7 @@ class ForceDescriber extends ISLCDescriber {
    * @returns {string}
    */
   getSelfVoicingForceVectorMagnitudeText( thisObjectLabel, otherObjectLabel ) {
-    return StringUtils.fillIn( selfVoicingLevelsForcePatternString, {
+    return StringUtils.fillIn( voicingLevelsForcePatternString, {
       object1: thisObjectLabel,
       object2: otherObjectLabel,
       value: this.getFormattedForce()
@@ -239,7 +239,7 @@ class ForceDescriber extends ISLCDescriber {
   }
 
   /**
-   * For the self voicing prototype - returns a string that describes the size of the force arrow and its direction.
+   * For the voicing prototype - returns a string that describes the size of the force arrow and its direction.
    * Returns something like
    * "Force arrow is very small, and points directly at mass 1.
    *
@@ -248,7 +248,7 @@ class ForceDescriber extends ISLCDescriber {
    * @returns {string}
    */
   getSelfVoicingQualitativeForceVectorText( otherObjectLabel ) {
-    return StringUtils.fillIn( selfVoicingQualitativeVectorPatternString, {
+    return StringUtils.fillIn( voicingQualitativeVectorPatternString, {
       size: this.getVectorSize(),
       otherObject: otherObjectLabel
     } );

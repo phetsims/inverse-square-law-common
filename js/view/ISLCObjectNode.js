@@ -34,7 +34,6 @@ import VoicingUtterance from '../../../utterance-queue/js/VoicingUtterance.js';
 import ISLCConstants from '../ISLCConstants.js';
 import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
 import inverseSquareLawCommonStrings from '../inverseSquareLawCommonStrings.js';
-import cursorSpeakerModel from './CursorSpeakerModel.js';
 import DefaultDirection from './DefaultDirection.js';
 import ISLCAlertManager from './ISLCAlertManager.js';
 import ISLCForceArrowNode from './ISLCForceArrowNode.js';
@@ -43,13 +42,8 @@ import ISLCPullerNode from './ISLCPullerNode.js';
 import PositionDescriber from './describers/PositionDescriber.js';
 
 // constants
-const selfVoicingPositionChangePatternString = inverseSquareLawCommonStrings.a11y.voicing.positionChangePattern;
-const selfVoicingBiggerString = inverseSquareLawCommonStrings.a11y.voicing.bigger;
-const selfVoicingSmallerString = inverseSquareLawCommonStrings.a11y.voicing.smaller;
-const selfVoicingBriefNewForceNoValuesAlertString = inverseSquareLawCommonStrings.a11y.voicing.briefNewForceNoValuesAlert;
-const selfVoicingBriefNewForceAlertPatternString = inverseSquareLawCommonStrings.a11y.voicing.briefNewForceAlertPattern;
 const summaryInteractionHintPatternString = inverseSquareLawCommonStrings.a11y.screenSummary.summaryInteractionHintPattern;
-const selfVoicingLevelsMoveSpheresHintString = inverseSquareLawCommonStrings.a11y.voicing.levels.moveSpheresHintString;
+const voicingLevelsMoveSpheresHintString = inverseSquareLawCommonStrings.a11y.voicing.levels.moveSpheresHintString;
 const forceArrowSizePatternString = inverseSquareLawCommonStrings.a11y.voicing.levels.forceArrowSizePattern;
 const grabbedString = sceneryPhetStrings.a11y.voicing.grabbedAlert;
 
@@ -90,7 +84,7 @@ class ISLCObjectNode extends Node {
 
       forceArrowHeight: 150, // height of arrow in view coordinates
 
-      objectColor: null, // {{string}} @required - description of sphere for self-voicing content
+      objectColor: null, // {{string}} @required - description of sphere for voicing content
 
       // phet-io
       tandem: Tandem.REQUIRED,
@@ -170,7 +164,7 @@ class ISLCObjectNode extends Node {
       config.arrowNodeOptions
     );
 
-    // PROTOTYPE a11y code for self-voicing features
+    // PROTOTYPE a11y code for voicing features
     if ( phet.chipper.queryParameters.supportsVoicing ) {
       const arrowHitListener = () => {
         let objectResponse;
@@ -186,7 +180,7 @@ class ISLCObjectNode extends Node {
         }
         else {
 
-          // custom response for self voicing when force values are hidden
+          // custom response for voicing when force values are hidden
           objectResponse = forceDescriber.getSelfVoicingQualitativeForceVectorText( config.otherObjectLabel );
         }
 
@@ -232,16 +226,16 @@ class ISLCObjectNode extends Node {
     // @protected - the object
     this.objectCircle = new Circle( radius );
 
-    // PROTOTYPE a11y code, to support self-voicing features
+    // PROTOTYPE a11y code, to support voicing features
     if ( phet.chipper.queryParameters.supportsVoicing ) {
-      assert && assert( config.objectColor, 'required param, if testing self voicing features' );
+      assert && assert( config.objectColor, 'required param, if testing voicing features' );
 
       this.addInputListener( new VoicingInputListener( {
         onFocusIn: () => {
 
           // special behavior if the hit is from a keyboard
-          const interactionHint = selfVoicingLevelsMoveSpheresHintString;
-          const objectResponse = positionDescriber.getSelfVoicingDistanceDescription( config.label, config.otherObjectLabel );
+          const interactionHint = voicingLevelsMoveSpheresHintString;
+          const objectResponse = positionDescriber.getVoicingDistanceDescription( config.label, config.otherObjectLabel );
 
           if ( phet.chipper.queryParameters.supportsVoicing ) {
             const response = levelSpeakerModel.collectResponses( objectResponse, null, interactionHint );
@@ -305,7 +299,7 @@ class ISLCObjectNode extends Node {
 
     // @public - so that events can be forwarded to this DragListener in the
     // case of alternative input
-    const selfVoicingDragUtterance = new VoicingUtterance( {
+    const voicingDragUtterance = new VoicingUtterance( {
       alertStableDelay: 500,
       alertMaximumDelay: 1000,
       cancelOther: false
@@ -323,8 +317,8 @@ class ISLCObjectNode extends Node {
           // the initial dragging alert does not use the utterance because it must be assertive and
           // should interrupt any other utterance being spoken
           // special behavior if the hit is from a keyboard
-          const interactionHint = selfVoicingLevelsMoveSpheresHintString;
-          const distanceDescription = positionDescriber.getSelfVoicingDistanceDescription( config.label, config.otherObjectLabel );
+          const interactionHint = voicingLevelsMoveSpheresHintString;
+          const distanceDescription = positionDescriber.getVoicingDistanceDescription( config.label, config.otherObjectLabel );
 
           const objectResponse = StringUtils.fillIn( '{{grabbed}}. {{response}}', {
             grabbed: grabbedString,
@@ -355,7 +349,7 @@ class ISLCObjectNode extends Node {
         object.positionProperty.set( model.snapToGrid( x ) );
 
         if ( phet.chipper.queryParameters.supportsVoicing ) {
-          const distanceDescription = positionDescriber.getSelfVoicingDistanceDescriptionWithoutLabel( config.otherObjectLabel );
+          const distanceDescription = positionDescriber.getVoicingDistanceDescriptionWithoutLabel( config.otherObjectLabel );
 
           // only speak something if the positions have changed during drag
           if ( oldPosition !== object.positionProperty.get() ) {
@@ -372,8 +366,8 @@ class ISLCObjectNode extends Node {
             previousSeparation = model.separationProperty.get();
             oldPosition = object.positionProperty.get();
 
-            selfVoicingDragUtterance.alert = levelSpeakerModel.collectResponses( distanceDescription, forceChangeText );
-            phet.joist.sim.voicingUtteranceQueue.addToBack( selfVoicingDragUtterance );
+            voicingDragUtterance.alert = levelSpeakerModel.collectResponses( distanceDescription, forceChangeText );
+            phet.joist.sim.voicingUtteranceQueue.addToBack( voicingDragUtterance );
           }
         }
       },
@@ -425,7 +419,7 @@ class ISLCObjectNode extends Node {
         object.isDraggingProperty.value = false;
         this.redrawForce();
 
-        const distanceDescription = positionDescriber.getSelfVoicingDistanceDescriptionWithoutLabel( config.otherObjectLabel );
+        const distanceDescription = positionDescriber.getVoicingDistanceDescriptionWithoutLabel( config.otherObjectLabel );
 
         // only speak force change if it has changed
         let forceChangeText = '';
@@ -520,48 +514,6 @@ class ISLCObjectNode extends Node {
 
     // update puller node visibility
     this.pullerNode.setPull( this.model.forceProperty.get(), this.objectCircle.width / 2 );
-  }
-
-  /**
-   * PROTOTYPE CODE: For the self voicing feature set, get alerts that describe the change in mass position. Only to be read when
-   * "interactive" mode is enabled.
-   * @private
-   *
-   * @param {number} newPosition
-   * @param {number} oldPosition
-   * @param {number} newForce
-   * @param {number} oldForce
-   * @returns {string}
-   */
-  getSelfVoicingPositionChangeAlert( newPosition, oldPosition, newForce, oldForce ) {
-    let vectorChangeText;
-
-    if ( cursorSpeakerModel.getInteractiveModeVerbose() ) {
-
-      // just the aria-live alert in verbose mode
-      vectorChangeText = newPosition !== oldPosition ? this.forceDescriber.getVectorChangeText( this.objectModel ) : this.forceDescriber.getPositionUnchangedAlertText( this.objectModel );
-    }
-    else if ( cursorSpeakerModel.getInteractiveModeBrief() ) {
-
-      // custom alert if brief mode, description dependent on whether values are shown
-      const changeString = newForce - oldForce > 0 ? selfVoicingBiggerString : selfVoicingSmallerString;
-      if ( this.model.showForceValuesProperty.get() ) {
-        vectorChangeText = StringUtils.fillIn( selfVoicingBriefNewForceAlertPatternString, {
-          change: changeString,
-          value: this.forceDescriber.getFormattedForce()
-        } );
-      }
-      else {
-        vectorChangeText = StringUtils.fillIn( selfVoicingBriefNewForceNoValuesAlertString, {
-          change: changeString
-        } );
-      }
-    }
-
-    return StringUtils.fillIn( selfVoicingPositionChangePatternString, {
-      valueText: this.getAriaValueText(),
-      vectorText: vectorChangeText
-    } );
   }
 
   /**
