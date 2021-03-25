@@ -170,7 +170,7 @@ class ISLCObjectNode extends Node {
         let objectResponse;
         if ( model.showForceValuesProperty.get() ) {
 
-          objectResponse = forceDescriber.getSelfVoicingForceVectorMagnitudeText( config.label, config.otherObjectLabel );
+          objectResponse = forceDescriber.getVoicingForceVectorMagnitudeText( config.label, config.otherObjectLabel );
 
           // for the voicing, we always want to include arrow size
           objectResponse = StringUtils.fillIn( forceArrowSizePatternString, {
@@ -181,7 +181,7 @@ class ISLCObjectNode extends Node {
         else {
 
           // custom response for voicing when force values are hidden
-          objectResponse = forceDescriber.getSelfVoicingQualitativeForceVectorText( config.otherObjectLabel );
+          objectResponse = forceDescriber.getVoicingQualitativeForceVectorText( config.otherObjectLabel );
         }
 
         const helpText = StringUtils.fillIn( summaryInteractionHintPatternString, {

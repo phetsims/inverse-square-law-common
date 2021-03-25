@@ -230,7 +230,7 @@ class ForceDescriber extends ISLCDescriber {
    * @param {string} otherObjectLabel
    * @returns {string}
    */
-  getSelfVoicingForceVectorMagnitudeText( thisObjectLabel, otherObjectLabel ) {
+  getVoicingForceVectorMagnitudeText( thisObjectLabel, otherObjectLabel ) {
     return StringUtils.fillIn( voicingLevelsForcePatternString, {
       object1: thisObjectLabel,
       object2: otherObjectLabel,
@@ -247,7 +247,7 @@ class ForceDescriber extends ISLCDescriber {
    * @param otherObjectLabel
    * @returns {string}
    */
-  getSelfVoicingQualitativeForceVectorText( otherObjectLabel ) {
+  getVoicingQualitativeForceVectorText( otherObjectLabel ) {
     return StringUtils.fillIn( voicingQualitativeVectorPatternString, {
       size: this.getVectorSize(),
       otherObject: otherObjectLabel
