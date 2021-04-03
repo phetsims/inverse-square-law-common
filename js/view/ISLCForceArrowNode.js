@@ -9,12 +9,16 @@
 
 import LinearFunction from '../../../dot/js/LinearFunction.js';
 import Utils from '../../../dot/js/Utils.js';
+import Shape from '../../../kite/js/Shape.js';
 import merge from '../../../phet-core/js/merge.js';
 import StringUtils from '../../../phetcommon/js/util/StringUtils.js';
+import VoicingHighlight from '../../../scenery-phet/js/accessibility/speaker/VoicingHighlight.js';
 import ArrowNode from '../../../scenery-phet/js/ArrowNode.js';
 import MathSymbols from '../../../scenery-phet/js/MathSymbols.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
 import ScientificNotationNode from '../../../scenery-phet/js/ScientificNotationNode.js';
+import Voicing from '../../../scenery/js/accessibility/speaker/Voicing.js';
+import webSpeaker from '../../../scenery/js/accessibility/speaker/webSpeaker.js';
 import Node from '../../../scenery/js/nodes/Node.js';
 import Rectangle from '../../../scenery/js/nodes/Rectangle.js';
 import RichText from '../../../scenery/js/nodes/RichText.js';
@@ -144,6 +148,38 @@ class ISLCForceArrowNode extends Node {
     this.addChild( this.arrowText );
     this.addChild( this.arrow );
 
+    const highlight = new VoicingHighlight( this );
+    this.initializeVoicing( {
+      voicingHighlight: highlight,
+      voicingTagName: 'button',
+      voicingFocusableProperty: webSpeaker.enabledProperty,
+      voicingCreateObjectResponse: event => {
+        let string = '';
+        if ( event.type === 'focus' ) {
+          string = 'focus object response';
+        }
+        else {
+          string = 'click or down action on the thing';
+        }
+
+        return string;
+      },
+      voicingCreateHintResponse: event => {
+
+      },
+      voicingCreateContextResponse: event => {
+
+      },
+      voicingCreateOverrideResponse: event => {
+
+      }
+    } );
+    this.focusHighlight = highlight;
+
+    this.localBoundsProperty.link( localBounds => {
+      this.voicingHitShape = Shape.bounds( localBounds );
+    } );
+
     this.y = 0;
   }
 
@@ -260,4 +296,5 @@ class ISLCForceArrowNode extends Node {
 
 inverseSquareLawCommon.register( 'ISLCForceArrowNode', ISLCForceArrowNode );
 
+Voicing.compose( ISLCForceArrowNode );
 export default ISLCForceArrowNode;
