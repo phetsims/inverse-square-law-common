@@ -17,9 +17,9 @@ import Utils from '../../../dot/js/Utils.js';
 import Shape from '../../../kite/js/Shape.js';
 import merge from '../../../phet-core/js/merge.js';
 import StringUtils from '../../../phetcommon/js/util/StringUtils.js';
-import PhetFont from '../../../scenery-phet/js/PhetFont.js';
-import VoicingInputListener from '../../../scenery-phet/js/accessibility/speaker/VoicingInputListener.js';
 import levelSpeakerModel from '../../../scenery-phet/js/accessibility/speaker/levelSpeakerModel.js';
+import VoicingInputListener from '../../../scenery-phet/js/accessibility/speaker/VoicingInputListener.js';
+import PhetFont from '../../../scenery-phet/js/PhetFont.js';
 import sceneryPhetStrings from '../../../scenery-phet/js/sceneryPhetStrings.js';
 import DragListener from '../../../scenery/js/listeners/DragListener.js';
 import Circle from '../../../scenery/js/nodes/Circle.js';
@@ -30,20 +30,18 @@ import Color from '../../../scenery/js/util/Color.js';
 import AccessibleSlider from '../../../sun/js/accessibility/AccessibleSlider.js';
 import Tandem from '../../../tandem/js/Tandem.js';
 import VoicingUtterance from '../../../utterance-queue/js/VoicingUtterance.js';
-import ISLCConstants from '../ISLCConstants.js';
 import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
 import inverseSquareLawCommonStrings from '../inverseSquareLawCommonStrings.js';
+import ISLCConstants from '../ISLCConstants.js';
 import DefaultDirection from './DefaultDirection.js';
+import PositionDescriber from './describers/PositionDescriber.js';
 import ISLCAlertManager from './ISLCAlertManager.js';
 import ISLCForceArrowNode from './ISLCForceArrowNode.js';
 import ISLCObjectEnum from './ISLCObjectEnum.js';
 import ISLCPullerNode from './ISLCPullerNode.js';
-import PositionDescriber from './describers/PositionDescriber.js';
 
 // constants
-const summaryInteractionHintPatternString = inverseSquareLawCommonStrings.a11y.screenSummary.summaryInteractionHintPattern;
 const voicingLevelsMoveSpheresHintString = inverseSquareLawCommonStrings.a11y.voicing.levels.moveSpheresHintString;
-const forceArrowSizePatternString = inverseSquareLawCommonStrings.a11y.voicing.levels.forceArrowSizePattern;
 const grabbedString = sceneryPhetStrings.a11y.voicing.grabbedAlert;
 
 const NEGATIVE_FILL = new Color( '#66f' );
@@ -162,35 +160,6 @@ class ISLCObjectNode extends Node {
       config.tandem.createTandem( 'forceDisplayNode' ),
       config.arrowNodeOptions
     );
-
-    // PROTOTYPE a11y code for voicing features
-    if ( phet.chipper.queryParameters.supportsVoicing ) {
-      const arrowHitListener = () => {
-        let objectResponse;
-        if ( model.showForceValuesProperty.get() ) {
-
-          objectResponse = forceDescriber.getVoicingForceVectorMagnitudeText( config.label, config.otherObjectLabel );
-
-          // for the voicing, we always want to include arrow size
-          objectResponse = StringUtils.fillIn( forceArrowSizePatternString, {
-            response: objectResponse,
-            size: forceDescriber.getVectorSize()
-          } );
-        }
-        else {
-
-          // custom response for voicing when force values are hidden
-          objectResponse = forceDescriber.getVoicingQualitativeForceVectorText( config.otherObjectLabel );
-        }
-
-        const helpText = StringUtils.fillIn( summaryInteractionHintPatternString, {
-          massOrCharge: 'mass'
-        } );
-
-        const response = levelSpeakerModel.collectResponses( objectResponse, null, helpText );
-        phet.joist.sim.voicingUtteranceQueue.addToBack( response );
-      };
-    }
 
     // set y position for the arrow
     this.arrowNode.y = config.y - config.forceArrowHeight;
