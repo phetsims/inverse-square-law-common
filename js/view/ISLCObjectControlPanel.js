@@ -108,7 +108,7 @@ class ISLCObjectControlPanel extends ISLCPanel {
       },
 
       // phet-io
-      tandem: tandem.createTandem( 'numberControl' )
+      tandem: tandem.createTandem( ISLCObjectControlPanel.NUMBER_CONTROL_TANDEM_NAME )
     }, options.numberControlOptions );
 
     for ( let i = 0; i < options.additionalTicks.length; i++ ) {
@@ -139,6 +139,9 @@ class ISLCObjectControlPanel extends ISLCPanel {
     } );
   }
 }
+
+// @public
+ISLCObjectControlPanel.NUMBER_CONTROL_TANDEM_NAME = 'numberControl';
 
 inverseSquareLawCommon.register( 'ISLCObjectControlPanel', ISLCObjectControlPanel );
 export default ISLCObjectControlPanel;
