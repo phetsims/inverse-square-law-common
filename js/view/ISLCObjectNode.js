@@ -21,7 +21,7 @@ import levelSpeakerModel from '../../../scenery-phet/js/accessibility/speaker/le
 import VoicingInputListener from '../../../scenery-phet/js/accessibility/speaker/VoicingInputListener.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
 import sceneryPhetStrings from '../../../scenery-phet/js/sceneryPhetStrings.js';
-import voicingUtteranceQueue from '../../../scenery/js/accessibility/speaker/voicingUtteranceQueue.js';
+import voicingUtteranceQueue from '../../../scenery/js/accessibility/voicing/voicingUtteranceQueue.js';
 import DragListener from '../../../scenery/js/listeners/DragListener.js';
 import Circle from '../../../scenery/js/nodes/Circle.js';
 import Node from '../../../scenery/js/nodes/Node.js';
