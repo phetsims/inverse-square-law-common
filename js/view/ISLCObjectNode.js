@@ -16,12 +16,7 @@ import Range from '../../../dot/js/Range.js';
 import Utils from '../../../dot/js/Utils.js';
 import Shape from '../../../kite/js/Shape.js';
 import merge from '../../../phet-core/js/merge.js';
-import StringUtils from '../../../phetcommon/js/util/StringUtils.js';
-import levelSpeakerModel from '../../../scenery-phet/js/accessibility/speaker/levelSpeakerModel.js';
-import VoicingInputListener from '../../../scenery-phet/js/accessibility/speaker/VoicingInputListener.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
-import sceneryPhetStrings from '../../../scenery-phet/js/sceneryPhetStrings.js';
-import voicingUtteranceQueue from '../../../scenery/js/accessibility/voicing/voicingUtteranceQueue.js';
 import DragListener from '../../../scenery/js/listeners/DragListener.js';
 import Circle from '../../../scenery/js/nodes/Circle.js';
 import Node from '../../../scenery/js/nodes/Node.js';
@@ -30,9 +25,7 @@ import RichText from '../../../scenery/js/nodes/RichText.js';
 import Color from '../../../scenery/js/util/Color.js';
 import AccessibleSlider from '../../../sun/js/accessibility/AccessibleSlider.js';
 import Tandem from '../../../tandem/js/Tandem.js';
-import VoicingUtterance from '../../../utterance-queue/js/VoicingUtterance.js';
 import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
-import inverseSquareLawCommonStrings from '../inverseSquareLawCommonStrings.js';
 import ISLCConstants from '../ISLCConstants.js';
 import DefaultDirection from './DefaultDirection.js';
 import PositionDescriber from './describers/PositionDescriber.js';
@@ -40,10 +33,6 @@ import ISLCAlertManager from './ISLCAlertManager.js';
 import ISLCForceArrowNode from './ISLCForceArrowNode.js';
 import ISLCObjectEnum from './ISLCObjectEnum.js';
 import ISLCPullerNode from './ISLCPullerNode.js';
-
-// constants
-const voicingLevelsMoveSpheresHintString = inverseSquareLawCommonStrings.a11y.voicing.levels.moveSpheresHintString;
-const grabbedString = sceneryPhetStrings.a11y.voicing.grabbedAlert;
 
 const NEGATIVE_FILL = new Color( '#66f' );
 const POSITIVE_FILL = new Color( '#f66' );
@@ -186,26 +175,6 @@ class ISLCObjectNode extends Node {
     // @protected - the object
     this.objectCircle = new Circle( radius );
 
-    // PROTOTYPE a11y code, to support voicing features
-    if ( phet.chipper.queryParameters.supportsVoicing ) {
-      assert && assert( config.objectColor, 'required param, if testing voicing features' );
-
-      this.addInputListener( new VoicingInputListener( {
-        onFocusIn: () => {
-
-          // special behavior if the hit is from a keyboard
-          const interactionHint = voicingLevelsMoveSpheresHintString;
-          const objectResponse = positionDescriber.getVoicingDistanceDescription( config.label, config.otherObjectLabel );
-
-          if ( phet.chipper.queryParameters.supportsVoicing ) {
-            const response = levelSpeakerModel.collectResponses( objectResponse, null, interactionHint );
-            voicingUtteranceQueue.addToBack( response );
-          }
-        },
-        highlightTarget: this
-      } ) );
-    }
-
     this.dragNode.addChild( this.pullerNode );
     this.dragNode.addChild( this.objectCircle );
 
@@ -252,18 +221,7 @@ class ISLCObjectNode extends Node {
     let clickOffset;
 
     let oldPosition = object.positionProperty.get();
-    let previousSeparation = model.separationProperty.get();
 
-    // reusable utterance to prevent a pile-up of alerts while the object moves
-    const separationUtterance = new VoicingUtterance();
-
-    // @public - so that events can be forwarded to this DragListener in the
-    // case of alternative input
-    const voicingDragUtterance = new VoicingUtterance( {
-      alertStableDelay: 500,
-      alertMaximumDelay: 1000,
-      cancelOther: false
-    } );
     this.dragListener = new DragListener( {
       allowTouchSnag: true,
       start: event => {
@@ -271,26 +229,6 @@ class ISLCObjectNode extends Node {
         object.isDraggingProperty.value = true;
 
         oldPosition = object.positionProperty.get();
-
-        if ( phet.chipper.queryParameters.supportsVoicing ) {
-
-          // the initial dragging alert does not use the utterance because it must be assertive and
-          // should interrupt any other utterance being spoken
-          // special behavior if the hit is from a keyboard
-          const interactionHint = voicingLevelsMoveSpheresHintString;
-          const distanceDescription = positionDescriber.getVoicingDistanceDescription( config.label, config.otherObjectLabel );
-
-          const objectResponse = StringUtils.fillIn( '{{grabbed}}. {{response}}', {
-            grabbed: grabbedString,
-            response: distanceDescription
-          } );
-
-          const response = levelSpeakerModel.collectResponses( objectResponse, null, interactionHint );
-          const dragStartUtterance = new VoicingUtterance( {
-            alert: response
-          } );
-          voicingUtteranceQueue.addToBack( dragStartUtterance );
-        }
       },
       drag: event => {
 
@@ -307,29 +245,6 @@ class ISLCObjectNode extends Node {
 
         // snapToGrid method dynamically checks whether to snap or not
         object.positionProperty.set( model.snapToGrid( x ) );
-
-        if ( phet.chipper.queryParameters.supportsVoicing ) {
-          const distanceDescription = positionDescriber.getVoicingDistanceDescriptionWithoutLabel( config.otherObjectLabel );
-
-          // only speak something if the positions have changed during drag
-          if ( oldPosition !== object.positionProperty.get() ) {
-            const forceChangeText = this.forceDescriber.getVectorChangeText( this.objectModel );
-
-            if ( model.separationProperty.get() < previousSeparation ) {
-              separationUtterance.alert = 'Closer';
-            }
-            else {
-              separationUtterance.alert = 'Farther away';
-            }
-
-            voicingUtteranceQueue.addToBack( separationUtterance );
-            previousSeparation = model.separationProperty.get();
-            oldPosition = object.positionProperty.get();
-
-            voicingDragUtterance.alert = levelSpeakerModel.collectResponses( distanceDescription, forceChangeText );
-            voicingUtteranceQueue.addToBack( voicingDragUtterance );
-          }
-        }
       },
       end: () => {
         object.isDraggingProperty.value = false;
@@ -378,19 +293,6 @@ class ISLCObjectNode extends Node {
       endDrag: () => {
         object.isDraggingProperty.value = false;
         this.redrawForce();
-
-        const distanceDescription = positionDescriber.getVoicingDistanceDescriptionWithoutLabel( config.otherObjectLabel );
-
-        // only speak force change if it has changed
-        let forceChangeText = '';
-        if ( oldPosition !== object.positionProperty.get() ) {
-          forceChangeText = this.forceDescriber.getVectorChangeText( this.objectModel );
-        }
-
-        if ( phet.chipper.queryParameters.supportsVoicing ) {
-          const response = levelSpeakerModel.collectResponses( distanceDescription, forceChangeText );
-          voicingUtteranceQueue.addToBack( response );
-        }
       },
       a11yCreateContextResponseAlert: () => {
         const newPosition = object.positionProperty.get();
