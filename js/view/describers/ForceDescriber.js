@@ -63,8 +63,9 @@ const lighlyString = inverseSquareLawCommonStrings.a11y.pullerEffort.lightly;
 const aLittleString = inverseSquareLawCommonStrings.a11y.pullerEffort.aLittle;
 const aTinyBitString = inverseSquareLawCommonStrings.a11y.pullerEffort.aTinyBit;
 
-const voicingLevelsForcePatternString = inverseSquareLawCommonStrings.a11y.voicing.levels.forcePattern;
-const voicingQualitativeVectorPatternString = inverseSquareLawCommonStrings.a11y.voicing.levels.qualitativeVectorPattern;
+const forceEqualsPatternString = inverseSquareLawCommonStrings.a11y.voicing.levels.forceEqualsPattern;
+const forceArrowSizePatternString = inverseSquareLawCommonStrings.a11y.voicing.levels.forceArrowSizePattern;
+const forceOnObjectsPatternString = inverseSquareLawCommonStrings.a11y.voicing.levels.forceOnObjectsPattern;
 
 const SIZE_STRINGS = [
   tinyString,
@@ -222,35 +223,35 @@ class ForceDescriber extends ISLCDescriber {
   }
 
   /**
-   * Get a string that describes the force vectors, for the voicing prototype - not used yet for
-   * production code.
+   * Get a description for the force arrow Reading Block, describing the arrow and relative force size.
+   * Returns something like
+   * "Force on mass 1 by mass2 equals 33.4 newtons, force arrows tiny."
    * @public
    *
    * @param {string} thisObjectLabel
    * @param {string} otherObjectLabel
    * @returns {string}
    */
-  getVoicingForceVectorMagnitudeText( thisObjectLabel, otherObjectLabel ) {
-    return StringUtils.fillIn( voicingLevelsForcePatternString, {
-      object1: thisObjectLabel,
-      object2: otherObjectLabel,
-      value: this.getFormattedForce()
-    } );
-  }
+  getForceVectorsReadingBlockContent( thisObjectLabel, otherObjectLabel ) {
+    let response = null;
 
-  /**
-   * For the voicing prototype - returns a string that describes the size of the force arrow and its direction.
-   * Returns something like
-   * "Force arrow is very small, and points directly at mass 1.
-   *
-   * @public
-   * @param otherObjectLabel
-   * @returns {string}
-   */
-  getVoicingQualitativeForceVectorText( otherObjectLabel ) {
-    return StringUtils.fillIn( voicingQualitativeVectorPatternString, {
-      size: this.getVectorSize(),
-      otherObject: otherObjectLabel
+    if ( this.showForceValuesProperty.value ) {
+      response = StringUtils.fillIn( forceEqualsPatternString, {
+        object1: thisObjectLabel,
+        object2: otherObjectLabel,
+        value: this.getFormattedForce()
+      } );
+    }
+    else {
+      response = StringUtils.fillIn( forceOnObjectsPatternString, {
+        object1: thisObjectLabel,
+        object2: otherObjectLabel
+      } );
+    }
+
+    return StringUtils.fillIn( forceArrowSizePatternString, {
+      response: response,
+      size: this.getVectorSize()
     } );
   }
 

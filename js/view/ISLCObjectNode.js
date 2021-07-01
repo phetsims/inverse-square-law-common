@@ -131,6 +131,8 @@ class ISLCObjectNode extends Node {
     this.objectModel = object;
     this.model = model; // used in abstract method implementations by children.
     this.modelViewTransform = modelViewTransform;
+    this.objectLabel = config.label;
+    this.otherObjectLabel = config.otherObjectLabel;
 
     // @private
     this.forceDescriber = forceDescriber;
@@ -376,6 +378,9 @@ class ISLCObjectNode extends Node {
 
     // update puller node visibility
     this.pullerNode.setPull( this.model.forceProperty.get(), this.objectCircle.width / 2 );
+
+    // voicing - update the ReadingBlock content for the arrow
+    this.arrowNode.readingBlockContent = this.forceDescriber.getForceVectorsReadingBlockContent( this.objectLabel, this.otherObjectLabel );
   }
 
   /**

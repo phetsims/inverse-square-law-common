@@ -22,6 +22,7 @@ import ISLCConstants from '../ISLCConstants.js';
 import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
 import inverseSquareLawCommonStrings from '../inverseSquareLawCommonStrings.js';
 import DefaultDirection from './DefaultDirection.js';
+import ReadingBlock from '../../../scenery/js/accessibility/voicing/ReadingBlock.js';
 
 const forceOnObjectByOtherObjectPatternString = inverseSquareLawCommonStrings.forceOnObjectByOtherObjectPattern;
 const forceOnObjectByOtherObjectWithUnitsPatternString = inverseSquareLawCommonStrings.forceOnObjectByOtherObjectWithUnitsPattern;
@@ -79,6 +80,9 @@ class ISLCForceArrowNode extends Node {
     options.tandem = tandem;
 
     super( options );
+
+    // voicing - initialize the trait
+    this.initializeReadingBlock();
 
     // @private
     this.layoutBounds = layoutBounds;
@@ -257,6 +261,8 @@ class ISLCForceArrowNode extends Node {
     }
   }
 }
+
+ReadingBlock.compose( ISLCForceArrowNode );
 
 inverseSquareLawCommon.register( 'ISLCForceArrowNode', ISLCForceArrowNode );
 

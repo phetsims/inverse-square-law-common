@@ -362,11 +362,11 @@
         "value": "smaller"
       },
       "levels": {
-        "forcePattern": {
-          "value": "Force on {{object1}} by {{object2}} equals {{value}} newtons."
+        "forceEqualsPattern": {
+          "value": "Force on {{object1}} by {{object2}} equals {{value}} newtons"
         },
-        "qualitativeVectorPattern": {
-          "value": "Force arrow is {{size}}, and points directly at {{otherObject}}."
+        "forceOnObjectsPattern": {
+          "value": "Force on {{object1}} by {{object2}}"
         },
         "forceArrowSizePattern": {
           "value": "{{response}}, force arrow {{size}}."
