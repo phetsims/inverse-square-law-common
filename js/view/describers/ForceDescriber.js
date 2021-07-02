@@ -328,12 +328,13 @@ class ForceDescriber extends ISLCDescriber {
   /**
    * Get text when an object has changed position, and the force value has as a result.
    * @param {ISLCObject} object - the object that changed position
+   * @param {boolean} alwaysIncludeProgressClause
    * @returns {string}
    * @public
    */
-  getVectorChangeText( object ) {
+  getVectorChangeText( object, alwaysIncludeProgressClause ) {
     const changeDirection = this.getChangeDirection();
-    const positionOrLandmark = this.positionDescriber.getPositionProgressOrLandmarkClause( object );
+    const positionOrLandmark = this.positionDescriber.getPositionProgressOrLandmarkClause( object, alwaysIncludeProgressClause );
 
     // Fill in the base clause of the vector changing.
     const vectorChangeClause = StringUtils.fillIn( vectorChangePatternString, {

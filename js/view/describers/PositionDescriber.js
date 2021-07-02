@@ -292,16 +292,25 @@ class PositionDescriber extends ISLCDescriber {
   }
 
   /**
+   * Returns a string describing the progress of motion of the object. Either "Closer" or "Farther Away".
+   * @public
+   * @returns {string}
+   */
+  getProgressClause() {
+    return this.movedCloser ? closerString : fartherAwayString;
+  }
+
+  /**
    * Get the position change clause, like closer/farther strings.
    * @param {ISLCObject} object
+   * @param {boolean} alwaysIncludeProgressClause
    * @returns {string|null} - null if there isn't a position progress or landmark clause
    * @public
    */
-  getPositionProgressOrLandmarkClause( object ) {
+  getPositionProgressOrLandmarkClause( object, alwaysIncludeProgressClause ) {
     const objectEnum = object.enum;
 
-    let positionString = this.movedCloser ? closerString : fartherAwayString;
-
+    let positionString = this.getProgressClause();
 
     // object 1 touching left
     if ( this.object1AtMin( objectEnum ) ) {
@@ -319,7 +328,7 @@ class PositionDescriber extends ISLCDescriber {
     }
 
     // No change, so if not covered by above edge cases, there shouldn't be a progress clause
-    else if ( this.lastMoveCloser === this.movedCloser ) {
+    else if ( this.lastMoveCloser === this.movedCloser && !alwaysIncludeProgressClause ) {
       return null;
     }
 

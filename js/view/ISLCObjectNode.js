@@ -17,6 +17,8 @@ import Utils from '../../../dot/js/Utils.js';
 import Shape from '../../../kite/js/Shape.js';
 import merge from '../../../phet-core/js/merge.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
+import Voicing from '../../../scenery/js/accessibility/voicing/Voicing.js';
+import VoicingResponsePatterns from '../../../scenery/js/accessibility/voicing/VoicingResponsePatterns.js';
 import DragListener from '../../../scenery/js/listeners/DragListener.js';
 import Circle from '../../../scenery/js/nodes/Circle.js';
 import Node from '../../../scenery/js/nodes/Node.js';
@@ -53,6 +55,7 @@ class ISLCObjectNode extends Node {
    * @param {PositionDescriber} positionDescriber
    * @param {Object} config
    * @mixes AccessibleSlider
+   * @mixes Voicing
    */
   constructor( model, object, layoutBounds, modelViewTransform, alertManager, forceDescriber, positionDescriber, config ) {
 
@@ -133,6 +136,7 @@ class ISLCObjectNode extends Node {
     this.modelViewTransform = modelViewTransform;
     this.objectLabel = config.label;
     this.otherObjectLabel = config.otherObjectLabel;
+    this.positionDescriber = positionDescriber;
 
     // @private
     this.forceDescriber = forceDescriber;
@@ -250,6 +254,13 @@ class ISLCObjectNode extends Node {
       },
       end: () => {
         object.isDraggingProperty.value = false;
+
+        // voicing
+        this.voicingSpeakEndDragResponse( oldPosition, object, {
+
+          // for mouse/touch input we want to include the progress clause every single move
+          alwaysIncludeProgressClause: true
+        } );
       },
       tandem: config.tandem.createTandem( 'dragListener' )
     } );
@@ -295,11 +306,14 @@ class ISLCObjectNode extends Node {
       endDrag: () => {
         object.isDraggingProperty.value = false;
         this.redrawForce();
+
+        // voicing
+        this.voicingSpeakEndDragResponse( oldPosition, object );
       },
       a11yCreateContextResponseAlert: () => {
         const newPosition = object.positionProperty.get();
         const positionChanged = newPosition !== oldPosition;
-        return positionChanged ? forceDescriber.getVectorChangeText( object ) : forceDescriber.getPositionUnchangedAlertText( object );
+        return positionChanged ? forceDescriber.getVectorChangeText( object, false ) : forceDescriber.getPositionUnchangedAlertText( object );
       },
       a11yCreateAriaValueText: positionDescriber.getPositionAriaValueTextCreator( this.enum ),
 
@@ -315,6 +329,24 @@ class ISLCObjectNode extends Node {
       new BooleanProperty( true ), // always enabled
       accessibleSliderOptions
     );
+
+    // voicing
+    this.initializeVoicing( {
+      voicingNameResponse: this.accessibleName,
+
+      // for the objects, it was requested that "Object" response come before "name" responses for all
+      // forms of input
+      voicingResponsePatterns: VoicingResponsePatterns.createResponsePatterns( VoicingResponsePatterns.DEFAULT_RESPONSE_PATTERNS, {
+        nameObjectHint: '{{OBJECT}}, {{NAME}}, {{HINT}}',
+        nameObject: '{{OBJECT}}, {{NAME}}'
+      } )
+    } );
+
+    // voicing - the object response is the aria-valuetext that this Node gets from mixing AccessibleSlider
+    // TODO: Move to AccessibleValueHandler??
+    object.positionProperty.link( () => {
+      this.voicingObjectResponse = this.ariaValueText;
+    } );
 
     // for layering purposes, we assume that the ScreenView will add the arrow node and label - by the
     // time the sim is stepped, make sure that the arrows are added to the view
@@ -384,6 +416,44 @@ class ISLCObjectNode extends Node {
   }
 
   /**
+   * Speaks a response (Through the Voicing trait) that describes end of drag.
+   * @private
+   *
+   * @param {number} - position at the start of drag
+   * @param {ISLCObject} object
+   * @param {Object} [options]
+   */
+  voicingSpeakEndDragResponse( oldPosition, object, options ) {
+
+    options = merge( {
+
+      // {boolean} whether or not to include the "progress" clause that describes whether the sphere is closer/farther
+      // away from the other mass after dragging
+      alwaysIncludeProgressClause: false
+    }, options );
+
+    // voicing
+    if ( oldPosition === object.positionProperty.value ) {
+
+      // if the position hasn't changed speak the object name and hint, no contextual change from this
+      this.voicingSpeakResponse( {
+        nameResponse: this.voicingNameResponse,
+        objectResponse: this.voicingObjectResponse
+      } );
+    }
+    else {
+      const contextResponse = this.forceDescriber.getVectorChangeText( object, options.alwaysIncludeProgressClause );
+
+      // the object did move, speak the object response and context response, but don't include the name response,
+      // it doesn't need to be repeated every move
+      this.voicingSpeakResponse( {
+        objectResponse: this.voicingObjectResponse,
+        contextResponse: contextResponse
+      } );
+    }
+  }
+
+  /**
    * @public
    */
   reset() {
@@ -417,5 +487,7 @@ inverseSquareLawCommon.register( 'ISLCObjectNode', ISLCObjectNode );
 
 // mix in accessibility features, this Node behaves like a range input
 AccessibleSlider.mixInto( ISLCObjectNode );
+
+Voicing.compose( ISLCObjectNode );
 
 export default ISLCObjectNode;
