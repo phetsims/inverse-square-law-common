@@ -27,6 +27,7 @@ import RichText from '../../../scenery/js/nodes/RichText.js';
 import Color from '../../../scenery/js/util/Color.js';
 import AccessibleSlider from '../../../sun/js/accessibility/AccessibleSlider.js';
 import Tandem from '../../../tandem/js/Tandem.js';
+import VoicingUtterance from '../../../utterance-queue/js/VoicingUtterance.js';
 import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
 import ISLCConstants from '../ISLCConstants.js';
 import DefaultDirection from './DefaultDirection.js';
@@ -228,6 +229,12 @@ class ISLCObjectNode extends Node {
 
     let oldPosition = object.positionProperty.get();
 
+    // @private {VoicingUtterance} - for Voicing, a single reusable Utterance that will prevent the
+    // voicingUtteranceQueue from getting spammed with too many alerts as drag occurs.
+    this.dragVoicingUtterance = new VoicingUtterance( {
+      alertStableDelay: 500
+    } );
+
     this.dragListener = new DragListener( {
       allowTouchSnag: true,
       start: event => {
@@ -235,6 +242,12 @@ class ISLCObjectNode extends Node {
         object.isDraggingProperty.value = true;
 
         oldPosition = object.positionProperty.get();
+
+        // voicing - on drag start, just speak the name and object response since we haven't moved yet
+        this.voicingSpeakResponse( {
+          nameResponse: this.voicingNameResponse,
+          objectResponse: this.voicingObjectResponse
+        } );
       },
       drag: event => {
 
@@ -251,16 +264,16 @@ class ISLCObjectNode extends Node {
 
         // snapToGrid method dynamically checks whether to snap or not
         object.positionProperty.set( model.snapToGrid( x ) );
-      },
-      end: () => {
-        object.isDraggingProperty.value = false;
 
-        // voicing
-        this.voicingSpeakEndDragResponse( oldPosition, object, {
+        // voicing - when we move
+        this.voicingSpeakDragResponse( object, {
 
           // for mouse/touch input we want to include the progress clause every single move
           alwaysIncludeProgressClause: true
         } );
+      },
+      end: () => {
+        object.isDraggingProperty.value = false;
       },
       tandem: config.tandem.createTandem( 'dragListener' )
     } );
@@ -308,7 +321,7 @@ class ISLCObjectNode extends Node {
         this.redrawForce();
 
         // voicing
-        this.voicingSpeakEndDragResponse( oldPosition, object );
+        this.voicingSpeakDragResponse( object );
       },
       a11yCreateContextResponseAlert: () => {
         const newPosition = object.positionProperty.get();
@@ -423,7 +436,7 @@ class ISLCObjectNode extends Node {
    * @param {ISLCObject} object
    * @param {Object} [options]
    */
-  voicingSpeakEndDragResponse( oldPosition, object, options ) {
+  voicingSpeakDragResponse( object, options ) {
 
     options = merge( {
 
@@ -432,25 +445,15 @@ class ISLCObjectNode extends Node {
       alwaysIncludeProgressClause: false
     }, options );
 
-    // voicing
-    if ( oldPosition === object.positionProperty.value ) {
+    const contextResponse = this.forceDescriber.getVectorChangeText( object, options.alwaysIncludeProgressClause );
 
-      // if the position hasn't changed speak the object name and hint, no contextual change from this
-      this.voicingSpeakResponse( {
-        nameResponse: this.voicingNameResponse,
-        objectResponse: this.voicingObjectResponse
-      } );
-    }
-    else {
-      const contextResponse = this.forceDescriber.getVectorChangeText( object, options.alwaysIncludeProgressClause );
-
-      // the object did move, speak the object response and context response, but don't include the name response,
-      // it doesn't need to be repeated every move
-      this.voicingSpeakResponse( {
-        objectResponse: this.voicingObjectResponse,
-        contextResponse: contextResponse
-      } );
-    }
+    // the object did move, speak the object response and context response, but don't include the name response,
+    // it doesn't need to be repeated every move
+    this.voicingSpeakResponse( {
+      objectResponse: this.voicingObjectResponse,
+      contextResponse: contextResponse,
+      utterance: this.dragVoicingUtterance
+    } );
   }
 
   /**
