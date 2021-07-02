@@ -355,12 +355,6 @@ class ISLCObjectNode extends Node {
       } )
     } );
 
-    // voicing - the object response is the aria-valuetext that this Node gets from mixing AccessibleSlider
-    // TODO: Move to AccessibleValueHandler??
-    object.positionProperty.link( () => {
-      this.voicingObjectResponse = this.ariaValueText;
-    } );
-
     // for layering purposes, we assume that the ScreenView will add the arrow node and label - by the
     // time the sim is stepped, make sure that the arrows are added to the view
     if ( assert ) {
