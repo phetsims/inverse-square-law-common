@@ -429,10 +429,9 @@ class ISLCObjectNode extends Node {
   }
 
   /**
-   * Speaks a response (Through the Voicing trait) that describes end of drag.
+   * Speaks a response (Through the Voicing trait) that describes the drag.
    * @private
    *
-   * @param {number} - position at the start of drag
    * @param {ISLCObject} object
    * @param {Object} [options]
    */
@@ -447,8 +446,8 @@ class ISLCObjectNode extends Node {
 
     const contextResponse = this.forceDescriber.getVectorChangeText( object, options.alwaysIncludeProgressClause );
 
-    // the object did move, speak the object response and context response, but don't include the name response,
-    // it doesn't need to be repeated every move
+    // speak the object response and context response, but don't include the name response, it doesn't need to be
+    // repeated every move
     this.voicingSpeakResponse( {
       objectResponse: this.voicingObjectResponse,
       contextResponse: contextResponse,
