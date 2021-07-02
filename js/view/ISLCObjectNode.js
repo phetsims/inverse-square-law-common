@@ -148,7 +148,7 @@ class ISLCObjectNode extends Node {
     // the full range of force for the arrow node (note: this is distinct)
     const arrowForceRange = new Range( model.getMinForceMagnitude(), model.getMaxForce() );
 
-    // @protected - arrow node
+    // @protected, (@public for pdomOrder) - arrow node
     this.arrowNode = new ISLCForceArrowNode(
       arrowForceRange,
       layoutBounds,
