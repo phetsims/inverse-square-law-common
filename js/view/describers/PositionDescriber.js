@@ -66,8 +66,6 @@ const leftSideOfTrackString = inverseSquareLawCommonStrings.a11y.position.landma
 const rightSideOfTrackString = inverseSquareLawCommonStrings.a11y.position.landmarks.rightSideOfTrack;
 const lastStopRightString = inverseSquareLawCommonStrings.a11y.position.landmarks.lastStopRight;
 const lastStopLeftString = inverseSquareLawCommonStrings.a11y.position.landmarks.lastStopLeft;
-const trackEndLeftString = inverseSquareLawCommonStrings.a11y.position.landmarks.trackEndLeft;
-const trackEndRightString = inverseSquareLawCommonStrings.a11y.position.landmarks.trackEndRight;
 
 const voicingLevelsMassQuantitativePatternString = inverseSquareLawCommonStrings.a11y.voicing.levels.massQuantitativePattern;
 const voicingLevelsMassQualitativePatternString = inverseSquareLawCommonStrings.a11y.voicing.levels.massQualitativePattern;
@@ -314,12 +312,12 @@ class PositionDescriber extends ISLCDescriber {
 
     // object 1 touching left
     if ( this.object1AtMin( objectEnum ) ) {
-      positionString = trackEndLeftString;
+      positionString = lastStopLeftString;
     }
 
     // object 2 touching right
     else if ( this.object2AtMax( objectEnum ) ) {
-      positionString = trackEndRightString;
+      positionString = lastStopRightString;
     }
 
     // objects touching each other

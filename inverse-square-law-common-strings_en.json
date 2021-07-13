@@ -136,12 +136,6 @@
         },
         "lastStopLeft": {
           "value": "Last stop left"
-        },
-        "trackEndLeft": {
-          "value": "Track end left"
-        },
-        "trackEndRight": {
-          "value": "Track end right"
         }
       }
     },
