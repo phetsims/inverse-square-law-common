@@ -27,7 +27,7 @@ import RichText from '../../../scenery/js/nodes/RichText.js';
 import Color from '../../../scenery/js/util/Color.js';
 import AccessibleSlider from '../../../sun/js/accessibility/AccessibleSlider.js';
 import Tandem from '../../../tandem/js/Tandem.js';
-import VoicingUtterance from '../../../utterance-queue/js/VoicingUtterance.js';
+import Utterance from '../../../utterance-queue/js/Utterance.js';
 import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
 import ISLCConstants from '../ISLCConstants.js';
 import DefaultDirection from './DefaultDirection.js';
@@ -231,7 +231,7 @@ class ISLCObjectNode extends Node {
 
     // @private {VoicingUtterance} - for Voicing, a single reusable Utterance that will prevent the
     // voicingUtteranceQueue from getting spammed with too many alerts as drag occurs.
-    this.dragVoicingUtterance = new VoicingUtterance( {
+    this.dragVoicingUtterance = new Utterance( {
       alertStableDelay: 500
     } );
 
