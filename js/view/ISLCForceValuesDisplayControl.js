@@ -12,9 +12,9 @@ import Text from '../../../scenery/js/nodes/Text.js';
 import VBox from '../../../scenery/js/nodes/VBox.js';
 import VerticalAquaRadioButtonGroup from '../../../sun/js/VerticalAquaRadioButtonGroup.js';
 import Tandem from '../../../tandem/js/Tandem.js';
-import ISLCConstants from '../ISLCConstants.js';
 import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
 import inverseSquareLawCommonStrings from '../inverseSquareLawCommonStrings.js';
+import ISLCConstants from '../ISLCConstants.js';
 import ForceValuesDisplayEnum from '../model/ForceValuesDisplayEnum.js';
 
 // constants
@@ -37,6 +37,7 @@ class ISLCForceValuesDisplayControl extends VBox {
     options = merge( {
       align: 'left',
       spacing: 5,
+      preventFit: true, // workaround for minor pixel changes in https://github.com/phetsims/gravity-force-lab/issues/101
       tandem: Tandem.REQUIRED
     }, options );
 
