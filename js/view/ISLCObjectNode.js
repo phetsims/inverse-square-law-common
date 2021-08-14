@@ -265,8 +265,8 @@ class ISLCObjectNode extends Node {
         // snapToGrid method dynamically checks whether to snap or not
         object.positionProperty.set( model.snapToGrid( x ) );
 
-        // voicing - when we move
-        this.voicingSpeakDragResponse( object, {
+        // voicing
+        this.voicingSpeakDragResponse( object, object.positionProperty.value, oldPosition, {
 
           // for mouse/touch input we want to include the progress clause every single move
           alwaysIncludeProgressClause: true
@@ -321,7 +321,7 @@ class ISLCObjectNode extends Node {
         this.redrawForce();
 
         // voicing
-        this.voicingSpeakDragResponse( object );
+        this.voicingSpeakDragResponse( object, object.positionProperty.value, oldPosition );
       },
       a11yCreateContextResponseAlert: () => {
         const newPosition = object.positionProperty.get();
@@ -423,13 +423,16 @@ class ISLCObjectNode extends Node {
   }
 
   /**
-   * Speaks a response (Through the Voicing trait) that describes the drag.
+   * Speaks a response (Through the Voicing trait) that describes the drag. Content will only be spoken
+   * if there has been some movement.
    * @private
    *
    * @param {ISLCObject} object
+   * @param {number} newPosition - new position of the object during drag
+   * @param {number} oldPosition - position of the object when drag started
    * @param {Object} [options]
    */
-  voicingSpeakDragResponse( object, options ) {
+  voicingSpeakDragResponse( object, newPosition, oldPosition, options ) {
 
     options = merge( {
 
@@ -438,15 +441,17 @@ class ISLCObjectNode extends Node {
       alwaysIncludeProgressClause: false
     }, options );
 
-    const contextResponse = this.forceDescriber.getVectorChangeText( object, options.alwaysIncludeProgressClause );
+    if ( newPosition !== oldPosition ) {
+      const contextResponse = this.forceDescriber.getVectorChangeText( object, options.alwaysIncludeProgressClause );
 
-    // speak the object response and context response, but don't include the name response, it doesn't need to be
-    // repeated every move
-    this.voicingSpeakResponse( {
-      objectResponse: this.voicingObjectResponse,
-      contextResponse: contextResponse,
-      utterance: this.dragVoicingUtterance
-    } );
+      // speak the object response and context response, but don't include the name response, it doesn't need to be
+      // repeated every move
+      this.voicingSpeakResponse( {
+        objectResponse: this.voicingObjectResponse,
+        contextResponse: contextResponse,
+        utterance: this.dragVoicingUtterance
+      } );
+    }
   }
 
   /**
