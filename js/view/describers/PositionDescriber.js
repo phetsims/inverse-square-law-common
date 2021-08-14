@@ -126,6 +126,13 @@ class PositionDescriber extends ISLCDescriber {
     // @private {number} - in meters, already converted with optional formatting function
     this.distanceBetween = 0;
 
+    // @private {NumberProperty}
+    this.separationProperty = model.separationProperty;
+
+    // @private {number}
+    this.rightObjectBoundary = model.rightObjectBoundary;
+    this.leftObjectBoundary = model.leftObjectBoundary;
+
     // @private {number} - in converted distance
     this.oldDistanceBetween = 0;
 
@@ -444,7 +451,7 @@ class PositionDescriber extends ISLCDescriber {
    * @public
    */
   getCapitalizedQualitativeRelativeDistanceRegion() {
-    const index = this.getDistanceIndex( this.distanceBetween, RELATIVE_DISTANCE_STRINGS_CAPITALIZED.length );
+    const index = this.getDistanceIndex( this.separationProperty.value, RELATIVE_DISTANCE_STRINGS_CAPITALIZED.length );
     assert && assert( index >= 0 && index < RELATIVE_DISTANCE_STRINGS_CAPITALIZED.length, 'index out of range' );
     return RELATIVE_DISTANCE_STRINGS_CAPITALIZED[ index ];
   }
@@ -455,23 +462,61 @@ class PositionDescriber extends ISLCDescriber {
    * @returns {string}
    */
   getQualitativeRelativeDistanceRegion() {
-    const index = this.getDistanceIndex( this.distanceBetween, RELATIVE_DISTANCE_STRINGS.length );
+    const index = this.getDistanceIndex( this.separationProperty.value, RELATIVE_DISTANCE_STRINGS.length );
     assert && assert( index >= 0 && index < RELATIVE_DISTANCE_STRINGS.length, 'index out of range' );
     return RELATIVE_DISTANCE_STRINGS[ index ];
   }
 
   /**
-   * Returns the mapped integer corresponding to the appropriate qualitative distance value. Since distances range from
-   * km to pm, subtypes must implement this method.
+   * Returns the mapped integer corresponding to the location in an array with strings that describe the qualitative
+   * distance between objects. Index is determined by normalizing the provided distance against the maximum separation
+   * of objects that the model can support. The regions within that normalized range were designed,
+   * see https://github.com/phetsims/gravity-force-lab-basics/issues/206#issuecomment-848960764.
    *
-   * @abstract
-   * @param  {number} distance
+   * Assumes that there are 9 descriptions for object distances, if that change this function will need to be udpated.
+   *
+   * @param  {number} distance - in model units
    * @param {number} numberOfRegions - for crosscheck
    * @returns {number} - integer
    * @private
    */
   getDistanceIndex( distance, numberOfRegions ) {
-    throw new Error( 'getDistanceIndex MUST be implemented in subtypes.' );
+    assert && assert( distance > 0, 'Distance between spheres should always be positive.' );
+    assert && assert( numberOfRegions === 9, 'If numberOfRegions changes, this function should too.' );
+
+    const maxDistance = Math.abs( this.rightObjectBoundary - this.leftObjectBoundary );
+    const normalizedDistance = distance / maxDistance;
+
+    let index;
+    if ( normalizedDistance === 1.0 ) {
+      index = 0;
+    }
+    else if ( normalizedDistance >= 0.95 ) {
+      index = 1;
+    }
+    else if ( normalizedDistance >= 0.8 ) {
+      index = 2;
+    }
+    else if ( normalizedDistance >= 0.65 ) {
+      index = 3;
+    }
+    else if ( normalizedDistance >= 0.5 ) {
+      index = 4;
+    }
+    else if ( normalizedDistance >= 0.35 ) {
+      index = 5;
+    }
+    else if ( normalizedDistance >= 0.2 ) {
+      index = 6;
+    }
+    else if ( normalizedDistance >= 0.14 ) {
+      index = 7;
+    }
+    else {
+      index = 8;
+    }
+
+    return index;
   }
 
   /**
