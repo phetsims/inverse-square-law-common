@@ -374,9 +374,7 @@ class PositionDescriber extends ISLCDescriber {
         } );
       }
       else {
-        return StringUtils.fillIn( distanceFromOtherObjectSentencePatternString, {
-          distanceFromOtherObject: distanceClause
-        } );
+        return this.getDistanceFromOtherObjectDescription( objectEnum );
       }
     };
 
@@ -387,6 +385,21 @@ class PositionDescriber extends ISLCDescriber {
       previousPositionRegionProperty.reset();
     };
     return valueTextCreator;
+  }
+
+  /**
+   * Get a description of the distance this object is from another, returning something like
+   * "5.8 Kilometers from Mass 1."
+   * @public
+   *
+   * @param {ISLCObjectEnum} objectEnum
+   * @returns {string}
+   */
+  getDistanceFromOtherObjectDescription( objectEnum ) {
+    const distanceClause = this.getDistanceClause( objectEnum );
+    return StringUtils.fillIn( distanceFromOtherObjectSentencePatternString, {
+      distanceFromOtherObject: distanceClause
+    } );
   }
 
   /**
