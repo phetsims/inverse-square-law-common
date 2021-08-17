@@ -13,6 +13,7 @@ import merge from '../../../phet-core/js/merge.js';
 import Node from '../../../scenery/js/nodes/Node.js';
 import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
 import ISLCObjectEnum from './ISLCObjectEnum.js';
+import PDOMListItemNode from './PDOMListItemNode.js';
 
 class ISLCObjectDescriptionNode extends Node {
 
@@ -39,8 +40,8 @@ class ISLCObjectDescriptionNode extends Node {
     // @protected
     this.thisObjectLabel = ISLCObjectEnum.isObject1( objectEnum ) ? config.object1Label : config.object2Label;
     this.otherObjectLabel = ISLCObjectEnum.isObject1( objectEnum ) ? config.object2Label : config.object1Label;
-    this.forceVectorMagnitudeItemNode = new Node( { tagName: 'li' } );
-    this.forceBetweenAndVectorNode = new Node( { tagName: 'li' } );
+    this.forceVectorMagnitudeItemNode = new PDOMListItemNode();
+    this.forceBetweenAndVectorNode = new PDOMListItemNode();
 
     this.addChild( this.forceBetweenAndVectorNode );
     this.addChild( this.forceVectorMagnitudeItemNode );
