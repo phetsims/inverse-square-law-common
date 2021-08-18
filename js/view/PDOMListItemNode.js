@@ -9,7 +9,7 @@
  */
 
 import merge from '../../../phet-core/js/merge.js';
-import PDOMSiblingStyle from '../../../scenery/js/accessibility/pdom/PDOMSiblingStyle.js';
+// import PDOMSiblingStyle from '../../../scenery/js/accessibility/pdom/PDOMSiblingStyle.js';
 import Node from '../../../scenery/js/nodes/Node.js';
 import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
 
@@ -28,7 +28,7 @@ class PDOMListItemNode extends Node {
 
     super( options );
 
-    this.setPDOMClass( PDOMSiblingStyle.LIST_ITEM_CLASS_NAME );
+    // this.setPDOMClass( PDOMSiblingStyle.LIST_ITEM_CLASS_NAME );
   }
 }
 
