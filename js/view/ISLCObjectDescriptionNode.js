@@ -10,7 +10,7 @@
  */
 
 import merge from '../../../phet-core/js/merge.js';
-import PDOMSiblingStyle from '../../../scenery/js/accessibility/pdom/PDOMSiblingStyle.js';
+// import PDOMSiblingStyle from '../../../scenery/js/accessibility/pdom/PDOMSiblingStyle.js';
 import Node from '../../../scenery/js/nodes/Node.js';
 import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
 import ISLCObjectEnum from './ISLCObjectEnum.js';
@@ -39,7 +39,7 @@ class ISLCObjectDescriptionNode extends Node {
 
     super( config );
 
-    this.setPDOMClass( PDOMSiblingStyle.LIST_ITEM_CLASS_NAME );
+    // this.setPDOMClass( PDOMSiblingStyle.LIST_ITEM_CLASS_NAME );
 
     // @protected
     this.thisObjectLabel = ISLCObjectEnum.isObject1( objectEnum ) ? config.object1Label : config.object2Label;
