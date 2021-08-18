@@ -31,8 +31,8 @@ class ISLCObjectDescriptionNode extends Node {
 
       // pdom
       labelTagName: 'h3',
-      tagName: 'ul',
-      role: 'list'
+      tagName: 'ul'
+      // ariaRole: 'list'
     }, config );
 
     assert && assert( config.object2Label && config.object1Label, 'required params must be specified' );
