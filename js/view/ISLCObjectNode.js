@@ -18,7 +18,7 @@ import Shape from '../../../kite/js/Shape.js';
 import merge from '../../../phet-core/js/merge.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
 import Voicing from '../../../scenery/js/accessibility/voicing/Voicing.js';
-import VoicingResponsePatterns from '../../../utterance-queue/js/VoicingResponsePatterns.js';
+import ResponsePatterns from '../../../utterance-queue/js/ResponsePatterns.js';
 import DragListener from '../../../scenery/js/listeners/DragListener.js';
 import Circle from '../../../scenery/js/nodes/Circle.js';
 import Node from '../../../scenery/js/nodes/Node.js';
@@ -349,7 +349,7 @@ class ISLCObjectNode extends Node {
 
       // for the objects, it was requested that "Object" response come before "name" responses for all
       // forms of input
-      voicingResponsePatterns: VoicingResponsePatterns.createResponsePatterns( VoicingResponsePatterns.DEFAULT_RESPONSE_PATTERNS, {
+      voicingResponsePatterns: ResponsePatterns.createResponsePatterns( ResponsePatterns.DEFAULT_RESPONSE_PATTERNS, {
         nameObjectHint: '{{OBJECT}}, {{NAME}}, {{HINT}}',
         nameObject: '{{OBJECT}}, {{NAME}}'
       } )
