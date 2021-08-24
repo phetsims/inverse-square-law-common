@@ -18,7 +18,7 @@ import Shape from '../../../kite/js/Shape.js';
 import merge from '../../../phet-core/js/merge.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
 import Voicing from '../../../scenery/js/accessibility/voicing/Voicing.js';
-import VoicingResponsePatterns from '../../../scenery/js/accessibility/voicing/VoicingResponsePatterns.js';
+import VoicingResponsePatterns from '../../../utterance-queue/js/VoicingResponsePatterns.js';
 import DragListener from '../../../scenery/js/listeners/DragListener.js';
 import Circle from '../../../scenery/js/nodes/Circle.js';
 import Node from '../../../scenery/js/nodes/Node.js';
