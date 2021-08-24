@@ -18,7 +18,6 @@ import Shape from '../../../kite/js/Shape.js';
 import merge from '../../../phet-core/js/merge.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
 import Voicing from '../../../scenery/js/accessibility/voicing/Voicing.js';
-import ResponsePatterns from '../../../utterance-queue/js/ResponsePatterns.js';
 import DragListener from '../../../scenery/js/listeners/DragListener.js';
 import Circle from '../../../scenery/js/nodes/Circle.js';
 import Node from '../../../scenery/js/nodes/Node.js';
@@ -27,6 +26,7 @@ import RichText from '../../../scenery/js/nodes/RichText.js';
 import Color from '../../../scenery/js/util/Color.js';
 import AccessibleSlider from '../../../sun/js/accessibility/AccessibleSlider.js';
 import Tandem from '../../../tandem/js/Tandem.js';
+import ResponsePatterns from '../../../utterance-queue/js/ResponsePatterns.js';
 import Utterance from '../../../utterance-queue/js/Utterance.js';
 import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
 import ISLCConstants from '../ISLCConstants.js';
@@ -349,7 +349,7 @@ class ISLCObjectNode extends Node {
 
       // for the objects, it was requested that "Object" response come before "name" responses for all
       // forms of input
-      voicingResponsePatterns: ResponsePatterns.createResponsePatterns( ResponsePatterns.DEFAULT_RESPONSE_PATTERNS, {
+      voicingResponsePatterns: new ResponsePatterns( {
         nameObjectHint: '{{OBJECT}}, {{NAME}}, {{HINT}}',
         nameObject: '{{OBJECT}}, {{NAME}}'
       } )
