@@ -57,11 +57,11 @@ class ISLCRulerNode extends Node {
    *                                the ruler (located on the left side of the ruler)
    * @param {ModelViewTransform2} modelViewTransform
    * @param {function():number} getObject1Position - get the position in model coords, of the first object
-   * @param {ISLCRulerDescriber} rulerDescriber
+   * @param {Alerter} rulerAlerter TODO: when other types need this, likely should create an ISLC interface for this
    * @param {Tandem} tandem
    * @param {Object} [options]
    */
-  constructor( rulerPositionProperty, dragBounds, modelViewTransform, getObject1Position, rulerDescriber, tandem, options ) {
+  constructor( rulerPositionProperty, dragBounds, modelViewTransform, getObject1Position, rulerAlerter, tandem, options ) {
 
     options = merge( {
       snapToNearest: null,
@@ -218,7 +218,7 @@ class ISLCRulerNode extends Node {
           positionOfLastMotionSound.set( rulerPositionProperty.value );
         }
 
-        rulerDescriber.onDrag();
+        rulerAlerter.onDrag();
       }
     } ) );
 
@@ -263,7 +263,7 @@ class ISLCRulerNode extends Node {
           positionOfLastMotionSound.set( rulerPositionProperty.value );
         }
 
-        rulerDescriber.onDrag();
+        rulerAlerter.onDrag();
       }
     } );
 
@@ -277,9 +277,9 @@ class ISLCRulerNode extends Node {
         grabRulerSoundPlayer.play();
 
         // call this first to update the dsecriber state before the alert
-        rulerDescriber.onGrab();
+        rulerAlerter.onGrab();
 
-        grabbedUtterance.alert = rulerDescriber.getRulerGrabbedAlertable();
+        grabbedUtterance.alert = rulerAlerter.getRulerGrabbedAlertable();
         this.alertDescriptionUtterance( grabbedUtterance );
       },
 
@@ -311,7 +311,7 @@ class ISLCRulerNode extends Node {
           movementSoundPlayer.play();
         }
 
-        rulerDescriber.alertJumpCenterMass();
+        rulerAlerter.alertJumpCenterMass();
       }
     }, {
       keys: [ KeyboardUtils.KEY_J, KeyboardUtils.KEY_H ], // jump home
@@ -322,7 +322,7 @@ class ISLCRulerNode extends Node {
         rulerPositionProperty.set( rulerPositionProperty.initialValue );
         this.grabDragInteraction.releaseDraggable();
 
-        rulerDescriber.alertJumpHome();
+        rulerAlerter.alertJumpHome();
       }
     } ] );
 
