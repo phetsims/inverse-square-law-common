@@ -9,6 +9,7 @@
  * @author Michael Barlow (PhET Interactive Simulations)
  */
 
+import Alerter from '../../../scenery-phet/js/accessibility/describers/Alerter.js';
 import ActivationUtterance from '../../../utterance-queue/js/ActivationUtterance.js';
 import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
 import inverseSquareLawCommonStrings from '../inverseSquareLawCommonStrings.js';
@@ -16,13 +17,16 @@ import inverseSquareLawCommonStrings from '../inverseSquareLawCommonStrings.js';
 // constants
 const forceValuesHiddenString = inverseSquareLawCommonStrings.a11y.forceValuesHidden;
 
-class ISLCAlertManager {
+class ISLCAlertManager extends Alerter {
 
   /**
    * @param {ISLCModel} model
    * @param {ForceDescriber} forceDescriber
+   * @param {Object} [options]
    */
-  constructor( model, forceDescriber ) {
+  constructor( model, forceDescriber, options ) {
+
+    super( options );
 
     // @protected
     this.forceDescriber = forceDescriber;
@@ -40,7 +44,7 @@ class ISLCAlertManager {
    */
   alertShowForceValues( showForceValues ) {
     this.showForceValuesUtterance.alert = this.getShowForceValuesAlert( showForceValues );
-    phet.joist.sim.utteranceQueue.addToBack( this.showForceValuesUtterance );
+    this.alertDescriptionUtterance( this.showForceValuesUtterance );
   }
 
   /**
