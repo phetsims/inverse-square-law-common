@@ -26,7 +26,7 @@ import RichText from '../../../scenery/js/nodes/RichText.js';
 import Color from '../../../scenery/js/util/Color.js';
 import AccessibleSlider from '../../../sun/js/accessibility/AccessibleSlider.js';
 import Tandem from '../../../tandem/js/Tandem.js';
-import ResponsePatterns from '../../../utterance-queue/js/ResponsePatterns.js';
+import ResponsePatternCollection from '../../../utterance-queue/js/ResponsePatternCollection.js';
 import Utterance from '../../../utterance-queue/js/Utterance.js';
 import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
 import ISLCConstants from '../ISLCConstants.js';
@@ -349,7 +349,7 @@ class ISLCObjectNode extends Node {
 
       // for the objects, it was requested that "Object" response come before "name" responses for all
       // forms of input
-      voicingResponsePatterns: new ResponsePatterns( {
+      voicingResponsePatternCollection: new ResponsePatternCollection( {
         nameObjectHint: '{{OBJECT}}, {{NAME}}, {{HINT}}',
         nameObject: '{{OBJECT}}, {{NAME}}'
       } )
