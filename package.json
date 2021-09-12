@@ -10,7 +10,8 @@
     "grunt": "~1.4.0"
   },
   "phet": {
-    "requirejsNamespace": "INVERSE_SQUARE_LAW_COMMON"
+    "requirejsNamespace": "INVERSE_SQUARE_LAW_COMMON",
+    "supportsOutputJS": true
   },
   "eslintConfig": {
     "extends": "../chipper/eslint/sim_eslintrc.js"
