@@ -128,7 +128,7 @@ class ISLCPullerNode extends Node {
       }
 
       // from the force value, get an index for the visible image
-      let index = Utils.roundSymmetric( forceToImage( force ) );
+      let index = Utils.roundSymmetric( forceToImage.evaluate( force ) );
 
       if ( force !== 0 && index === zeroForceIndex ) {
         index += ( force > 0 ) ? 1 : -1;
@@ -140,8 +140,8 @@ class ISLCPullerNode extends Node {
       pullerGroupNode.x = -offsetX;
 
       // scale the shadow and place it under the visible image
-      shadowNode.radius = forceToShadowWidth( force ) / 2;
-      shadowNode.right = images[ index ].right - offsetX + Utils.roundSymmetric( indexToShadowOffset( index ) );
+      shadowNode.radius = forceToShadowWidth.evaluate( force ) / 2;
+      shadowNode.right = images[ index ].right - offsetX + Utils.roundSymmetric( indexToShadowOffset.evaluate( index ) );
       shadowNode.centerY = images[ index ].bottom;
 
       // configure pointer area

@@ -117,7 +117,7 @@ class ISLCForceArrowNode extends Node {
      */
     this.getLinearMappingToArrowWidth = forceValue => {
       const linearFunction = forceValue < forceThreshold ? minTwoForceToArrowWidthFunction : mainForceToArrowWidthFunction;
-      return linearFunction( forceValue );
+      return linearFunction.evaluate( forceValue );
     };
 
     // @public (read-only) - for layout, the label for the arrow
