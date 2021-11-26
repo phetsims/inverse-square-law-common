@@ -8,8 +8,8 @@
 
 import merge from '../../../phet-core/js/merge.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
-import Text from '../../../scenery/js/nodes/Text.js';
-import VBox from '../../../scenery/js/nodes/VBox.js';
+import { Text } from '../../../scenery/js/imports.js';
+import { VBox } from '../../../scenery/js/imports.js';
 import VerticalAquaRadioButtonGroup from '../../../sun/js/VerticalAquaRadioButtonGroup.js';
 import Tandem from '../../../tandem/js/Tandem.js';
 import inverseSquareLawCommon from '../inverseSquareLawCommon.js';

@@ -9,9 +9,9 @@
 
 import merge from '../../../phet-core/js/merge.js';
 import ArrowNode from '../../../scenery-phet/js/ArrowNode.js';
-import Line from '../../../scenery/js/nodes/Line.js';
-import Node from '../../../scenery/js/nodes/Node.js';
-import Text from '../../../scenery/js/nodes/Text.js';
+import { Line } from '../../../scenery/js/imports.js';
+import { Node } from '../../../scenery/js/imports.js';
+import { Text } from '../../../scenery/js/imports.js';
 import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
 
 class ISLCLegendNode extends Node {

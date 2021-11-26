@@ -16,12 +16,12 @@ import GrabDragInteraction from '../../../scenery-phet/js/accessibility/GrabDrag
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
 import RulerNode from '../../../scenery-phet/js/RulerNode.js';
 import sceneryPhetStrings from '../../../scenery-phet/js/sceneryPhetStrings.js';
-import FocusHighlightFromNode from '../../../scenery/js/accessibility/FocusHighlightFromNode.js';
-import KeyboardUtils from '../../../scenery/js/accessibility/KeyboardUtils.js';
-import DragListener from '../../../scenery/js/listeners/DragListener.js';
-import KeyboardDragListener from '../../../scenery/js/listeners/KeyboardDragListener.js';
-import Line from '../../../scenery/js/nodes/Line.js';
-import Node from '../../../scenery/js/nodes/Node.js';
+import { FocusHighlightFromNode } from '../../../scenery/js/imports.js';
+import { KeyboardUtils } from '../../../scenery/js/imports.js';
+import { DragListener } from '../../../scenery/js/imports.js';
+import { KeyboardDragListener } from '../../../scenery/js/imports.js';
+import { Line } from '../../../scenery/js/imports.js';
+import { Node } from '../../../scenery/js/imports.js';
 import SoundClip from '../../../tambo/js/sound-generators/SoundClip.js';
 import SoundLevelEnum from '../../../tambo/js/SoundLevelEnum.js';
 import soundManager from '../../../tambo/js/soundManager.js';
