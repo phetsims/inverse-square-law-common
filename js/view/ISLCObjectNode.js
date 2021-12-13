@@ -337,7 +337,7 @@ class ISLCObjectNode extends Node {
       accessibleSliderOptions
     );
 
-    // voicing
+    // voicing, TODO, redundant with initializeAccessibleSlider, https://github.com/phetsims/sun/issues/730
     this.initializeVoicing();
     this.mutate( {
       voicingNameResponse: this.accessibleName,
