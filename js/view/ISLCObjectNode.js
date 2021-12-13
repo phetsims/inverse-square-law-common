@@ -17,13 +17,7 @@ import Utils from '../../../dot/js/Utils.js';
 import Shape from '../../../kite/js/Shape.js';
 import merge from '../../../phet-core/js/merge.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
-import { Voicing } from '../../../scenery/js/imports.js';
-import { DragListener } from '../../../scenery/js/imports.js';
-import { Circle } from '../../../scenery/js/imports.js';
-import { Node } from '../../../scenery/js/imports.js';
-import { Path } from '../../../scenery/js/imports.js';
-import { RichText } from '../../../scenery/js/imports.js';
-import { Color } from '../../../scenery/js/imports.js';
+import { Circle, Color, DragListener, Node, Path, RichText, Voicing } from '../../../scenery/js/imports.js';
 import AccessibleSlider from '../../../sun/js/accessibility/AccessibleSlider.js';
 import Tandem from '../../../tandem/js/Tandem.js';
 import ResponsePatternCollection from '../../../utterance-queue/js/ResponsePatternCollection.js';
@@ -344,7 +338,8 @@ class ISLCObjectNode extends Node {
     );
 
     // voicing
-    this.initializeVoicing( {
+    this.initializeVoicing();
+    this.mutate( {
       voicingNameResponse: this.accessibleName,
 
       // for the objects, it was requested that "Object" response come before "name" responses for all
