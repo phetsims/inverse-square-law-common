@@ -7,6 +7,7 @@
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 
+import Property from '../../../axon/js/Property.js';
 import Utils from '../../../dot/js/Utils.js';
 import Vector2 from '../../../dot/js/Vector2.js';
 import Shape from '../../../kite/js/Shape.js';
@@ -16,12 +17,7 @@ import GrabDragInteraction from '../../../scenery-phet/js/accessibility/GrabDrag
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
 import RulerNode from '../../../scenery-phet/js/RulerNode.js';
 import sceneryPhetStrings from '../../../scenery-phet/js/sceneryPhetStrings.js';
-import { FocusHighlightFromNode } from '../../../scenery/js/imports.js';
-import { KeyboardUtils } from '../../../scenery/js/imports.js';
-import { DragListener } from '../../../scenery/js/imports.js';
-import { KeyboardDragListener } from '../../../scenery/js/imports.js';
-import { Line } from '../../../scenery/js/imports.js';
-import { Node } from '../../../scenery/js/imports.js';
+import { DragListener, FocusHighlightFromNode, KeyboardDragListener, KeyboardUtils, Line, Node } from '../../../scenery/js/imports.js';
 import SoundClip from '../../../tambo/js/sound-generators/SoundClip.js';
 import SoundLevelEnum from '../../../tambo/js/SoundLevelEnum.js';
 import soundManager from '../../../tambo/js/soundManager.js';
@@ -231,7 +227,7 @@ class ISLCRulerNode extends Node {
 
     // supports keyboard interaction
     const keyboardDragListener = new KeyboardDragListener( {
-      dragBounds: dragBoundsWithRulerHeight,
+      dragBoundsProperty: new Property( dragBoundsWithRulerHeight ),
       positionProperty: rulerPositionProperty,
       transform: modelViewTransform,
       moveOnHoldDelay: options.moveOnHoldDelay,
