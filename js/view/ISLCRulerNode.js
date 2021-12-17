@@ -24,7 +24,7 @@ import soundManager from '../../../tambo/js/soundManager.js';
 import grabSound from '../../../tambo/sounds/grab_mp3.js';
 import releaseSound from '../../../tambo/sounds/release_mp3.js';
 import Utterance from '../../../utterance-queue/js/Utterance.js';
-import rulerMovementSound from '../../sounds/ruler-movement-000_mp3.js';
+import rulerMovement000_mp3 from '../../sounds/rulerMovement000_mp3.js';
 import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
 import inverseSquareLawCommonStrings from '../inverseSquareLawCommonStrings.js';
 import ISLCQueryParameters from '../ISLCQueryParameters.js';
@@ -173,7 +173,7 @@ class ISLCRulerNode extends Node {
     if ( options.movementSoundPlayer === null ) {
 
       // no sound player provided, use the default
-      movementSoundPlayer = new SoundClip( rulerMovementSound, { initialOutputLevel: 0.2 } );
+      movementSoundPlayer = new SoundClip( rulerMovement000_mp3, { initialOutputLevel: 0.2 } );
       soundManager.addSoundGenerator( movementSoundPlayer, { sonificationLevel: SoundLevelEnum.ENHANCED } );
     }
     else {

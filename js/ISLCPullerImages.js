@@ -6,132 +6,132 @@
  * @author  Michael Barlow
  */
 
-import zeroForceImage from '../images/figure_0_png.js';
-import atomicZeroForceImage from '../images/figure_atomic_0_png.js';
-import pullImage10 from '../images/figure_pull_10_png.js';
-import pullImage11 from '../images/figure_pull_11_png.js';
-import pullImage12 from '../images/figure_pull_12_png.js';
-import pullImage13 from '../images/figure_pull_13_png.js';
-import pullImage14 from '../images/figure_pull_14_png.js';
-import pullImage15 from '../images/figure_pull_15_png.js';
-import pullImage16 from '../images/figure_pull_16_png.js';
-import pullImage17 from '../images/figure_pull_17_png.js';
-import pullImage18 from '../images/figure_pull_18_png.js';
-import pullImage19 from '../images/figure_pull_19_png.js';
-import pullImage1 from '../images/figure_pull_1_png.js';
-import pullImage20 from '../images/figure_pull_20_png.js';
-import pullImage21 from '../images/figure_pull_21_png.js';
-import pullImage22 from '../images/figure_pull_22_png.js';
-import pullImage23 from '../images/figure_pull_23_png.js';
-import pullImage24 from '../images/figure_pull_24_png.js';
-import pullImage25 from '../images/figure_pull_25_png.js';
-import pullImage26 from '../images/figure_pull_26_png.js';
-import pullImage27 from '../images/figure_pull_27_png.js';
-import pullImage28 from '../images/figure_pull_28_png.js';
-import pullImage29 from '../images/figure_pull_29_png.js';
-import pullImage2 from '../images/figure_pull_2_png.js';
-import pullImage30 from '../images/figure_pull_30_png.js';
-import pullImage31 from '../images/figure_pull_31_png.js';
-import pullImage3 from '../images/figure_pull_3_png.js';
-import pullImage4 from '../images/figure_pull_4_png.js';
-import pullImage5 from '../images/figure_pull_5_png.js';
-import pullImage6 from '../images/figure_pull_6_png.js';
-import pullImage7 from '../images/figure_pull_7_png.js';
-import pullImage8 from '../images/figure_pull_8_png.js';
-import pullImage9 from '../images/figure_pull_9_png.js';
-import atomicPullImage10 from '../images/figure_pull_atomic_10_png.js';
-import atomicPullImage11 from '../images/figure_pull_atomic_11_png.js';
-import atomicPullImage12 from '../images/figure_pull_atomic_12_png.js';
-import atomicPullImage13 from '../images/figure_pull_atomic_13_png.js';
-import atomicPullImage14 from '../images/figure_pull_atomic_14_png.js';
-import atomicPullImage15 from '../images/figure_pull_atomic_15_png.js';
-import atomicPullImage16 from '../images/figure_pull_atomic_16_png.js';
-import atomicPullImage17 from '../images/figure_pull_atomic_17_png.js';
-import atomicPullImage18 from '../images/figure_pull_atomic_18_png.js';
-import atomicPullImage19 from '../images/figure_pull_atomic_19_png.js';
-import atomicPullImage1 from '../images/figure_pull_atomic_1_png.js';
-import atomicPullImage20 from '../images/figure_pull_atomic_20_png.js';
-import atomicPullImage21 from '../images/figure_pull_atomic_21_png.js';
-import atomicPullImage22 from '../images/figure_pull_atomic_22_png.js';
-import atomicPullImage23 from '../images/figure_pull_atomic_23_png.js';
-import atomicPullImage24 from '../images/figure_pull_atomic_24_png.js';
-import atomicPullImage25 from '../images/figure_pull_atomic_25_png.js';
-import atomicPullImage26 from '../images/figure_pull_atomic_26_png.js';
-import atomicPullImage27 from '../images/figure_pull_atomic_27_png.js';
-import atomicPullImage28 from '../images/figure_pull_atomic_28_png.js';
-import atomicPullImage29 from '../images/figure_pull_atomic_29_png.js';
-import atomicPullImage2 from '../images/figure_pull_atomic_2_png.js';
-import atomicPullImage30 from '../images/figure_pull_atomic_30_png.js';
-import atomicPullImage31 from '../images/figure_pull_atomic_31_png.js';
-import atomicPullImage3 from '../images/figure_pull_atomic_3_png.js';
-import atomicPullImage4 from '../images/figure_pull_atomic_4_png.js';
-import atomicPullImage5 from '../images/figure_pull_atomic_5_png.js';
-import atomicPullImage6 from '../images/figure_pull_atomic_6_png.js';
-import atomicPullImage7 from '../images/figure_pull_atomic_7_png.js';
-import atomicPullImage8 from '../images/figure_pull_atomic_8_png.js';
-import atomicPullImage9 from '../images/figure_pull_atomic_9_png.js';
-import pushImage10 from '../images/figure_push_10_png.js';
-import pushImage11 from '../images/figure_push_11_png.js';
-import pushImage12 from '../images/figure_push_12_png.js';
-import pushImage13 from '../images/figure_push_13_png.js';
-import pushImage14 from '../images/figure_push_14_png.js';
-import pushImage15 from '../images/figure_push_15_png.js';
-import pushImage16 from '../images/figure_push_16_png.js';
-import pushImage17 from '../images/figure_push_17_png.js';
-import pushImage18 from '../images/figure_push_18_png.js';
-import pushImage19 from '../images/figure_push_19_png.js';
-import pushImage1 from '../images/figure_push_1_png.js';
-import pushImage20 from '../images/figure_push_20_png.js';
-import pushImage21 from '../images/figure_push_21_png.js';
-import pushImage22 from '../images/figure_push_22_png.js';
-import pushImage23 from '../images/figure_push_23_png.js';
-import pushImage24 from '../images/figure_push_24_png.js';
-import pushImage25 from '../images/figure_push_25_png.js';
-import pushImage26 from '../images/figure_push_26_png.js';
-import pushImage27 from '../images/figure_push_27_png.js';
-import pushImage28 from '../images/figure_push_28_png.js';
-import pushImage29 from '../images/figure_push_29_png.js';
-import pushImage2 from '../images/figure_push_2_png.js';
-import pushImage30 from '../images/figure_push_30_png.js';
-import pushImage31 from '../images/figure_push_31_png.js';
-import pushImage3 from '../images/figure_push_3_png.js';
-import pushImage4 from '../images/figure_push_4_png.js';
-import pushImage5 from '../images/figure_push_5_png.js';
-import pushImage6 from '../images/figure_push_6_png.js';
-import pushImage7 from '../images/figure_push_7_png.js';
-import pushImage8 from '../images/figure_push_8_png.js';
-import pushImage9 from '../images/figure_push_9_png.js';
-import atomicPushImage10 from '../images/figure_push_atomic_10_png.js';
-import atomicPushImage11 from '../images/figure_push_atomic_11_png.js';
-import atomicPushImage12 from '../images/figure_push_atomic_12_png.js';
-import atomicPushImage13 from '../images/figure_push_atomic_13_png.js';
-import atomicPushImage14 from '../images/figure_push_atomic_14_png.js';
-import atomicPushImage15 from '../images/figure_push_atomic_15_png.js';
-import atomicPushImage16 from '../images/figure_push_atomic_16_png.js';
-import atomicPushImage17 from '../images/figure_push_atomic_17_png.js';
-import atomicPushImage18 from '../images/figure_push_atomic_18_png.js';
-import atomicPushImage19 from '../images/figure_push_atomic_19_png.js';
-import atomicPushImage1 from '../images/figure_push_atomic_1_png.js';
-import atomicPushImage20 from '../images/figure_push_atomic_20_png.js';
-import atomicPushImage21 from '../images/figure_push_atomic_21_png.js';
-import atomicPushImage22 from '../images/figure_push_atomic_22_png.js';
-import atomicPushImage23 from '../images/figure_push_atomic_23_png.js';
-import atomicPushImage24 from '../images/figure_push_atomic_24_png.js';
-import atomicPushImage25 from '../images/figure_push_atomic_25_png.js';
-import atomicPushImage26 from '../images/figure_push_atomic_26_png.js';
-import atomicPushImage27 from '../images/figure_push_atomic_27_png.js';
-import atomicPushImage28 from '../images/figure_push_atomic_28_png.js';
-import atomicPushImage29 from '../images/figure_push_atomic_29_png.js';
-import atomicPushImage2 from '../images/figure_push_atomic_2_png.js';
-import atomicPushImage30 from '../images/figure_push_atomic_30_png.js';
-import atomicPushImage31 from '../images/figure_push_atomic_31_png.js';
-import atomicPushImage3 from '../images/figure_push_atomic_3_png.js';
-import atomicPushImage4 from '../images/figure_push_atomic_4_png.js';
-import atomicPushImage5 from '../images/figure_push_atomic_5_png.js';
-import atomicPushImage6 from '../images/figure_push_atomic_6_png.js';
-import atomicPushImage7 from '../images/figure_push_atomic_7_png.js';
-import atomicPushImage8 from '../images/figure_push_atomic_8_png.js';
-import atomicPushImage9 from '../images/figure_push_atomic_9_png.js';
+import figure0_png from '../images/figure_0_png.js';
+import figureAtomic_0_png from '../images/figureAtomic_0_png.js';
+import figurePull_10_png from '../images/figurePull_10_png.js';
+import figurePull_11_png from '../images/figurePull_11_png.js';
+import figurePull_12_png from '../images/figurePull_12_png.js';
+import figurePull_13_png from '../images/figurePull_13_png.js';
+import figurePull_14_png from '../images/figurePull_14_png.js';
+import figurePull_15_png from '../images/figurePull_15_png.js';
+import figurePull_16_png from '../images/figurePull_16_png.js';
+import figurePull_17_png from '../images/figurePull_17_png.js';
+import figurePull_18_png from '../images/figurePull_18_png.js';
+import figurePull_19_png from '../images/figurePull_19_png.js';
+import figurePull_1_png from '../images/figurePull_1_png.js';
+import figurePull_20_png from '../images/figurePull_20_png.js';
+import figurePull_21_png from '../images/figurePull_21_png.js';
+import figurePull_22_png from '../images/figurePull_22_png.js';
+import figurePull_23_png from '../images/figurePull_23_png.js';
+import figurePull_24_png from '../images/figurePull_24_png.js';
+import figurePull_25_png from '../images/figurePull_25_png.js';
+import figurePull_26_png from '../images/figurePull_26_png.js';
+import figurePull_27_png from '../images/figurePull_27_png.js';
+import figurePull_28_png from '../images/figurePull_28_png.js';
+import figurePull_29_png from '../images/figurePull_29_png.js';
+import figurePull_2_png from '../images/figurePull_2_png.js';
+import figurePull_30_png from '../images/figurePull_30_png.js';
+import figurePull_31_png from '../images/figurePull_31_png.js';
+import figurePull_3_png from '../images/figurePull_3_png.js';
+import figurePull_4_png from '../images/figurePull_4_png.js';
+import figurePull_5_png from '../images/figurePull_5_png.js';
+import figurePull_6_png from '../images/figurePull_6_png.js';
+import figurePull_7_png from '../images/figurePull_7_png.js';
+import figurePull_8_png from '../images/figurePull_8_png.js';
+import figurePull_9_png from '../images/figurePull_9_png.js';
+import figurePullAtomic_10_png from '../images/figurePullAtomic_10_png.js';
+import figurePullAtomic_11_png from '../images/figurePullAtomic_11_png.js';
+import figurePullAtomic_12_png from '../images/figurePullAtomic_12_png.js';
+import figurePullAtomic_13_png from '../images/figurePullAtomic_13_png.js';
+import figurePullAtomic_14_png from '../images/figurePullAtomic_14_png.js';
+import figurePullAtomic_15_png from '../images/figurePullAtomic_15_png.js';
+import figurePullAtomic_16_png from '../images/figurePullAtomic_16_png.js';
+import figurePullAtomic_17_png from '../images/figurePullAtomic_17_png.js';
+import figurePullAtomic_18_png from '../images/figurePullAtomic_18_png.js';
+import figurePullAtomic_19_png from '../images/figurePullAtomic_19_png.js';
+import figurePullAtomic_1_png from '../images/figurePullAtomic_1_png.js';
+import figurePullAtomic_20_png from '../images/figurePullAtomic_20_png.js';
+import figurePullAtomic_21_png from '../images/figurePullAtomic_21_png.js';
+import figurePullAtomic_22_png from '../images/figurePullAtomic_22_png.js';
+import figurePullAtomic_23_png from '../images/figurePullAtomic_23_png.js';
+import figurePullAtomic_24_png from '../images/figurePullAtomic_24_png.js';
+import figurePullAtomic_25_png from '../images/figurePullAtomic_25_png.js';
+import figurePullAtomic_26_png from '../images/figurePullAtomic_26_png.js';
+import figurePullAtomic_27_png from '../images/figurePullAtomic_27_png.js';
+import figurePullAtomic_28_png from '../images/figurePullAtomic_28_png.js';
+import figurePullAtomic_29_png from '../images/figurePullAtomic_29_png.js';
+import figurePullAtomic_2_png from '../images/figurePullAtomic_2_png.js';
+import figurePullAtomic_30_png from '../images/figurePullAtomic_30_png.js';
+import figurePullAtomic_31_png from '../images/figurePullAtomic_31_png.js';
+import figurePullAtomic_3_png from '../images/figurePullAtomic_3_png.js';
+import figurePullAtomic_4_png from '../images/figurePullAtomic_4_png.js';
+import figurePullAtomic_5_png from '../images/figurePullAtomic_5_png.js';
+import figurePullAtomic_6_png from '../images/figurePullAtomic_6_png.js';
+import figurePullAtomic_7_png from '../images/figurePullAtomic_7_png.js';
+import figurePullAtomic_8_png from '../images/figurePullAtomic_8_png.js';
+import figurePullAtomic_9_png from '../images/figurePullAtomic_9_png.js';
+import figurePush_10_png from '../images/figurePush_10_png.js';
+import figurePush_11_png from '../images/figurePush_11_png.js';
+import figurePush_12_png from '../images/figurePush_12_png.js';
+import figurePush_13_png from '../images/figurePush_13_png.js';
+import figurePush_14_png from '../images/figurePush_14_png.js';
+import figurePush_15_png from '../images/figurePush_15_png.js';
+import figurePush_16_png from '../images/figurePush_16_png.js';
+import figurePush_17_png from '../images/figurePush_17_png.js';
+import figurePush_18_png from '../images/figurePush_18_png.js';
+import figurePush_19_png from '../images/figurePush_19_png.js';
+import figurePush_1_png from '../images/figurePush_1_png.js';
+import figurePush_20_png from '../images/figurePush_20_png.js';
+import figurePush_21_png from '../images/figurePush_21_png.js';
+import figurePush_22_png from '../images/figurePush_22_png.js';
+import figurePush_23_png from '../images/figurePush_23_png.js';
+import figurePush_24_png from '../images/figurePush_24_png.js';
+import figurePush_25_png from '../images/figurePush_25_png.js';
+import figurePush_26_png from '../images/figurePush_26_png.js';
+import figurePush_27_png from '../images/figurePush_27_png.js';
+import figurePush_28_png from '../images/figurePush_28_png.js';
+import figurePush_29_png from '../images/figurePush_29_png.js';
+import figurePush_2_png from '../images/figurePush_2_png.js';
+import figurePush_30_png from '../images/figurePush_30_png.js';
+import figurePush_31_png from '../images/figurePush_31_png.js';
+import figurePush_3_png from '../images/figurePush_3_png.js';
+import figurePush_4_png from '../images/figurePush_4_png.js';
+import figurePush_5_png from '../images/figurePush_5_png.js';
+import figurePush_6_png from '../images/figurePush_6_png.js';
+import figurePush_7_png from '../images/figurePush_7_png.js';
+import figurePush_8_png from '../images/figurePush_8_png.js';
+import figurePush_9_png from '../images/figurePush_9_png.js';
+import figurePushAtomic_10_png from '../images/figurePushAtomic_10_png.js';
+import figurePushAtomic_11_png from '../images/figurePushAtomic_11_png.js';
+import figurePushAtomic_12_png from '../images/figurePushAtomic_12_png.js';
+import figurePushAtomic_13_png from '../images/figurePushAtomic_13_png.js';
+import figurePushAtomic_14_png from '../images/figurePushAtomic_14_png.js';
+import figurePushAtomic_15_png from '../images/figurePushAtomic_15_png.js';
+import figurePushAtomic_16_png from '../images/figurePushAtomic_16_png.js';
+import figurePushAtomic_17_png from '../images/figurePushAtomic_17_png.js';
+import figurePushAtomic_18_png from '../images/figurePushAtomic_18_png.js';
+import figurePushAtomic_19_png from '../images/figurePushAtomic_19_png.js';
+import figurePushAtomic_1_png from '../images/figurePushAtomic_1_png.js';
+import figurePushAtomic_20_png from '../images/figurePushAtomic_20_png.js';
+import figurePushAtomic_21_png from '../images/figurePushAtomic_21_png.js';
+import figurePushAtomic_22_png from '../images/figurePushAtomic_22_png.js';
+import figurePushAtomic_23_png from '../images/figurePushAtomic_23_png.js';
+import figurePushAtomic_24_png from '../images/figurePushAtomic_24_png.js';
+import figurePushAtomic_25_png from '../images/figurePushAtomic_25_png.js';
+import figurePushAtomic_26_png from '../images/figurePushAtomic_26_png.js';
+import figurePushAtomic_27_png from '../images/figurePushAtomic_27_png.js';
+import figurePushAtomic_28_png from '../images/figurePushAtomic_28_png.js';
+import figurePushAtomic_29_png from '../images/figurePushAtomic_29_png.js';
+import figurePushAtomic_2_png from '../images/figurePushAtomic_2_png.js';
+import figurePushAtomic_30_png from '../images/figurePushAtomic_30_png.js';
+import figurePushAtomic_31_png from '../images/figurePushAtomic_31_png.js';
+import figurePushAtomic_3_png from '../images/figurePushAtomic_3_png.js';
+import figurePushAtomic_4_png from '../images/figurePushAtomic_4_png.js';
+import figurePushAtomic_5_png from '../images/figurePushAtomic_5_png.js';
+import figurePushAtomic_6_png from '../images/figurePushAtomic_6_png.js';
+import figurePushAtomic_7_png from '../images/figurePushAtomic_7_png.js';
+import figurePushAtomic_8_png from '../images/figurePushAtomic_8_png.js';
+import figurePushAtomic_9_png from '../images/figurePushAtomic_9_png.js';
 import inverseSquareLawCommon from './inverseSquareLawCommon.js';
 
 // standard images
@@ -142,32 +142,32 @@ import inverseSquareLawCommon from './inverseSquareLawCommon.js';
 
 // for all images, the appended number corresponds to their 'level of effort', e.g. pullImage1 shows less pull than pullImage22
 // this is important for mapping force values to the index of the corresponding pull effort
-const pullImages = [ pullImage1, pullImage2, pullImage3, pullImage4, pullImage5, pullImage6, pullImage7,
-  pullImage8, pullImage9, pullImage10, pullImage11, pullImage12, pullImage13, pullImage14, pullImage15, pullImage16,
-  pullImage17, pullImage18, pullImage19, pullImage20, pullImage21, pullImage22, pullImage23, pullImage24, pullImage25,
-  pullImage26, pullImage27, pullImage28, pullImage29, pullImage30, pullImage31 ];
+const pullImages = [ figurePull_1_png, figurePull_2_png, figurePull_3_png, figurePull_4_png, figurePull_5_png, figurePull_6_png, figurePull_7_png,
+  figurePull_8_png, figurePull_9_png, figurePull_10_png, figurePull_11_png, figurePull_12_png, figurePull_13_png, figurePull_14_png, figurePull_15_png, figurePull_16_png,
+  figurePull_17_png, figurePull_18_png, figurePull_19_png, figurePull_20_png, figurePull_21_png, figurePull_22_png, figurePull_23_png, figurePull_24_png, figurePull_25_png,
+  figurePull_26_png, figurePull_27_png, figurePull_28_png, figurePull_29_png, figurePull_30_png, figurePull_31_png ];
 
-const pushImages = [ pushImage1, pushImage2, pushImage3, pushImage4, pushImage5, pushImage6, pushImage7,
-  pushImage8, pushImage9, pushImage10, pushImage11, pushImage12, pushImage13, pushImage14, pushImage15, pushImage16,
-  pushImage17, pushImage18, pushImage19, pushImage20, pushImage21, pushImage22, pushImage23, pushImage24, pushImage25,
-  pushImage26, pushImage27, pushImage28, pushImage29, pushImage30, pushImage31 ];
+const pushImages = [ figurePush_1_png, figurePush_2_png, figurePush_3_png, figurePush_4_png, figurePush_5_png, figurePush_6_png, figurePush_7_png,
+  figurePush_8_png, figurePush_9_png, figurePush_10_png, figurePush_11_png, figurePush_12_png, figurePush_13_png, figurePush_14_png, figurePush_15_png, figurePush_16_png,
+  figurePush_17_png, figurePush_18_png, figurePush_19_png, figurePush_20_png, figurePush_21_png, figurePush_22_png, figurePush_23_png, figurePush_24_png, figurePush_25_png,
+  figurePush_26_png, figurePush_27_png, figurePush_28_png, figurePush_29_png, figurePush_30_png, figurePush_31_png ];
 
 // ensure push images are ordered from large push to small push
 pushImages.reverse();
 
-const atomicPullImages = [ atomicPullImage1, atomicPullImage2, atomicPullImage3, atomicPullImage4, atomicPullImage5,
-  atomicPullImage6, atomicPullImage7, atomicPullImage8, atomicPullImage9, atomicPullImage10, atomicPullImage11,
-  atomicPullImage12, atomicPullImage13, atomicPullImage14, atomicPullImage15, atomicPullImage16, atomicPullImage17,
-  atomicPullImage18, atomicPullImage19, atomicPullImage20, atomicPullImage21, atomicPullImage22, atomicPullImage23,
-  atomicPullImage24, atomicPullImage25, atomicPullImage26, atomicPullImage27, atomicPullImage28, atomicPullImage29,
-  atomicPullImage30, atomicPullImage31 ];
+const atomicPullImages = [ figurePullAtomic_1_png, figurePullAtomic_2_png, figurePullAtomic_3_png, figurePullAtomic_4_png, figurePullAtomic_5_png,
+  figurePullAtomic_6_png, figurePullAtomic_7_png, figurePullAtomic_8_png, figurePullAtomic_9_png, figurePullAtomic_10_png, figurePullAtomic_11_png,
+  figurePullAtomic_12_png, figurePullAtomic_13_png, figurePullAtomic_14_png, figurePullAtomic_15_png, figurePullAtomic_16_png, figurePullAtomic_17_png,
+  figurePullAtomic_18_png, figurePullAtomic_19_png, figurePullAtomic_20_png, figurePullAtomic_21_png, figurePullAtomic_22_png, figurePullAtomic_23_png,
+  figurePullAtomic_24_png, figurePullAtomic_25_png, figurePullAtomic_26_png, figurePullAtomic_27_png, figurePullAtomic_28_png, figurePullAtomic_29_png,
+  figurePullAtomic_30_png, figurePullAtomic_31_png ];
 
-const atomicPushImages = [ atomicPushImage1, atomicPushImage2, atomicPushImage3, atomicPushImage4, atomicPushImage5,
-  atomicPushImage6, atomicPushImage7, atomicPushImage8, atomicPushImage9, atomicPushImage10, atomicPushImage11,
-  atomicPushImage12, atomicPushImage13, atomicPushImage14, atomicPushImage15, atomicPushImage16, atomicPushImage17,
-  atomicPushImage18, atomicPushImage19, atomicPushImage20, atomicPushImage21, atomicPushImage22, atomicPushImage23,
-  atomicPushImage24, atomicPushImage25, atomicPushImage26, atomicPushImage27, atomicPushImage28, atomicPushImage29,
-  atomicPushImage30, atomicPushImage31 ];
+const atomicPushImages = [ figurePushAtomic_1_png, figurePushAtomic_2_png, figurePushAtomic_3_png, figurePushAtomic_4_png, figurePushAtomic_5_png,
+  figurePushAtomic_6_png, figurePushAtomic_7_png, figurePushAtomic_8_png, figurePushAtomic_9_png, figurePushAtomic_10_png, figurePushAtomic_11_png,
+  figurePushAtomic_12_png, figurePushAtomic_13_png, figurePushAtomic_14_png, figurePushAtomic_15_png, figurePushAtomic_16_png, figurePushAtomic_17_png,
+  figurePushAtomic_18_png, figurePushAtomic_19_png, figurePushAtomic_20_png, figurePushAtomic_21_png, figurePushAtomic_22_png, figurePushAtomic_23_png,
+  figurePushAtomic_24_png, figurePushAtomic_25_png, figurePushAtomic_26_png, figurePushAtomic_27_png, figurePushAtomic_28_png, figurePushAtomic_29_png,
+  figurePushAtomic_30_png, figurePushAtomic_31_png ];
 
 atomicPushImages.reverse();
 
@@ -176,8 +176,8 @@ const ISLCPullerImages = {
   pushImages: pushImages,
   atomicPullImages: atomicPullImages,
   atomicPushImages: atomicPushImages,
-  zeroForceImage: zeroForceImage,
-  atomicZeroForceImage: atomicZeroForceImage
+  zeroForceImage: figure0_png,
+  atomicZeroForceImage: figureAtomic_0_png
 };
 
 inverseSquareLawCommon.register( 'ISLCPullerImages', ISLCPullerImages );
