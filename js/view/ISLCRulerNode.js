@@ -21,8 +21,8 @@ import { DragListener, FocusHighlightFromNode, KeyboardDragListener, KeyboardUti
 import SoundClip from '../../../tambo/js/sound-generators/SoundClip.js';
 import SoundLevelEnum from '../../../tambo/js/SoundLevelEnum.js';
 import soundManager from '../../../tambo/js/soundManager.js';
-import grabSound from '../../../tambo/sounds/grab_mp3.js';
-import releaseSound from '../../../tambo/sounds/release_mp3.js';
+import grab_mp3 from '../../../tambo/sounds/grab_mp3.js';
+import release_mp3 from '../../../tambo/sounds/release_mp3.js';
 import Utterance from '../../../utterance-queue/js/Utterance.js';
 import rulerMovement000_mp3 from '../../sounds/rulerMovement000_mp3.js';
 import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
@@ -150,7 +150,7 @@ class ISLCRulerNode extends Node {
     if ( options.grabRulerSoundPlayer === null ) {
 
       // no sound player specified by the client, use the default
-      grabRulerSoundPlayer = new SoundClip( grabSound );
+      grabRulerSoundPlayer = new SoundClip( grab_mp3 );
       soundManager.addSoundGenerator( grabRulerSoundPlayer );
     }
     else {
@@ -161,7 +161,7 @@ class ISLCRulerNode extends Node {
     if ( options.releaseRulerSoundPlayer === null ) {
 
       // no sound player specified by the client, use the default
-      releaseRulerSoundPlayer = new SoundClip( releaseSound );
+      releaseRulerSoundPlayer = new SoundClip( release_mp3 );
       soundManager.addSoundGenerator( releaseRulerSoundPlayer );
     }
     else {
