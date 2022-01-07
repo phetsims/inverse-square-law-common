@@ -6,10 +6,10 @@
  * @author Michael Barlow (PhET Interactive Simulations)
  */
 
-import Enumeration from '../../../phet-core/js/Enumeration.js';
+import EnumerationDeprecated from '../../../phet-core/js/EnumerationDeprecated.js';
 import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
 
-const ISLCObjectEnum = Enumeration.byKeys( [
+const ISLCObjectEnum = EnumerationDeprecated.byKeys( [
   'OBJECT_ONE',
   'OBJECT_TWO'
 ], {

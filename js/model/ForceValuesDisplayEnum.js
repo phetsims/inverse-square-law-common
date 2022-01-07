@@ -5,10 +5,10 @@
  * @author Michael Kauzmann (PhET Interactive Simulations)
  */
 
-import Enumeration from '../../../phet-core/js/Enumeration.js';
+import EnumerationDeprecated from '../../../phet-core/js/EnumerationDeprecated.js';
 import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
 
-const ForceValuesDisplayEnum = Enumeration.byKeys( [
+const ForceValuesDisplayEnum = EnumerationDeprecated.byKeys( [
   'DECIMAL', 'SCIENTIFIC', 'HIDDEN'
 ] );
 inverseSquareLawCommon.register( 'ForceValuesDisplayEnum', ForceValuesDisplayEnum );
