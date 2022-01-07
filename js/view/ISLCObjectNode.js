@@ -17,7 +17,7 @@ import Utils from '../../../dot/js/Utils.js';
 import Shape from '../../../kite/js/Shape.js';
 import merge from '../../../phet-core/js/merge.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
-import { Circle, Color, DragListener, Node, Path, RichText, Voicing } from '../../../scenery/js/imports.js';
+import { Circle, Color, DragListener, Node, Path, RichText } from '../../../scenery/js/imports.js';
 import AccessibleSlider from '../../../sun/js/accessibility/AccessibleSlider.js';
 import Tandem from '../../../tandem/js/Tandem.js';
 import ResponsePatternCollection from '../../../utterance-queue/js/ResponsePatternCollection.js';
@@ -481,7 +481,5 @@ inverseSquareLawCommon.register( 'ISLCObjectNode', ISLCObjectNode );
 
 // mix in accessibility features, this Node behaves like a range input
 AccessibleSlider.mixInto( ISLCObjectNode );
-
-Voicing.compose( ISLCObjectNode );
 
 export default ISLCObjectNode;
