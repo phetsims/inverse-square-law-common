@@ -29,7 +29,7 @@ const TEXT_TANDEM_NAME = 'labelText';
 class ISLCForceValuesDisplayControl extends VBox {
 
   /**
-   * @param {EnumerationProperty.<ForceValuesDisplayEnum>} forceValuesDisplayProperty
+   * @param {EnumerationDeprecatedProperty.<ForceValuesDisplayEnum>} forceValuesDisplayProperty
    * @param {Object} [options]
    */
   constructor( forceValuesDisplayProperty, options ) {

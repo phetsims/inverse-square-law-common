@@ -5,7 +5,7 @@
  */
 
 import BooleanProperty from '../../../axon/js/BooleanProperty.js';
-import EnumerationProperty from '../../../axon/js/EnumerationProperty.js';
+import EnumerationDeprecatedProperty from '../../../axon/js/EnumerationDeprecatedProperty.js';
 import EnumerationDeprecated from '../../../phet-core/js/EnumerationDeprecated.js';
 import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
 
@@ -23,11 +23,11 @@ class CursorSpeakerModel {
 
     // {Property.<Verbosity>} - the "interactive mode" voicing content can be brief or more "verbose",
     // debending on user selection
-    this.interactiveModeVerbosityProperty = new EnumerationProperty( Verbosity, Verbosity.VERBOSE );
+    this.interactiveModeVerbosityProperty = new EnumerationDeprecatedProperty( Verbosity, Verbosity.VERBOSE );
 
-    // {EnumerationProperty.<Verbosity>} - the "explore mode" voicing content can be brief or verbose, depending
+    // {EnumerationDeprecatedProperty.<Verbosity>} - the "explore mode" voicing content can be brief or verbose, depending
     // on user selection
-    this.exploreModeVerbosityProperty = new EnumerationProperty( Verbosity, Verbosity.VERBOSE );
+    this.exploreModeVerbosityProperty = new EnumerationDeprecatedProperty( Verbosity, Verbosity.VERBOSE );
   }
 
   /**
