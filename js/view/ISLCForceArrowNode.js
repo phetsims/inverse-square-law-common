@@ -31,7 +31,7 @@ const forceOnObjectByOtherObjectWithUnitsPatternString = inverseSquareLawCommonS
 const ARROW_LENGTH = 8; // empirically determined
 const TEXT_OFFSET = 10; // empirically determined to make sure text does not go out of bounds
 
-class ISLCForceArrowNode extends Node {
+class ISLCForceArrowNode extends ReadingBlock( Node ) {
 
   /**
    * @param {Range} arrowForceRange - the range in force magnitude
@@ -79,10 +79,8 @@ class ISLCForceArrowNode extends Node {
 
     options.tandem = tandem;
 
-    super( options );
-
-    // voicing - initialize the trait
-    this.initializeReadingBlock();
+    super();
+    this.mutate( options );
 
     // @private
     this.layoutBounds = layoutBounds;
@@ -261,8 +259,6 @@ class ISLCForceArrowNode extends Node {
     }
   }
 }
-
-ReadingBlock.compose( ISLCForceArrowNode );
 
 inverseSquareLawCommon.register( 'ISLCForceArrowNode', ISLCForceArrowNode );
 

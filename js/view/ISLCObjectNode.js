@@ -17,7 +17,7 @@ import Utils from '../../../dot/js/Utils.js';
 import Shape from '../../../kite/js/Shape.js';
 import merge from '../../../phet-core/js/merge.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
-import { Circle, Color, DragListener, Node, Path, RichText } from '../../../scenery/js/imports.js';
+import { Circle, Color, DragListener, Node, Path, RichText, Voicing } from '../../../scenery/js/imports.js';
 import AccessibleSlider from '../../../sun/js/accessibility/AccessibleSlider.js';
 import Tandem from '../../../tandem/js/Tandem.js';
 import ResponsePatternCollection from '../../../utterance-queue/js/ResponsePatternCollection.js';
@@ -38,7 +38,8 @@ const ZERO_FILL = new Color( 'gray' );
 const LABEL_MAX_WIDTH = 50; // empirically determined through testing with long strings
 const LABEL_CENTER_X = 0;
 
-class ISLCObjectNode extends Node {
+// TODO: remove once AccessibleValueHandler has Voicing back in it, https://github.com/phetsims/scenery/issues/1340
+class ISLCObjectNode extends Voicing( Node ) {
 
   /**
    * @param {ISLCModel} model - the simulation model
