@@ -1,4 +1,4 @@
-// Copyright 2017-2021, University of Colorado Boulder
+// Copyright 2017-2022, University of Colorado Boulder
 
 /**
  * Arrow node for sims that use inverse-square-law-common.  The arrow is scaled to represent the magnitude of the force,
