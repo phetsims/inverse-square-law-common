@@ -345,7 +345,7 @@ class PositionDescriber extends ISLCDescriber {
   /**
    * Returns a function used by AccessibleSlider to format its aria-valuetext attribute. Of note is that this function
    * is called AFTER the Slider's position Property has been set. Since, the PositionDescriber links to the PositionProperty
-   * prior to the call to initializeAccessibleSlider, we can ensure that PositionDescribers dynamic properties (e.g. distanceBetween )
+   * prior to the call to super to initialize AccessibleSlider, we can ensure that PositionDescribers dynamic properties (e.g. distanceBetween )
    * will be accurate when the below function is called.
    *
    * @param  {ISLCObjectEnum} objectEnum

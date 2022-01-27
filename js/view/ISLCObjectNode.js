@@ -17,7 +17,7 @@ import Utils from '../../../dot/js/Utils.js';
 import Shape from '../../../kite/js/Shape.js';
 import merge from '../../../phet-core/js/merge.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
-import { Circle, Color, DragListener, Node, Path, RichText, Voicing } from '../../../scenery/js/imports.js';
+import { Circle, Color, DragListener, Node, Path, RichText } from '../../../scenery/js/imports.js';
 import AccessibleSlider from '../../../sun/js/accessibility/AccessibleSlider.js';
 import Tandem from '../../../tandem/js/Tandem.js';
 import ResponsePatternCollection from '../../../utterance-queue/js/ResponsePatternCollection.js';
@@ -38,8 +38,7 @@ const ZERO_FILL = new Color( 'gray' );
 const LABEL_MAX_WIDTH = 50; // empirically determined through testing with long strings
 const LABEL_CENTER_X = 0;
 
-// TODO: remove once AccessibleValueHandler has Voicing back in it, https://github.com/phetsims/scenery/issues/1340
-class ISLCObjectNode extends Voicing( Node ) {
+class ISLCObjectNode extends AccessibleSlider( Node ) {
 
   /**
    * @param {ISLCModel} model - the simulation model
@@ -54,6 +53,7 @@ class ISLCObjectNode extends Voicing( Node ) {
    * @mixes Voicing
    */
   constructor( model, object, layoutBounds, modelViewTransform, alertManager, forceDescriber, positionDescriber, config ) {
+    const whichObject = object === model.object1 ? ISLCObjectEnum.OBJECT_ONE : ISLCObjectEnum.OBJECT_TWO;
 
     config = merge( {
       label: null, // {string} @required
@@ -74,6 +74,9 @@ class ISLCObjectNode extends Voicing( Node ) {
 
       // phet-io
       tandem: Tandem.REQUIRED,
+
+      // pdom
+      containerTagName: 'div',
 
       // {Property[]} - Properties that need to be monitored to successfully update this Node's PDOM descriptions
       additionalA11yDependencies: []
@@ -105,8 +108,41 @@ class ISLCObjectNode extends Voicing( Node ) {
       // options passed to the PullerNode, filled in below
       pullerNodeOptions: {
         attractNegative: config.attractNegative
-      }
+      },
+
+      // options for AccessibleSlider
+      keyboardStep: config.stepSize,
+      shiftKeyboardStep: config.snapToNearest,
+      pageKeyboardStep: config.stepSize * 2,
+      a11yMapPDOMValue: value => Utils.toFixedNumber( value, 1 ),
+      constrainValue: value => {
+        const numberOfDecimalPlaces = Utils.numberOfDecimalPlaces( config.snapToNearest );
+        return Utils.toFixedNumber( value, numberOfDecimalPlaces );
+      },
+      startDrag: () => {
+        object.isDraggingProperty.value = true;
+        oldPosition = object.positionProperty.get();
+      },
+      endDrag: () => {
+        object.isDraggingProperty.value = false;
+        this.redrawForce();
+
+        // voicing
+        this.voicingSpeakDragResponse( object, object.positionProperty.value, oldPosition );
+      },
+      a11yCreateContextResponseAlert: () => {
+        const newPosition = object.positionProperty.get();
+        const positionChanged = newPosition !== oldPosition;
+        return positionChanged ? forceDescriber.getVectorChangeText( object, false ) : forceDescriber.getPositionUnchangedAlertText( object );
+      },
+      a11yCreateAriaValueText: positionDescriber.getPositionAriaValueTextCreator( whichObject ),
+
+      // This object's PDOM description also depends on the position of the other object, so include it here.
+      a11yDependencies: config.additionalA11yDependencies.concat( object === model.object1 ?
+        [ model.object2.positionProperty ] : [ model.object1.positionProperty ] )
     }, config );
+
+    config = merge( {}, config );
 
     // use snapToNearest if stepSize is not provided
     if ( config.stepSize === null ) {
@@ -118,10 +154,13 @@ class ISLCObjectNode extends Voicing( Node ) {
     assert && assert( config.otherObjectLabel, 'required param' );
     assert && assert( alertManager instanceof ISLCAlertManager );
 
-    super( {
-      containerTagName: 'div',
-      tandem: config.tandem
-    } );
+
+    super(
+      object.positionProperty,
+      object.enabledRangeProperty,
+      new BooleanProperty( true ), // always enabled
+      config
+    );
 
     this.accessibleName = PositionDescriber.getObjectLabelPositionText( config.label );
 
@@ -138,7 +177,7 @@ class ISLCObjectNode extends Voicing( Node ) {
     this.forceDescriber = forceDescriber;
 
     // @public - which object this instance is (one or two)
-    this.enum = object === model.object1 ? ISLCObjectEnum.OBJECT_ONE : ISLCObjectEnum.OBJECT_TWO;
+    this.enum = whichObject;
 
     // the full range of force for the arrow node (note: this is distinct)
     const arrowForceRange = new Range( model.getMinForceMagnitude(), model.getMaxForce() );
@@ -298,46 +337,6 @@ class ISLCObjectNode extends Voicing( Node ) {
       this.redrawForce();
     } );
 
-    const accessibleSliderOptions = {
-      keyboardStep: config.stepSize,
-      shiftKeyboardStep: config.snapToNearest,
-      pageKeyboardStep: config.stepSize * 2,
-      a11yMapPDOMValue: value => Utils.toFixedNumber( value, 1 ),
-      constrainValue: value => {
-        const numberOfDecimalPlaces = Utils.numberOfDecimalPlaces( config.snapToNearest );
-        return Utils.toFixedNumber( value, numberOfDecimalPlaces );
-      },
-      startDrag: () => {
-        object.isDraggingProperty.value = true;
-        oldPosition = object.positionProperty.get();
-      },
-      endDrag: () => {
-        object.isDraggingProperty.value = false;
-        this.redrawForce();
-
-        // voicing
-        this.voicingSpeakDragResponse( object, object.positionProperty.value, oldPosition );
-      },
-      a11yCreateContextResponseAlert: () => {
-        const newPosition = object.positionProperty.get();
-        const positionChanged = newPosition !== oldPosition;
-        return positionChanged ? forceDescriber.getVectorChangeText( object, false ) : forceDescriber.getPositionUnchangedAlertText( object );
-      },
-      a11yCreateAriaValueText: positionDescriber.getPositionAriaValueTextCreator( this.enum ),
-
-      // This object's PDOM description also depends on the position of the other object, so include it here.
-      a11yDependencies: config.additionalA11yDependencies.concat( object === model.object1 ?
-        [ model.object2.positionProperty ] : [ model.object1.positionProperty ] )
-    };
-
-    // pdom - initialize the accessible slider, which makes this Node act like an accessible range input
-    this.initializeAccessibleSlider(
-      object.positionProperty,
-      object.enabledRangeProperty,
-      new BooleanProperty( true ), // always enabled
-      accessibleSliderOptions
-    );
-
     this.mutate( {
       voicingNameResponse: this.accessibleName,
 
@@ -479,8 +478,5 @@ const getUpdatedFill = forceValue => {
 };
 
 inverseSquareLawCommon.register( 'ISLCObjectNode', ISLCObjectNode );
-
-// mix in accessibility features, this Node behaves like a range input
-AccessibleSlider.mixInto( ISLCObjectNode );
 
 export default ISLCObjectNode;
