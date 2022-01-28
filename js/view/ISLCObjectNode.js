@@ -37,7 +37,7 @@ const ZERO_FILL = new Color( 'gray' );
 const LABEL_MAX_WIDTH = 50; // empirically determined through testing with long strings
 const LABEL_CENTER_X = 0;
 
-class ISLCObjectNode extends AccessibleSlider( Node ) {
+class ISLCObjectNode extends AccessibleSlider( Node, 0 ) {
 
   /**
    * @param {ISLCModel} model - the simulation model
