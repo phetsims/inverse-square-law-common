@@ -11,7 +11,6 @@
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 
-import BooleanProperty from '../../../axon/js/BooleanProperty.js';
 import Range from '../../../dot/js/Range.js';
 import Utils from '../../../dot/js/Utils.js';
 import Shape from '../../../kite/js/Shape.js';
@@ -71,6 +70,10 @@ class ISLCObjectNode extends AccessibleSlider( Node ) {
       forceArrowHeight: 150, // height of arrow in view coordinates
 
       objectColor: null, // {{string}} @required - description of sphere for voicing content
+
+      // AccessibleSlider
+      valueProperty: object.positionProperty,
+      enabledRangeProperty: object.enabledRangeProperty,
 
       // phet-io
       tandem: Tandem.REQUIRED,
@@ -155,12 +158,7 @@ class ISLCObjectNode extends AccessibleSlider( Node ) {
     assert && assert( alertManager instanceof ISLCAlertManager );
 
 
-    super(
-      object.positionProperty,
-      object.enabledRangeProperty,
-      new BooleanProperty( true ), // always enabled
-      config
-    );
+    super( config );
 
     this.accessibleName = PositionDescriber.getObjectLabelPositionText( config.label );
 
@@ -445,13 +443,6 @@ class ISLCObjectNode extends AccessibleSlider( Node ) {
         utterance: this.dragVoicingUtterance
       } );
     }
-  }
-
-  /**
-   * @public
-   */
-  reset() {
-    this.resetAccessibleSlider();
   }
 }
 
