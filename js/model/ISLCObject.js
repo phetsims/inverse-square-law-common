@@ -47,8 +47,7 @@ class ISLCObject {
       tandem: tandem.createTandem( 'positionProperty' ),
       units: 'm',
       range: new Range( options.leftObjectBoundary, options.rightObjectBoundary ),
-      phetioDocumentation: 'The position of the object along the track, in meters. The origin is in the center between the two objects.',
-      phetioStudioControl: false // temporary workaround until we support dynamic ranges in https://github.com/phetsims/gravity-force-lab/issues/172
+      phetioDocumentation: 'The position of the object along the track, in meters. The origin is in the center between the two objects.'
     } );
 
     // @public {Property.<number>} - the mass or charge of the object in kilograms or coulombs
