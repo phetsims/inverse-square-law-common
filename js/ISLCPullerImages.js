@@ -6,7 +6,7 @@
  * @author  Michael Barlow
  */
 
-import figure0_png from '../images/figure_0_png.js';
+import figure_0_png from '../images/figure_0_png.js';
 import figureAtomic_0_png from '../images/figureAtomic_0_png.js';
 import figurePull_10_png from '../images/figurePull_10_png.js';
 import figurePull_11_png from '../images/figurePull_11_png.js';
@@ -176,7 +176,7 @@ const ISLCPullerImages = {
   pushImages: pushImages,
   atomicPullImages: atomicPullImages,
   atomicPushImages: atomicPushImages,
-  zeroForceImage: figure0_png,
+  zeroForceImage: figure_0_png,
   atomicZeroForceImage: figureAtomic_0_png
 };
 
