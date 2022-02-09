@@ -297,7 +297,7 @@ class ISLCRulerNode extends Node {
     const rulerAlignWithObjectXOffset = modelViewTransform.viewToModelDeltaX( RULER_WIDTH ) / 2;
 
     // register hotkeys
-    keyboardDragListener.addHotkeys( [ {
+    keyboardDragListener.hotkeys = ( [ {
       keys: [ KeyboardUtils.KEY_J, KeyboardUtils.KEY_C ], // jump to center of object 1
       callback: () => {
         const x = getObject1Position();
