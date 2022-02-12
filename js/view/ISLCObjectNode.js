@@ -75,6 +75,13 @@ class ISLCObjectNode extends AccessibleSlider( Node, 0 ) {
       valueProperty: object.positionProperty,
       enabledRangeProperty: object.enabledRangeProperty,
 
+      // Voicing
+      // a single reusable Utterance that will prevent the voicingUtteranceQueue from getting spammed with too many
+      // alerts as drag occurs.
+      voicingUtterance: new Utterance( {
+        alertStableDelay: 500
+      } ),
+
       // phet-io
       tandem: Tandem.REQUIRED,
 
@@ -261,12 +268,6 @@ class ISLCObjectNode extends AccessibleSlider( Node, 0 ) {
 
     let oldPosition = object.positionProperty.get();
 
-    // @private {VoicingUtterance} - for Voicing, a single reusable Utterance that will prevent the
-    // voicingUtteranceQueue from getting spammed with too many alerts as drag occurs.
-    this.dragVoicingUtterance = new Utterance( {
-      alertStableDelay: 500
-    } );
-
     this.dragListener = new DragListener( {
       allowTouchSnag: true,
       start: event => {
@@ -439,8 +440,7 @@ class ISLCObjectNode extends AccessibleSlider( Node, 0 ) {
       // repeated every move
       this.voicingSpeakResponse( {
         objectResponse: this.voicingObjectResponse,
-        contextResponse: contextResponse,
-        utterance: this.dragVoicingUtterance
+        contextResponse: contextResponse
       } );
     }
   }
