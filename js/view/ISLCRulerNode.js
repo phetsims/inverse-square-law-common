@@ -260,7 +260,8 @@ class ISLCRulerNode extends Node {
         }
 
         rulerAlerter.onDrag();
-      }
+      },
+      tandem: tandem.createTandem( 'keyboardDragListener' )
     } );
 
     assert && assert( !options.onGrab, 'ISLCRulerNode sets its own onGrab' );
