@@ -411,7 +411,7 @@ class ISLCObjectNode extends AccessibleSlider( Node, 0 ) {
     this.pullerNode.setPull( this.model.forceProperty.get(), this.objectCircle.width / 2 );
 
     // voicing - update the ReadingBlock content for the arrow
-    this.arrowNode.readingBlockContent = this.forceDescriber.getForceVectorsReadingBlockContent( this.objectLabel, this.otherObjectLabel );
+    this.arrowNode.readingBlockNameResponse = this.forceDescriber.getForceVectorsReadingBlockNameResponse( this.objectLabel, this.otherObjectLabel );
   }
 
   /**

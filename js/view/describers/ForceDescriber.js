@@ -232,7 +232,7 @@ class ForceDescriber extends ISLCDescriber {
    * @param {string} otherObjectLabel
    * @returns {string}
    */
-  getForceVectorsReadingBlockContent( thisObjectLabel, otherObjectLabel ) {
+  getForceVectorsReadingBlockNameResponse( thisObjectLabel, otherObjectLabel ) {
     let response = null;
 
     if ( this.showForceValuesProperty.value ) {
