@@ -13,6 +13,7 @@ import Alerter from '../../../scenery-phet/js/accessibility/describers/Alerter.j
 import ActivationUtterance from '../../../utterance-queue/js/ActivationUtterance.js';
 import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
 import inverseSquareLawCommonStrings from '../inverseSquareLawCommonStrings.js';
+import merge from '../../../phet-core/js/merge.js';
 
 // constants
 const forceValuesHiddenString = inverseSquareLawCommonStrings.a11y.forceValuesHidden;
@@ -25,6 +26,13 @@ class ISLCAlertManager extends Alerter {
    * @param {Object} [options]
    */
   constructor( model, forceDescriber, options ) {
+
+    options = merge( {
+
+      // For now, we do not want the ISLC Alerters to alert anything to Voicing, Interactive Description and Voicing
+      // alerts have differences and we are managing them manually.
+      alertToVoicing: false
+    }, options );
 
     super( options );
 
