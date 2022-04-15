@@ -13,7 +13,6 @@ import Alerter from '../../../scenery-phet/js/accessibility/describers/Alerter.j
 import ActivationUtterance from '../../../utterance-queue/js/ActivationUtterance.js';
 import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
 import inverseSquareLawCommonStrings from '../inverseSquareLawCommonStrings.js';
-import merge from '../../../phet-core/js/merge.js';
 
 // constants
 const forceValuesHiddenString = inverseSquareLawCommonStrings.a11y.forceValuesHidden;
