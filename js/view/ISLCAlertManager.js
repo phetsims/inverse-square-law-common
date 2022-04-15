@@ -26,14 +26,6 @@ class ISLCAlertManager extends Alerter {
    * @param {Object} [options]
    */
   constructor( model, forceDescriber, options ) {
-
-    options = merge( {
-
-      // For now, we do not want the ISLC Alerters to alert anything to Voicing, Interactive Description and Voicing
-      // alerts have differences and we are managing them manually.
-      alertToVoicing: false
-    }, options );
-
     super( options );
 
     // @protected
