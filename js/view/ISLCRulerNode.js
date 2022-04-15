@@ -71,7 +71,7 @@ class ISLCRulerNode extends Node {
 
       // sound generation
 
-      // {SoundPlayer|null} - sound players, null indicates default should be used, use SoundPlayer.NO_SOUND to disable
+      // {ISoundPlayer|null} - sound players, null indicates default should be used, use nullSoundPlayer to disable
       grabRulerSoundPlayer: null,
       releaseRulerSoundPlayer: null,
       movementSoundPlayer: null,
