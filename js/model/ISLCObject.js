@@ -38,8 +38,7 @@ class ISLCObject {
       rightObjectBoundary: ISLCConstants.RIGHT_OBJECT_BOUNDARY,
       constantRadius: ISLCConstants.CONSTANT_RADIUS, // radius when constant
 
-      valueUnits: 'kg',
-      valueStep: null
+      valueUnits: 'kg'
     }, options );
 
     // @public
@@ -55,8 +54,7 @@ class ISLCObject {
       tandem: tandem.createTandem( 'valueProperty' ),
       range: valueRange,
       units: options.valueUnits,
-      phetioDocumentation: 'The value of the object',
-      step: options.valueStep
+      phetioDocumentation: 'The value of the object'
     } );
 
     // @public (read-only) {function(mass:number):number}
