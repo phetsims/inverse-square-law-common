@@ -10,6 +10,7 @@ import BooleanProperty from '../../../axon/js/BooleanProperty.js';
 import DerivedProperty from '../../../axon/js/DerivedProperty.js';
 import Emitter from '../../../axon/js/Emitter.js';
 import Property from '../../../axon/js/Property.js';
+import Multilink from '../../../axon/js/Multilink.js';
 import Range from '../../../dot/js/Range.js';
 import Utils from '../../../dot/js/Utils.js';
 import merge from '../../../phet-core/js/merge.js';
@@ -105,7 +106,7 @@ class ISLCModel {
 
     // pdom - necessary to reset the enabledRangeProperty to prevent object overlap, disposal not necessary
     // We need to update the available range for each object when the either's radius or position changes.
-    Property.multilink( [ object1.positionProperty, object2.positionProperty ], () => {
+    Multilink.multilink( [ object1.positionProperty, object2.positionProperty ], () => {
       updateRange( object1 );
       updateRange( object2 );
     } );

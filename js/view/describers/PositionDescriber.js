@@ -8,7 +8,7 @@
  * @author Michael Barlow (PhET Interactive Simulations)
  */
 
-import Property from '../../../../axon/js/Property.js';
+import Multilink from '../../../../axon/js/Multilink.js';
 import StringProperty from '../../../../axon/js/StringProperty.js';
 import merge from '../../../../phet-core/js/merge.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
@@ -149,7 +149,7 @@ class PositionDescriber extends ISLCDescriber {
     // see https://github.com/phetsims/gravity-force-lab-basics/issues/88
     this.useQuantitativeDistance = true;
 
-    Property.multilink(
+    Multilink.multilink(
       [ this.object1.positionProperty, this.object2.positionProperty ],
       ( x1, x2 ) => {
 

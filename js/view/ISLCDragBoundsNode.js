@@ -7,7 +7,7 @@
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 
-import Property from '../../../axon/js/Property.js';
+import Multilink from '../../../axon/js/Multilink.js';
 import merge from '../../../phet-core/js/merge.js';
 import { Line } from '../../../scenery/js/imports.js';
 import { Node } from '../../../scenery/js/imports.js';
@@ -56,7 +56,7 @@ class ISLCDragBoundsNode extends Node {
       model.object2.radiusProperty
     ];
 
-    Property.multilink( objectProperties, () => {
+    Multilink.multilink( objectProperties, () => {
       object1MinX = modelViewTransform.modelToViewX( model.getObjectMinPosition( model.object1 ) );
       object1MinLine.x1 = object1MinX;
       object1MinLine.x2 = object1MinX;
