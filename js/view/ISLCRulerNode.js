@@ -23,6 +23,7 @@ import SoundLevelEnum from '../../../tambo/js/SoundLevelEnum.js';
 import soundManager from '../../../tambo/js/soundManager.js';
 import grab_mp3 from '../../../tambo/sounds/grab_mp3.js';
 import release_mp3 from '../../../tambo/sounds/release_mp3.js';
+import Tandem from '../../../tandem/js/Tandem.js';
 import Utterance from '../../../utterance-queue/js/Utterance.js';
 import rulerMovement000_mp3 from '../../sounds/rulerMovement000_mp3.js';
 import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
@@ -57,9 +58,18 @@ class ISLCRulerNode extends Node {
    * @param {Tandem} tandem
    * @param {Object} [options]
    */
-  constructor( rulerPositionProperty, dragBounds, modelViewTransform, getObject1Position, rulerAlerter, tandem, options ) {
+  constructor( rulerPositionProperty, dragBounds, modelViewTransform, getObject1Position, rulerAlerter, options ) {
+    assert && options && assert( options.tagName === undefined, 'RulerNode sets its own tagName, see GrabDragInteraction usage below.' );
 
     options = merge( {
+
+      // Node
+      cursor: 'pointer',
+      cssTransform: true,
+      tagName: 'div',
+      focusable: true,
+
+      // SelfOptions
       snapToNearest: null,
       majorTickLabels: [ '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10' ],
       unitString: unitsCentimetersString,
@@ -102,20 +112,15 @@ class ISLCRulerNode extends Node {
             objectToGrab: rulerLabelString
           } )
         } )
-      }
-    }, options );
+      },
 
-    assert && assert( options.tagName === undefined, 'RulerNode sets its own tagName, see GrabDragInteraction usage below.' );
+      tandem: Tandem.REQUIRED
+    }, options );
 
     const majorTickLabels = options.majorTickLabels;
     const rulerUnitString = options.unitString;
 
-    super( {
-      cursor: 'pointer',
-      cssTransform: true,
-      tagName: 'div',
-      focusable: true
-    } );
+    super( options );
 
     const ruler = new RulerNode(
       RULER_WIDTH,
@@ -130,7 +135,7 @@ class ISLCRulerNode extends Node {
         snapToNearest: options.snapToNearest ? options.snapToNearest : 0,
         unitsFont: new PhetFont( 10 ),
         unitsSpacing: 3,
-        tandem: tandem
+        tandem: Tandem.OPT_OUT
       } );
     this.addChild( ruler );
 
@@ -187,7 +192,7 @@ class ISLCRulerNode extends Node {
 
     this.addInputListener( new DragListener( {
       positionProperty: rulerPositionProperty,
-      tandem: tandem.createTandem( 'dragListener' ),
+      tandem: options.tandem.createTandem( 'dragListener' ),
       transform: modelViewTransform,
       targetNode: ruler,
       useParentOffset: true,
@@ -261,13 +266,12 @@ class ISLCRulerNode extends Node {
 
         rulerAlerter.onDrag();
       },
-      tandem: tandem.createTandem( 'keyboardDragListener' )
+      tandem: options.tandem.createTandem( 'keyboardDragListener' )
     } );
 
     assert && assert( !options.onGrab, 'ISLCRulerNode sets its own onGrab' );
     assert && assert( !options.onRelease, 'ISLCRulerNode sets its own onRelease' );
     assert && assert( !options.listenersForDragState, 'ISLCRulerNode sets its own listenersForDragState' );
-    assert && assert( !options.tandem, 'ISLCRulerNode sets its own tandem' );
     const grabDragInteractionOptions = merge( options.grabDragInteractionOptions, {
 
       onGrab: () => {
@@ -284,11 +288,16 @@ class ISLCRulerNode extends Node {
         releaseRulerSoundPlayer.play();
       },
 
-      tandem: tandem.createTandem( 'grabDragInteraction' )
+      tandem: options.tandem.createTandem( 'grabDragInteraction' )
     } );
 
     // @private - add the "grab button" interaction
     this.grabDragInteraction = new GrabDragInteraction( this, keyboardDragListener, grabDragInteractionOptions );
+
+    // If you can't use mouse/touch, then you cant use keyboard either
+    this.inputEnabledProperty.link( inputEnabled => {
+      this.grabDragInteraction.enabled = inputEnabled;
+    } );
 
     // pdom - the GrabDragInteraction is added to this Node but the drag handler and transform changes are applied
     // to the child RulerNode - PDOM siblings need to reposition with the RulerNode
