@@ -174,7 +174,7 @@ class ISLCRulerNode extends Node {
 
       // no sound player provided, use the default
       movementSoundPlayer = new SoundClip( rulerMovement000_mp3, { initialOutputLevel: 0.2 } );
-      soundManager.addSoundGenerator( movementSoundPlayer, { sonificationLevel: SoundLevelEnum.ENHANCED } );
+      soundManager.addSoundGenerator( movementSoundPlayer, { sonificationLevel: SoundLevelEnum.EXTRA } );
     }
     else {
 
