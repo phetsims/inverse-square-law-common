@@ -14,8 +14,8 @@ import Property from '../../../axon/js/Property.js';
 import Range from '../../../dot/js/Range.js';
 import merge from '../../../phet-core/js/merge.js';
 import NumberIO from '../../../tandem/js/types/NumberIO.js';
-import ISLCConstants from '../ISLCConstants.js';
 import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
+import ISLCConstants from '../ISLCConstants.js';
 import ISLCObjectEnum from '../view/ISLCObjectEnum.js';
 
 class ISLCObject {

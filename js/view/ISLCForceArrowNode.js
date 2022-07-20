@@ -15,14 +15,11 @@ import ArrowNode from '../../../scenery-phet/js/ArrowNode.js';
 import MathSymbols from '../../../scenery-phet/js/MathSymbols.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
 import ScientificNotationNode from '../../../scenery-phet/js/ScientificNotationNode.js';
-import { Node } from '../../../scenery/js/imports.js';
-import { Rectangle } from '../../../scenery/js/imports.js';
-import { RichText } from '../../../scenery/js/imports.js';
-import ISLCConstants from '../ISLCConstants.js';
+import { Node, ReadingBlock, Rectangle, RichText } from '../../../scenery/js/imports.js';
 import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
 import inverseSquareLawCommonStrings from '../inverseSquareLawCommonStrings.js';
+import ISLCConstants from '../ISLCConstants.js';
 import DefaultDirection from './DefaultDirection.js';
-import { ReadingBlock } from '../../../scenery/js/imports.js';
 
 const forceOnObjectByOtherObjectPatternString = inverseSquareLawCommonStrings.forceOnObjectByOtherObjectPattern;
 const forceOnObjectByOtherObjectWithUnitsPatternString = inverseSquareLawCommonStrings.forceOnObjectByOtherObjectWithUnitsPattern;
