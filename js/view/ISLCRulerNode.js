@@ -236,8 +236,8 @@ class ISLCRulerNode extends Node {
       positionProperty: rulerPositionProperty,
       transform: modelViewTransform,
       moveOnHoldDelay: options.moveOnHoldDelay,
-      downDelta: 2 * keyboardDragDelta,
-      shiftDownDelta: keyboardDragDelta,
+      dragDelta: 2 * keyboardDragDelta,
+      shiftDragDelta: keyboardDragDelta,
 
       start() {
 
