@@ -238,8 +238,6 @@ class ISLCRulerNode extends Node {
       moveOnHoldDelay: options.moveOnHoldDelay,
       downDelta: 2 * keyboardDragDelta,
       shiftDownDelta: keyboardDragDelta,
-      dragVelocity: keyboardDragDelta * 60,
-      shiftDragVelocity: keyboardDragDelta * 60,
 
       start() {
 
