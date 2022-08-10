@@ -69,7 +69,7 @@ class ISLCObject {
         tandem: tandem.createTandem( 'radiusProperty' ),
         phetioDocumentation: 'The radius of the object',
         units: 'm',
-        phetioType: DerivedProperty.DerivedPropertyIO( NumberIO )
+        phetioValueType: NumberIO
       }
     );
 
@@ -80,7 +80,7 @@ class ISLCObject {
     this.enabledRangeProperty = new Property( enabledRange, {
       tandem: tandem.createTandem( 'enabledRangeProperty' ),
       phetioDocumentation: 'The range for position of this object based on the radius and position of both objects',
-      phetioType: Property.PropertyIO( Range.RangeIO ),
+      phetioValueType: Range.RangeIO,
       phetioReadOnly: true
     } );
 

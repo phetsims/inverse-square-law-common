@@ -80,7 +80,7 @@ class ISLCModel {
       this.object1.positionProperty,
       this.object2.positionProperty
     ], ( v1, v2, x1, x2 ) => this.calculateForce( v1, v2, Math.abs( x2 - x1 ) ), {
-      phetioType: DerivedProperty.DerivedPropertyIO( NumberIO ),
+      phetioValueType: NumberIO,
       tandem: tandem.createTandem( 'forceProperty' ),
       units: 'N',
       phetioDocumentation: 'The force of one object on the other (in Newtons)'
@@ -91,7 +91,7 @@ class ISLCModel {
       this.object1.positionProperty,
       this.object2.positionProperty
     ], ( p1, p2 ) => Math.abs( p2 - p1 ), {
-      phetioType: DerivedProperty.DerivedPropertyIO( NumberIO ),
+      phetioValueType: NumberIO,
       tandem: tandem.createTandem( 'separationProperty' ),
       units: object1.positionProperty.units,
       phetioDocumentation: 'The distance between the two objects\' centers'
