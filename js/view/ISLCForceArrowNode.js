@@ -28,7 +28,7 @@ const forceOnObjectByOtherObjectWithUnitsPatternString = inverseSquareLawCommonS
 const ARROW_LENGTH = 8; // empirically determined
 const TEXT_OFFSET = 10; // empirically determined to make sure text does not go out of bounds
 
-class ISLCForceArrowNode extends ReadingBlock( Node, 0 ) {
+class ISLCForceArrowNode extends ReadingBlock( Node ) {
 
   /**
    * @param {Range} arrowForceRange - the range in force magnitude
