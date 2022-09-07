@@ -12,60 +12,60 @@ import merge from '../../../../phet-core/js/merge.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import ScientificNotationNode from '../../../../scenery-phet/js/ScientificNotationNode.js';
 import inverseSquareLawCommon from '../../inverseSquareLawCommon.js';
-import inverseSquareLawCommonStrings from '../../inverseSquareLawCommonStrings.js';
+import InverseSquareLawCommonStrings from '../../InverseSquareLawCommonStrings.js';
 import ForceValuesDisplayEnum from '../../model/ForceValuesDisplayEnum.js';
 import ISLCDescriber from './ISLCDescriber.js';
 
-const unitsNewtonsString = inverseSquareLawCommonStrings.units.newtons;
-const forceVectorArrowsString = inverseSquareLawCommonStrings.a11y.screenSummary.forceVectorArrows;
-const summaryVectorSizePatternString = inverseSquareLawCommonStrings.a11y.screenSummary.summaryVectorSizePattern;
-const summaryVectorSizeValueUnitsPatternString = inverseSquareLawCommonStrings.a11y.screenSummary.summaryVectorSizeValueUnitsPattern;
-const forceVectorMagnitudeUnitsPatternString = inverseSquareLawCommonStrings.a11y.sphere.forceVectorMagnitudeUnitsPattern;
-const forceAndVectorPatternString = inverseSquareLawCommonStrings.a11y.sphere.forceAndVectorPattern;
-const forceVectorSizePatternString = inverseSquareLawCommonStrings.a11y.sphere.forceVectorSizePattern;
-const robotPullSummaryPatternString = inverseSquareLawCommonStrings.a11y.screenSummary.robotPullSummaryPattern;
-const robotPushSummaryPatternString = inverseSquareLawCommonStrings.a11y.screenSummary.robotPushSummaryPattern;
-const vectorsString = inverseSquareLawCommonStrings.a11y.alerts.vectors;
-const vectorsSizeClausePatternString = inverseSquareLawCommonStrings.a11y.alerts.vectorsSizeClausePattern;
-const forcesValueUnitsClausePatternString = inverseSquareLawCommonStrings.a11y.alerts.forcesValueUnitsClausePattern;
-const forceMagnitudeString = inverseSquareLawCommonStrings.a11y.sphere.forceMagnitude;
-const forceVectorCapitalizedString = inverseSquareLawCommonStrings.a11y.sphere.forceVectorCapitalized;
-const forceVectorsSizePatternString = inverseSquareLawCommonStrings.a11y.sphere.forceVectorsSizePattern;
+const unitsNewtonsString = InverseSquareLawCommonStrings.units.newtons;
+const forceVectorArrowsString = InverseSquareLawCommonStrings.a11y.screenSummary.forceVectorArrows;
+const summaryVectorSizePatternString = InverseSquareLawCommonStrings.a11y.screenSummary.summaryVectorSizePattern;
+const summaryVectorSizeValueUnitsPatternString = InverseSquareLawCommonStrings.a11y.screenSummary.summaryVectorSizeValueUnitsPattern;
+const forceVectorMagnitudeUnitsPatternString = InverseSquareLawCommonStrings.a11y.sphere.forceVectorMagnitudeUnitsPattern;
+const forceAndVectorPatternString = InverseSquareLawCommonStrings.a11y.sphere.forceAndVectorPattern;
+const forceVectorSizePatternString = InverseSquareLawCommonStrings.a11y.sphere.forceVectorSizePattern;
+const robotPullSummaryPatternString = InverseSquareLawCommonStrings.a11y.screenSummary.robotPullSummaryPattern;
+const robotPushSummaryPatternString = InverseSquareLawCommonStrings.a11y.screenSummary.robotPushSummaryPattern;
+const vectorsString = InverseSquareLawCommonStrings.a11y.alerts.vectors;
+const vectorsSizeClausePatternString = InverseSquareLawCommonStrings.a11y.alerts.vectorsSizeClausePattern;
+const forcesValueUnitsClausePatternString = InverseSquareLawCommonStrings.a11y.alerts.forcesValueUnitsClausePattern;
+const forceMagnitudeString = InverseSquareLawCommonStrings.a11y.sphere.forceMagnitude;
+const forceVectorCapitalizedString = InverseSquareLawCommonStrings.a11y.sphere.forceVectorCapitalized;
+const forceVectorsSizePatternString = InverseSquareLawCommonStrings.a11y.sphere.forceVectorsSizePattern;
 
-const valuesInUnitsPatternString = inverseSquareLawCommonStrings.a11y.valuesInUnitsPattern;
-const forcesInScientificNotationString = inverseSquareLawCommonStrings.a11y.forcesInScientificNotation;
+const valuesInUnitsPatternString = InverseSquareLawCommonStrings.a11y.valuesInUnitsPattern;
+const forcesInScientificNotationString = InverseSquareLawCommonStrings.a11y.forcesInScientificNotation;
 
-const vectorChangePatternString = inverseSquareLawCommonStrings.a11y.alerts.vectorChangePattern;
-const vectorsCapitalizedString = inverseSquareLawCommonStrings.a11y.alerts.vectorsCapitalized;
-const vectorChangeForcesNowValuePatternString = inverseSquareLawCommonStrings.a11y.alerts.vectorChangeForcesNowValuePattern;
-const vectorChangeSentencePatternString = inverseSquareLawCommonStrings.a11y.alerts.vectorChangeSentencePattern;
-const vectorChangeClausePatternString = inverseSquareLawCommonStrings.a11y.alerts.vectorChangeClausePattern;
-const vectorChangeForcesNowClausePatternString = inverseSquareLawCommonStrings.a11y.alerts.vectorChangeForcesNowClausePattern;
-const vectorForceClausePatternString = inverseSquareLawCommonStrings.a11y.vectorForceClausePattern;
-const regionForceClausePatternString = inverseSquareLawCommonStrings.a11y.regionForceClausePattern;
+const vectorChangePatternString = InverseSquareLawCommonStrings.a11y.alerts.vectorChangePattern;
+const vectorsCapitalizedString = InverseSquareLawCommonStrings.a11y.alerts.vectorsCapitalized;
+const vectorChangeForcesNowValuePatternString = InverseSquareLawCommonStrings.a11y.alerts.vectorChangeForcesNowValuePattern;
+const vectorChangeSentencePatternString = InverseSquareLawCommonStrings.a11y.alerts.vectorChangeSentencePattern;
+const vectorChangeClausePatternString = InverseSquareLawCommonStrings.a11y.alerts.vectorChangeClausePattern;
+const vectorChangeForcesNowClausePatternString = InverseSquareLawCommonStrings.a11y.alerts.vectorChangeForcesNowClausePattern;
+const vectorForceClausePatternString = InverseSquareLawCommonStrings.a11y.vectorForceClausePattern;
+const regionForceClausePatternString = InverseSquareLawCommonStrings.a11y.regionForceClausePattern;
 
-const tinyString = inverseSquareLawCommonStrings.a11y.qualitative.tiny;
-const verySmallString = inverseSquareLawCommonStrings.a11y.qualitative.verySmall;
-const smallString = inverseSquareLawCommonStrings.a11y.qualitative.small;
-const mediumSizeString = inverseSquareLawCommonStrings.a11y.qualitative.mediumSize;
-const largeString = inverseSquareLawCommonStrings.a11y.qualitative.large;
-const veryLargeString = inverseSquareLawCommonStrings.a11y.qualitative.veryLarge;
-const hugeString = inverseSquareLawCommonStrings.a11y.qualitative.huge;
+const tinyString = InverseSquareLawCommonStrings.a11y.qualitative.tiny;
+const verySmallString = InverseSquareLawCommonStrings.a11y.qualitative.verySmall;
+const smallString = InverseSquareLawCommonStrings.a11y.qualitative.small;
+const mediumSizeString = InverseSquareLawCommonStrings.a11y.qualitative.mediumSize;
+const largeString = InverseSquareLawCommonStrings.a11y.qualitative.large;
+const veryLargeString = InverseSquareLawCommonStrings.a11y.qualitative.veryLarge;
+const hugeString = InverseSquareLawCommonStrings.a11y.qualitative.huge;
 
-const getBiggerString = inverseSquareLawCommonStrings.a11y.qualitative.getBigger;
-const getSmallerString = inverseSquareLawCommonStrings.a11y.qualitative.getSmaller;
+const getBiggerString = InverseSquareLawCommonStrings.a11y.qualitative.getBigger;
+const getSmallerString = InverseSquareLawCommonStrings.a11y.qualitative.getSmaller;
 
-const veryHardString = inverseSquareLawCommonStrings.a11y.pullerEffort.veryHard;
-const hardString = inverseSquareLawCommonStrings.a11y.pullerEffort.hard;
-const moderatelyString = inverseSquareLawCommonStrings.a11y.pullerEffort.moderately;
-const gentlyString = inverseSquareLawCommonStrings.a11y.pullerEffort.gently;
-const lighlyString = inverseSquareLawCommonStrings.a11y.pullerEffort.lightly;
-const aLittleString = inverseSquareLawCommonStrings.a11y.pullerEffort.aLittle;
-const aTinyBitString = inverseSquareLawCommonStrings.a11y.pullerEffort.aTinyBit;
+const veryHardString = InverseSquareLawCommonStrings.a11y.pullerEffort.veryHard;
+const hardString = InverseSquareLawCommonStrings.a11y.pullerEffort.hard;
+const moderatelyString = InverseSquareLawCommonStrings.a11y.pullerEffort.moderately;
+const gentlyString = InverseSquareLawCommonStrings.a11y.pullerEffort.gently;
+const lighlyString = InverseSquareLawCommonStrings.a11y.pullerEffort.lightly;
+const aLittleString = InverseSquareLawCommonStrings.a11y.pullerEffort.aLittle;
+const aTinyBitString = InverseSquareLawCommonStrings.a11y.pullerEffort.aTinyBit;
 
-const forceEqualsPatternString = inverseSquareLawCommonStrings.a11y.voicing.levels.forceEqualsPattern;
-const forceArrowSizePatternString = inverseSquareLawCommonStrings.a11y.voicing.levels.forceArrowSizePattern;
-const forceOnObjectsPatternString = inverseSquareLawCommonStrings.a11y.voicing.levels.forceOnObjectsPattern;
+const forceEqualsPatternString = InverseSquareLawCommonStrings.a11y.voicing.levels.forceEqualsPattern;
+const forceArrowSizePatternString = InverseSquareLawCommonStrings.a11y.voicing.levels.forceArrowSizePattern;
+const forceOnObjectsPatternString = InverseSquareLawCommonStrings.a11y.voicing.levels.forceOnObjectsPattern;
 
 const SIZE_STRINGS = [
   tinyString,
@@ -88,9 +88,9 @@ const PULL_EFFORT_STINGS = [
 const CHANGE_DIRECTIONS = [ getSmallerString, null, getBiggerString ];
 
 // scientific notation
-const scientificNotationPatternString = inverseSquareLawCommonStrings.a11y.scientificNotationPattern;
-const negativeValuePatternString = inverseSquareLawCommonStrings.a11y.negativeValuePattern;
-const valuePatternString = inverseSquareLawCommonStrings.a11y.valuePattern;
+const scientificNotationPatternString = InverseSquareLawCommonStrings.a11y.scientificNotationPattern;
+const negativeValuePatternString = InverseSquareLawCommonStrings.a11y.negativeValuePattern;
+const valuePatternString = InverseSquareLawCommonStrings.a11y.valuePattern;
 
 class ForceDescriber extends ISLCDescriber {
 

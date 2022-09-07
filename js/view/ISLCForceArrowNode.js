@@ -17,12 +17,12 @@ import PhetFont from '../../../scenery-phet/js/PhetFont.js';
 import ScientificNotationNode from '../../../scenery-phet/js/ScientificNotationNode.js';
 import { Node, ReadingBlock, Rectangle, RichText } from '../../../scenery/js/imports.js';
 import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
-import inverseSquareLawCommonStrings from '../inverseSquareLawCommonStrings.js';
+import InverseSquareLawCommonStrings from '../InverseSquareLawCommonStrings.js';
 import ISLCConstants from '../ISLCConstants.js';
 import DefaultDirection from './DefaultDirection.js';
 
-const forceOnObjectByOtherObjectPatternString = inverseSquareLawCommonStrings.forceOnObjectByOtherObjectPattern;
-const forceOnObjectByOtherObjectWithUnitsPatternString = inverseSquareLawCommonStrings.forceOnObjectByOtherObjectWithUnitsPattern;
+const forceOnObjectByOtherObjectPatternString = InverseSquareLawCommonStrings.forceOnObjectByOtherObjectPattern;
+const forceOnObjectByOtherObjectWithUnitsPatternString = InverseSquareLawCommonStrings.forceOnObjectByOtherObjectWithUnitsPattern;
 
 // constants
 const ARROW_LENGTH = 8; // empirically determined

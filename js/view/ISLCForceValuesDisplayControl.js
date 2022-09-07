@@ -12,16 +12,16 @@ import { Text, VBox } from '../../../scenery/js/imports.js';
 import VerticalAquaRadioButtonGroup from '../../../sun/js/VerticalAquaRadioButtonGroup.js';
 import Tandem from '../../../tandem/js/Tandem.js';
 import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
-import inverseSquareLawCommonStrings from '../inverseSquareLawCommonStrings.js';
+import InverseSquareLawCommonStrings from '../InverseSquareLawCommonStrings.js';
 import ISLCConstants from '../ISLCConstants.js';
 import ForceValuesDisplayEnum from '../model/ForceValuesDisplayEnum.js';
 
 // constants
-const decimalNotationString = inverseSquareLawCommonStrings.decimalNotation;
-const forceValuesString = inverseSquareLawCommonStrings.forceValues;
-const hiddenString = inverseSquareLawCommonStrings.hidden;
-const scientificNotationString = inverseSquareLawCommonStrings.scientificNotation;
-const forceValuesHelpTextString = inverseSquareLawCommonStrings.a11y.forceValuesHelpText;
+const decimalNotationString = InverseSquareLawCommonStrings.decimalNotation;
+const forceValuesString = InverseSquareLawCommonStrings.forceValues;
+const hiddenString = InverseSquareLawCommonStrings.hidden;
+const scientificNotationString = InverseSquareLawCommonStrings.scientificNotation;
+const forceValuesHelpTextString = InverseSquareLawCommonStrings.a11y.forceValuesHelpText;
 
 const TEXT_TANDEM_NAME = 'labelText';
 

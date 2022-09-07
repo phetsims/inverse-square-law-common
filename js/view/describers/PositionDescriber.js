@@ -13,65 +13,65 @@ import StringProperty from '../../../../axon/js/StringProperty.js';
 import merge from '../../../../phet-core/js/merge.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import inverseSquareLawCommon from '../../inverseSquareLawCommon.js';
-import inverseSquareLawCommonStrings from '../../inverseSquareLawCommonStrings.js';
+import InverseSquareLawCommonStrings from '../../InverseSquareLawCommonStrings.js';
 import ISLCObjectEnum from '../ISLCObjectEnum.js';
 import ISLCDescriber from './ISLCDescriber.js';
 
-const unitsMetersString = inverseSquareLawCommonStrings.units.meters;
-const unitsMeterString = inverseSquareLawCommonStrings.units.meter;
+const unitsMetersString = InverseSquareLawCommonStrings.units.meters;
+const unitsMeterString = InverseSquareLawCommonStrings.units.meter;
 
-const objectLabelPositionPatternString = inverseSquareLawCommonStrings.a11y.sphere.objectLabelPositionPattern;
-const distanceAndValueSummaryPatternString = inverseSquareLawCommonStrings.a11y.screenSummary.distanceAndValueSummaryPattern;
-const qualitativeDistanceEachOtherPatternString = inverseSquareLawCommonStrings.a11y.screenSummary.qualitativeDistanceEachOtherPattern;
-const centersExactlyPatternString = inverseSquareLawCommonStrings.a11y.screenSummary.centersExactlyPattern;
-const quantitativeAndQualitativePatternString = inverseSquareLawCommonStrings.a11y.screenSummary.quantitativeAndQualitativePattern;
-const centersOfObjectsDistancePatternString = inverseSquareLawCommonStrings.a11y.screenSummary.centersOfObjectsDistancePattern;
+const objectLabelPositionPatternString = InverseSquareLawCommonStrings.a11y.sphere.objectLabelPositionPattern;
+const distanceAndValueSummaryPatternString = InverseSquareLawCommonStrings.a11y.screenSummary.distanceAndValueSummaryPattern;
+const qualitativeDistanceEachOtherPatternString = InverseSquareLawCommonStrings.a11y.screenSummary.qualitativeDistanceEachOtherPattern;
+const centersExactlyPatternString = InverseSquareLawCommonStrings.a11y.screenSummary.centersExactlyPattern;
+const quantitativeAndQualitativePatternString = InverseSquareLawCommonStrings.a11y.screenSummary.quantitativeAndQualitativePattern;
+const centersOfObjectsDistancePatternString = InverseSquareLawCommonStrings.a11y.screenSummary.centersOfObjectsDistancePattern;
 
-const positionDistanceFromOtherObjectPatternString = inverseSquareLawCommonStrings.a11y.position.valuetext.positionDistanceFromOtherObjectPattern;
-const positionProgressOrLandmarkClauseString = inverseSquareLawCommonStrings.a11y.positionProgressOrLandmarkClause;
-const distanceAndUnitsPatternString = inverseSquareLawCommonStrings.a11y.position.valuetext.distanceAndUnitsPattern;
-const centersApartPatternString = inverseSquareLawCommonStrings.a11y.position.valuetext.centersApartPattern;
-const quantitativeDistancePatternString = inverseSquareLawCommonStrings.a11y.position.valuetext.quantitativeDistancePattern;
-const distanceFromOtherObjectPatternString = inverseSquareLawCommonStrings.a11y.position.valuetext.distanceFromOtherObjectPattern;
-const distanceFromOtherObjectSentencePatternString = inverseSquareLawCommonStrings.a11y.position.valuetext.distanceFromOtherObjectSentencePattern;
+const positionDistanceFromOtherObjectPatternString = InverseSquareLawCommonStrings.a11y.position.valuetext.positionDistanceFromOtherObjectPattern;
+const positionProgressOrLandmarkClauseString = InverseSquareLawCommonStrings.a11y.positionProgressOrLandmarkClause;
+const distanceAndUnitsPatternString = InverseSquareLawCommonStrings.a11y.position.valuetext.distanceAndUnitsPattern;
+const centersApartPatternString = InverseSquareLawCommonStrings.a11y.position.valuetext.centersApartPattern;
+const quantitativeDistancePatternString = InverseSquareLawCommonStrings.a11y.position.valuetext.quantitativeDistancePattern;
+const distanceFromOtherObjectPatternString = InverseSquareLawCommonStrings.a11y.position.valuetext.distanceFromOtherObjectPattern;
+const distanceFromOtherObjectSentencePatternString = InverseSquareLawCommonStrings.a11y.position.valuetext.distanceFromOtherObjectSentencePattern;
 
-const farthestFromString = inverseSquareLawCommonStrings.a11y.qualitative.farthestFrom;
-const extremelyFarFromString = inverseSquareLawCommonStrings.a11y.qualitative.extremelyFarFrom;
-const veryFarFromString = inverseSquareLawCommonStrings.a11y.qualitative.veryFarFrom;
-const farFromString = inverseSquareLawCommonStrings.a11y.qualitative.farFrom;
-const notSoCloseToString = inverseSquareLawCommonStrings.a11y.qualitative.notSoCloseTo;
-const closeToString = inverseSquareLawCommonStrings.a11y.qualitative.closeTo;
-const veryCloseToString = inverseSquareLawCommonStrings.a11y.qualitative.veryCloseTo;
-const extremelyCloseToString = inverseSquareLawCommonStrings.a11y.qualitative.extremelyCloseTo;
-const closestToString = inverseSquareLawCommonStrings.a11y.qualitative.closestTo;
+const farthestFromString = InverseSquareLawCommonStrings.a11y.qualitative.farthestFrom;
+const extremelyFarFromString = InverseSquareLawCommonStrings.a11y.qualitative.extremelyFarFrom;
+const veryFarFromString = InverseSquareLawCommonStrings.a11y.qualitative.veryFarFrom;
+const farFromString = InverseSquareLawCommonStrings.a11y.qualitative.farFrom;
+const notSoCloseToString = InverseSquareLawCommonStrings.a11y.qualitative.notSoCloseTo;
+const closeToString = InverseSquareLawCommonStrings.a11y.qualitative.closeTo;
+const veryCloseToString = InverseSquareLawCommonStrings.a11y.qualitative.veryCloseTo;
+const extremelyCloseToString = InverseSquareLawCommonStrings.a11y.qualitative.extremelyCloseTo;
+const closestToString = InverseSquareLawCommonStrings.a11y.qualitative.closestTo;
 
-const farthestFromCapitalizedString = inverseSquareLawCommonStrings.a11y.qualitative.farthestFromCapitalized;
-const extremelyFarFromCapitalizedString = inverseSquareLawCommonStrings.a11y.qualitative.extremelyFarFromCapitalized;
-const veryFarFromCapitalizedString = inverseSquareLawCommonStrings.a11y.qualitative.veryFarFromCapitalized;
-const farFromCapitalizedString = inverseSquareLawCommonStrings.a11y.qualitative.farFromCapitalized;
-const notSoCloseToCapitalizedString = inverseSquareLawCommonStrings.a11y.qualitative.notSoCloseToCapitalized;
-const closeToCapitalizedString = inverseSquareLawCommonStrings.a11y.qualitative.closeToCapitalized;
-const veryCloseToCapitalizedString = inverseSquareLawCommonStrings.a11y.qualitative.veryCloseToCapitalized;
-const extremelyCloseToCapitalizedString = inverseSquareLawCommonStrings.a11y.qualitative.extremelyCloseToCapitalized;
-const closestToCapitalizedString = inverseSquareLawCommonStrings.a11y.qualitative.closestToCapitalized;
+const farthestFromCapitalizedString = InverseSquareLawCommonStrings.a11y.qualitative.farthestFromCapitalized;
+const extremelyFarFromCapitalizedString = InverseSquareLawCommonStrings.a11y.qualitative.extremelyFarFromCapitalized;
+const veryFarFromCapitalizedString = InverseSquareLawCommonStrings.a11y.qualitative.veryFarFromCapitalized;
+const farFromCapitalizedString = InverseSquareLawCommonStrings.a11y.qualitative.farFromCapitalized;
+const notSoCloseToCapitalizedString = InverseSquareLawCommonStrings.a11y.qualitative.notSoCloseToCapitalized;
+const closeToCapitalizedString = InverseSquareLawCommonStrings.a11y.qualitative.closeToCapitalized;
+const veryCloseToCapitalizedString = InverseSquareLawCommonStrings.a11y.qualitative.veryCloseToCapitalized;
+const extremelyCloseToCapitalizedString = InverseSquareLawCommonStrings.a11y.qualitative.extremelyCloseToCapitalized;
+const closestToCapitalizedString = InverseSquareLawCommonStrings.a11y.qualitative.closestToCapitalized;
 
-const closerString = inverseSquareLawCommonStrings.a11y.qualitative.closer;
-const fartherAwayString = inverseSquareLawCommonStrings.a11y.qualitative.fartherAway;
+const closerString = InverseSquareLawCommonStrings.a11y.qualitative.closer;
+const fartherAwayString = InverseSquareLawCommonStrings.a11y.qualitative.fartherAway;
 
-const distanceApartPatternString = inverseSquareLawCommonStrings.a11y.sphere.distanceApartPattern;
-const spherePositionHelpTextString = inverseSquareLawCommonStrings.a11y.sphere.positionHelpText;
+const distanceApartPatternString = InverseSquareLawCommonStrings.a11y.sphere.distanceApartPattern;
+const spherePositionHelpTextString = InverseSquareLawCommonStrings.a11y.sphere.positionHelpText;
 
 // track landmarks
-const leftSideOfTrackString = inverseSquareLawCommonStrings.a11y.position.landmarks.leftSideOfTrack;
-const rightSideOfTrackString = inverseSquareLawCommonStrings.a11y.position.landmarks.rightSideOfTrack;
-const lastStopRightString = inverseSquareLawCommonStrings.a11y.position.landmarks.lastStopRight;
-const lastStopLeftString = inverseSquareLawCommonStrings.a11y.position.landmarks.lastStopLeft;
+const leftSideOfTrackString = InverseSquareLawCommonStrings.a11y.position.landmarks.leftSideOfTrack;
+const rightSideOfTrackString = InverseSquareLawCommonStrings.a11y.position.landmarks.rightSideOfTrack;
+const lastStopRightString = InverseSquareLawCommonStrings.a11y.position.landmarks.lastStopRight;
+const lastStopLeftString = InverseSquareLawCommonStrings.a11y.position.landmarks.lastStopLeft;
 
-const voicingLevelsMassQuantitativePatternString = inverseSquareLawCommonStrings.a11y.voicing.levels.massQuantitativePattern;
-const voicingLevelsMassQualitativePatternString = inverseSquareLawCommonStrings.a11y.voicing.levels.massQualitativePattern;
+const voicingLevelsMassQuantitativePatternString = InverseSquareLawCommonStrings.a11y.voicing.levels.massQuantitativePattern;
+const voicingLevelsMassQualitativePatternString = InverseSquareLawCommonStrings.a11y.voicing.levels.massQualitativePattern;
 
-const voicingLevelsMassQuantitativeWithoutLabelPatternString = inverseSquareLawCommonStrings.a11y.voicing.levels.massQuantitativeWithoutLabelPattern;
-const voicingLevelsMassQualitativeWithoutLabelPatternString = inverseSquareLawCommonStrings.a11y.voicing.levels.massQualitativeWithoutLabelPattern;
+const voicingLevelsMassQuantitativeWithoutLabelPatternString = InverseSquareLawCommonStrings.a11y.voicing.levels.massQuantitativeWithoutLabelPattern;
+const voicingLevelsMassQualitativeWithoutLabelPatternString = InverseSquareLawCommonStrings.a11y.voicing.levels.massQualitativeWithoutLabelPattern;
 
 const RELATIVE_DISTANCE_STRINGS = [
   farthestFromString,

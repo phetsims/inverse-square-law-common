@@ -16,7 +16,7 @@ import StringUtils from '../../../phetcommon/js/util/StringUtils.js';
 import GrabDragInteraction from '../../../scenery-phet/js/accessibility/GrabDragInteraction.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
 import RulerNode from '../../../scenery-phet/js/RulerNode.js';
-import sceneryPhetStrings from '../../../scenery-phet/js/sceneryPhetStrings.js';
+import SceneryPhetStrings from '../../../scenery-phet/js/SceneryPhetStrings.js';
 import { DragListener, FocusHighlightFromNode, KeyboardDragListener, KeyboardUtils, Line, Node } from '../../../scenery/js/imports.js';
 import SoundClip from '../../../tambo/js/sound-generators/SoundClip.js';
 import SoundLevelEnum from '../../../tambo/js/SoundLevelEnum.js';
@@ -27,16 +27,16 @@ import Tandem from '../../../tandem/js/Tandem.js';
 import Utterance from '../../../utterance-queue/js/Utterance.js';
 import rulerMovement000_mp3 from '../../sounds/rulerMovement000_mp3.js';
 import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
-import inverseSquareLawCommonStrings from '../inverseSquareLawCommonStrings.js';
+import InverseSquareLawCommonStrings from '../InverseSquareLawCommonStrings.js';
 import ISLCQueryParameters from '../ISLCQueryParameters.js';
 
 // constants
-const unitsCentimetersString = inverseSquareLawCommonStrings.units.centimeters;
-const rulerHelpTextString = inverseSquareLawCommonStrings.a11y.ruler.rulerHelpText;
-const rulerKeyboardHintString = inverseSquareLawCommonStrings.a11y.ruler.rulerKeyboardHint;
-const gestureHelpTextPatternString = sceneryPhetStrings.a11y.grabDrag.gestureHelpTextPattern;
-const rulerLabelString = inverseSquareLawCommonStrings.a11y.ruler.rulerLabel;
-const measureDistanceRulerString = inverseSquareLawCommonStrings.a11y.ruler.measureDistanceRuler;
+const unitsCentimetersString = InverseSquareLawCommonStrings.units.centimeters;
+const rulerHelpTextString = InverseSquareLawCommonStrings.a11y.ruler.rulerHelpText;
+const rulerKeyboardHintString = InverseSquareLawCommonStrings.a11y.ruler.rulerKeyboardHint;
+const gestureHelpTextPatternString = SceneryPhetStrings.a11y.grabDrag.gestureHelpTextPattern;
+const rulerLabelString = InverseSquareLawCommonStrings.a11y.ruler.rulerLabel;
+const measureDistanceRulerString = InverseSquareLawCommonStrings.a11y.ruler.measureDistanceRuler;
 
 const RULER_WIDTH = 500;
 const RULER_HEIGHT = 35;

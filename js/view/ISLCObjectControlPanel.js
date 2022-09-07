@@ -14,10 +14,10 @@ import PhetFont from '../../../scenery-phet/js/PhetFont.js';
 import { GroupFocusHighlightFromNode, Text } from '../../../scenery/js/imports.js';
 import Tandem from '../../../tandem/js/Tandem.js';
 import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
-import inverseSquareLawCommonStrings from '../inverseSquareLawCommonStrings.js';
+import InverseSquareLawCommonStrings from '../InverseSquareLawCommonStrings.js';
 import ISLCPanel from './ISLCPanel.js';
 
-const pattern0Value1UnitsString = inverseSquareLawCommonStrings.pattern_0value_1units;
+const pattern0Value1UnitsString = InverseSquareLawCommonStrings.pattern_0value_1units;
 
 // constants
 const TITLE_MAX_WIDTH = 150; // max widths are set empirically to handle long strings

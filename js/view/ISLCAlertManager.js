@@ -12,10 +12,10 @@
 import Alerter from '../../../scenery-phet/js/accessibility/describers/Alerter.js';
 import ActivationUtterance from '../../../utterance-queue/js/ActivationUtterance.js';
 import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
-import inverseSquareLawCommonStrings from '../inverseSquareLawCommonStrings.js';
+import InverseSquareLawCommonStrings from '../InverseSquareLawCommonStrings.js';
 
 // constants
-const forceValuesHiddenString = inverseSquareLawCommonStrings.a11y.forceValuesHidden;
+const forceValuesHiddenString = InverseSquareLawCommonStrings.a11y.forceValuesHidden;
 
 class ISLCAlertManager extends Alerter {
 

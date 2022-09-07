@@ -279,8 +279,8 @@ type StringsType = {
   }
 };
 
-const inverseSquareLawCommonStrings = getStringModule( 'INVERSE_SQUARE_LAW_COMMON' ) as StringsType;
+const InverseSquareLawCommonStrings = getStringModule( 'INVERSE_SQUARE_LAW_COMMON' ) as StringsType;
 
-inverseSquareLawCommon.register( 'inverseSquareLawCommonStrings', inverseSquareLawCommonStrings );
+inverseSquareLawCommon.register( 'InverseSquareLawCommonStrings', InverseSquareLawCommonStrings );
 
-export default inverseSquareLawCommonStrings;
+export default InverseSquareLawCommonStrings;
