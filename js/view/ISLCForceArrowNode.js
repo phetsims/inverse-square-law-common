@@ -123,6 +123,7 @@ class ISLCForceArrowNode extends ReadingBlock( Node ) {
       maxWidth: 300, // empirically determined through testing with long strings
       y: -20,
       tandem: tandem.createTandem( 'forceText' ),
+      phetioVisiblePropertyInstrumented: true,
       phetioDocumentation: 'This text updates from the model as the force changes, and cannot be edited.',
       stringPropertyOptions: { phetioReadOnly: true }
     } );
