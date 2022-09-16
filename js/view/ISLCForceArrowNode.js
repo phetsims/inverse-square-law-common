@@ -124,7 +124,7 @@ class ISLCForceArrowNode extends ReadingBlock( Node ) {
       y: -20,
       tandem: tandem.createTandem( 'forceText' ),
       phetioDocumentation: 'This text updates from the model as the force changes, and cannot be edited.',
-      textPropertyOptions: { phetioReadOnly: true }
+      stringPropertyOptions: { phetioReadOnly: true }
     } );
 
     // @private - tip and tail set in redrawArrow
