@@ -47,32 +47,29 @@ class ISLCForceValuesDisplayControl extends VBox {
     // create these "throw away" Tandems in order to have the proper nesting inside the radio button group. This is
     // result of two patterns conflicting: dependency injection for content Nodes and lazy Tandem creation by the
     // component.
-    const decimalNotationTandem = forceValuesGroupTandem.createTandem( 'decimalNotationRadioButton' );
-    const scientificNotationTandem = forceValuesGroupTandem.createTandem( 'scientificNotationRadioButton' );
-    const hiddenTandem = forceValuesGroupTandem.createTandem( 'hiddenRadioButton' );
     const radioButtonContent = [
       {
         value: ForceValuesDisplayEnum.DECIMAL,
-        node: new Text( decimalNotationString, merge( {}, ISLCConstants.UI_TEXT_OPTIONS, {
-          tandem: decimalNotationTandem.createTandem( TEXT_TANDEM_NAME )
+        createNode: tandem => new Text( decimalNotationString, merge( {}, ISLCConstants.UI_TEXT_OPTIONS, {
+          tandem: tandem.createTandem( TEXT_TANDEM_NAME )
         } ) ),
-        tandemName: decimalNotationTandem.name,
+        tandemName: 'decimalNotationRadioButton',
         labelContent: decimalNotationString
       },
       {
         value: ForceValuesDisplayEnum.SCIENTIFIC,
-        node: new Text( scientificNotationString, merge( {}, ISLCConstants.UI_TEXT_OPTIONS, {
-          tandem: scientificNotationTandem.createTandem( TEXT_TANDEM_NAME )
+        createNode: tandem => new Text( scientificNotationString, merge( {}, ISLCConstants.UI_TEXT_OPTIONS, {
+          tandem: tandem.createTandem( TEXT_TANDEM_NAME )
         } ) ),
-        tandemName: scientificNotationTandem.name,
+        tandemName: 'scientificNotationRadioButton',
         labelContent: scientificNotationString
       },
       {
         value: ForceValuesDisplayEnum.HIDDEN,
-        node: new Text( hiddenString, merge( {}, ISLCConstants.UI_TEXT_OPTIONS, {
-          tandem: hiddenTandem.createTandem( TEXT_TANDEM_NAME )
+        createNode: tandem => new Text( hiddenString, merge( {}, ISLCConstants.UI_TEXT_OPTIONS, {
+          tandem: tandem.createTandem( TEXT_TANDEM_NAME )
         } ) ),
-        tandemName: hiddenTandem.name,
+        tandemName: 'hiddenRadioButton',
         labelContent: hiddenString
       }
     ];
