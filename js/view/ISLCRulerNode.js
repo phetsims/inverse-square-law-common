@@ -17,7 +17,7 @@ import GrabDragInteraction from '../../../scenery-phet/js/accessibility/GrabDrag
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
 import RulerNode from '../../../scenery-phet/js/RulerNode.js';
 import SceneryPhetStrings from '../../../scenery-phet/js/SceneryPhetStrings.js';
-import { DragListener, FocusHighlightFromNode, KeyboardDragListener, KeyboardUtils, Line, Node } from '../../../scenery/js/imports.js';
+import { DragListener, FocusHighlightFromNode, InteractiveHighlighting, KeyboardDragListener, KeyboardUtils, Line, Node } from '../../../scenery/js/imports.js';
 import SoundClip from '../../../tambo/js/sound-generators/SoundClip.js';
 import SoundLevelEnum from '../../../tambo/js/SoundLevelEnum.js';
 import soundManager from '../../../tambo/js/soundManager.js';
@@ -44,7 +44,7 @@ const RULER_INSET = 10;
 const SHOW_RULER_REGIONS = ISLCQueryParameters.showRulerRegions;
 const SOUND_PLAY_DRAG_DISTANCE = 0.5; // in screen coords
 
-class ISLCRulerNode extends Node {
+class ISLCRulerNode extends InteractiveHighlighting( Node ) {
 
   /**
    * @param {Property.<number>} rulerPositionProperty
