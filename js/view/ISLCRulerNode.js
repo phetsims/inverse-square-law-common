@@ -301,7 +301,7 @@ class ISLCRulerNode extends InteractiveHighlighting( Node ) {
     // to the child RulerNode - PDOM siblings need to reposition with the RulerNode
     this.setPDOMTransformSourceNode( ruler );
 
-    // the ruler's origin is the center, this offset get's the edge of it.
+    // the ruler's origin is the center, this offset gets the edge of it.
     const rulerAlignWithObjectXOffset = modelViewTransform.viewToModelDeltaX( RULER_WIDTH ) / 2;
 
     // register hotkeys
