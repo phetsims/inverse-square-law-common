@@ -34,7 +34,7 @@ import ISLCQueryParameters from '../ISLCQueryParameters.js';
 const unitsCentimetersString = InverseSquareLawCommonStrings.units.centimeters;
 const rulerHelpTextString = InverseSquareLawCommonStrings.a11y.ruler.rulerHelpText;
 const rulerKeyboardHintString = InverseSquareLawCommonStrings.a11y.ruler.rulerKeyboardHint;
-const gestureHelpTextPatternString = SceneryPhetStrings.a11y.grabDrag.gestureHelpTextPatternStringProperty;
+const gestureHelpTextPatternStringProperty = SceneryPhetStrings.a11y.grabDrag.gestureHelpTextPatternStringProperty;
 const rulerLabelString = InverseSquareLawCommonStrings.a11y.ruler.rulerLabel;
 const measureDistanceRulerString = InverseSquareLawCommonStrings.a11y.ruler.measureDistanceRuler;
 
@@ -108,7 +108,7 @@ class ISLCRulerNode extends InteractiveHighlighting( Node ) {
 
         // Overwrite the gesture help text to include ruler-specific logic. This isn't always needed.
         gestureHelpText: StringUtils.fillIn( rulerHelpTextString, {
-          deviceSpecificHint: StringUtils.fillIn( gestureHelpTextPatternString, {
+          deviceSpecificHint: StringUtils.fillIn( gestureHelpTextPatternStringProperty, {
             objectToGrab: rulerLabelString
           } )
         } )
