@@ -238,7 +238,7 @@ class ISLCForceArrowNode extends ReadingBlock( Node ) {
           }
         }
 
-        this.arrowText.text = StringUtils.fillIn( forceOnObjectByOtherObjectWithUnitsPatternString, {
+        this.arrowText.string = StringUtils.fillIn( forceOnObjectByOtherObjectWithUnitsPatternString, {
           thisObject: this.label,
           otherObject: this.otherObjectLabel,
           value: formattedString
@@ -249,7 +249,7 @@ class ISLCForceArrowNode extends ReadingBlock( Node ) {
       }
     }
     else {
-      this.arrowText.text = StringUtils.fillIn( forceOnObjectByOtherObjectPatternString, {
+      this.arrowText.string = StringUtils.fillIn( forceOnObjectByOtherObjectPatternString, {
         thisObject: this.label,
         otherObject: this.otherObjectLabel
       } );
