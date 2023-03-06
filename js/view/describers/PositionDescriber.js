@@ -139,7 +139,7 @@ class PositionDescriber extends ISLCDescriber {
     // @public {boolean|null} - previous value of this.movedCloser
     this.lastMoveCloser = false;
 
-    // @private {boolean|null} - Whether or not the masses moved closer last position change. only set when an object
+    // @private {boolean|null} - Whether the masses moved closer last position change. only set when an object
     // is dragging. `null` if the user isn't interacting specifically with the objects
     this.movedCloser = false;
 
