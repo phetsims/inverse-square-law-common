@@ -16,7 +16,7 @@ import Utils from '../../../dot/js/Utils.js';
 import merge from '../../../phet-core/js/merge.js';
 import NumberIO from '../../../tandem/js/types/NumberIO.js';
 import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
-import ISLCObjectEnum from '../view/ISLCObjectEnum.js';
+import ISLCObjectEnum from './ISLCObjectEnum.js';
 
 // constants
 const OBJECT_ONE = ISLCObjectEnum.OBJECT_ONE;

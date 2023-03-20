@@ -9,7 +9,7 @@
  */
 
 import inverseSquareLawCommon from '../../inverseSquareLawCommon.js';
-import ISLCObjectEnum from '../ISLCObjectEnum.js';
+import ISLCObjectEnum from '../../model/ISLCObjectEnum.js';
 
 class ISLCDescriber {
 

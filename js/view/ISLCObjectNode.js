@@ -27,7 +27,7 @@ import DefaultDirection from './DefaultDirection.js';
 import PositionDescriber from './describers/PositionDescriber.js';
 import ISLCAlertManager from './ISLCAlertManager.js';
 import ISLCForceArrowNode from './ISLCForceArrowNode.js';
-import ISLCObjectEnum from './ISLCObjectEnum.js';
+import ISLCObjectEnum from '../model/ISLCObjectEnum.js';
 import ISLCPullerNode from './ISLCPullerNode.js';
 
 const NEGATIVE_FILL = new Color( '#66f' );

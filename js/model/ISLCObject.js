@@ -16,7 +16,7 @@ import merge from '../../../phet-core/js/merge.js';
 import NumberIO from '../../../tandem/js/types/NumberIO.js';
 import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
 import ISLCConstants from '../ISLCConstants.js';
-import ISLCObjectEnum from '../view/ISLCObjectEnum.js';
+import ISLCObjectEnum from './ISLCObjectEnum.js';
 
 class ISLCObject {
 

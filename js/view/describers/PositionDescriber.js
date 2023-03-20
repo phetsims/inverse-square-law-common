@@ -14,7 +14,7 @@ import merge from '../../../../phet-core/js/merge.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import inverseSquareLawCommon from '../../inverseSquareLawCommon.js';
 import InverseSquareLawCommonStrings from '../../InverseSquareLawCommonStrings.js';
-import ISLCObjectEnum from '../ISLCObjectEnum.js';
+import ISLCObjectEnum from '../../model/ISLCObjectEnum.js';
 import ISLCDescriber from './ISLCDescriber.js';
 
 const unitsMetersString = InverseSquareLawCommonStrings.units.meters;
