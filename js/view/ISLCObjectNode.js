@@ -271,7 +271,7 @@ class ISLCObjectNode extends AccessibleSlider( Node, 0 ) {
     this.dragListener = new DragListener( {
       allowTouchSnag: true,
       start: event => {
-        clickOffset = this.dragNode.globalToParentPoint( event.pointer.point ).x - event.target.x;
+        clickOffset = this.dragNode.globalToParentPoint( event.pointer.point ).x - this.dragNode.x;
         object.isDraggingProperty.value = true;
 
         oldPosition = object.positionProperty.get();
