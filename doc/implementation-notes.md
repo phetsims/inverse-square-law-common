@@ -5,7 +5,7 @@ Basics. Due to the needs of the inheriting sims, it's common to pass in large op
 between the different requirements.
 
 ## Model
-First, see the model overview at https://github.com/phetsims/inverse-square-law-common/blob/master/doc/model.md
+First, see the model overview at https://github.com/phetsims/inverse-square-law-common/blob/main/doc/model.md
 
 The most fundamental interaction is between the two `ISLCObject`s within the `ISLCModel` space. The objects can only move 
 in 1D and are constrained by the bounds of the sim as well as the nearest edge of the other object. The model's step 
