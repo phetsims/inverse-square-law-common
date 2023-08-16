@@ -17,7 +17,7 @@ import GrabDragInteraction from '../../../scenery-phet/js/accessibility/GrabDrag
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
 import RulerNode from '../../../scenery-phet/js/RulerNode.js';
 import SceneryPhetStrings from '../../../scenery-phet/js/SceneryPhetStrings.js';
-import { DragListener, FocusHighlightFromNode, InteractiveHighlighting, KeyboardDragListener, KeyboardUtils, Line, Node } from '../../../scenery/js/imports.js';
+import { DragListener, HighlightFromNode, InteractiveHighlighting, KeyboardDragListener, KeyboardUtils, Line, Node } from '../../../scenery/js/imports.js';
 import SoundClip from '../../../tambo/js/sound-generators/SoundClip.js';
 import SoundLevelEnum from '../../../tambo/js/SoundLevelEnum.js';
 import soundManager from '../../../tambo/js/soundManager.js';
@@ -224,7 +224,7 @@ class ISLCRulerNode extends InteractiveHighlighting( Node ) {
     } ) );
 
     // pdom - custom focus highlight
-    const focusHighlight = new FocusHighlightFromNode( ruler, { useLocalBounds: true } );
+    const focusHighlight = new HighlightFromNode( ruler, { useLocalBounds: true } );
     this.setFocusHighlight( focusHighlight );
 
     const grabbedUtterance = new Utterance();

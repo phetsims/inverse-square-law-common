@@ -11,7 +11,7 @@ import merge from '../../../phet-core/js/merge.js';
 import StringUtils from '../../../phetcommon/js/util/StringUtils.js';
 import NumberControl from '../../../scenery-phet/js/NumberControl.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
-import { GroupFocusHighlightFromNode, Text } from '../../../scenery/js/imports.js';
+import { GroupHighlightFromNode, Text } from '../../../scenery/js/imports.js';
 import Tandem from '../../../tandem/js/Tandem.js';
 import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
 import InverseSquareLawCommonStrings from '../InverseSquareLawCommonStrings.js';
@@ -132,7 +132,7 @@ class ISLCObjectControlPanel extends ISLCPanel {
 
     // pdom - creates highlight that appears around this node when any ancestor (like the
     // NumberControl) has focus
-    this.groupFocusHighlight = new GroupFocusHighlightFromNode( this, {
+    this.groupFocusHighlight = new GroupHighlightFromNode( this, {
       useLocalBounds: true,
       dilationCoefficient: 3.7
     } );
