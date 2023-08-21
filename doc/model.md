@@ -4,7 +4,8 @@ This document describes the model for the all Inverse Square Law simulations.<br
 @author Michael Barlow (PhET Interactive Simulations)
 
 ## Coulomb's Law
-Coulomb's law  defines the force that two charges will exert upon each other.
+
+Coulomb's law defines the force that two charges will exert upon each other.
 
 F = k( q1 * q2 / r<sup>2</sup>)
 
@@ -17,6 +18,7 @@ q2 = the charge *right* object<br>
 r = the distance between the charges
 
 ## Gravitational Force
+
 Gravitation describes the attractive force between two point masses.
 
 F = G( m1 * m2 / r<sup>2</sup>)
