@@ -115,7 +115,7 @@ class ISLCForceArrowNode extends ReadingBlock( Node ) {
     };
 
     // @public (read-only) - for layout, the label for the arrow
-    this.arrowText = new RichText( '', {
+    this.forceText = new RichText( '', {
       font: options.arrowLabelFont,
       fill: options.arrowLabelFill,
       stroke: options.labelStroke,
@@ -137,10 +137,10 @@ class ISLCForceArrowNode extends ReadingBlock( Node ) {
     }, _.pick( options, [ 'headHeight', 'headWidth', 'tailWidth' ] ) ) );
 
     // @private
-    this.arrowTextBackground = new Rectangle( 0, 0, 1000, 1000, { fill: options.backgroundFill, opacity: 0.3 } );
-    this.addChild( this.arrowTextBackground );
+    this.forceTextBackground = new Rectangle( 0, 0, 1000, 1000, { fill: options.backgroundFill, opacity: 0.3 } );
+    this.addChild( this.forceTextBackground );
 
-    this.addChild( this.arrowText );
+    this.addChild( this.forceText );
     this.addChild( this.arrow );
 
     this.y = 0;
@@ -181,23 +181,23 @@ class ISLCForceArrowNode extends ReadingBlock( Node ) {
    * @param {Bounds2} parentToLocalBounds
    */
   setArrowTextPosition( parentToLocalBounds ) {
-    const arrowTextCenter = this.arrowText.center.copy();
+    const arrowTextCenter = this.forceText.center.copy();
     arrowTextCenter.x = 0;
     const localToParentPoint = this.localToParentPoint( arrowTextCenter );
-    if ( Math.floor( localToParentPoint.x - this.arrowText.width / 2 ) <= this.layoutBounds.left + TEXT_OFFSET ) {
-      this.arrowText.left = parentToLocalBounds.left + TEXT_OFFSET;
+    if ( Math.floor( localToParentPoint.x - this.forceText.width / 2 ) <= this.layoutBounds.left + TEXT_OFFSET ) {
+      this.forceText.left = parentToLocalBounds.left + TEXT_OFFSET;
     }
-    else if ( Math.ceil( localToParentPoint.x + this.arrowText.width / 2 ) >= this.layoutBounds.right - TEXT_OFFSET ) {
-      this.arrowText.right = parentToLocalBounds.right - TEXT_OFFSET;
+    else if ( Math.ceil( localToParentPoint.x + this.forceText.width / 2 ) >= this.layoutBounds.right - TEXT_OFFSET ) {
+      this.forceText.right = parentToLocalBounds.right - TEXT_OFFSET;
     }
     else {
-      this.arrowText.center = arrowTextCenter;
+      this.forceText.center = arrowTextCenter;
     }
 
     // set the background layout too
-    this.arrowTextBackground.rectWidth = this.arrowText.width + 4;
-    this.arrowTextBackground.rectHeight = this.arrowText.height + 2;
-    this.arrowTextBackground.center = this.arrowText.center;
+    this.forceTextBackground.rectWidth = this.forceText.width + 4;
+    this.forceTextBackground.rectHeight = this.forceText.height + 2;
+    this.forceTextBackground.center = this.forceText.center;
   }
 
   /**
@@ -238,7 +238,7 @@ class ISLCForceArrowNode extends ReadingBlock( Node ) {
           }
         }
 
-        this.arrowText.string = StringUtils.fillIn( forceOnObjectByOtherObjectWithUnitsPatternString, {
+        this.forceText.string = StringUtils.fillIn( forceOnObjectByOtherObjectWithUnitsPatternString, {
           thisObject: this.label,
           otherObject: this.otherObjectLabel,
           value: formattedString
@@ -249,7 +249,7 @@ class ISLCForceArrowNode extends ReadingBlock( Node ) {
       }
     }
     else {
-      this.arrowText.string = StringUtils.fillIn( forceOnObjectByOtherObjectPatternString, {
+      this.forceText.string = StringUtils.fillIn( forceOnObjectByOtherObjectPatternString, {
         thisObject: this.label,
         otherObject: this.otherObjectLabel
       } );
