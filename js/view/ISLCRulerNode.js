@@ -270,13 +270,13 @@ class ISLCRulerNode extends InteractiveHighlighting( Node ) {
     assert && assert( !options.onGrab, 'ISLCRulerNode sets its own onGrab' );
     assert && assert( !options.onRelease, 'ISLCRulerNode sets its own onRelease' );
     assert && assert( !options.listenersForDragState, 'ISLCRulerNode sets its own listenersForDragState' );
-    // eslint-disable-next-line tandem-name-should-match
+
     const grabDragInteractionOptions = merge( options.grabDragInteractionOptions, {
 
       onGrab: () => {
         grabRulerSoundPlayer.play();
 
-        // call this first to update the dsecriber state before the alert
+        // call this first to update the describer state before the alert
         rulerAlerter.onGrab();
 
         grabbedUtterance.alert = rulerAlerter.getRulerGrabbedAlertable();
