@@ -9,9 +9,9 @@ between the different requirements.
 First, see the model overview at https://github.com/phetsims/inverse-square-law-common/blob/main/doc/model.md
 
 The most fundamental interaction is between the two `ISLCObject`s within the `ISLCModel` space. The objects can only
-move
-in 1D and are constrained by the bounds of the sim as well as the nearest edge of the other object. The model's step
-function handles these constraints as well as force calculation and triggering the necessary events for visual updates.
+move in 1D and are constrained by the bounds of the sim as well as the nearest edge of the other object. The model's
+step function handles these constraints as well as force calculation and triggering the necessary events for visual
+updates.
 
 While the objects have defined radii, the force calculation is based on their center-to-center distance.
 
@@ -34,8 +34,7 @@ Force ranges are required for the mapping functions for the arrow width and pull
 This "view" output was added after initial development of this sim suite. The majority of the logic to achieve this
 output modality is in three places.
 
-* `*Describer.js` types are responsible for forming output strings from the model or
-  describer specific state.
+* `*Describer.js` types are responsible for forming output strings from the model or describer specific state.
 * `*AlertManager.js` types provide the majority of interface with aria-live alerts via
   `SCENERY_PHET/utteranceQueue`. Alert managers often use describers to form the strings they alert.
 * New listeners often need to be added in parallel to traditional mouse/touch listeners to support alternative input.
