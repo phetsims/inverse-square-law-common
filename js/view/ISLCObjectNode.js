@@ -239,7 +239,7 @@ class ISLCObjectNode extends AccessibleSlider( Node, 0 ) {
     this.addChild( this.dragNode );
 
     // @private
-    this.y = config.y; // TODO: is this needed? https://github.com/phetsims/tasks/issues/1129
+    this.y = config.y; //TODO https://github.com/phetsims/inverse-square-law-common/issues/88 is this needed?
 
     // Added for PhET-iO as a way to hide the dashed lines.
     const centerOfMassLineNode = new Node( { tandem: config.tandem.createTandem( 'centerOfMassLineNode' ) } );
