@@ -55,7 +55,6 @@ class ISLCRulerNode extends InteractiveHighlighting( Node ) {
    * @param {ModelViewTransform2} modelViewTransform
    * @param {function():number} getObject1Position - get the position in model coords, of the first object
    * @param {Alerter} rulerAlerter TODO  https://github.com/phetsims/least-squares-regression/issues/86 when other types need this, likely should create an ISLC interface for this
-   * @param {Tandem} tandem
    * @param {Object} [options]
    */
   constructor( rulerPositionProperty, dragBounds, modelViewTransform, getObject1Position, rulerAlerter, options ) {
