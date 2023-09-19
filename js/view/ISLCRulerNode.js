@@ -333,7 +333,7 @@ class ISLCRulerNode extends InteractiveHighlighting( Node ) {
 
     // @public - ruler node is never destroyed, no listener disposal necessary
     rulerPositionProperty.link( value => {
-      ruler.center = modelViewTransform.modelToViewPosition( value );
+      this.center = modelViewTransform.modelToViewPosition( value );
     } );
 
     if ( SHOW_RULER_REGIONS ) {
