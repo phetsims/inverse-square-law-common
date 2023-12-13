@@ -249,9 +249,9 @@ class ISLCRulerNode extends InteractiveHighlighting( Node ) {
       // as key is held down
       drag() {
         if ( options.snapToNearest ) {
-          const xModel = rulerPositionProperty.get().x;
+          const xModel = rulerPositionProperty.value.x;
           const snappedX = Utils.roundSymmetric( xModel / options.snapToNearest ) * options.snapToNearest;
-          rulerPositionProperty.set( new Vector2( snappedX, rulerPositionProperty.get().y ) );
+          rulerPositionProperty.set( new Vector2( snappedX, rulerPositionProperty.value.y ) );
         }
 
         // play a sound if the ruler has been dragged for a ways without being released
