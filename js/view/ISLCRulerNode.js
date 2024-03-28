@@ -305,7 +305,7 @@ class ISLCRulerNode extends InteractiveHighlighting( Node ) {
     const rulerAlignWithObjectXOffset = modelViewTransform.viewToModelDeltaX( RULER_WIDTH ) / 2;
 
     // register hotkeys
-    keyboardDragListener.hotkeys = [ {
+    keyboardDragListener.setHotkeys( [ {
       keys: [ KeyboardUtils.KEY_J, KeyboardUtils.KEY_C ], // jump to center of object 1
       callback: () => {
         const x = getObject1Position();
@@ -328,7 +328,7 @@ class ISLCRulerNode extends InteractiveHighlighting( Node ) {
 
         rulerAlerter.alertJumpHome();
       }
-    } ];
+    } ] );
 
 
     // @public - ruler node is never destroyed, no listener disposal necessary
