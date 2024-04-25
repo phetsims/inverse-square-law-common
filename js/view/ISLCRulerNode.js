@@ -17,7 +17,7 @@ import GrabDragInteraction from '../../../scenery-phet/js/accessibility/GrabDrag
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
 import RulerNode from '../../../scenery-phet/js/RulerNode.js';
 import SceneryPhetStrings from '../../../scenery-phet/js/SceneryPhetStrings.js';
-import { DragListener, HighlightFromNode, InteractiveHighlighting, KeyboardDragListener, KeyboardUtils, Line, Node } from '../../../scenery/js/imports.js';
+import { DragListener, HighlightFromNode, InteractiveHighlighting, KeyboardDragListener, KeyboardListener, Line, Node } from '../../../scenery/js/imports.js';
 import SoundClip from '../../../tambo/js/sound-generators/SoundClip.js';
 import SoundLevelEnum from '../../../tambo/js/SoundLevelEnum.js';
 import soundManager from '../../../tambo/js/soundManager.js';
@@ -270,6 +270,34 @@ class ISLCRulerNode extends InteractiveHighlighting( Node ) {
     assert && assert( !options.onRelease, 'ISLCRulerNode sets its own onRelease' );
     assert && assert( !options.listenersForDragState, 'ISLCRulerNode sets its own listenersForDragState' );
 
+    // the ruler's origin is the center, this offset gets the edge of it.
+    const rulerAlignWithObjectXOffset = modelViewTransform.viewToModelDeltaX( RULER_WIDTH ) / 2;
+
+    const jumpListener = new KeyboardListener( {
+      keys: [ 'j+c', 'j+h' ],
+      fire: ( event, pressedKeys ) => {
+        if ( pressedKeys === 'j+c' ) {
+          const x = getObject1Position();
+          const destinationPosition = new Vector2( x + rulerAlignWithObjectXOffset, options.modelYForCenterJump );
+          if ( !rulerPositionProperty.value.equals( destinationPosition ) ) {
+            rulerPositionProperty.set( destinationPosition );
+            movementSoundPlayer.play();
+          }
+
+          rulerAlerter.alertJumpCenterMass();
+        }
+        else if ( pressedKeys === 'j+h' ) {
+          if ( !rulerPositionProperty.value.equals( rulerPositionProperty.initialValue ) ) {
+            movementSoundPlayer.play();
+          }
+          rulerPositionProperty.set( rulerPositionProperty.initialValue );
+          this.grabDragInteraction.releaseDraggable();
+
+          rulerAlerter.alertJumpHome();
+        }
+      }
+    } );
+
     const grabDragInteractionOptions = merge( options.grabDragInteractionOptions, {
 
       onGrab: () => {
@@ -286,6 +314,8 @@ class ISLCRulerNode extends InteractiveHighlighting( Node ) {
         releaseRulerSoundPlayer.play();
       },
 
+      listenersForDragState: [ jumpListener ],
+
       tandem: options.tandem.createTandem( 'grabDragInteraction' )
     } );
 
@@ -300,36 +330,6 @@ class ISLCRulerNode extends InteractiveHighlighting( Node ) {
     // pdom - the GrabDragInteraction is added to this Node but the drag handler and transform changes are applied
     // to the child RulerNode - PDOM siblings need to reposition with the RulerNode
     this.setPDOMTransformSourceNode( ruler );
-
-    // the ruler's origin is the center, this offset gets the edge of it.
-    const rulerAlignWithObjectXOffset = modelViewTransform.viewToModelDeltaX( RULER_WIDTH ) / 2;
-
-    // register hotkeys
-    keyboardDragListener.setHotkeys( [ {
-      keys: [ KeyboardUtils.KEY_J, KeyboardUtils.KEY_C ], // jump to center of object 1
-      callback: () => {
-        const x = getObject1Position();
-        const destinationPosition = new Vector2( x + rulerAlignWithObjectXOffset, options.modelYForCenterJump );
-        if ( !rulerPositionProperty.value.equals( destinationPosition ) ) {
-          rulerPositionProperty.set( destinationPosition );
-          movementSoundPlayer.play();
-        }
-
-        rulerAlerter.alertJumpCenterMass();
-      }
-    }, {
-      keys: [ KeyboardUtils.KEY_J, KeyboardUtils.KEY_H ], // jump home
-      callback: () => {
-        if ( !rulerPositionProperty.value.equals( rulerPositionProperty.initialValue ) ) {
-          movementSoundPlayer.play();
-        }
-        rulerPositionProperty.set( rulerPositionProperty.initialValue );
-        this.grabDragInteraction.releaseDraggable();
-
-        rulerAlerter.alertJumpHome();
-      }
-    } ] );
-
 
     // @public - ruler node is never destroyed, no listener disposal necessary
     rulerPositionProperty.link( value => {
