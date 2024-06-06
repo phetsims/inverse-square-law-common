@@ -124,7 +124,7 @@ class ISLCObjectNode extends AccessibleSlider( Node, 0 ) {
       keyboardStep: config.stepSize,
       shiftKeyboardStep: config.snapToNearest,
       pageKeyboardStep: config.stepSize * 2,
-      a11yMapPDOMValue: value => Utils.toFixedNumber( value, 1 ),
+      pdomMapPDOMValue: value => Utils.toFixedNumber( value, 1 ),
       constrainValue: value => {
         const numberOfDecimalPlaces = Utils.numberOfDecimalPlaces( config.snapToNearest );
         return Utils.toFixedNumber( value, numberOfDecimalPlaces );
@@ -140,15 +140,15 @@ class ISLCObjectNode extends AccessibleSlider( Node, 0 ) {
         // voicing
         this.voicingSpeakDragResponse( object, object.positionProperty.value, oldPosition );
       },
-      a11yCreateContextResponseAlert: () => {
+      pdomCreateContextResponseAlert: () => {
         const newPosition = object.positionProperty.get();
         const positionChanged = newPosition !== oldPosition;
         return positionChanged ? forceDescriber.getVectorChangeText( object, false ) : forceDescriber.getPositionUnchangedAlertText( object );
       },
-      a11yCreateAriaValueText: positionDescriber.getPositionAriaValueTextCreator( whichObject ),
+      pdomCreateAriaValueText: positionDescriber.getPositionAriaValueTextCreator( whichObject ),
 
       // This object's PDOM description also depends on the position of the other object, so include it here.
-      a11yDependencies: config.additionalA11yDependencies.concat( object === model.object1 ?
+      pdomDependencies: config.additionalA11yDependencies.concat( object === model.object1 ?
         [ model.object2.positionProperty ] : [ model.object1.positionProperty ] )
     }, config );
 
