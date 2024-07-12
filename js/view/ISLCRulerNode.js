@@ -177,8 +177,11 @@ class ISLCRulerNode extends InteractiveHighlighting( Node ) {
     if ( options.movementSoundPlayer === null ) {
 
       // no sound player provided, use the default
-      movementSoundPlayer = new SoundClip( rulerMovement000_mp3, { initialOutputLevel: 0.2 } );
-      soundManager.addSoundGenerator( movementSoundPlayer, { sonificationLevel: SoundLevelEnum.EXTRA } );
+      movementSoundPlayer = new SoundClip( rulerMovement000_mp3, {
+        initialOutputLevel: 0.2,
+        sonificationLevel: SoundLevelEnum.EXTRA
+      } );
+      soundManager.addSoundGenerator( movementSoundPlayer );
     }
     else {
 
