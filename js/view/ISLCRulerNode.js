@@ -17,7 +17,7 @@ import GrabDragInteraction from '../../../scenery-phet/js/accessibility/GrabDrag
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
 import RulerNode from '../../../scenery-phet/js/RulerNode.js';
 import SceneryPhetStrings from '../../../scenery-phet/js/SceneryPhetStrings.js';
-import { DragListener, HighlightFromNode, InteractiveHighlighting, KeyboardDragListener, KeyboardListener, Line, Node } from '../../../scenery/js/imports.js';
+import { DragListener, HighlightFromNode, HotkeyData, InteractiveHighlighting, KeyboardDragListener, KeyboardListener, Line, Node } from '../../../scenery/js/imports.js';
 import SoundClip from '../../../tambo/js/sound-generators/SoundClip.js';
 import SoundLevelEnum from '../../../tambo/js/SoundLevelEnum.js';
 import soundManager from '../../../tambo/js/soundManager.js';
@@ -277,9 +277,12 @@ class ISLCRulerNode extends InteractiveHighlighting( Node ) {
     const rulerAlignWithObjectXOffset = modelViewTransform.viewToModelDeltaX( RULER_WIDTH ) / 2;
 
     const jumpListener = new KeyboardListener( {
-      keys: [ 'j+c', 'j+h' ],
+      keyStringProperties: HotkeyData.combineKeyStringProperties( [
+        ISLCRulerNode.JUMP_HOME_HOTKEY_DATA,
+        ISLCRulerNode.JUMP_CENTER_HOTKEY_DATA
+      ] ),
       fire: ( event, pressedKeys ) => {
-        if ( pressedKeys === 'j+c' ) {
+        if ( ISLCRulerNode.JUMP_CENTER_HOTKEY_DATA.hasKeyStroke( pressedKeys ) ) {
           const x = getObject1Position();
           const destinationPosition = new Vector2( x + rulerAlignWithObjectXOffset, options.modelYForCenterJump );
           if ( !rulerPositionProperty.value.equals( destinationPosition ) ) {
@@ -289,7 +292,7 @@ class ISLCRulerNode extends InteractiveHighlighting( Node ) {
 
           rulerAlerter.alertJumpCenterMass();
         }
-        else if ( pressedKeys === 'j+h' ) {
+        else if ( ISLCRulerNode.JUMP_HOME_HOTKEY_DATA.hasKeyStroke( pressedKeys ) ) {
           if ( !rulerPositionProperty.value.equals( rulerPositionProperty.initialValue ) ) {
             movementSoundPlayer.play();
           }
@@ -347,6 +350,18 @@ class ISLCRulerNode extends InteractiveHighlighting( Node ) {
       ruler.addChild( yLine );
     }
   }
+
+  static JUMP_HOME_HOTKEY_DATA = new HotkeyData( {
+    keyStringProperties: [ new Property( 'j+h' ) ],
+    binderName: 'Jump ruler to home position',
+    repoName: inverseSquareLawCommon.name
+  } );
+
+  static JUMP_CENTER_HOTKEY_DATA = new HotkeyData( {
+    keyStringProperties: [ new Property( 'j+c' ) ],
+    binderName: 'Jump start ruler to center position',
+    repoName: inverseSquareLawCommon.name
+  } );
 
   /**
    * @public
