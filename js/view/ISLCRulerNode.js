@@ -13,7 +13,7 @@ import Vector2 from '../../../dot/js/Vector2.js';
 import { Shape } from '../../../kite/js/imports.js';
 import merge from '../../../phet-core/js/merge.js';
 import StringUtils from '../../../phetcommon/js/util/StringUtils.js';
-import GrabDragInteraction from '../../../scenery-phet/js/accessibility/GrabDragInteraction.js';
+import GrabDragInteraction from '../../../scenery-phet/js/accessibility/grab-drag/GrabDragInteraction.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
 import RulerNode from '../../../scenery-phet/js/RulerNode.js';
 import SceneryPhetStrings from '../../../scenery-phet/js/SceneryPhetStrings.js';
