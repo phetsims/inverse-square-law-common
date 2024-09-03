@@ -271,7 +271,7 @@ class ISLCRulerNode extends InteractiveHighlighting( Node ) {
 
     assert && assert( !options.onGrab, 'ISLCRulerNode sets its own onGrab' );
     assert && assert( !options.onRelease, 'ISLCRulerNode sets its own onRelease' );
-    assert && assert( !options.listenersForDragState, 'ISLCRulerNode sets its own listenersForDragState' );
+    assert && assert( !options.listenersWhileDraggable, 'ISLCRulerNode sets its own listenersWhileDraggable' );
 
     // the ruler's origin is the center, this offset gets the edge of it.
     const rulerAlignWithObjectXOffset = modelViewTransform.viewToModelDeltaX( RULER_WIDTH ) / 2;
@@ -320,7 +320,7 @@ class ISLCRulerNode extends InteractiveHighlighting( Node ) {
         releaseRulerSoundPlayer.play();
       },
 
-      listenersForDragState: [ jumpListener ],
+      listenersWhileDraggable: [ jumpListener ],
 
       tandem: options.tandem.createTandem( 'grabDragInteraction' )
     } );
