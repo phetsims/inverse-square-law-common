@@ -297,7 +297,7 @@ class ISLCRulerNode extends InteractiveHighlighting( Node ) {
             movementSoundPlayer.play();
           }
           rulerPositionProperty.set( rulerPositionProperty.initialValue );
-          this.grabDragInteraction.releaseDraggable();
+          this.grabDragInteraction.release();
 
           rulerAlerter.alertJumpHome();
         }
