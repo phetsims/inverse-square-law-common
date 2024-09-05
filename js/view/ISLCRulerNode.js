@@ -93,7 +93,7 @@ class ISLCRulerNode extends InteractiveHighlighting( Node ) {
       moveOnHoldDelay: 750,
       grabDragInteractionOptions: {
         objectToGrabString: rulerLabelString,
-        grabbableAccessibleName: measureDistanceRulerString,
+        idleStateAccessibleName: measureDistanceRulerString,
 
         // Empirically determined values to place the cue above the ruler.
         grabCueOptions: {
@@ -271,7 +271,7 @@ class ISLCRulerNode extends InteractiveHighlighting( Node ) {
 
     assert && assert( !options.onGrab, 'ISLCRulerNode sets its own onGrab' );
     assert && assert( !options.onRelease, 'ISLCRulerNode sets its own onRelease' );
-    assert && assert( !options.listenersWhileDraggable, 'ISLCRulerNode sets its own listenersWhileDraggable' );
+    assert && assert( !options.listenersWhileGrabbed, 'ISLCRulerNode sets its own listenersWhileGrabbed' );
 
     // the ruler's origin is the center, this offset gets the edge of it.
     const rulerAlignWithObjectXOffset = modelViewTransform.viewToModelDeltaX( RULER_WIDTH ) / 2;
@@ -320,7 +320,7 @@ class ISLCRulerNode extends InteractiveHighlighting( Node ) {
         releaseRulerSoundPlayer.play();
       },
 
-      listenersWhileDraggable: [ jumpListener ],
+      listenersWhileGrabbed: [ jumpListener ],
 
       tandem: options.tandem.createTandem( 'grabDragInteraction' )
     } );
