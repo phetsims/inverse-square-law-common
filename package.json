@@ -22,7 +22,7 @@
         ],
         "parserOptions": {
           "project": [
-            "../inverse-square-law-common/tsconfig.json"
+            "../chipper/tsconfig/eslint-all/tsconfig.json"
           ]
         }
       }
