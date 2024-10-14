@@ -55,9 +55,17 @@ class ISLCRulerNode extends InteractiveHighlighting( Node ) {
    * @param {ModelViewTransform2} modelViewTransform
    * @param {function():number} getObject1Position - get the position in model coords, of the first object
    * @param {Alerter} rulerAlerter TODO  https://github.com/phetsims/least-squares-regression/issues/86 when other types need this, likely should create an ISLC interface for this
+   * @param {Node} interactionCueParent
    * @param {Object} [options]
    */
-  constructor( rulerPositionProperty, dragBounds, modelViewTransform, getObject1Position, rulerAlerter, options ) {
+  constructor(
+    rulerPositionProperty,
+    dragBounds,
+    modelViewTransform,
+    getObject1Position,
+    rulerAlerter,
+    interactionCueParent,
+    options ) {
     assert && options && assert( options.tagName === undefined, 'RulerNode sets its own tagName, see GrabDragInteraction usage below.' );
 
     options = merge( {
@@ -306,6 +314,11 @@ class ISLCRulerNode extends InteractiveHighlighting( Node ) {
 
     const grabDragInteractionOptions = merge( options.grabDragInteractionOptions, {
 
+      // For ISLC sims, it looks nicer to have the cue above the ruler as there is usually
+      // more empty space in above the ruler in the sim.
+      grabCuePosition: 'top',
+      grabCueOffset: new Vector2( 0, -10 ),
+
       onGrab: () => {
         grabRulerSoundPlayer.play();
 
@@ -326,7 +339,7 @@ class ISLCRulerNode extends InteractiveHighlighting( Node ) {
     } );
 
     // @private - add the "grab button" interaction
-    this.grabDragInteraction = new GrabDragInteraction( this, keyboardDragListener, grabDragInteractionOptions );
+    this.grabDragInteraction = new GrabDragInteraction( this, keyboardDragListener, interactionCueParent, grabDragInteractionOptions );
 
     // If you can't use mouse/touch, then you cant use keyboard either
     this.inputEnabledProperty.link( inputEnabled => {
