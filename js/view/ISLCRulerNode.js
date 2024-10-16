@@ -72,9 +72,6 @@ class ISLCRulerNode extends InteractiveHighlighting( Node ) {
 
       // Node
       cursor: 'pointer',
-      cssTransform: true,
-      tagName: 'div',
-      focusable: true,
 
       // SelfOptions
       snapToNearest: null,
@@ -200,7 +197,7 @@ class ISLCRulerNode extends InteractiveHighlighting( Node ) {
     // variable to track position where last movement sound was produced
     const positionOfLastMotionSound = rulerPositionProperty.value.copy();
 
-    this.addInputListener( new DragListener( {
+    ruler.addInputListener( new DragListener( {
       positionProperty: rulerPositionProperty,
       tandem: options.tandem.createTandem( 'dragListener' ),
       transform: modelViewTransform,
@@ -339,7 +336,7 @@ class ISLCRulerNode extends InteractiveHighlighting( Node ) {
     } );
 
     // @private - add the "grab button" interaction
-    this.grabDragInteraction = new GrabDragInteraction( this, keyboardDragListener, interactionCueParent, grabDragInteractionOptions );
+    this.grabDragInteraction = new GrabDragInteraction( ruler, keyboardDragListener, interactionCueParent, grabDragInteractionOptions );
 
     // If you can't use mouse/touch, then you cant use keyboard either
     this.inputEnabledProperty.link( inputEnabled => {
@@ -352,7 +349,7 @@ class ISLCRulerNode extends InteractiveHighlighting( Node ) {
 
     // @public - ruler node is never destroyed, no listener disposal necessary
     rulerPositionProperty.link( value => {
-      this.center = modelViewTransform.modelToViewPosition( value );
+      ruler.center = modelViewTransform.modelToViewPosition( value );
     } );
 
     if ( SHOW_RULER_REGIONS ) {
