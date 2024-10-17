@@ -96,6 +96,7 @@ class ISLCRulerNode extends InteractiveHighlighting( Node ) {
 
       // pdom
       moveOnHoldDelay: 750,
+      moveOnHoldInterval: 50,
       grabDragInteractionOptions: {
         objectToGrabString: rulerLabelString,
         idleStateAccessibleName: measureDistanceRulerString,
@@ -243,6 +244,7 @@ class ISLCRulerNode extends InteractiveHighlighting( Node ) {
       positionProperty: rulerPositionProperty,
       transform: modelViewTransform,
       moveOnHoldDelay: options.moveOnHoldDelay,
+      moveOnHoldInterval: options.moveOnHoldInterval,
       dragDelta: 2 * keyboardDragDelta,
       shiftDragDelta: keyboardDragDelta,
 
