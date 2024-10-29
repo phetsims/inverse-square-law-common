@@ -54,7 +54,9 @@ class ISLCForceValuesDisplayControl extends VBox {
           tandem: tandem.createTandem( TEXT_TANDEM_NAME )
         } ) ),
         tandemName: 'decimalNotationRadioButton',
-        labelContent: decimalNotationString
+        options: {
+          accessibleName: decimalNotationString
+        }
       },
       {
         value: ForceValuesDisplayEnum.SCIENTIFIC,
@@ -62,7 +64,9 @@ class ISLCForceValuesDisplayControl extends VBox {
           tandem: tandem.createTandem( TEXT_TANDEM_NAME )
         } ) ),
         tandemName: 'scientificNotationRadioButton',
-        labelContent: scientificNotationString
+        options: {
+          accessibleName: scientificNotationString
+        }
       },
       {
         value: ForceValuesDisplayEnum.HIDDEN,
@@ -70,7 +74,9 @@ class ISLCForceValuesDisplayControl extends VBox {
           tandem: tandem.createTandem( TEXT_TANDEM_NAME )
         } ) ),
         tandemName: 'hiddenRadioButton',
-        labelContent: hiddenString
+        options: {
+          accessibleName: hiddenString
+        }
       }
     ];
     const radioButtonGroup = new VerticalAquaRadioButtonGroup( forceValuesDisplayProperty, radioButtonContent, {
