@@ -23,11 +23,11 @@ import ResponsePatternCollection from '../../../utterance-queue/js/ResponsePatte
 import Utterance from '../../../utterance-queue/js/Utterance.js';
 import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
 import ISLCConstants from '../ISLCConstants.js';
+import ISLCObjectEnum from '../model/ISLCObjectEnum.js';
 import DefaultDirection from './DefaultDirection.js';
 import PositionDescriber from './describers/PositionDescriber.js';
 import ISLCAlertManager from './ISLCAlertManager.js';
 import ISLCForceArrowNode from './ISLCForceArrowNode.js';
-import ISLCObjectEnum from '../model/ISLCObjectEnum.js';
 import ISLCPullerNode from './ISLCPullerNode.js';
 
 const NEGATIVE_FILL = new Color( '#66f' );
