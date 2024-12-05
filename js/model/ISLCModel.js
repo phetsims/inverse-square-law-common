@@ -49,7 +49,8 @@ class ISLCModel {
     // @public {Property.<boolean>} - whether to display the force values
     this.showForceValuesProperty = new BooleanProperty( true, {
       tandem: tandem.createTandem( 'showForceValuesProperty' ),
-      phetioDocumentation: 'Whether the force values should be displayed'
+      phetioDocumentation: 'Whether the force values should be displayed',
+      phetioFeatured: true
     } );
 
     // @public
