@@ -12,9 +12,12 @@ import Bounds2 from '../../../dot/js/Bounds2.js';
 import LinearFunction from '../../../dot/js/LinearFunction.js';
 import Utils from '../../../dot/js/Utils.js';
 import Vector2 from '../../../dot/js/Vector2.js';
-import { Shape } from '../../../kite/js/imports.js';
+import Shape from '../../../kite/js/Shape.js';
 import merge from '../../../phet-core/js/merge.js';
-import { Circle, Image, Node, Path } from '../../../scenery/js/imports.js';
+import Circle from '../../../scenery/js/nodes/Circle.js';
+import Image from '../../../scenery/js/nodes/Image.js';
+import Node from '../../../scenery/js/nodes/Node.js';
+import Path from '../../../scenery/js/nodes/Path.js';
 import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
 import ISLCPullerImages from '../ISLCPullerImages.js';
 

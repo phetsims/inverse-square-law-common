@@ -8,9 +8,9 @@
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 
-import { Shape } from '../../../kite/js/imports.js';
+import Shape from '../../../kite/js/Shape.js';
 import merge from '../../../phet-core/js/merge.js';
-import { Path } from '../../../scenery/js/imports.js';
+import Path from '../../../scenery/js/nodes/Path.js';
 import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
 
 class ISLCGridNode extends Path {

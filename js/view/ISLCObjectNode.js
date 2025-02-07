@@ -13,10 +13,15 @@
 
 import Range from '../../../dot/js/Range.js';
 import Utils from '../../../dot/js/Utils.js';
-import { Shape } from '../../../kite/js/imports.js';
+import Shape from '../../../kite/js/Shape.js';
 import merge from '../../../phet-core/js/merge.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
-import { Circle, Color, DragListener, Node, Path, RichText } from '../../../scenery/js/imports.js';
+import DragListener from '../../../scenery/js/listeners/DragListener.js';
+import Circle from '../../../scenery/js/nodes/Circle.js';
+import Node from '../../../scenery/js/nodes/Node.js';
+import Path from '../../../scenery/js/nodes/Path.js';
+import RichText from '../../../scenery/js/nodes/RichText.js';
+import Color from '../../../scenery/js/util/Color.js';
 import AccessibleSlider from '../../../sun/js/accessibility/AccessibleSlider.js';
 import Tandem from '../../../tandem/js/Tandem.js';
 import ResponsePatternCollection from '../../../utterance-queue/js/ResponsePatternCollection.js';

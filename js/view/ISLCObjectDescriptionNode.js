@@ -10,7 +10,7 @@
  */
 
 import merge from '../../../phet-core/js/merge.js';
-import { Node } from '../../../scenery/js/imports.js';
+import Node from '../../../scenery/js/nodes/Node.js';
 import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
 import ISLCObjectEnum from '../model/ISLCObjectEnum.js';
 
