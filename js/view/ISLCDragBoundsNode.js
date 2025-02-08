@@ -1,4 +1,4 @@
-// Copyright 2018-2022, University of Colorado Boulder
+// Copyright 2018-2025, University of Colorado Boulder
 
 /**
  * Shows the boundaries of the draggable area for an ISLCObjec's center point. Adjusts with the radius of the object.
