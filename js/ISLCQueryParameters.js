@@ -6,6 +6,7 @@
  * @author Jesse Greenberg
  */
 
+import { QueryStringMachine } from '../../query-string-machine/js/QueryStringMachineModule.js';
 import inverseSquareLawCommon from './inverseSquareLawCommon.js';
 
 const ISLCQueryParameters = QueryStringMachine.getAll( {
