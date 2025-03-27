@@ -43,7 +43,7 @@ class ISLCAlertManager extends Alerter {
    */
   alertShowForceValues( showForceValues ) {
     this.showForceValuesUtterance.alert = this.getShowForceValuesAlert( showForceValues );
-    this.alertDescriptionUtterance( this.showForceValuesUtterance );
+    this.addAccessibleResponse( this.showForceValuesUtterance );
   }
 
   /**

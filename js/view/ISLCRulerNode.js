@@ -332,7 +332,7 @@ class ISLCRulerNode extends InteractiveHighlighting( Node ) {
         rulerAlerter.onGrab();
 
         grabbedUtterance.alert = rulerAlerter.getRulerGrabbedAlertable();
-        this.alertDescriptionUtterance( grabbedUtterance );
+        this.addAccessibleResponse( grabbedUtterance );
       },
 
       onRelease: () => {
