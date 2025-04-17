@@ -3,8 +3,6 @@
 /**
  * Node that creates the PDOM description for the ISLCObject. This Node has no visual output.
  *
- * NOTE: this node should have its labelContent filled in.
- *
  * @author Michael Kauzmann (PhET Interactive Simulations)
  * @author Michael Barlow (PhET Interactive Simulations)
  */
@@ -28,7 +26,6 @@ class ISLCObjectDescriptionNode extends Node {
       object2Label: null, // {string} @required
 
       // pdom
-      labelTagName: 'h3',
       tagName: 'ul',
       ariaRole: 'list'
     }, config );
