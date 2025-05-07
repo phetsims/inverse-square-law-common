@@ -114,7 +114,7 @@ class ISLCRulerNode extends InteractiveHighlighting( Node ) {
           y: -45
         },
 
-        keyboardHelpText: StringUtils.fillIn( rulerHelpTextString, {
+        accessibleHelpText: StringUtils.fillIn( rulerHelpTextString, {
           deviceSpecificHint: rulerKeyboardHintString
         } ),
 
