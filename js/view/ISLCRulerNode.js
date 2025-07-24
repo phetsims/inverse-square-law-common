@@ -371,13 +371,13 @@ class ISLCRulerNode extends InteractiveHighlighting( Node ) {
   }
 
   static JUMP_HOME_HOTKEY_DATA = new HotkeyData( {
-    keyStringProperties: [ new Property( 'j+h' ) ],
+    keys: [ 'j+h' ],
     binderName: 'Jump ruler to home position',
     repoName: inverseSquareLawCommon.name
   } );
 
   static JUMP_CENTER_HOTKEY_DATA = new HotkeyData( {
-    keyStringProperties: [ new Property( 'j+c' ) ],
+    keys: [ 'j+c' ],
     binderName: 'Jump start ruler to center position',
     repoName: inverseSquareLawCommon.name
   } );
