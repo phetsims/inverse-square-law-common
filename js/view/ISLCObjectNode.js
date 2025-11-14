@@ -153,7 +153,7 @@ class ISLCObjectNode extends AccessibleSlider( Node, 0 ) {
       pdomCreateAriaValueText: positionDescriber.getPositionAriaValueTextCreator( whichObject ),
 
       // This object's PDOM description also depends on the position of the other object, so include it here.
-      pdomDependencies: config.additionalA11yDependencies.concat( object === model.object1 ?
+      descriptionDependencies: config.additionalA11yDependencies.concat( object === model.object1 ?
         [ model.object2.positionProperty ] : [ model.object1.positionProperty ] )
     }, config );
 
