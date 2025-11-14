@@ -129,7 +129,7 @@ class ISLCObjectNode extends AccessibleSlider( Node, 0 ) {
       keyboardStep: config.stepSize,
       shiftKeyboardStep: config.snapToNearest,
       pageKeyboardStep: config.stepSize * 2,
-      pdomMapPDOMValue: value => Utils.toFixedNumber( value, 1 ),
+      mapPDOMValue: value => Utils.toFixedNumber( value, 1 ),
       constrainValue: value => {
         const numberOfDecimalPlaces = Utils.numberOfDecimalPlaces( config.snapToNearest );
         return Utils.toFixedNumber( value, numberOfDecimalPlaces );
