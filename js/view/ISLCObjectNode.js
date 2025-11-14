@@ -150,7 +150,7 @@ class ISLCObjectNode extends AccessibleSlider( Node, 0 ) {
         const positionChanged = newPosition !== oldPosition;
         return positionChanged ? forceDescriber.getVectorChangeText( object, false ) : forceDescriber.getPositionUnchangedAlertText( object );
       },
-      pdomCreateAriaValueText: positionDescriber.getPositionAriaValueTextCreator( whichObject ),
+      createAriaValueText: positionDescriber.getPositionAriaValueTextCreator( whichObject ),
 
       // This object's PDOM description also depends on the position of the other object, so include it here.
       descriptionDependencies: config.additionalA11yDependencies.concat( object === model.object1 ?
