@@ -145,7 +145,7 @@ class ISLCObjectNode extends AccessibleSlider( Node, 0 ) {
         // voicing
         this.voicingSpeakDragResponse( object, object.positionProperty.value, oldPosition );
       },
-      pdomCreateContextResponseAlert: () => {
+      createContextResponseAlert: () => {
         const newPosition = object.positionProperty.get();
         const positionChanged = newPosition !== oldPosition;
         return positionChanged ? forceDescriber.getVectorChangeText( object, false ) : forceDescriber.getPositionUnchangedAlertText( object );
