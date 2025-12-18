@@ -16,7 +16,7 @@ import StringUtils from '../../../phetcommon/js/util/StringUtils.js';
 import GrabDragInteraction from '../../../scenery-phet/js/accessibility/grab-drag/GrabDragInteraction.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
 import RulerNode from '../../../scenery-phet/js/RulerNode.js';
-import SceneryPhetStrings from '../../../scenery-phet/js/SceneryPhetStrings.js';
+import SceneryPhetFluent from '../../../scenery-phet/js/SceneryPhetFluent.js';
 import HighlightFromNode from '../../../scenery/js/accessibility/HighlightFromNode.js';
 import InteractiveHighlighting from '../../../scenery/js/accessibility/voicing/InteractiveHighlighting.js';
 import HotkeyData from '../../../scenery/js/input/HotkeyData.js';
@@ -41,7 +41,7 @@ import ISLCQueryParameters from '../ISLCQueryParameters.js';
 const unitsCentimetersString = InverseSquareLawCommonStrings.units.centimeters;
 const rulerHelpTextString = InverseSquareLawCommonStrings.a11y.ruler.rulerHelpText;
 const rulerKeyboardHintString = InverseSquareLawCommonStrings.a11y.ruler.rulerKeyboardHint;
-const gestureHelpTextPatternStringProperty = SceneryPhetStrings.a11y.grabDrag.gestureHelpTextPatternStringProperty;
+const gestureHelpTextPatternStringProperty = SceneryPhetFluent.a11y.grabDrag.gestureHelpTextPatternStringProperty;
 const rulerLabelString = InverseSquareLawCommonStrings.a11y.ruler.rulerLabel;
 const measureDistanceRulerString = InverseSquareLawCommonStrings.a11y.ruler.measureDistanceRuler;
 
