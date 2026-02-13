@@ -352,10 +352,6 @@ class ISLCRulerNode extends InteractiveHighlighting( Node ) {
       this.grabDragInteraction.enabled = inputEnabled;
     } );
 
-    // pdom - the GrabDragInteraction is added to this Node but the drag handler and transform changes are applied
-    // to the child RulerNode - PDOM siblings need to reposition with the RulerNode
-    this.setPDOMTransformSourceNode( ruler );
-
     // @public - ruler node is never destroyed, no listener disposal necessary
     rulerPositionProperty.link( value => {
       ruler.center = modelViewTransform.modelToViewPosition( value );
