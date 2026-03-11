@@ -81,8 +81,8 @@ class ISLCForceValuesDisplayControl extends VBox {
       }
     ];
     const radioButtonGroup = new VerticalAquaRadioButtonGroup( forceValuesDisplayProperty, radioButtonContent, {
-      labelContent: forceValuesString,
-      descriptionContent: forceValuesHelpTextString,
+      accessibleName: forceValuesString,
+      accessibleHelpText: forceValuesHelpTextString,
       tandem: forceValuesGroupTandem
     } );
 
