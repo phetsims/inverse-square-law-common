@@ -84,7 +84,7 @@ class ISLCObjectNode extends AccessibleSlider( Node, 0 ) {
       // a single reusable Utterance that will prevent the voicingUtteranceQueue from getting spammed with too many
       // alerts as drag occurs.
       voicingUtterance: new Utterance( {
-        alertStableDelay: 500
+        alertDelay: 500
       } ),
 
       // phet-io

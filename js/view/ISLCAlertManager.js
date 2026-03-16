@@ -32,7 +32,7 @@ class ISLCAlertManager extends Alerter {
     this.model = model;
 
     // @public {Utterance} - utterances to be added to utteranceQueue, can be used to leverage
-    // alertStableDelay feature so this alert content doesn't hit the user too frequently
+    // alertDelay feature so this alert content doesn't hit the user too frequently
     this.showForceValuesUtterance = new ActivationUtterance();
   }
 
