@@ -386,5 +386,4 @@ class ISLCRulerNode extends InteractiveHighlighting( Node ) {
   }
 }
 
-inverseSquareLawCommon.register( 'ISLCRulerNode', ISLCRulerNode );
 export default ISLCRulerNode;

@@ -26,7 +26,6 @@ import AccessibleSlider from '../../../sun/js/accessibility/AccessibleSlider.js'
 import Tandem from '../../../tandem/js/Tandem.js';
 import ResponsePatternCollection from '../../../utterance-queue/js/ResponsePatternCollection.js';
 import Utterance from '../../../utterance-queue/js/Utterance.js';
-import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
 import ISLCConstants from '../ISLCConstants.js';
 import ISLCObjectEnum from '../model/ISLCObjectEnum.js';
 import DefaultDirection from './DefaultDirection.js';
@@ -472,7 +471,5 @@ const getUpdatedFill = forceValue => {
 
   return fill;
 };
-
-inverseSquareLawCommon.register( 'ISLCObjectNode', ISLCObjectNode );
 
 export default ISLCObjectNode;

@@ -11,7 +11,6 @@
 import Shape from '../../../kite/js/Shape.js';
 import merge from '../../../phet-core/js/merge.js';
 import Path from '../../../scenery/js/nodes/Path.js';
-import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
 
 class ISLCGridNode extends Path {
 
@@ -51,7 +50,5 @@ class ISLCGridNode extends Path {
     } );
   }
 }
-
-inverseSquareLawCommon.register( 'ISLCGridNode', ISLCGridNode );
 
 export default ISLCGridNode;

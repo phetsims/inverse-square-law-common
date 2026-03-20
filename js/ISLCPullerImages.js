@@ -132,7 +132,6 @@ import figurePushAtomic_6_png from '../images/figurePushAtomic_6_png.js';
 import figurePushAtomic_7_png from '../images/figurePushAtomic_7_png.js';
 import figurePushAtomic_8_png from '../images/figurePushAtomic_8_png.js';
 import figurePushAtomic_9_png from '../images/figurePushAtomic_9_png.js';
-import inverseSquareLawCommon from './inverseSquareLawCommon.js';
 
 // standard images
 
@@ -179,7 +178,5 @@ const ISLCPullerImages = {
   zeroForceImage: figure_0_png,
   atomicZeroForceImage: figureAtomic_0_png
 };
-
-inverseSquareLawCommon.register( 'ISLCPullerImages', ISLCPullerImages );
 
 export default ISLCPullerImages;

@@ -10,7 +10,6 @@
 import Shape from '../../../kite/js/Shape.js';
 import merge from '../../../phet-core/js/merge.js';
 import Path from '../../../scenery/js/nodes/Path.js';
-import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
 
 /**
  * @param {Array.<number>} rulerRegionPositions - a list of y values that are the ruler region boundaries
@@ -39,5 +38,4 @@ class ISLCRulerRegionsNode extends Path {
   }
 }
 
-inverseSquareLawCommon.register( 'ISLCRulerRegionsNode', ISLCRulerRegionsNode );
 export default ISLCRulerRegionsNode;

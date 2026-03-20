@@ -11,7 +11,6 @@
 import merge from '../../../../phet-core/js/merge.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import ScientificNotationNode from '../../../../scenery-phet/js/ScientificNotationNode.js';
-import inverseSquareLawCommon from '../../inverseSquareLawCommon.js';
 import InverseSquareLawCommonStrings from '../../InverseSquareLawCommonStrings.js';
 import ForceValuesDisplayEnum from '../../model/ForceValuesDisplayEnum.js';
 import ISLCDescriber from './ISLCDescriber.js';
@@ -499,5 +498,4 @@ const getScientificNotationTextFromPattern = ( forceValue, mantissaDecimalPlaces
   return StringUtils.fillIn( pattern, { mantissa: mantissaString, exponent: exponentString } );
 };
 
-inverseSquareLawCommon.register( 'ForceDescriber', ForceDescriber );
 export default ForceDescriber;

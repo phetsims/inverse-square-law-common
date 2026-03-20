@@ -7,7 +7,6 @@
  */
 
 import EnumerationDeprecated from '../../../phet-core/js/EnumerationDeprecated.js';
-import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
 
 const ISLCObjectEnum = EnumerationDeprecated.byKeys( [
   'OBJECT_ONE',
@@ -44,5 +43,4 @@ const ISLCObjectEnum = EnumerationDeprecated.byKeys( [
     };
   }
 } );
-inverseSquareLawCommon.register( 'ISLCObjectEnum', ISLCObjectEnum );
 export default ISLCObjectEnum;

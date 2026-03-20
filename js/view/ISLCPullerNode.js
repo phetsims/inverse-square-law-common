@@ -18,7 +18,6 @@ import Circle from '../../../scenery/js/nodes/Circle.js';
 import Image from '../../../scenery/js/nodes/Image.js';
 import Node from '../../../scenery/js/nodes/Node.js';
 import Path from '../../../scenery/js/nodes/Path.js';
-import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
 import ISLCPullerImages from '../ISLCPullerImages.js';
 
 // constants
@@ -151,7 +150,5 @@ class ISLCPullerNode extends Node {
     };
   }
 }
-
-inverseSquareLawCommon.register( 'ISLCPullerNode', ISLCPullerNode );
 
 export default ISLCPullerNode;

@@ -8,7 +8,6 @@
  * @author Michael Barlow (PhET Interactive Simulations)
  */
 
-import inverseSquareLawCommon from '../../inverseSquareLawCommon.js';
 import ISLCObjectEnum from '../../model/ISLCObjectEnum.js';
 
 class ISLCDescriber {
@@ -68,5 +67,4 @@ class ISLCDescriber {
   }
 }
 
-inverseSquareLawCommon.register( 'ISLCDescriber', ISLCDescriber );
 export default ISLCDescriber;

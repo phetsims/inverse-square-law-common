@@ -9,7 +9,6 @@
 
 import merge from '../../../phet-core/js/merge.js';
 import Node from '../../../scenery/js/nodes/Node.js';
-import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
 import ISLCObjectEnum from '../model/ISLCObjectEnum.js';
 
 class ISLCObjectDescriptionNode extends Node {
@@ -49,5 +48,4 @@ class ISLCObjectDescriptionNode extends Node {
   }
 }
 
-inverseSquareLawCommon.register( 'ISLCObjectDescriptionNode', ISLCObjectDescriptionNode );
 export default ISLCObjectDescriptionNode;

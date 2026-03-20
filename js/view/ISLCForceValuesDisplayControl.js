@@ -12,7 +12,6 @@ import VBox from '../../../scenery/js/layout/nodes/VBox.js';
 import Text from '../../../scenery/js/nodes/Text.js';
 import VerticalAquaRadioButtonGroup from '../../../sun/js/VerticalAquaRadioButtonGroup.js';
 import Tandem from '../../../tandem/js/Tandem.js';
-import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
 import InverseSquareLawCommonStrings from '../InverseSquareLawCommonStrings.js';
 import ISLCConstants from '../ISLCConstants.js';
 import ForceValuesDisplayEnum from '../model/ForceValuesDisplayEnum.js';
@@ -97,5 +96,4 @@ class ISLCForceValuesDisplayControl extends VBox {
   }
 }
 
-inverseSquareLawCommon.register( 'ISLCForceValuesDisplayControl', ISLCForceValuesDisplayControl );
 export default ISLCForceValuesDisplayControl;

@@ -19,7 +19,6 @@ import ReadingBlock from '../../../scenery/js/accessibility/voicing/ReadingBlock
 import Node from '../../../scenery/js/nodes/Node.js';
 import Rectangle from '../../../scenery/js/nodes/Rectangle.js';
 import RichText from '../../../scenery/js/nodes/RichText.js';
-import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
 import InverseSquareLawCommonStrings from '../InverseSquareLawCommonStrings.js';
 import ISLCConstants from '../ISLCConstants.js';
 import DefaultDirection from './DefaultDirection.js';
@@ -259,7 +258,5 @@ class ISLCForceArrowNode extends ReadingBlock( Node ) {
     }
   }
 }
-
-inverseSquareLawCommon.register( 'ISLCForceArrowNode', ISLCForceArrowNode );
 
 export default ISLCForceArrowNode;

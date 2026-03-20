@@ -7,8 +7,6 @@
  * @author Michael Barlow (PhET Interactive Simulations)
  */
 
-import inverseSquareLawCommon from '../../inverseSquareLawCommon.js';
-
 class ISLCObjectDescriber {
   constructor( model, object, objectLabel ) {
     this.model = model;
@@ -17,5 +15,4 @@ class ISLCObjectDescriber {
   }
 }
 
-inverseSquareLawCommon.register( 'ISLCObjectDescriber', ISLCObjectDescriber );
 export default ISLCObjectDescriber;

@@ -8,7 +8,6 @@
 
 import merge from '../../../phet-core/js/merge.js';
 import Panel from '../../../sun/js/Panel.js';
-import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
 
 class ISLCPanel extends Panel {
 
@@ -30,5 +29,4 @@ class ISLCPanel extends Panel {
   }
 }
 
-inverseSquareLawCommon.register( 'ISLCPanel', ISLCPanel );
 export default ISLCPanel;

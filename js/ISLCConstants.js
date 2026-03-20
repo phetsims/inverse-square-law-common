@@ -7,7 +7,6 @@
  */
 
 import PhetFont from '../../scenery-phet/js/PhetFont.js';
-import inverseSquareLawCommon from './inverseSquareLawCommon.js';
 
 // constants
 const MAX_DISTANCE_FROM_CENTER = 5; // meters, empirically determined boundary for objects
@@ -42,7 +41,5 @@ const ISLCConstants = {
   // The number of decimal places to display scientific notation in.
   DECIMAL_NOTATION_PRECISION: 12
 };
-
-inverseSquareLawCommon.register( 'ISLCConstants', ISLCConstants );
 
 export default ISLCConstants;

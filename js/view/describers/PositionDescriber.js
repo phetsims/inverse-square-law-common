@@ -12,7 +12,6 @@ import Multilink from '../../../../axon/js/Multilink.js';
 import StringProperty from '../../../../axon/js/StringProperty.js';
 import merge from '../../../../phet-core/js/merge.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
-import inverseSquareLawCommon from '../../inverseSquareLawCommon.js';
 import InverseSquareLawCommonStrings from '../../InverseSquareLawCommonStrings.js';
 import ISLCObjectEnum from '../../model/ISLCObjectEnum.js';
 import ISLCDescriber from './ISLCDescriber.js';
@@ -601,5 +600,4 @@ class PositionDescriber extends ISLCDescriber {
   }
 }
 
-inverseSquareLawCommon.register( 'PositionDescriber', PositionDescriber );
 export default PositionDescriber;

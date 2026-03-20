@@ -14,7 +14,6 @@ import PhetFont from '../../../scenery-phet/js/PhetFont.js';
 import GroupHighlightFromNode from '../../../scenery/js/accessibility/GroupHighlightFromNode.js';
 import Text from '../../../scenery/js/nodes/Text.js';
 import Tandem from '../../../tandem/js/Tandem.js';
-import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
 import InverseSquareLawCommonStrings from '../InverseSquareLawCommonStrings.js';
 import ISLCPanel from './ISLCPanel.js';
 
@@ -143,5 +142,4 @@ class ISLCObjectControlPanel extends ISLCPanel {
 // @public
 ISLCObjectControlPanel.NUMBER_CONTROL_TANDEM_NAME = 'numberControl';
 
-inverseSquareLawCommon.register( 'ISLCObjectControlPanel', ISLCObjectControlPanel );
 export default ISLCObjectControlPanel;

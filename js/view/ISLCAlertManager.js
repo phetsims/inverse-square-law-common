@@ -11,7 +11,6 @@
 
 import Alerter from '../../../scenery-phet/js/accessibility/describers/Alerter.js';
 import ActivationUtterance from '../../../utterance-queue/js/ActivationUtterance.js';
-import inverseSquareLawCommon from '../inverseSquareLawCommon.js';
 import InverseSquareLawCommonStrings from '../InverseSquareLawCommonStrings.js';
 
 // constants
@@ -65,5 +64,4 @@ class ISLCAlertManager extends Alerter {
   }
 }
 
-inverseSquareLawCommon.register( 'ISLCAlertManager', ISLCAlertManager );
 export default ISLCAlertManager;

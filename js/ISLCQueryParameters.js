@@ -7,7 +7,6 @@
  */
 
 import { QueryStringMachine } from '../../query-string-machine/js/QueryStringMachineModule.js';
-import inverseSquareLawCommon from './inverseSquareLawCommon.js';
 
 const ISLCQueryParameters = QueryStringMachine.getAll( {
 
@@ -27,7 +26,5 @@ const ISLCQueryParameters = QueryStringMachine.getAll( {
   // object will change depending on the size and position of both objects.
   showDragBounds: { type: 'flag' }
 } );
-
-inverseSquareLawCommon.register( 'ISLCQueryParameters', ISLCQueryParameters );
 
 export default ISLCQueryParameters;
