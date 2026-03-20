@@ -284,4 +284,6 @@ type StringsType = {
 
 const InverseSquareLawCommonStrings = getStringModule( 'INVERSE_SQUARE_LAW_COMMON' ) as StringsType;
 
+inverseSquareLawCommon.register( 'InverseSquareLawCommonStrings', InverseSquareLawCommonStrings );
+
 export default InverseSquareLawCommonStrings;
